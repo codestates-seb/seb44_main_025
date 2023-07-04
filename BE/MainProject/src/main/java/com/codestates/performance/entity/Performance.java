@@ -24,4 +24,24 @@ public class Performance {
     private int totalSeat;
     @Column(nullable = false)
     private long categoryId;
+
+    public Performance() {}
+
+    public Performance(String title,
+                        long artistId,
+                        long contentId,
+                        LocalDateTime date,
+                        int price,
+                        String place,
+                        int totalSeat,
+                        long categoryId) {
+        this.title = title;
+        this.artistId = artistId;
+        this.contentId = contentId;
+        this.date = date;
+        this.price = price;
+        this.place = place;
+        this.totalSeat = totalSeat;
+        this.categoryId = categoryId;
+    }
 }

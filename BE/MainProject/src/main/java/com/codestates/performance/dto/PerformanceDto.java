@@ -1,12 +1,17 @@
 package com.codestates.performance.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
 public class PerformanceDto {
+    @Getter
+    @AllArgsConstructor
     public static class Post {
         private String title;
-        private String artistName;
-        private long contentId;
+        private long artistId;
+        private String content;
         private LocalDateTime date;
         private int price;
         private String place;
