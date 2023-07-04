@@ -18,7 +18,6 @@ public class Performance {
     private long artistId;
     @OneToOne
     @JoinColumn(name="CONTENT_ID")
-    @Column(nullable = false, updatable = false)
     private Content content;
     @Column(nullable = false)
     private LocalDateTime date;
