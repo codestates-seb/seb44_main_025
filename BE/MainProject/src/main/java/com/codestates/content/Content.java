@@ -1,5 +1,6 @@
 package com.codestates.content;
 
+import com.codestates.performance.entity.Performance;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,8 @@ public class Content {
     private long contentId;
     @Column(columnDefinition = "text")
     private String body;
+    @OneToOne(mappedBy = "content")
+    private Performance performance;
 
     public Content() {}
     public Content(String body) {

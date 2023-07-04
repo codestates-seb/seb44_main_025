@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PerformanceServiceImpl implements PerformanceService{
     @Override
-    public void createPerformance(Performance performance) {
-
+    public Performance createPerformance(Performance performance) {
+        return performance;
     }
 }

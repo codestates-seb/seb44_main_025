@@ -1,8 +1,12 @@
 package com.codestates.performance.entity;
 
+import com.codestates.content.Content;
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
 @Entity
 public class Performance {
     @Id
@@ -12,8 +16,10 @@ public class Performance {
     private String title;
     @Column(nullable = false, updatable = false)
     private long artistId;
+    @OneToOne
+    @JoinColumn(name="CONTENT_ID")
     @Column(nullable = false, updatable = false)
-    private long contentId;
+    private Content content;
     @Column(nullable = false)
     private LocalDateTime date;
     @Column(nullable = false)
@@ -29,7 +35,7 @@ public class Performance {
 
     public Performance(String title,
                         long artistId,
-                        long contentId,
+                        Content content,
                         LocalDateTime date,
                         int price,
                         String place,
@@ -37,7 +43,7 @@ public class Performance {
                         long categoryId) {
         this.title = title;
         this.artistId = artistId;
-        this.contentId = contentId;
+        this.content = content;
         this.date = date;
         this.price = price;
         this.place = place;
