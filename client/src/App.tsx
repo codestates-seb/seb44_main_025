@@ -1,11 +1,13 @@
 import { Outlet } from 'react-router-dom';
-import Concertpreview from './components/concertpreview';
+import Artist from './components/artist';
+import Artistcontainer from './components/artistcontainer';
 
 function App() {
   return (
     <div className="App">
       <Outlet />
-      <Concertpreview />
+      <Artist />
+      <Artistcontainer />
     </div>
   );
 }
