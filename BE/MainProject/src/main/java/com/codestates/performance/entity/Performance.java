@@ -16,7 +16,7 @@ public class Performance {
     private String title;
     @Column(nullable = false, updatable = false)
     private long artistId;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name="CONTENT_ID")
     private Content content;
     @Column(nullable = false)

@@ -12,7 +12,7 @@ public class PerformanceDto {
         private String title;
         private long artistId;
         private String content;
-        private LocalDateTime date;
+        private String date;
         private int price;
         private String place;
         private int totalSeat;
