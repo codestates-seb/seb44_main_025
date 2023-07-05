@@ -6,7 +6,6 @@ export default function Artist() {
       <S.ArtistImg src="우리사랑이대로.jpeg" />
       <S.ArtistDetail>
         <S.Artistcontent>아티스트명</S.Artistcontent>
-        <S.Artistcontent>장르</S.Artistcontent>
       </S.ArtistDetail>
     </S.ArtistpreviewWrapper>
   );
