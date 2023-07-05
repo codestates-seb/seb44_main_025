@@ -2,45 +2,54 @@ import { styled } from 'styled-components';
 
 export default function Artistcontainer() {
   return (
-    <S.ConcertpreviewWrapper>
-      <S.ConcertImg src="우리사랑이대로.jpeg" />
-      <S.ArtistDetail>
-        <S.Artistcontent>아티스트명</S.Artistcontent>
-        <S.Artistcontent>장르</S.Artistcontent>
-      </S.ArtistDetail>
-      <S.ConcertImg src="우리사랑이대로.jpeg" />
-      <S.ArtistDetail>
-        <S.Artistcontent>아티스트명</S.Artistcontent>
-        <S.Artistcontent>장르</S.Artistcontent>
-      </S.ArtistDetail>
-      <S.ConcertImg src="우리사랑이대로.jpeg" />
-      <S.ArtistDetail>
-        <S.Artistcontent>아티스트명</S.Artistcontent>
-        <S.Artistcontent>장르</S.Artistcontent>
-      </S.ArtistDetail>
-      <S.ConcertImg src="우리사랑이대로.jpeg" />
-      <S.ArtistDetail>
-        <S.Artistcontent>아티스트명</S.Artistcontent>
-        <S.Artistcontent>장르</S.Artistcontent>
-      </S.ArtistDetail>
-    </S.ConcertpreviewWrapper>
+    <S.ArtistpreviewContainer>
+      <S.ArtistpreviewWrapper>
+        <S.ArtistImg src="우리사랑이대로.jpeg" />
+        <S.ArtistDetail>
+          <S.Artistcontent>아티스트명</S.Artistcontent>
+        </S.ArtistDetail>
+      </S.ArtistpreviewWrapper>
+      <S.ArtistpreviewWrapper>
+        <S.ArtistImg src="우리사랑이대로.jpeg" />
+        <S.ArtistDetail>
+          <S.Artistcontent>아티스트명</S.Artistcontent>
+        </S.ArtistDetail>
+      </S.ArtistpreviewWrapper>
+      <S.ArtistpreviewWrapper>
+        <S.ArtistImg src="우리사랑이대로.jpeg" />
+        <S.ArtistDetail>
+          <S.Artistcontent>아티스트명</S.Artistcontent>
+        </S.ArtistDetail>
+      </S.ArtistpreviewWrapper>
+      <S.ArtistpreviewWrapper>
+        <S.ArtistImg src="우리사랑이대로.jpeg" />
+        <S.ArtistDetail>
+          <S.Artistcontent>아티스트명</S.Artistcontent>
+        </S.ArtistDetail>
+      </S.ArtistpreviewWrapper>
+    </S.ArtistpreviewContainer>
   );
 }
 
 const S = {
-  ConcertpreviewWrapper: styled.div`
+  ArtistpreviewContainer: styled.div`
+    width: 360px;
+    height: 115px;
+    display: flex;
+    justify-content: space-evenly;
+  `,
+  ArtistpreviewWrapper: styled.div`
     width: 75px;
     height: 115px;
   `,
-  ConcertImg: styled.img`
+  ArtistImg: styled.img`
     width: 75px;
     height: 75px;
   `,
   ArtistDetail: styled.div`
     height: 30px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
   `,
   Artistcontent: styled.p`
