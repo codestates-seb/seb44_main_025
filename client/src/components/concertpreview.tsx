@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { ButtonWithArrowDark } from './Buttons/Buttons';
 
 export default function Concertpreview() {
   return (
@@ -6,10 +7,11 @@ export default function Concertpreview() {
       <S.ConcertImg src="우리사랑이대로.jpeg" />
       <S.ConcertDetail>
         <S.ConcertTitle>우리 사랑 이대로</S.ConcertTitle>
-        <S.Concertcontent>2023.08.03</S.Concertcontent>
         <S.Concertcontent>규현&은지</S.Concertcontent>
         <S.Concertcontent>Pop</S.Concertcontent>
         <S.Concertcontent>₩ 10,000</S.Concertcontent>
+        <S.Concertcontent>2023.08.03</S.Concertcontent>
+        <ButtonWithArrowDark text={'공연예약'}></ButtonWithArrowDark>
       </S.ConcertDetail>
     </S.ConcertpreviewWrapper>
   );
@@ -41,6 +43,11 @@ const S = {
   `,
   ConcertDetail: styled.div`
     margin-left: 10px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-end;
   `,
   ConcertTitle: styled.header`
     font-size: var(--heading6-font-size);
