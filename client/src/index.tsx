@@ -23,6 +23,18 @@ const router = createBrowserRouter([
         path: '/performances/register',
         element: <div>공연 등록</div>,
       },
+      {
+        path: '/login',
+        element: <div>로그인</div>,
+      },
+      {
+        path: '/signup',
+        element: <div>회원가입</div>,
+      },
+      {
+        path: '/mypage',
+        element: <div>마이 페이지</div>,
+      },
     ],
   },
 ]);
