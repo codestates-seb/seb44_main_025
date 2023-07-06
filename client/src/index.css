@@ -2,6 +2,7 @@
 
   /* color */
   --theme-background-color: #1e2630;
+  --body-background-color:#1e1e1e;
   --button-theme-background-color: #1e2630;
   --button-primary-background-color: #8250ca;
   --button-primary-border-color: #8250ca;
@@ -14,6 +15,7 @@
   --font-dark-color: #0f0f0f;
   --font-light-black-color: rgba(15, 15, 15, 0.3);
   --font-light-white-color: rgba(255, 255, 255, 0.7);
+  --header-border-color:rgba(255, 255, 255, 0.3);
   --font-mid-color: rgba(15, 15, 15, 0.6);
   --font-white-color: #f2f2f2;
   --input-border-color: #4dcfc0;

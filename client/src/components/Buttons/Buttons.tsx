@@ -60,9 +60,10 @@ export const ButtonPrimary75px = styled.button`
   border-radius: 100px;
   border: none;
 `;
-export const ButtonPrimary150px = styled.button`
+type ButtonPrimary160pxPropTypes = { width?: 160 | 170 };
+export const ButtonPrimary160px = styled.button<ButtonPrimary160pxPropTypes>`
   cursor: pointer;
-  width: 150px;
+  width: ${props => (props?.width ? `${props.width}px` : '160px')};
   height: 48px;
   background-color: var(--button-primary-background-color);
   color: var(--font-white-color);
@@ -174,7 +175,7 @@ export const ButtonsPreview = () => {
       <ButtonMini>버튼</ButtonMini>
       <ButtonToggle text={'버튼'} />
       <ButtonPrimary75px>버튼</ButtonPrimary75px>
-      <ButtonPrimary150px>버튼</ButtonPrimary150px>
+      <ButtonPrimary160px>버튼</ButtonPrimary160px>
       <ButtonPrimary335px>공연 정보 등록/수정</ButtonPrimary335px>
       <ButtonWithArrowLight text={'공연예약'} />
       <ButtonWithArrowDark text={'공연예약'} />

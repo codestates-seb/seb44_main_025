@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import MainCarousel from '../components/MainCarousel';
+import CarouselSlide from './CarouselSlide';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -31,13 +31,23 @@ const Main = () => {
       try {
         const response = await axios.get('/dummy/performancelist.json');
         setData(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
   }, []);
+
+  /** 캐러셀 2초마다 동작 */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      SlideTransitionControl();
+    }, 2000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [n]);
 
   /** 캐러셀 슬라이드 좌표 지정하는 함수 */
   function SlideTransitionControl() {
@@ -58,7 +68,6 @@ const Main = () => {
         setTime(0);
       }, 500);
     }
-    console.log(num);
   }
 
   return (
@@ -75,23 +84,16 @@ const Main = () => {
               {data.map((v: Dummydata, i) => {
                 return (
                   <div key={i}>
-                    <MainCarousel posterImg={v.imageUrl} />
+                    <CarouselSlide posterImg={v.imageUrl} />
                   </div>
                 );
               })}
               {/* 무한 슬라이드를 위해 첫번째 슬라이드 복제 */}
-              <MainCarousel posterImg={data[0].imageUrl} />
+              <CarouselSlide posterImg={data[0].imageUrl} />
             </>
           )}
         </S.Container>
       </S.Something>
-      <button
-        onClick={() => {
-          SlideTransitionControl();
-        }}
-      >
-        옆으로넘기기
-      </button>
     </>
   );
 };
@@ -106,8 +108,6 @@ const S = {
     width: 390px;
     display: flex;
     flex-flow: row;
-    /* overflow: hidden; */
-    /* transform: translate(-390px); */
     transition: ${props => props.transform};
     transform: ${props => props.translate};
   `,

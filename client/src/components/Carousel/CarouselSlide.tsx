@@ -1,10 +1,10 @@
 import { styled } from 'styled-components';
-import { ButtonWithArrowLight } from './Buttons/Buttons';
+import { ButtonWithArrowLight } from '../Buttons/Buttons';
 
 type OwnProps = {
   posterImg: string;
 };
-const MainCarousel: React.FC<OwnProps> = ({ posterImg }) => {
+const CarouselSlide: React.FC<OwnProps> = ({ posterImg }) => {
   return (
     <S.Container>
       <S.ConcertpreviewWrapper>
@@ -74,4 +74,4 @@ const S = {
   `,
 };
 
-export default MainCarousel;
+export default CarouselSlide;
