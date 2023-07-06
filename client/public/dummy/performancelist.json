@@ -1,0 +1,38 @@
+[
+  {
+    "title": "우리사랑이대로",
+    "artistId": 1,
+    "content": "테스트",
+    "date": "2023-07-05 00:00:00",
+    "price": 10000,
+    "place": "홍대",
+    "nickname": "김코딩",
+    "totalSeat": 100,
+    "categoryId": 1,
+    "imageUrl": "/우리사랑이대로.jpeg"   
+  },
+  {
+    "title": "우리사랑이대로",
+    "artistId": 1,
+    "content": "테스트",
+    "date": "2023-07-05 00:00:00",
+    "price": 10000,
+    "place": "홍대",
+    "nickname": "김코딩",
+    "totalSeat": 100,
+    "categoryId": 1,
+    "imageUrl": "/단체사진.jpg"   
+  },
+  {
+    "title": "우리사랑이대로",
+    "artistId": 1,
+    "content": "테스트",
+    "date": "2023-07-05 00:00:00",
+    "price": 10000,
+    "place": "홍대",
+    "nickname": "김코딩",
+    "totalSeat": 100,
+    "categoryId": 1,
+    "imageUrl": "/우리사랑이대로.jpeg"   
+  }
+]
