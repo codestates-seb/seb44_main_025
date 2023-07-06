@@ -22,7 +22,8 @@ public interface PerformanceMapper {
                 performanceDto.getPrice(),
                 performanceDto.getPlace(),
                 performanceDto.getTotalSeat(),
-                performanceDto.getCategoryId()
+                performanceDto.getCategoryId(),
+                performanceDto.getImageUrl()
         );
     }
 
@@ -37,7 +38,8 @@ public interface PerformanceMapper {
                 performance.getPrice(),
                 performance.getPlace(),
                 performance.getTotalSeat(),
-                performance.getCategoryId()
+                performance.getCategoryId(),
+                performance.getImageUrl()
         );
     }
 }

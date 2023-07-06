@@ -15,6 +15,7 @@ public class PerformanceDto {
         private String place;
         private int totalSeat;
         private long categoryId;
+        private String imageUrl;
     }
 
     @Getter
@@ -29,5 +30,6 @@ public class PerformanceDto {
         private String place;
         private int totalSeat;
         private long categoryId;
+        private String imageUrl;
     }
 }

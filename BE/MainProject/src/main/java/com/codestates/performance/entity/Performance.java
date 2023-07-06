@@ -29,6 +29,8 @@ public class Performance {
     private int totalSeat;
     @Column(nullable = false)
     private long categoryId;
+    @Column(nullable = false)
+    private String imageUrl;
 
     public Performance() {}
 
@@ -39,7 +41,8 @@ public class Performance {
                         int price,
                         String place,
                         int totalSeat,
-                        long categoryId) {
+                        long categoryId,
+                       String imageUrl) {
         this.title = title;
         this.artistId = artistId;
         this.content = content;
@@ -48,5 +51,6 @@ public class Performance {
         this.place = place;
         this.totalSeat = totalSeat;
         this.categoryId = categoryId;
+        this.imageUrl = imageUrl;
     }
 }
