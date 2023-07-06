@@ -6,7 +6,7 @@ export default function Concertpreview() {
       <S.ConcertImg src="우리사랑이대로.jpeg" />
       <S.ConcertDetail>
         <S.ConcertTitle>닉네임</S.ConcertTitle>
-        <S.Concertcontent>내용</S.Concertcontent>
+        <S.Concertcontent>content</S.Concertcontent>
         <S.Concertcontent>date</S.Concertcontent>
       </S.ConcertDetail>
     </S.ConcertpreviewWrapper>
