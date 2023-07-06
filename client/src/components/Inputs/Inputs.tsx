@@ -132,8 +132,8 @@ type Theme = {
 type InputPropTypes = {
   label?: string;
   icon?: boolean;
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  value?: string;
+  setValue?: React.Dispatch<React.SetStateAction<string>>;
 } & Theme &
   DivPropTypes &
   InputContainerPropTypes;
@@ -144,12 +144,19 @@ export const Input = (props: InputPropTypes) => {
       {props?.theme === 'dark' ? (
         <InputContainerDark height={props?.height} width={props?.width}>
           <input
-            value={props.value}
-            onChange={e => props.setValue(e.target.value)}
+            value={props?.value}
+            onChange={e =>
+              typeof props?.setValue === 'function' &&
+              props?.setValue(e.target.value)
+            }
           />
           {props?.icon &&
-            (props.value ? (
-              <CloseIcon onClick={() => props.setValue('')} />
+            (props?.value ? (
+              <CloseIcon
+                onClick={() =>
+                  typeof props?.setValue === 'function' && props?.setValue('')
+                }
+              />
             ) : (
               <SearchIcon />
             ))}
@@ -157,12 +164,19 @@ export const Input = (props: InputPropTypes) => {
       ) : (
         <InputContainerLight height={props?.height} width={props?.width}>
           <input
-            value={props.value}
-            onChange={e => props.setValue(e.target.value)}
+            value={props?.value}
+            onChange={e =>
+              typeof props?.setValue === 'function' &&
+              props?.setValue(e.target.value)
+            }
           />
           {props?.icon &&
-            (props.value ? (
-              <CloseIcon onClick={() => props.setValue('')} />
+            (props?.value ? (
+              <CloseIcon
+                onClick={() =>
+                  typeof props?.setValue === 'function' && props?.setValue('')
+                }
+              />
             ) : (
               <SearchIcon />
             ))}
@@ -175,8 +189,8 @@ export const Input = (props: InputPropTypes) => {
 type InputWarningSuccessPropTypes = {
   label?: string;
   message?: string;
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  value?: string;
+  setValue?: React.Dispatch<React.SetStateAction<string>>;
 } & DivPropTypes &
   InputContainerPropTypes;
 export const InputWarning = (props: InputWarningSuccessPropTypes) => {
@@ -185,8 +199,11 @@ export const InputWarning = (props: InputWarningSuccessPropTypes) => {
       {props?.label && <label>{props.label}</label>}
       <InputContainerWarning>
         <input
-          value={props.value}
-          onChange={e => props.setValue(e.target.value)}
+          value={props?.value}
+          onChange={e =>
+            typeof props?.setValue === 'function' &&
+            props?.setValue(e.target.value)
+          }
         />
       </InputContainerWarning>
       {props?.message && <p>{props.message}</p>}
@@ -199,8 +216,11 @@ export const InputSuccess = (props: InputWarningSuccessPropTypes) => {
       {props?.label && <label>{props.label}</label>}
       <InputContainerSuccess>
         <input
-          value={props.value}
-          onChange={e => props.setValue(e.target.value)}
+          value={props?.value}
+          onChange={e =>
+            typeof props?.setValue === 'function' &&
+            props?.setValue(e.target.value)
+          }
         />
       </InputContainerSuccess>
       {props?.message && <p>{props.message}</p>}
@@ -211,8 +231,8 @@ export const InputSuccess = (props: InputWarningSuccessPropTypes) => {
 type InputWithButtonPropTypes = {
   buttonText: string;
   icon?: boolean;
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  value?: string;
+  setValue?: React.Dispatch<React.SetStateAction<string>>;
 } & Theme &
   DivPropTypes &
   InputFlexContainerPropTypes;
@@ -224,12 +244,20 @@ export const InputWithButton = (props: InputWithButtonPropTypes) => {
           <>
             <InputContainerDark height={props?.height}>
               <input
-                value={props.value}
-                onChange={e => props.setValue(e.target.value)}
+                value={props?.value}
+                onChange={e =>
+                  typeof props?.setValue === 'function' &&
+                  props?.setValue(e.target.value)
+                }
               />
               {props?.icon &&
-                (props.value ? (
-                  <CloseIcon onClick={() => props.setValue('')} />
+                (props?.value ? (
+                  <CloseIcon
+                    onClick={() =>
+                      typeof props?.setValue === 'function' &&
+                      props?.setValue('')
+                    }
+                  />
                 ) : (
                   <SearchIcon />
                 ))}
@@ -240,12 +268,20 @@ export const InputWithButton = (props: InputWithButtonPropTypes) => {
           <>
             <InputContainerLight height={props?.height}>
               <input
-                value={props.value}
-                onChange={e => props.setValue(e.target.value)}
+                value={props?.value}
+                onChange={e =>
+                  typeof props?.setValue === 'function' &&
+                  props?.setValue(e.target.value)
+                }
               />
               {props?.icon &&
-                (props.value ? (
-                  <CloseIcon onClick={() => props.setValue('')} />
+                (props?.value ? (
+                  <CloseIcon
+                    onClick={() =>
+                      typeof props?.setValue === 'function' &&
+                      props?.setValue('')
+                    }
+                  />
                 ) : (
                   <SearchIcon />
                 ))}
