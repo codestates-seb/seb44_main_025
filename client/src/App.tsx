@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
-import Review from './components/review/review';
+import Mypage from './pages/mypage';
 
 function App() {
   return (
     <div className="App">
       <Outlet />
-      <Review />
+      <Mypage />
     </div>
   );
 }

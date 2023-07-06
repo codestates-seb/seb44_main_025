@@ -1,20 +1,20 @@
 import { styled } from 'styled-components';
 
-export default function Concertpreview() {
+export default function Review() {
   return (
-    <S.ConcertpreviewWrapper>
-      <S.ConcertImg src="우리사랑이대로.jpeg" />
-      <S.ConcertDetail>
-        <S.ConcertTitle>닉네임</S.ConcertTitle>
-        <S.Concertcontent>content</S.Concertcontent>
-        <S.Concertcontent>date</S.Concertcontent>
-      </S.ConcertDetail>
-    </S.ConcertpreviewWrapper>
+    <S.ReviewWrapper>
+      <S.UserImg src="우리사랑이대로.jpeg" />
+      <S.ReviewDetail>
+        <S.UserNickname>닉네임</S.UserNickname>
+        <S.Reviewcontent>content</S.Reviewcontent>
+        <S.Reviewcontent>date</S.Reviewcontent>
+      </S.ReviewDetail>
+    </S.ReviewWrapper>
   );
 }
 
 const S = {
-  ConcertpreviewWrapper: styled.div`
+  ReviewWrapper: styled.div`
     width: 360px;
     height: 60px;
     background-color: var(--font-mid-color);
@@ -22,8 +22,10 @@ const S = {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-left: 15px;
+    margin-bottom: 10px;
   `,
-  ConcertImg: styled.img`
+  UserImg: styled.img`
     width: 50px;
     height: 50px;
     margin: 15px;
@@ -38,19 +40,19 @@ const S = {
     background-origin: border-box;
     background-clip: content-box, border-box;
   `,
-  ConcertDetail: styled.div`
+  ReviewDetail: styled.div`
     height: 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
   `,
-  ConcertTitle: styled.header`
+  UserNickname: styled.header`
     font-size: var(--heading6-font-size);
     line-height: var(--heading6-line-height);
     font-weight: var(--heading6-font-weight);
     color: var(--font-white-color);
   `,
-  Concertcontent: styled.p`
+  Reviewcontent: styled.p`
     font-size: var(--nav-font-size);
     font-weight: var(--nav-font-weight);
     line-height: var(--nav-line-height);
