@@ -1,4 +1,4 @@
-package com.codestates.content;
+package com.codestates.content.entity;
 
 import com.codestates.performance.entity.Performance;
 import lombok.AllArgsConstructor;

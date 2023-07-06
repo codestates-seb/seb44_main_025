@@ -1,6 +1,6 @@
 package com.codestates.performance.mapper;
 
-import com.codestates.content.Content;
+import com.codestates.content.entity.Content;
 import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
 import org.mapstruct.Mapper;
@@ -10,8 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 @Mapper(componentModel = "spring")
 public interface PerformanceMapper {
-    default Performance performanceDtoToPerformance(PerformanceDto.Post performanceDto) {
-        // Content 클래스로 감싸서 전달
+    default Performance performancePostDtoToPerformance(PerformanceDto.Post performanceDto) {
         Content content = new Content(performanceDto.getContent());
         LocalDateTime date = LocalDateTime.parse(performanceDto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
@@ -24,6 +23,21 @@ public interface PerformanceMapper {
                 performanceDto.getPlace(),
                 performanceDto.getTotalSeat(),
                 performanceDto.getCategoryId()
+        );
+    }
+
+    default PerformanceDto.Response performanceToPerformanceResponseDto(Performance performance) {
+        System.out.println(performance.toString());
+        return new PerformanceDto.Response(
+                performance.getPerformanceId(),
+                performance.getTitle(),
+                performance.getArtistId(),
+                performance.getContent().getBody(),
+                performance.getDate().toString(),
+                performance.getPrice(),
+                performance.getPlace(),
+                performance.getTotalSeat(),
+                performance.getCategoryId()
         );
     }
 }

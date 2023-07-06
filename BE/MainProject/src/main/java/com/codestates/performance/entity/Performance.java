@@ -1,6 +1,6 @@
 package com.codestates.performance.entity;
 
-import com.codestates.content.Content;
+import com.codestates.content.entity.Content;
 import lombok.Getter;
 
 import javax.persistence.*;
