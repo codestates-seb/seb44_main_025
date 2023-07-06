@@ -5,6 +5,7 @@ spring:
       path: /h2
   datasource:
     url: jdbc:h2:mem:test
+    mode: mysql
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -12,5 +13,7 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
+      schema-locations: classpath*db/h2/schema.sql
+
 
 
