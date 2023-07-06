@@ -7,7 +7,7 @@ export default function Concertpreview() {
       <S.ConcertDetail>
         <S.ConcertTitle>닉네임</S.ConcertTitle>
         <S.Concertcontent>내용</S.Concertcontent>
-        <S.Concertcontent>날짜</S.Concertcontent>
+        <S.Concertcontent>date</S.Concertcontent>
       </S.ConcertDetail>
     </S.ConcertpreviewWrapper>
   );
