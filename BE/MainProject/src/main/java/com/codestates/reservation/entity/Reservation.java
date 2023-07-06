@@ -1,5 +1,6 @@
 package com.codestates.reservation.entity;
 
+import com.codestates.payment.Payment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
