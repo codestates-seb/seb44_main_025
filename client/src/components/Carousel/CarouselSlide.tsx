@@ -1,36 +1,50 @@
 import { styled } from 'styled-components';
 import { ButtonWithArrowLight } from '../Buttons/Buttons';
+import { Link } from 'react-router-dom';
 
 type OwnProps = {
   posterImg: string;
+  title: string;
+  nickname: string;
+  content: string;
+  price: number;
+  date: string;
+  categoryId: number;
 };
-const CarouselSlide: React.FC<OwnProps> = ({ posterImg }) => {
+const CarouselSlide: React.FC<OwnProps> = ({
+  posterImg,
+  title,
+  nickname,
+  content,
+  price,
+  date,
+  categoryId,
+}) => {
   return (
-    <S.Container>
+    <>
       <S.ConcertpreviewWrapper>
-        <S.ConcertImg src="우리사랑이대로.jpeg" />
+        <S.ConcertImg src={posterImg} />
         <S.ConcertDetail>
-          <S.ConcertTitle>우리 사랑 이대로</S.ConcertTitle>
-          <S.Concertcontent>규현&은지</S.Concertcontent>
-          <S.Concertcontent>Pop</S.Concertcontent>
-          <S.Concertcontent>₩ 10,000</S.Concertcontent>
-          <S.Concertcontent>2023.08.03</S.Concertcontent>
-          <ButtonWithArrowLight text={'공연예약'}></ButtonWithArrowLight>
+          <S.ConcertTitle>{title}</S.ConcertTitle>
+          <S.Concertcontent>{nickname}</S.Concertcontent>
+          <S.Concertcontent>{content}</S.Concertcontent>
+          <S.Concertcontent>₩ {price.toLocaleString()}</S.Concertcontent>
+          <S.Concertcontent>{date}</S.Concertcontent>
+          <Link
+            to={`/performances/:${categoryId}`}
+            style={{ textDecorationLine: 'none' }}
+          >
+            <ButtonWithArrowLight text={'공연예약'}></ButtonWithArrowLight>
+          </Link>
         </S.ConcertDetail>
       </S.ConcertpreviewWrapper>
 
-      <S.ImgDiv
-        style={{ backgroundImage: `url(${posterImg})` }}
-        // style={{ backgroundImage: 'url(/단체사진.jpg)' }}
-      ></S.ImgDiv>
-    </S.Container>
+      <S.ImgDiv style={{ backgroundImage: `url(${posterImg})` }} />
+    </>
   );
 };
 
 const S = {
-  Container: styled.div`
-    /* float: left; */
-  `,
   ImgDiv: styled.div`
     height: 180px;
     width: 390px;

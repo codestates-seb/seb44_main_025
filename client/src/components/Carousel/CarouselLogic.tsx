@@ -23,7 +23,7 @@ interface ContainerProps {
 
 const Main = () => {
   let [data, setData] = useState<any[]>([]);
-  let [n, setN] = useState(0);
+  let [movementWidth, setMovementWidth] = useState(0);
   let [time, setTime] = useState(0.5);
 
   useEffect(() => {
@@ -38,33 +38,36 @@ const Main = () => {
     fetchData();
   }, []);
 
-  /** 캐러셀 2초마다 동작 */
+  /** 캐러셀 3초마다 동작 */
   useEffect(() => {
     const interval = setInterval(() => {
       SlideTransitionControl();
-    }, 2000);
+    }, 3000);
 
     return () => {
       clearInterval(interval);
     };
-  }, [n]);
+  }, [movementWidth]);
 
   /** 캐러셀 슬라이드 좌표 지정하는 함수 */
   function SlideTransitionControl() {
     let num = 0;
-    if (n !== -390 * (data.length - 1)) {
+    // 마지막 슬라이드가 아닌 경우
+    if (movementWidth !== -390 * (data.length - 1)) {
       setTime(0.5);
-      num = n - 390;
-      setN(num);
-    } else {
+      num = movementWidth - 390;
+      setMovementWidth(num);
+    }
+    // 마지막 슬라이드인 경우s
+    else {
       /** 마지막 슬라이드에서 첫 슬라이드로 */
       // 0.5초동안 슬라이드 넘김
-      num = n - 390;
-      setN(num);
+      num = movementWidth - 390;
+      setMovementWidth(num);
       // 0.5초 후, 0초동안 첫 번째 슬라이드로 이동(사람 눈엔 보이지 않음)
       setTimeout(function () {
         num = 0;
-        setN(num);
+        setMovementWidth(num);
         setTime(0);
       }, 500);
     }
@@ -74,9 +77,8 @@ const Main = () => {
     <>
       <S.Something>
         <S.Container
-          translate={`translate(${n}px)`}
+          translate={`translate(${movementWidth}px)`}
           transform={`transform ${time}s`}
-          className="움직이게"
         >
           {data.length !== 0 && (
             <>
@@ -84,12 +86,30 @@ const Main = () => {
               {data.map((v: Dummydata, i) => {
                 return (
                   <div key={i}>
-                    <CarouselSlide posterImg={v.imageUrl} />
+                    <CarouselSlide
+                      posterImg={v.imageUrl}
+                      title={v.title}
+                      nickname={v.nickname}
+                      content={v.content}
+                      price={v.price}
+                      date={v.date}
+                      categoryId={v.categoryId}
+                    />
                   </div>
                 );
               })}
               {/* 무한 슬라이드를 위해 첫번째 슬라이드 복제 */}
-              <CarouselSlide posterImg={data[0].imageUrl} />
+              <div>
+                <CarouselSlide
+                  posterImg={data[0].imageUrl}
+                  title={data[0].title}
+                  nickname={data[0].nickname}
+                  content={data[0].content}
+                  price={data[0].price}
+                  date={data[0].date}
+                  categoryId={data[0].categoryId}
+                />
+              </div>
             </>
           )}
         </S.Container>

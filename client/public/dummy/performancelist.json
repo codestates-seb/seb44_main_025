@@ -2,37 +2,37 @@
   {
     "title": "우리사랑이대로",
     "artistId": 1,
-    "content": "테스트",
+    "content": "pop",
     "date": "2023-07-05 00:00:00",
     "price": 10000,
     "place": "홍대",
-    "nickname": "김코딩",
+    "nickname": "규현&은지",
     "totalSeat": 100,
     "categoryId": 1,
     "imageUrl": "/우리사랑이대로.jpeg"   
   },
   {
-    "title": "우리사랑이대로",
+    "title": "사랑은 가슴이 시킨다",
     "artistId": 1,
     "content": "테스트",
     "date": "2023-07-05 00:00:00",
     "price": 10000,
     "place": "홍대",
-    "nickname": "김코딩",
+    "nickname": "이창섭",
     "totalSeat": 100,
-    "categoryId": 1,
+    "categoryId": 2,
     "imageUrl": "/단체사진.jpg"   
   },
   {
-    "title": "우리사랑이대로",
+    "title": "You Will Be Found",
     "artistId": 1,
     "content": "테스트",
     "date": "2023-07-05 00:00:00",
     "price": 10000,
     "place": "홍대",
-    "nickname": "김코딩",
+    "nickname": "Sam Smith",
     "totalSeat": 100,
-    "categoryId": 1,
-    "imageUrl": "/우리사랑이대로.jpeg"   
+    "categoryId": 3,
+    "imageUrl": "/여성사진.jpg"   
   }
 ]
