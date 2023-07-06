@@ -20,6 +20,7 @@ public class Reservation {
     private Long reservationId;
     private Long performanceId;
     private Long memberId;
+    private Long PaymentId;
     @Column(nullable = false)
     private String nickName;
     @Column(nullable = false)
@@ -33,6 +34,7 @@ public class Reservation {
 
     @OneToOne(mappedBy = "reservation")
     private Payment payment;
+
 
     @Getter
     public enum ReservationStatus {
