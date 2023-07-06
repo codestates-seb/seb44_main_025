@@ -44,17 +44,19 @@ const S = {
     height: 160px;
   `,
   Subtitle: styled.header`
-    font-size: var(--p-large-medium-font-size);
-    font-weight: var(--p-large-medium-font-weight);
-    line-height: var(--p-large-medium-line-height);
-    color: var(--font-light-white-color);
-    margin-bottom: 20px;
+    font-size: var(--heading5-font-size);
+    font-weight: var(--heading5-font-weight);
+    line-height: var(--heading5-line-height);
+    color: var(--font-white-color);
+    padding: 10px 15px 10px 15px;
   `,
   ArtistpreviewContainer: styled.div`
     width: 360px;
     height: 115px;
     display: flex;
     justify-content: space-evenly;
+    margin-bottom: 10px;
+    margin-left: 15px;
   `,
   ArtistpreviewWrapper: styled.div`
     width: 75px;

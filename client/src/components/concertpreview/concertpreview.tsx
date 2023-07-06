@@ -11,7 +11,7 @@ export default function Concertpreview() {
         <S.Concertcontent>Pop</S.Concertcontent>
         <S.Concertcontent>₩ 10,000</S.Concertcontent>
         <S.Concertcontent>2023.08.03</S.Concertcontent>
-        <ButtonWithArrowDark text={'공연예약'}></ButtonWithArrowDark>
+        <ButtonWithArrowDark text={'예약취소'}></ButtonWithArrowDark>
       </S.ConcertDetail>
     </S.ConcertpreviewWrapper>
   );
@@ -22,10 +22,12 @@ const S = {
     width: 360px;
     height: 180px;
     background-color: var(--font-mid-color);
-    border-radius: 15%;
+    border-radius: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
+    margin-left: 15px;
   `,
   ConcertImg: styled.img`
     width: 200px;
