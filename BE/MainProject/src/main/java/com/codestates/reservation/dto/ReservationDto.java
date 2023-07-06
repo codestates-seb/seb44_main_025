@@ -46,5 +46,3 @@ public class ReservationDto {
         private int seatCount = 1; // 한 사람당 한 좌석만 예약하도록 1로 고정해줌.
     }
 }
-
-}
