@@ -28,12 +28,11 @@ public interface PerformanceMapper {
     }
 
     default PerformanceDto.Response performanceToPerformanceResponseDto(Performance performance) {
-        System.out.println(performance.toString());
         return new PerformanceDto.Response(
                 performance.getPerformanceId(),
                 performance.getTitle(),
                 performance.getArtistId(),
-                performance.getContent().getBody(),
+                performance.getContent().getBody().toString(),
                 performance.getDate().toString(),
                 performance.getPrice(),
                 performance.getPlace(),

@@ -1,9 +1,10 @@
 package com.codestates.global.response;
 
-public class SingleResponseDto<T> {
-  private T data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-  public SingleResponseDto(T data) {
-    this.data = data;
-  }
+@Getter
+@AllArgsConstructor
+public class SingleResponseDto<T> {
+    private T data;
 }
