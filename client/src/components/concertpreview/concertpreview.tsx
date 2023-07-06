@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { ButtonWithArrowDark } from './Buttons/Buttons';
+import { ButtonWithArrowDark } from '../Buttons/Buttons';
 
 export default function Concertpreview() {
   return (
