@@ -19,9 +19,9 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public Category findVerifiedCategory(String category) {
+    public Category findVerifiedCategory(long category) {
         Optional<Category> optionalCategory =
-                categoryRepository.findByCategory(category);
+                categoryRepository.findByCategoryId(category);
         Category findcategory =
                 optionalCategory.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.CATEGORY_NOT_FOUND));

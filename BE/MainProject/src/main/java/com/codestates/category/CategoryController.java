@@ -3,6 +3,7 @@ package com.codestates.category;
 import com.codestates.category.dto.CategoryPostDto;
 import com.codestates.member.Member;
 import com.codestates.member.dto.MemberPostDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/category")
 @Validated
+@Slf4j
 public class CategoryController {
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;

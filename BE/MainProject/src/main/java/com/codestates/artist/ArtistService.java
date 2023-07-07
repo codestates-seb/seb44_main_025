@@ -48,6 +48,7 @@ public class ArtistService {
     }
     public List<Artist> findCategoryArtists(Category category){
         return artistRepository.findAllByCategory(category);}
+
     public Page<Artist> findArtists(Category category, int page, int size) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("artistId").descending());
@@ -76,6 +77,10 @@ public class ArtistService {
         Optional<Artist> artist = artistRepository.findByArtistName(artistName);
         if (artist.isPresent())
             throw new BusinessLogicException(ExceptionCode.ARTIST_EXISTS);
+    }
+    public Page<Artist> findPageArtist(Category category, int page, int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return artistRepository.findAllByCategoryOrderByArtistIdDesc(category, pageRequest);
     }
 
 }

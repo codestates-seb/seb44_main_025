@@ -13,11 +13,10 @@ import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class ArtistResponseDto {
     private long memberId;
-    private String Category;
+    private String category;
     private long artistId;
     private String artistName;
     private String imageUrl;

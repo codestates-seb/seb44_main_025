@@ -24,6 +24,6 @@ public class ArtistDto {
     @NotBlank
     private String content;
     private SnsLink snsLink;
-    private Category category;
+    private long categoryId;
 
 }
