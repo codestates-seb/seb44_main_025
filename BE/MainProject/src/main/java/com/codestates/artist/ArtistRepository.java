@@ -13,4 +13,6 @@ public interface ArtistRepository extends JpaRepository<Artist, Long> {
     List<Artist> findAllByCategory(Category category);
 
     Page<Artist> findAllByCategory(Category category, Pageable pageable);
+    Page<Artist> findAllByCategoryOrderByArtistIdDesc(Category Category, Pageable pageable);
+
 }

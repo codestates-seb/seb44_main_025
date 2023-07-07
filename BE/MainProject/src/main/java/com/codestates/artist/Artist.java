@@ -2,6 +2,7 @@ package com.codestates.artist;
 
 import com.codestates.category.Category;
 import com.codestates.member.Member;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,12 +19,12 @@ import java.time.LocalDateTime;
 public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "artist", nullable = false, updatable = false, unique = true)
+    @Column(name = "artist_id", nullable = false, updatable = false, unique = true)
     private long artistId;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
@@ -36,7 +37,7 @@ public class Artist {
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public void Category(long categoryId){this.category = category;}
+
 
     public Artist(String artistName, String imageUrl, String content, Category category,
                   Member member){

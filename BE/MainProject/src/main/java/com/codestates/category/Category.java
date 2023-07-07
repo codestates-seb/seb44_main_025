@@ -2,6 +2,7 @@ package com.codestates.category;
 
 import com.codestates.artist.Artist;
 import com.codestates.performance.Performance;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "CATEGORY")
 public class Category {
     @Id
@@ -22,6 +23,8 @@ public class Category {
     private long categoryId;
     @Column(name = "category", nullable = false, unique = true, updatable = false)
     private String category;
+
+    @JsonManagedReference
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Artist> artists;
 
