@@ -1,9 +1,13 @@
 :root {
+
+  /* color */
   --theme-background-color: #1e2630;
+  --body-background-color:#1e1e1e;
   --button-theme-background-color: #1e2630;
   --button-primary-background-color: #8250ca;
   --button-primary-border-color: #8250ca;
-  --nav-color: rgba(198, 193, 204, 0.2);
+  /* --nav-color: rgba(198, 193, 204, 0.2); */
+  --nav-color: #40454F;
   --button-white-background-color: #ffffff;
   --button-white-border-color: #ffffff;
   --button-highlight-background-color: #e52b67;
@@ -12,11 +16,16 @@
   --font-dark-color: #0f0f0f;
   --font-light-black-color: rgba(15, 15, 15, 0.3);
   --font-light-white-color: rgba(255, 255, 255, 0.7);
+  --header-border-color:rgba(255, 255, 255, 0.3);
   --font-mid-color: rgba(15, 15, 15, 0.6);
-  --font-mid-color: #f2f2f2;
+  --font-white-color: #f2f2f2;
   --input-border-color: #4dcfc0;
   --image-border-bottom-color: #9b40bf;
   --image-border-top-color: #f344f7;
+  --font-primary--color: #8250ca;
+
+
+  /* font-size */
   --heading1-font-size: 26px;
   --heading1-font-weight: Bold;
   --heading1-line-height: 32px;
@@ -53,6 +62,7 @@
 }
 
 body {
+  background-color: var(--body-background-color);
   font-family: 'Inter', Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
