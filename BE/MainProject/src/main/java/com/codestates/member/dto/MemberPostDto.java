@@ -1,9 +1,14 @@
 package com.codestates.member.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+@Getter
+@Setter
 public class MemberPostDto {
     @NotBlank
     @Pattern(regexp = "^([a-zA-Z0-9@.]{8,50})$")
