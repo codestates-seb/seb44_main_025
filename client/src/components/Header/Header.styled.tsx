@@ -1,8 +1,12 @@
 import { styled } from 'styled-components';
 const S = {
-  Body: styled.body`
+  Header: styled.header`
     display: flex;
     justify-content: center;
+
+    position: sticky;
+    top: 0px;
+    z-index: 3;
   `,
   Nav: styled.nav`
     width: 390px;
