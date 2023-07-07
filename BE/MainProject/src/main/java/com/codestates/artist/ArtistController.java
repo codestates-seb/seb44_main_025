@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -45,6 +44,7 @@ public class ArtistController {
         this.artistDtoToArtist = artistDtoToArtist;
     }
 
+    //아티스트 등록
     @PostMapping
     public ResponseEntity postArtist(@Valid @RequestBody ArtistDto artistDto){
 
@@ -54,7 +54,7 @@ public class ArtistController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
+    //아티스트 프로필 수정
     @PatchMapping("/{artistId}")
     public ResponseEntity patchArtist(@Valid @PathVariable("artistId") long artistId,
                                       @Valid @RequestBody ArtistDto artistDto){
@@ -67,12 +67,15 @@ public class ArtistController {
                 HttpStatus.OK);
     }
 
+    //아티스트id로 아티스트 프로필 조회
     @GetMapping("/{artistId}")
     public ResponseEntity getArtist(@PathVariable("artistId") long artistId){
         Artist response = artistService.findArtist(artistId);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    //카테고리별 아티스트 리스트 출력
     @GetMapping
     public ResponseEntity getArtists(@Positive @RequestParam long category,
                                            @Positive @RequestParam int page,
@@ -88,11 +91,10 @@ public class ArtistController {
                         .map(artist-> artistMapper.artistToArtistResponseDto(artist))
                         .collect(Collectors.toList());
 
-
-
         return new ResponseEntity<>(new ArtistPageResponseDto(response, pageInfo), HttpStatus.OK);
     }
 
+    //아티스트 삭제
     @DeleteMapping("/delete/{artistId}")
     public ResponseEntity deleteArtist(@PathVariable("artistId") long artistId){
         artistService.deleteArtist(artistId);
