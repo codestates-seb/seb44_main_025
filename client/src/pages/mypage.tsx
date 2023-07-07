@@ -108,10 +108,10 @@ const S = {
   `,
   UserImg: styled.img`
     position: relative;
-    width: 64px;
-    height: 64px;
-    margin-top: -40px;
-    margin-left: 20px;
+    width: 100px;
+    height: 100px;
+    margin-top: -60px;
+    margin-left: 15px;
     border: 3px solid transparent;
     display: flex;
     align-self: flex-start;
