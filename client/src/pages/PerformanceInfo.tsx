@@ -151,7 +151,7 @@ const PerformanceInfo = () => {
             <S.Poster></S.Poster>
             <S.Summary>
               <p>공연명</p>
-              <p>공연명</p>
+              <p>신나는 공연</p>
               <p>날짜</p>
               <p>2023년 8월 3일</p>
               <p>금액</p>
@@ -161,9 +161,7 @@ const PerformanceInfo = () => {
             </S.Summary>
           </S.SummaryContainer>
           <S.Heading3>공연설명</S.Heading3>
-          <S.TextContainer>
-            ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-          </S.TextContainer>
+          <S.TextContainer>공연 설명입니다.</S.TextContainer>
           <S.Heading3>공연장 위치</S.Heading3>
           <S.Map></S.Map>
           <S.Heading3>아티스트 정보</S.Heading3>
