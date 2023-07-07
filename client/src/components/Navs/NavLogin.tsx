@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const NavLogin = () => {
   return (
-    <S.Body>
+    <S.Div>
       <S.Nav>
         <Link to="/">
           <S.GroupDiv>
@@ -35,7 +35,7 @@ const NavLogin = () => {
           </S.GroupDiv>
         </Link>
       </S.Nav>
-    </S.Body>
+    </S.Div>
   );
 };
 
