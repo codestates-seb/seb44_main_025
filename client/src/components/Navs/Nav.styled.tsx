@@ -9,6 +9,11 @@ const S = {
     position: sticky;
     bottom: 0;
   `,
+  Container: styled.div`
+    width: 390px;
+    height: 50px;
+    background-color: var(--theme-background-color);
+  `,
   Nav: styled.nav`
     width: 390px;
     height: 50px;
