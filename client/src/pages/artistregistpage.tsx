@@ -129,7 +129,7 @@ const S = {
     line-height: var(--p-large-medium-line-height);
     color: var(--font-white-color);
     margin-bottom: 5px;
-    margin-left: 10px;
+    margin-left: 20px;
   `,
   ArtistIntrodution: styled.div`
     margin-top: 20px;
