@@ -1,0 +1,69 @@
+:root {
+
+  /* color */
+  --theme-background-color: #1e2630;
+  --body-background-color:#1e1e1e;
+  --button-theme-background-color: #1e2630;
+  --button-primary-background-color: #8250ca;
+  --button-primary-border-color: #8250ca;
+  /* --nav-color: rgba(198, 193, 204, 0.2); */
+  --nav-color: #40454F;
+  --button-white-background-color: #ffffff;
+  --button-white-border-color: #ffffff;
+  --button-highlight-background-color: #e52b67;
+  --button-highlight-border-color: #e52b67;
+  --font-highlight-color: #e52b67;
+  --font-dark-color: #0f0f0f;
+  --font-light-black-color: rgba(15, 15, 15, 0.3);
+  --font-light-white-color: rgba(255, 255, 255, 0.7);
+  --header-border-color:rgba(255, 255, 255, 0.3);
+  --font-mid-color: rgba(15, 15, 15, 0.6);
+  --font-white-color: #f2f2f2;
+  --input-border-color: #4dcfc0;
+  --image-border-bottom-color: #9b40bf;
+  --image-border-top-color: #f344f7;
+  --font-primary--color: #8250ca;
+
+
+  /* font-size */
+  --heading1-font-size: 26px;
+  --heading1-font-weight: Bold;
+  --heading1-line-height: 32px;
+  --heading3-font-size: 20px;
+  --heading3-font-weight: Bold;
+  --heading3-line-height: 24px;
+  --heading5-font-size: 18px;
+  --heading5-font-weight: Bold;
+  --heading5-line-height: 24px;
+  --heading6-font-size: 16px;
+  --heading6-font-weight: Bold;
+  --heading6-line-height: 24px;
+  --p-large-regular-font-size: 16px;
+  --p-large-regular-font-weight: Regular;
+  --p-large-regular-line-height: 24px;
+  --p-large-medium-font-size: 16px;
+  --p-large-medium-font-weight: Medium;
+  --p-large-medium-line-height: 24px;
+  --p-small-regular-font-size: 14px;
+  --p-small-regular-font-weight: Regular;
+  --p-small-regular-line-height: 20px;
+  --p-small-medium-font-size: 14px;
+  --p-small-medium-font-weight: Medium;
+  --p-small-medium-line-height: 20px;
+  --nav-font-size: 12px;
+  --nav-font-weight: Regular;
+  --nav-line-height: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--body-background-color);
+  font-family: 'Inter', Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

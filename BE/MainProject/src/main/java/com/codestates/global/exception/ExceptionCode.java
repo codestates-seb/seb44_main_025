@@ -3,15 +3,18 @@ package com.codestates.global.exception;
 import lombok.Getter;
 
 public enum ExceptionCode {
-    MEMBER_NOT_FOUND(404, "Member email not found"),
-    MEMBER_EXISTS(409, "Member email exists"),
+    MEMBER_NOT_FOUND(404, "해당 회원이 존재하지 않음"),
+    MEMBER_EXISTS(409, "이미 존재하는 이메일입니다"),
     PERFORMANCE_NOT_FOUND(404, "Performance not found"),
     PERFORMANCE_EXISTS(409, "Performance title exists"),
     CANNOT_CHANGE_PERFORMANCE(403, "Performance can not change"),
     CANNOT_CHANGE_MEMBER(403, "Member can not change"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     RESERVATION_NOT_FOUND(404, "Reservation not found"),
-    LIKE_NOT_FOUND(404, "Like not found");
+    LIKE_NOT_FOUND(404, "Like not found"),
+    ARTIST_NOT_FOUND(404, "아티스트가 존재하지 않음"),
+    ARTIST_EXISTS(409, "이미 존재하는 아티스트명 입니다"),
+    CATEGORY_NOT_FOUND(404, "존재하지 않는 카테고리명");
 
 
 
