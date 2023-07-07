@@ -43,11 +43,6 @@ public class MemberService {
     }
 
 
-    public List<Member> findMembers() {
-        return (List<Member>) memberRepository.findAll();
-    }
-
-    //회원 삭제
     public void deleteMember(long memberId) {
         Member findMember = findVerifiedMember(memberId);
 

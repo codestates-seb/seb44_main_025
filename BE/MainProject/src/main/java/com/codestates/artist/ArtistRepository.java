@@ -10,9 +10,6 @@ import java.util.Optional;
 
 public interface ArtistRepository extends JpaRepository<Artist, Long> {
     Optional<Artist> findByArtistName(String artistName);
-    List<Artist> findAllByCategory(Category category);
-
-    Page<Artist> findAllByCategory(Category category, Pageable pageable);
     Page<Artist> findAllByCategoryOrderByArtistIdDesc(Category Category, Pageable pageable);
 
 }

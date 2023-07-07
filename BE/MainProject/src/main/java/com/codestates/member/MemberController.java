@@ -51,8 +51,6 @@ public class MemberController {
                 HttpStatus.OK);
     }
 
-
-
     @GetMapping("/mypage/{memberId}")
     public ResponseEntity getMember(@PathVariable("memberId") long memberId){
         Member response = memberService.findMember(memberId);
