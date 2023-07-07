@@ -4,6 +4,11 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import axios from 'axios';
+
+/** @todo 도메인 주소 입력 */
+axios.defaults.baseURL = '';
+axios.defaults.withCredentials = true;
 
 const router = createBrowserRouter([
   {
