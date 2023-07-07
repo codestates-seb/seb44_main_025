@@ -7,7 +7,7 @@
   --button-primary-background-color: #8250ca;
   --button-primary-border-color: #8250ca;
   /* --nav-color: rgba(198, 193, 204, 0.2); */
-  --nav-color: #40454f;
+  --nav-color: #40454F;
   --button-white-background-color: #ffffff;
   --button-white-border-color: #ffffff;
   --button-highlight-background-color: #e52b67;
@@ -62,7 +62,7 @@
 }
 
 body {
-  background-color: #1e2630;
+  background-color: var(--body-background-color);
   font-family: 'Inter', Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -4,7 +4,7 @@ import S from './Header.styled';
 
 const HeaderLogoST = () => {
   return (
-    <S.Body>
+    <S.Header>
       <S.Nav>
         <span style={{ color: 'white' }}>로고들어갈자리</span>
         <S.Div>
@@ -16,7 +16,7 @@ const HeaderLogoST = () => {
           </S.TicketS>
         </S.Div>
       </S.Nav>
-    </S.Body>
+    </S.Header>
   );
 };
 
