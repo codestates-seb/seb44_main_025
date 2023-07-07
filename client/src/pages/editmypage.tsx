@@ -1,57 +1,64 @@
 import { styled } from 'styled-components';
 import HeaderOnlyP from '../components/Header/HeaderOnlyP';
-import { ButtonPrimary75px } from '../components/Buttons/Buttons';
-import { Input, InputWithButton } from '../components/Inputs/Inputs';
+import {
+  ButtonPrimary75px,
+  ButtonHighlightBorder,
+} from '../components/Buttons/Buttons';
+import {
+  Input,
+  InputWithButton,
+  InputSuccess,
+  InputWarning,
+} from '../components/Inputs/Inputs';
 import { useState } from 'react';
 
-export default function Artistregist() {
+export default function Editmypage() {
   const [Artist, SetArtist] = useState('');
-  const [Video, SetVideo] = useState('');
 
   return (
     <>
       <HeaderOnlyP />
       <S.Main>
         <S.Section>
-          <S.Title>아티스트 등록하기</S.Title>
+          <S.Title>개인정보 수정하기</S.Title>
           <S.ProfileImg src="우리사랑이대로.jpeg" />
           <S.UserImg src="우리사랑이대로.jpeg" />
-          <S.ArtistDetail>
-            <S.SubTitle>아티스트 정보</S.SubTitle>
+          <S.UserDetail>
+            <S.SubTitle>로그인 아이디</S.SubTitle>
             <S.ButtonWarppar>
-              <ButtonPrimary75px>등록</ButtonPrimary75px>
+              <ButtonPrimary75px>수정</ButtonPrimary75px>
             </S.ButtonWarppar>
             <S.InputContainer>
-              <S.InputLabel>아티스트</S.InputLabel>
+              <S.InputLabel>닉네임</S.InputLabel>
               <InputWithButton
                 value={Artist}
                 icon={true}
                 width={285}
-                height={30}
                 buttonText={'중복확인'}
               ></InputWithButton>
             </S.InputContainer>
             <S.InputContainer>
-              <S.InputLabel>SNS Link</S.InputLabel>
-              <Input height={30}></Input>
+              <S.InputLabel>비밀번호 변경</S.InputLabel>
+              <Input></Input>
             </S.InputContainer>
             <S.InputContainer>
-              <S.ArtistIntrodution>
-                <S.InputLabel>아티스트 소개</S.InputLabel>
-                <S.ArtistIntrodutionTextarea />
-              </S.ArtistIntrodution>
+              <S.InputLabel>비밀번호 변경 확인</S.InputLabel>
+              <Input></Input>
             </S.InputContainer>
             <S.InputContainer>
-              <S.InputLabel>동영상 첨부</S.InputLabel>
-              <InputWithButton
-                value={Video}
-                icon={true}
-                width={285}
-                height={30}
-                buttonText={'찾아보기'}
-              ></InputWithButton>
+              <S.InputLabel>비밀번호 변경 확인</S.InputLabel>
+              <InputSuccess message={'비밀번호가 일치합니다.'}></InputSuccess>
             </S.InputContainer>
-          </S.ArtistDetail>
+            <S.InputContainer>
+              <S.InputLabel>비밀번호 변경 확인</S.InputLabel>
+              <InputWarning
+                message={'비밀번호가 일치하지 않습니다.'}
+              ></InputWarning>
+            </S.InputContainer>
+            <S.HighlightButtonWarppar>
+              <ButtonHighlightBorder>회원탈퇴</ButtonHighlightBorder>
+            </S.HighlightButtonWarppar>
+          </S.UserDetail>
         </S.Section>
       </S.Main>
     </>
@@ -108,7 +115,7 @@ const S = {
     background-clip: content-box, border-box;
     z-index: 1;
   `,
-  ArtistDetail: styled.div`
+  UserDetail: styled.div`
     margin-top: 20px;
     margin-bottom: 20px;
   `,
@@ -131,13 +138,11 @@ const S = {
     margin-bottom: 5px;
     margin-left: 10px;
   `,
-  ArtistIntrodution: styled.div`
-    margin-top: 20px;
-  `,
-  ArtistIntrodutionTextarea: styled.textarea`
-    width: 360px;
-    height: 100px;
-    resize: none;
-    border-radius: 15px;
+  HighlightButtonWarppar: styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 15px;
+    margin-top: 40px;
+    margin-bottom: 20px;
   `,
 };
