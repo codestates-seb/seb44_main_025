@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
-import Artistpage from './pages/artistpage';
+import Artistregist from './pages/artistregistpage';
 
 function App() {
   return (
     <div className="App">
       <Outlet />
-      <Artistpage />
+      <Artistregist />
     </div>
   );
 }

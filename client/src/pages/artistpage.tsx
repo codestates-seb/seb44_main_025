@@ -1,9 +1,6 @@
 import { styled } from 'styled-components';
 import HeaderLogoST from '../components/Header/HeaderLogoST';
-import {
-  ButtonPrimary75px,
-  ButtonWithArrowDark,
-} from '../components/Buttons/Buttons';
+import { ButtonWithArrowDark } from '../components/Buttons/Buttons';
 import EditIcon from '../icons/EditIcon';
 import Concertpreview from '../components/concertpreview/concertpreview';
 import ArtistreviewContainer from '../components/artist/artistreviewcontainer';
@@ -105,10 +102,10 @@ const S = {
   `,
   UserImg: styled.img`
     position: relative;
-    width: 64px;
-    height: 64px;
-    margin-top: -40px;
-    margin-left: 20px;
+    width: 100px;
+    height: 100px;
+    margin-top: -60px;
+    margin-left: 15px;
     border: 3px solid transparent;
     display: flex;
     align-self: flex-start;
