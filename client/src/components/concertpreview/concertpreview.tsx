@@ -1,10 +1,11 @@
 import { styled } from 'styled-components';
 import { ButtonWithArrowDark } from '../Buttons/Buttons';
+import Img from '../.././images/우리사랑이대로.jpeg';
 
 export default function Concertpreview() {
   return (
     <S.ConcertpreviewWrapper>
-      <S.ConcertImg src="우리사랑이대로.jpeg" />
+      <S.ConcertImg src={Img} />
       <S.ConcertDetail>
         <S.ConcertTitle>우리 사랑 이대로</S.ConcertTitle>
         <S.Concertcontent>규현&은지</S.Concertcontent>

@@ -7,6 +7,8 @@ import ArtistreviewContainer from '../components/artist/artistreviewcontainer';
 import Review from '../components/review/review';
 import Footer from '../components/footer';
 import NavMypage from '../components/Navs/NavMypage';
+import Img from '.././images/우리사랑이대로.jpeg';
+import { Link } from 'react-router-dom';
 
 export default function Artistpage() {
   return (
@@ -15,13 +17,15 @@ export default function Artistpage() {
       <S.Main>
         <S.Section>
           <S.Title>아티스트페이지</S.Title>
-          <S.ProfileImg src="우리사랑이대로.jpeg" />
-          <S.UserImg src="우리사랑이대로.jpeg" />
+          <S.ProfileImg src={Img} />
+          <S.UserImg src={Img} />
           <S.ArtistDetail>
             <S.ArtistContent>아티스트</S.ArtistContent>
             <S.ArtistContent>SNS Link</S.ArtistContent>
             <S.UserEdit>
-              <EditIcon />
+              <Link to="/artistregistpage">
+                <EditIcon />
+              </Link>
             </S.UserEdit>
           </S.ArtistDetail>
           <S.ArtistIntrodution>
@@ -79,6 +83,7 @@ const S = {
   `,
   Section: styled.section`
     width: 390px;
+    min-height: calc(100vh - 100px);
     background-color: var(--theme-background-color);
   `,
   Title: styled.header`

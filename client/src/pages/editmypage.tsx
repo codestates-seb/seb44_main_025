@@ -11,6 +11,8 @@ import {
   InputWarning,
 } from '../components/Inputs/Inputs';
 import { useState } from 'react';
+import Img from '.././images/우리사랑이대로.jpeg';
+import { Link } from 'react-router-dom';
 
 export default function Editmypage() {
   const [Artist, SetArtist] = useState('');
@@ -21,8 +23,8 @@ export default function Editmypage() {
       <S.Main>
         <S.Section>
           <S.Title>개인정보 수정하기</S.Title>
-          <S.ProfileImg src="우리사랑이대로.jpeg" />
-          <S.UserImg src="우리사랑이대로.jpeg" />
+          <S.ProfileImg src={Img} />
+          <S.UserImg src={Img} />
           <S.UserDetail>
             <S.SubTitle>로그인 아이디</S.SubTitle>
             <S.ButtonWarppar>
@@ -56,7 +58,9 @@ export default function Editmypage() {
               ></InputWarning>
             </S.InputContainer>
             <S.HighlightButtonWarppar>
-              <ButtonHighlightBorder>회원탈퇴</ButtonHighlightBorder>
+              <Link to="cancelpage">
+                <ButtonHighlightBorder>회원탈퇴</ButtonHighlightBorder>
+              </Link>
             </S.HighlightButtonWarppar>
           </S.UserDetail>
         </S.Section>
@@ -73,6 +77,7 @@ const S = {
   `,
   Section: styled.section`
     width: 390px;
+    min-height: calc(100vh - 50px);
     background-color: var(--theme-background-color);
   `,
   Title: styled.header`
@@ -128,7 +133,7 @@ const S = {
   `,
   InputContainer: styled.div`
     margin-left: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   `,
   InputLabel: styled.div`
     font-size: var(--p-large-medium-font-size);

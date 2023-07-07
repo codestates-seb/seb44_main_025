@@ -1,9 +1,10 @@
 import { styled } from 'styled-components';
+import Img from '.././images/우리사랑이대로.jpeg';
 
 export default function Footer() {
   return (
     <S.FooterContainer>
-      <S.FooterLogo src="우리사랑이대로.jpeg"></S.FooterLogo>
+      <S.FooterLogo src={Img} />
       <S.FooterContentDiv>
         <S.FooterContent>허진우, 이도현, 최연동</S.FooterContent>
         <S.FooterContent>이현수, 선혜민, 조혜란</S.FooterContent>
