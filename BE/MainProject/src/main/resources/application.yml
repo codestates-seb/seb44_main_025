@@ -12,5 +12,18 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
-
-
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+cloud:
+  aws:
+    credentials:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
+    s3:
+      bucket: eztoplay-aws-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

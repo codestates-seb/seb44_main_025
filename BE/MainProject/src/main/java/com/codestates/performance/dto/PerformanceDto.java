@@ -16,6 +16,10 @@ public class PerformanceDto {
         private int totalSeat;
         private long categoryId;
         private String imageUrl;
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
     }
 
     @Getter
