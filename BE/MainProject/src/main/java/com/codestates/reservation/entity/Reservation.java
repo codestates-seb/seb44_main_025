@@ -1,5 +1,6 @@
 package com.codestates.reservation.entity;
 
+import com.codestates.payment.entity.Payment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,6 @@ public class Reservation {
 
     @OneToOne(mappedBy = "reservation")
     private Payment payment;
-
 
     @Getter
     public enum ReservationStatus {

@@ -1,6 +1,7 @@
 package com.codestates.reservation.service;
 
-import com.codestates.performance.Performance;
+import com.codestates.performance.entity.Performance;
+import com.codestates.performance.repository.PerformanceRepository;
 import com.codestates.reservation.dto.ReservationDto;
 import com.codestates.reservation.entity.Reservation;
 import com.codestates.reservation.mapper.ReservationMapper;
@@ -16,12 +17,12 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
 
-    //private final PerformanceRepository performanceRepository;
+    private final PerformanceRepository performanceRepository;
 
     public ReservationService(ReservationRepository reservationRepository, ReservationMapper reservationMapper, PerformanceRepository performanceRepository) {
         this.reservationRepository = reservationRepository;
         this.reservationMapper = reservationMapper;
-        //this.performanceRepository = performanceRepository;
+        this.performanceRepository = performanceRepository;
     }
 
     // 예약 생성
@@ -40,17 +41,17 @@ public class ReservationService {
 
         // 공연자 권한 확인 -> 해당 공연의 공연자만 공연에 대한 가격을 설정할 수 있다
         Long performerId = performance.getArtistId();
-        if (performerId.equals(userId)) {
-            int price = performance.getPrice();
-            reservation.setPrice(price);
-
-            // 남은 좌석 업데이트 (한 이용자는 한 좌석만 예약핧 수 있다 그렇기에 -1)
-            int remainingSeats = performance.getTotalseat() - 1; //현재 공연의 총 좌석 수 - 1
-            performance.setTotalseat(remainingSeats); // 한 사람당 한 좌석만 예약 가능하도록 남은 좌석 수를 업데이트
-            performanceRepository.save(performance); //업데이트된 좌석 수를 데이터베이스에 저장
-        } else {
-            throw new AccessDeniedException("가격을 설정할 수 있는 권한이 없습니다.");
-        }
+//        if (performerId.equals(userId)) {
+//            int price = performance.getPrice();
+//            reservation.setPrice(price);
+//
+//            // 남은 좌석 업데이트 (한 이용자는 한 좌석만 예약핧 수 있다 그렇기에 -1)
+//            int remainingSeats = performance.getTotalSeat() - 1; //현재 공연의 총 좌석 수 - 1
+//            performance.setTotalseat(remainingSeats); // 한 사람당 한 좌석만 예약 가능하도록 남은 좌석 수를 업데이트
+//            performanceRepository.save(performance); //업데이트된 좌석 수를 데이터베이스에 저장
+//        } else {
+//            throw new AccessDeniedException("가격을 설정할 수 있는 권한이 없습니다.");
+//        }
         // 예약 정보 저장
         Reservation savedReservation = reservationRepository.save(reservation);
 

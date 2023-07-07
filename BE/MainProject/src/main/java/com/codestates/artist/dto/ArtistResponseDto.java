@@ -2,7 +2,6 @@ package com.codestates.artist.dto;
 
 import com.codestates.category.Category;
 import com.codestates.member.Member;
-import com.codestates.performance.Performance;
 import com.codestates.snslink.SnsLink;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
