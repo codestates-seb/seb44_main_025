@@ -3,7 +3,6 @@ import { styled } from 'styled-components';
 export default function ArtistreviewContainer() {
   return (
     <S.ArtistpreviewMain>
-      <S.Subtitle>내가 관람한 공연</S.Subtitle>
       <S.ArtistpreviewContainer>
         <S.ArtistpreviewWrapper>
           <S.ArtistImg src="우리사랑이대로.jpeg" />
@@ -41,7 +40,8 @@ export default function ArtistreviewContainer() {
 const S = {
   ArtistpreviewMain: styled.div`
     width: 360px;
-    height: 160px;
+    height: 115px;
+    margin-bottom: 10px;
   `,
   Subtitle: styled.header`
     font-size: var(--heading5-font-size);
@@ -55,7 +55,6 @@ const S = {
     height: 115px;
     display: flex;
     justify-content: space-evenly;
-    margin-bottom: 10px;
     margin-left: 15px;
   `,
   ArtistpreviewWrapper: styled.div`
