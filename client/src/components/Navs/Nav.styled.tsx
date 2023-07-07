@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 const S = {
-  Body: styled.body`
+  Div: styled.div`
     display: flex;
     justify-content: center;
 

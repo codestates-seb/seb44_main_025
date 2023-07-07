@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const NavMypage = () => {
   return (
-    <S.Body>
+    <S.Div>
       <S.Nav>
         <Link to="/">
           <S.GroupDiv>
@@ -34,7 +34,7 @@ const NavMypage = () => {
           </S.GroupDiv>
         </Link>
       </S.Nav>
-    </S.Body>
+    </S.Div>
   );
 };
 
