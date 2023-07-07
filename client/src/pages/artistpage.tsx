@@ -30,7 +30,7 @@ export default function Artistpage() {
           <S.ArtistIntrodution>
             <S.SubTitle>소개</S.SubTitle>
             <S.ArtistIntrodutionContainer>
-              <S.ArtistContent>안녕하세요</S.ArtistContent>
+              <S.ArtistContent>안녕하세요~!</S.ArtistContent>
             </S.ArtistIntrodutionContainer>
           </S.ArtistIntrodution>
           <S.ConcertpreviewContainer>
