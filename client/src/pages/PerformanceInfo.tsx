@@ -136,8 +136,16 @@ const PerformanceInfo = () => {
             <ButtonMini>댄스</ButtonMini>
           </S.CategoryContainer>
           <S.ButtonContainer>
-            <ButtonPrimary160px>공연 후기 작성</ButtonPrimary160px>
-            <ButtonPrimary160px>공연 정보 수정하기</ButtonPrimary160px>
+            {/* TODO: 공연 일정 이후 && 공연 관람한 유저에게만 보여주기 */}
+            <ButtonPrimary160px onClick={() => navigate('/reviews/post')}>
+              공연 후기 작성
+            </ButtonPrimary160px>
+            {/* TODO: 공연 일정 이전 && 공연을 등록한 유저에게만 보여주기 */}
+            <ButtonPrimary160px
+              onClick={() => navigate('/performances/register')}
+            >
+              공연 정보 수정하기
+            </ButtonPrimary160px>
           </S.ButtonContainer>
           <S.SummaryContainer>
             <S.Poster></S.Poster>
