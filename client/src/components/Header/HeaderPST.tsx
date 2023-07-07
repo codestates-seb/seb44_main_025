@@ -7,7 +7,7 @@ import S from './Header.styled';
 const HeaderPST = () => {
   const navigate = useNavigate();
   return (
-    <S.Body>
+    <S.Header>
       <S.Nav>
         <S.PreviousS
           onClick={() => {
@@ -25,7 +25,7 @@ const HeaderPST = () => {
           </S.TicketS>
         </S.Div>
       </S.Nav>
-    </S.Body>
+    </S.Header>
   );
 };
 
