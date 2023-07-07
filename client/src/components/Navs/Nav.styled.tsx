@@ -1,13 +1,18 @@
 import { styled } from 'styled-components';
 
 const S = {
-  Body: styled.body`
+  Div: styled.div`
     display: flex;
     justify-content: center;
 
     height: 50px;
     position: sticky;
     bottom: 0;
+  `,
+  Container: styled.div`
+    width: 390px;
+    height: 50px;
+    background-color: var(--theme-background-color);
   `,
   Nav: styled.nav`
     width: 390px;

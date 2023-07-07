@@ -1,14 +1,18 @@
 import { styled } from 'styled-components';
 const S = {
-  Body: styled.body`
+  Header: styled.header`
     display: flex;
     justify-content: center;
+
+    position: sticky;
+    top: 0px;
+    z-index: 3;
   `,
   Nav: styled.nav`
     width: 390px;
     height: 50px;
     background-color: var(--theme-background-color);
-    border-bottom: 2px solid var(--button-white-border-color);
+    border-bottom: 3px solid var(--nav-color);
     padding: 0px 12px 0px 12px;
     display: flex;
     justify-content: space-between;
