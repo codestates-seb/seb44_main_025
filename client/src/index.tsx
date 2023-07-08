@@ -4,12 +4,18 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Notfoundpage from './pages/notfondpage';
+import Mypage from './pages/mypage';
+import Editmypage from './pages/editmypage';
+import Artistpage from './pages/artistpage';
+import Artistregist from './pages/artistregistpage';
+import Cancelpage from './pages/cancelpage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <div>Not Found</div>,
+    errorElement: <Notfoundpage />,
     children: [
       {
         path: '/performances',
@@ -33,7 +39,23 @@ const router = createBrowserRouter([
       },
       {
         path: '/mypage',
-        element: <div>마이 페이지</div>,
+        element: <Mypage />,
+      },
+      {
+        path: '/artistpage',
+        element: <Artistpage />,
+      },
+      {
+        path: '/mypage/editmypage',
+        element: <Editmypage />,
+      },
+      {
+        path: '/artistregistpage',
+        element: <Artistregist />,
+      },
+      {
+        path: '/mypage/editmypage/cancelpage',
+        element: <Cancelpage />,
       },
     ],
   },

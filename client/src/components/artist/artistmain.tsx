@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-
+import Img from '../.././images/우리사랑이대로.jpeg';
 export default function Artistmain() {
   return (
     <S.ArtistpreviewMain>
@@ -7,28 +7,28 @@ export default function Artistmain() {
       <S.veiwAll>전체보기</S.veiwAll>
       <S.ArtistpreviewContainer>
         <S.ArtistpreviewWrapper>
-          <S.ArtistImg src="우리사랑이대로.jpeg" />
+          <S.ArtistImg src={Img} />
           <S.ArtistDetail>
             <S.Artistcontent>아티스트명</S.Artistcontent>
             <S.Artistcontent>장르</S.Artistcontent>
           </S.ArtistDetail>
         </S.ArtistpreviewWrapper>
         <S.ArtistpreviewWrapper>
-          <S.ArtistImg src="우리사랑이대로.jpeg" />
+          <S.ArtistImg src={Img} />
           <S.ArtistDetail>
             <S.Artistcontent>아티스트명</S.Artistcontent>
             <S.Artistcontent>장르</S.Artistcontent>
           </S.ArtistDetail>
         </S.ArtistpreviewWrapper>
         <S.ArtistpreviewWrapper>
-          <S.ArtistImg src="우리사랑이대로.jpeg" />
+          <S.ArtistImg src={Img} />
           <S.ArtistDetail>
             <S.Artistcontent>아티스트명</S.Artistcontent>
             <S.Artistcontent>장르</S.Artistcontent>
           </S.ArtistDetail>
         </S.ArtistpreviewWrapper>
         <S.ArtistpreviewWrapper>
-          <S.ArtistImg src="우리사랑이대로.jpeg" />
+          <S.ArtistImg src={Img} />
           <S.ArtistDetail>
             <S.Artistcontent>아티스트명</S.Artistcontent>
             <S.Artistcontent>장르</S.Artistcontent>
