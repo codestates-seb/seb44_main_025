@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import { ReactComponent as CloseIcon } from '../../icons/icon_close.svg';
 import { ReactComponent as SearchIcon } from '../../icons/icon_search.svg';
 import { useState } from 'react';
+import { UseFormRegister, FieldValues } from 'react-hook-form';
 
 type DivPropTypes = {
   status?: 'success' | 'error';
@@ -134,6 +135,9 @@ type InputPropTypes = {
   icon?: boolean;
   value?: string;
   setValue?: React.Dispatch<React.SetStateAction<string>>;
+  placeholder?: string;
+  type?: 'text' | 'password' | 'date' | 'number' | 'url';
+  register?: UseFormRegister<FieldValues>;
 } & Theme &
   DivPropTypes &
   InputContainerPropTypes;
@@ -144,6 +148,9 @@ export const Input = (props: InputPropTypes) => {
       {props?.theme === 'dark' ? (
         <InputContainerDark height={props?.height} width={props?.width}>
           <input
+            {...props?.register}
+            type={props?.type}
+            placeholder={props?.placeholder}
             value={props?.value}
             onChange={e =>
               typeof props?.setValue === 'function' &&
@@ -164,7 +171,10 @@ export const Input = (props: InputPropTypes) => {
       ) : (
         <InputContainerLight height={props?.height} width={props?.width}>
           <input
+            {...props?.register}
+            type={props?.type}
             value={props?.value}
+            placeholder={props?.placeholder}
             onChange={e =>
               typeof props?.setValue === 'function' &&
               props?.setValue(e.target.value)
@@ -191,6 +201,8 @@ type InputWarningSuccessPropTypes = {
   message?: string;
   value?: string;
   setValue?: React.Dispatch<React.SetStateAction<string>>;
+  placeholder?: string;
+  register?: UseFormRegister<FieldValues>;
 } & DivPropTypes &
   InputContainerPropTypes;
 export const InputWarning = (props: InputWarningSuccessPropTypes) => {
@@ -199,6 +211,9 @@ export const InputWarning = (props: InputWarningSuccessPropTypes) => {
       {props?.label && <label>{props.label}</label>}
       <InputContainerWarning>
         <input
+          {...props?.register}
+          type="password"
+          placeholder={props?.placeholder}
           value={props?.value}
           onChange={e =>
             typeof props?.setValue === 'function' &&
@@ -216,6 +231,9 @@ export const InputSuccess = (props: InputWarningSuccessPropTypes) => {
       {props?.label && <label>{props.label}</label>}
       <InputContainerSuccess>
         <input
+          {...props?.register}
+          type="password"
+          placeholder={props?.placeholder}
           value={props?.value}
           onChange={e =>
             typeof props?.setValue === 'function' &&
@@ -233,6 +251,9 @@ type InputWithButtonPropTypes = {
   icon?: boolean;
   value?: string;
   setValue?: React.Dispatch<React.SetStateAction<string>>;
+  placeholder?: string;
+  type?: 'text' | 'password' | 'url';
+  register?: UseFormRegister<FieldValues>;
 } & Theme &
   DivPropTypes &
   InputFlexContainerPropTypes;
@@ -244,7 +265,10 @@ export const InputWithButton = (props: InputWithButtonPropTypes) => {
           <>
             <InputContainerDark height={props?.height}>
               <input
+                {...props?.register}
+                type={props?.type}
                 value={props?.value}
+                placeholder={props?.placeholder}
                 onChange={e =>
                   typeof props?.setValue === 'function' &&
                   props?.setValue(e.target.value)
@@ -268,7 +292,10 @@ export const InputWithButton = (props: InputWithButtonPropTypes) => {
           <>
             <InputContainerLight height={props?.height}>
               <input
+                {...props?.register}
+                type={props?.type}
                 value={props?.value}
+                placeholder={props?.placeholder}
                 onChange={e =>
                   typeof props?.setValue === 'function' &&
                   props?.setValue(e.target.value)
@@ -309,6 +336,7 @@ export const InputsPreview = () => {
     >
       <button onClick={() => setIcon(!icon)}>아이콘 true/false 전환</button>
       <Input
+        placeholder={'placeholder'}
         theme={'light'}
         height={30}
         width={75}
@@ -335,6 +363,8 @@ export const InputsPreview = () => {
         setValue={setValue}
       />
       <Input
+        type="date"
+        placeholder="placeholder"
         theme={'dark'}
         height={48}
         label={'Label'}
