@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface PerformanceMapper {
@@ -40,5 +42,21 @@ public interface PerformanceMapper {
                 performance.getCategoryId(),
                 performance.getImageUrl()
         );
+    }
+
+    default List<PerformanceDto.Response> performancesToPerformanceResponseDtos(List<Performance> findPerformance) {
+        return findPerformance.stream()
+                .map(e->new PerformanceDto.Response(
+                        e.getPerformanceId(),
+                        e.getTitle(),
+                        e.getArtistId(),
+                        e.getContent().getBody().toString(),
+                        e.getDate().toString(),
+                        e.getPrice(),
+                        e.getPlace(),
+                        e.getTotalSeat(),
+                        e.getCategoryId(),
+                        e.getImageUrl()
+                )).collect(Collectors.toList());
     }
 }

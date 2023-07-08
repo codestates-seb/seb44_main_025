@@ -1,4 +1,4 @@
-package com.codestates.global.response;
+package com.codestates.global.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
