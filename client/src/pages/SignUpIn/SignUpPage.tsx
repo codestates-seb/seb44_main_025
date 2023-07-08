@@ -148,7 +148,7 @@ const SignUpPage = () => {
                     {...register('email', {
                       required: true,
                       pattern: emailRegExp,
-                      onChange: e => setNoEmailDuplBtnClickedSubmit(true),
+                      onChange: () => setNoEmailDuplBtnClickedSubmit(true),
                     })}
                   />
                   <S.ButtonSpan
@@ -159,13 +159,15 @@ const SignUpPage = () => {
                     중복확인
                   </S.ButtonSpan>
                 </div>
-                <div>{errors.email && <p>이메일 형식으로 입력해라</p>}</div>
+                <div>
+                  {errors.email && <p>이메일 형식에 맞게 입력해주세요</p>}
+                </div>
                 {noEmailDuplBtnClickedSubmit ? (
                   submitClicked === true ? (
                     <p>중복확인을 해주세요</p>
                   ) : null
                 ) : emailDuplication ? (
-                  <p>같은 이메일 이미 있음</p>
+                  <p>같은 이메일이 이미 존재합니다</p>
                 ) : emailDuplBtnCnt > 0 ? (
                   <p style={{ color: 'var(--input-border-color)' }}>
                     {' '}
@@ -182,7 +184,9 @@ const SignUpPage = () => {
                     pattern: passwordRegExp,
                   })}
                 />
-                {errors.password && <p>비밀번호 형식으로 입력해라</p>}
+                {errors.password && (
+                  <p>비밀번호는 8~16자의 영문, 숫자로 이루어져야 합니다</p>
+                )}
               </div>
               <div>
                 <label htmlFor="password_fonfirm">비밀번호 확인</label>
@@ -193,7 +197,7 @@ const SignUpPage = () => {
                     validate: value => value === input_password.current,
                   })}
                 />
-                {errors.password_confirm && <p>똑같은 비밀번호 입력해라</p>}
+                {errors.password_confirm && <p>비밀번호가 다릅니다</p>}
               </div>
               <div>
                 <label htmlFor="nickname">닉네임</label>
@@ -203,7 +207,7 @@ const SignUpPage = () => {
                     {...register('nickname', {
                       required: true,
                       pattern: nicknameRegExp,
-                      onChange: e => setNoNicknameDuplBtnClickedSubmit(true),
+                      onChange: () => setNoNicknameDuplBtnClickedSubmit(true),
                     })}
                   />
                   <S.ButtonSpan
@@ -214,13 +218,15 @@ const SignUpPage = () => {
                     중복확인
                   </S.ButtonSpan>
                 </div>
-                {errors.nickname && <p>닉네임 규칙에 맞게 입력해라</p>}
+                {errors.nickname && (
+                  <p>닉네임은 한글 또는 영문으로 이루어져야 합니다</p>
+                )}
                 {noNicknameDuplBtnClickedSubmit ? (
                   submitClicked === true ? (
                     <p>중복확인을 해주세요</p>
                   ) : null
                 ) : nicknameDuplication ? (
-                  <p>같은 닉네임 이미 있음</p>
+                  <p>같은 닉네임이 이미 존재합니다</p>
                 ) : nicknameDuplBtnCnt > 0 ? (
                   <p style={{ color: 'var(--input-border-color)' }}>
                     사용 가능한 닉네임입니다
