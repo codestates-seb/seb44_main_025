@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.File;
+import java.io.IOException;
 
 @Slf4j
 @RequestMapping("/performance")
@@ -30,7 +31,7 @@ public class PerformanceController {
     /* 공연 생성 */
     @PostMapping(value = "/register", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity postPerformance(@RequestPart PerformanceDto.Post performanceDto,
-                                          @RequestPart("image_file") MultipartFile imageFile) {
+                                          @RequestPart("image_file") MultipartFile imageFile) throws IOException {
         String imageUrl = imageUploadService.imageUpload(imageFile);
         performanceDto.setImageUrl(imageUrl);
 
