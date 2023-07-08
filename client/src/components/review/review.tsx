@@ -1,9 +1,10 @@
 import { styled } from 'styled-components';
+import Img from '../.././images/우리사랑이대로.jpeg';
 
 export default function Review() {
   return (
     <S.ReviewWrapper>
-      <S.UserImg src="우리사랑이대로.jpeg" />
+      <S.UserImg src={Img} />
       <S.ReviewDetail>
         <S.UserNickname>닉네임</S.UserNickname>
         <S.Reviewcontent>content</S.Reviewcontent>

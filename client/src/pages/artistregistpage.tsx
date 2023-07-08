@@ -3,6 +3,7 @@ import HeaderOnlyP from '../components/Header/HeaderOnlyP';
 import { ButtonPrimary75px } from '../components/Buttons/Buttons';
 import { Input, InputWithButton } from '../components/Inputs/Inputs';
 import { useState } from 'react';
+import Img from '.././images/우리사랑이대로.jpeg';
 
 export default function Artistregist() {
   const [Artist, SetArtist] = useState('');
@@ -14,8 +15,8 @@ export default function Artistregist() {
       <S.Main>
         <S.Section>
           <S.Title>아티스트 등록하기</S.Title>
-          <S.ProfileImg src="우리사랑이대로.jpeg" />
-          <S.UserImg src="우리사랑이대로.jpeg" />
+          <S.ProfileImg src={Img} />
+          <S.UserImg src={Img} />
           <S.ArtistDetail>
             <S.SubTitle>아티스트 정보</S.SubTitle>
             <S.ButtonWarppar>
@@ -66,6 +67,7 @@ const S = {
   `,
   Section: styled.section`
     width: 390px;
+    min-height: calc(100vh - 50px);
     background-color: var(--theme-background-color);
   `,
   Title: styled.header`
@@ -121,7 +123,7 @@ const S = {
   `,
   InputContainer: styled.div`
     margin-left: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   `,
   InputLabel: styled.div`
     font-size: var(--p-large-medium-font-size);

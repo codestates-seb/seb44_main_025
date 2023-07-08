@@ -1,9 +1,10 @@
 import { styled } from 'styled-components';
+import Img from '../.././images/우리사랑이대로.jpeg';
 
 export default function Artist() {
   return (
     <S.ArtistpreviewWrapper>
-      <S.ArtistImg src="우리사랑이대로.jpeg" />
+      <S.ArtistImg src={Img} />
       <S.ArtistDetail>
         <S.Artistcontent>아티스트명</S.Artistcontent>
       </S.ArtistDetail>

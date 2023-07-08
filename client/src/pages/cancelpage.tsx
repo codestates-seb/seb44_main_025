@@ -44,6 +44,7 @@ const S = {
   `,
   Section: styled.section`
     width: 390px;
+    height: calc(100vh - 50px);
     background-color: var(--theme-background-color);
   `,
   Title: styled.header`

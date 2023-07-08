@@ -10,6 +10,8 @@ import ArtistreviewContainer from '../components/artist/artistreviewcontainer';
 import Review from '../components/review/review';
 import Footer from '../components/footer';
 import NavMypage from '../components/Navs/NavMypage';
+import { Link } from 'react-router-dom';
+import Img from '.././images/우리사랑이대로.jpeg';
 
 export default function Mypage() {
   return (
@@ -21,12 +23,14 @@ export default function Mypage() {
           <S.ButtonWarppar>
             <ButtonPrimary75px>로그아웃</ButtonPrimary75px>
           </S.ButtonWarppar>
-          <S.ProfileImg src="우리사랑이대로.jpeg" />
-          <S.UserImg src="우리사랑이대로.jpeg" />
+          <S.ProfileImg src={Img} />
+          <S.UserImg src={Img} />
           <S.UserDetail>
             <S.UserNickname>닉네임</S.UserNickname>
             <S.UserEdit>
-              <EditIcon />
+              <Link to="editmypage">
+                <EditIcon />
+              </Link>
             </S.UserEdit>
           </S.UserDetail>
           {/* 아티스트 미등록 사용자는 아티스트 등록 버튼 */}
@@ -85,6 +89,7 @@ const S = {
   `,
   Section: styled.section`
     width: 390px;
+    min-height: calc(100vh - 100px);
     background-color: var(--theme-background-color);
   `,
   Title: styled.header`
