@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import Img from '../.././images/우리사랑이대로.jpeg';
 
 export default function Artistmain() {
   return (
@@ -6,25 +7,25 @@ export default function Artistmain() {
       <S.Subtitle>이번에 함께할 아티스트예요!</S.Subtitle>
       <S.ArtistpreviewContainer>
         <S.ArtistpreviewWrapper>
-          <S.ArtistImg src="우리사랑이대로.jpeg" />
+          <S.ArtistImg src={Img} />
           <S.ArtistDetail>
             <S.Artistcontent>아티스트명</S.Artistcontent>
           </S.ArtistDetail>
         </S.ArtistpreviewWrapper>
         <S.ArtistpreviewWrapper>
-          <S.ArtistImg src="우리사랑이대로.jpeg" />
+          <S.ArtistImg src={Img} />
           <S.ArtistDetail>
             <S.Artistcontent>아티스트명</S.Artistcontent>
           </S.ArtistDetail>
         </S.ArtistpreviewWrapper>
         <S.ArtistpreviewWrapper>
-          <S.ArtistImg src="우리사랑이대로.jpeg" />
+          <S.ArtistImg src={Img} />
           <S.ArtistDetail>
             <S.Artistcontent>아티스트명</S.Artistcontent>
           </S.ArtistDetail>
         </S.ArtistpreviewWrapper>
         <S.ArtistpreviewWrapper>
-          <S.ArtistImg src="우리사랑이대로.jpeg" />
+          <S.ArtistImg src={Img} />
           <S.ArtistDetail>
             <S.Artistcontent>아티스트명</S.Artistcontent>
           </S.ArtistDetail>
