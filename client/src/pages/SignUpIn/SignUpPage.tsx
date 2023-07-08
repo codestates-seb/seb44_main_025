@@ -176,7 +176,6 @@ const SignUpPage = () => {
               <div>
                 <label htmlFor="password">비밀번호</label>
                 <S.Input
-                  value={'1234qwer'}
                   type="password"
                   {...register('password', {
                     required: true,
@@ -188,7 +187,6 @@ const SignUpPage = () => {
               <div>
                 <label htmlFor="password_fonfirm">비밀번호 확인</label>
                 <S.Input
-                  value={'1234qwer'}
                   type="password"
                   {...register('password_confirm', {
                     required: true,
