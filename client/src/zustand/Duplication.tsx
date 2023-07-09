@@ -46,10 +46,10 @@ export const IsSubmitClicked = create<stores.Store7>(set => ({
   setSubmitClicked: state => set({ submitClicked: state }),
 }));
 
-/** 중복여부
- * @true :중복되지 않음
- * @false :중복됨
- */
+// /** 중복여부
+//  * @true :중복되지 않음
+//  * @false :중복됨
+//  */
 // export let [emailDuplication, setEmailDuplication] = useState(false);
 // export let [nicknameDuplication, setNicknameDuplication] = useState(false);
 

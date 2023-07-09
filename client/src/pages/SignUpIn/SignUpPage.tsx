@@ -18,7 +18,7 @@ import {
   noEmailDuplSubmit,
   noNicknameDuplSubmit,
   IsSubmitClicked,
-} from '../../constants/Duplication';
+} from '../../zustand/Duplication';
 import { useNavigate } from 'react-router-dom';
 
 interface IForm {
@@ -81,9 +81,6 @@ const SignUpPage = () => {
   };
   /** 회원정보를 서버로 전송하는 ajax 함수 */
   const ajaxPostSignUp = (data: IForm) => {
-    // console.log(data);
-    // alert('회원가입 성공');
-    // navigate('/login');
     axios
       .post('/signup', data, {
         headers: { 'Content-Type': 'application/json' },

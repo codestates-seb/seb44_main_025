@@ -6,6 +6,7 @@ import PageMovement from '../../components/Sign/PageMovement';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
+import { setCookie } from '../../utils/Cookie';
 
 interface IForm {
   email: string;
@@ -28,10 +29,18 @@ const SignInPage = () => {
       .then(response => {
         const { accessToken } = response.data;
         if (response.status === 200) {
-          // token이 필요한 API 요청 시 header Authorization에 token 담아서 보내기
+          // token이 필요한 API 요청 시 header Authorization에 token 담아 전송
           axios.defaults.headers.common[
             'Authorization'
           ] = `Bearer ${accessToken}`;
+          // cookie에 토큰 저장
+          setCookie('token', `JWT ${response.data.token}`, {
+            path: '/',
+            sameSite: 'strict',
+            secure: true,
+            httpOnly: true,
+          });
+          // 메인페이지로 이동
           navigate('/');
         }
       })
@@ -42,8 +51,6 @@ const SignInPage = () => {
 
   /** 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는 함수 */
   const onSubmit: SubmitHandler<IForm> = data => {
-    console.log(data);
-
     ajaxPostSignIn(data);
   };
 
@@ -59,7 +66,7 @@ const SignInPage = () => {
                 <label htmlFor="email">이메일</label>
                 <div>
                   <S.Input
-                    width={285}
+                    width={360}
                     {...register('email', {
                       required: true,
                       pattern: emailRegExp,
@@ -78,6 +85,7 @@ const SignInPage = () => {
                     required: true,
                   })}
                 />
+                <div>{errors.password && <p>반드시 입력해야 합니다</p>}</div>
               </div>
             </div>
             <ButtonPrimary160px>로그인하기</ButtonPrimary160px>

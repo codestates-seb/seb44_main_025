@@ -1,28 +1,15 @@
 import { Cookies } from 'react-cookie';
 
-interface Set {
-  name: any;
-  value: any;
-  option: any;
-}
-interface Get {
-  name: any;
-}
-interface Remove {
-  name: any;
-  option: any;
-}
-
 const cookies = new Cookies();
 
-export const setCookie = ({ name, value, option }: Set) => {
+export const setCookie = (name: any, value: any, option: any) => {
   return cookies.set(name, value, { ...option });
 };
 
-export const getCookie = ({ name }: Get) => {
+export const getCookie = (name: any) => {
   return cookies.get(name);
 };
 
-export const removeCookie = ({ name, option }: Remove) => {
+export const removeCookie = (name: any, option: any) => {
   return cookies.remove(name, { ...option });
 };
