@@ -1,9 +1,24 @@
 import S from './Sign.styled';
 import HeaderOnlyP from '../../components/Header/HeaderOnlyP';
 import { ButtonPrimary160px } from '../../components/Buttons/Buttons';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import PageMovement from '../../components/Sign/PageMovement';
+import {
+  emailRegExp,
+  passwordRegExp,
+  nicknameRegExp,
+} from '../../utils/RegExp';
+import {
+  emailDuplication,
+  nicknameDuplication,
+  emailDuplBtnCounter,
+  nicknameDuplBtnCounter,
+  noEmailDuplSubmit,
+  noNicknameDuplSubmit,
+  IsSubmitClicked,
+} from '../../constants/Duplication';
 
 interface IForm {
   email: string;
@@ -13,25 +28,16 @@ interface IForm {
 }
 
 const SignUpPage = () => {
-  /** 중복여부
-   * @true :중복되지 않음
-   * @false :중복됨
-   */
-  let [emailDuplication, setEmailDuplication] = useState(false);
-  let [nicknameDuplication, setNicknameDuplication] = useState(false);
-  /** 중복확인버튼 클릭 여부 */
-  let [emailDuplBtnCnt, setEmailDuplBtnCnt] = useState(0);
-  let [nicknameDuplBtnCnt, setNicknameDuplBtnCnt] = useState(0);
-  /** 중복확인 클릭하지 않고 submit 했을 때
-   * @ture :중복확인 X
-   * @false :중복확인 O
-   */
-  let [noEmailDuplBtnClickedSubmit, setNoEmailDuplBtnClickedSubmit] =
-    useState(true);
-  let [noNicknameDuplBtnClickedSubmit, setNoNicknameDuplBtnClickedSubmit] =
-    useState(true);
-  let [submitClicked, setSubmitClicked] = useState(false);
-  useState(true);
+  const { emailDupl, setEmailDupl } = emailDuplication();
+  const { nicknameDupl, setNicknameDupl } = nicknameDuplication();
+  const { emailDuplBtnCnt, setEmailDuplBtnCnt } = emailDuplBtnCounter();
+  const { nicknameDuplBtnCnt, setNicknameDuplBtnCnt } =
+    nicknameDuplBtnCounter();
+  const { noEmailDuplBtnClickedSubmit, setNoEmailDuplBtnClickedSubmit } =
+    noEmailDuplSubmit();
+  const { noNicknameDuplBtnClickedSubmit, setNoNicknameDuplBtnClickedSubmit } =
+    noNicknameDuplSubmit();
+  const { submitClicked, setSubmitClicked } = IsSubmitClicked();
 
   const {
     register,
@@ -50,30 +56,20 @@ const SignUpPage = () => {
   const input_nickname = useRef<string | null>(null);
   input_nickname.current = watch('nickname');
 
-  /** 유효성 검사 정규식
-   * @email :@.필수, TDL 2또는 3글자
-   * @Password :8~16자 영문, 숫자 조합
-   * @nickname :한글 또는 영문 가능
-   */
-  const emailRegExp =
-    /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
-  const passwordRegExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
-  const nicknameRegExp = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]*$/;
-
   /** 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는 함수 */
   const onSubmit: SubmitHandler<IForm> = data => {
     setSubmitClicked(true);
     if (!noEmailDuplBtnClickedSubmit && !noNicknameDuplBtnClickedSubmit) {
-      if (!emailDuplication && !nicknameDuplication) {
-        함수(data);
+      if (!emailDupl && !nicknameDupl) {
+        ajaxPost(data);
         console.log(noNicknameDuplBtnClickedSubmit);
       } else {
-        if (emailDuplication) {
+        if (emailDupl) {
           if (emailDuplBtnCnt > 0) {
             setNoEmailDuplBtnClickedSubmit(true);
           }
         }
-        if (nicknameDuplication) {
+        if (nicknameDupl) {
           if (nicknameDuplBtnCnt > 0) {
             setNoNicknameDuplBtnClickedSubmit(true);
           }
@@ -82,10 +78,8 @@ const SignUpPage = () => {
     }
   };
   /** 회원정보를 서버로 전송하는 ajax 함수 */
-  const 함수 = (data: IForm) => {
+  const ajaxPost = (data: IForm) => {
     console.log(data);
-    console.log(emailDuplBtnCnt);
-    console.log(nicknameDuplBtnCnt);
     axios
       .post('/signup', data)
       .then(response => {
@@ -98,35 +92,36 @@ const SignUpPage = () => {
         alert(`error: ${error}`);
       });
   };
+
   /** 중복 확인하는 함수
    * @todo 중복확인 로직 구현
    */
-  const duplicateCheck = (
+  const DuplicateCheck = (
     email: string | null,
     nickname: string | null
   ): void => {
     if (typeof email === 'string' && nickname === '') {
       if (email === 'hello@naver.com') {
-        setEmailDuplication(false);
-        setEmailDuplBtnCnt(emailDuplBtnCnt + 1);
+        setEmailDupl(false);
+        setEmailDuplBtnCnt();
         setNoEmailDuplBtnClickedSubmit(false);
       } else {
-        setEmailDuplication(true);
-        setEmailDuplBtnCnt(emailDuplBtnCnt + 1);
+        setEmailDupl(true);
+        setEmailDuplBtnCnt();
         setNoEmailDuplBtnClickedSubmit(false);
       }
     }
     if (email === '' && typeof nickname === 'string') {
       // 중복검사를 통과한 경우
       if (nickname === 'hello') {
-        setNicknameDuplication(false);
-        setNicknameDuplBtnCnt(nicknameDuplBtnCnt + 1);
+        setNicknameDupl(false);
+        setNicknameDuplBtnCnt();
         setNoNicknameDuplBtnClickedSubmit(false);
       }
       // 통과하지 못 한 경우
       else {
-        setNicknameDuplication(true);
-        setNicknameDuplBtnCnt(nicknameDuplBtnCnt + 1);
+        setNicknameDupl(true);
+        setNicknameDuplBtnCnt();
         setNoNicknameDuplBtnClickedSubmit(false);
       }
     }
@@ -153,7 +148,7 @@ const SignUpPage = () => {
                   />
                   <S.ButtonSpan
                     onClick={() => {
-                      duplicateCheck(input_email.current, '');
+                      DuplicateCheck(input_email.current, '');
                     }}
                   >
                     중복확인
@@ -166,7 +161,7 @@ const SignUpPage = () => {
                   submitClicked === true ? (
                     <p>중복확인을 해주세요</p>
                   ) : null
-                ) : emailDuplication ? (
+                ) : emailDupl ? (
                   <p>같은 이메일이 이미 존재합니다</p>
                 ) : emailDuplBtnCnt > 0 ? (
                   <p style={{ color: 'var(--input-border-color)' }}>
@@ -212,7 +207,7 @@ const SignUpPage = () => {
                   />
                   <S.ButtonSpan
                     onClick={() => {
-                      duplicateCheck('', input_nickname.current);
+                      DuplicateCheck('', input_nickname.current);
                     }}
                   >
                     중복확인
@@ -225,7 +220,7 @@ const SignUpPage = () => {
                   submitClicked === true ? (
                     <p>중복확인을 해주세요</p>
                   ) : null
-                ) : nicknameDuplication ? (
+                ) : nicknameDupl ? (
                   <p>같은 닉네임이 이미 존재합니다</p>
                 ) : nicknameDuplBtnCnt > 0 ? (
                   <p style={{ color: 'var(--input-border-color)' }}>
@@ -236,10 +231,11 @@ const SignUpPage = () => {
             </div>
             <ButtonPrimary160px>회원가입하기</ButtonPrimary160px>
           </S.Form>
-          <div>
-            <S.Span>이미 계정이 있으신가요?</S.Span>
-            <S.ButtonSpan>로그인</S.ButtonSpan>
-          </div>
+          <PageMovement
+            infoText="이미 계정이 있으신가요?"
+            pagelink="/login"
+            linkedText="로그인"
+          />
         </S.Container>
       </S.Main>
     </>

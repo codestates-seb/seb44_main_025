@@ -94,8 +94,5 @@ const S = {
     cursor: pointer;
     color: var(--font-primary--color);
   `,
-  Span: styled.span`
-    color: var(--font-white-color);
-  `,
 };
 export default S;
