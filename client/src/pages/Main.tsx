@@ -61,7 +61,8 @@ const S = {
     min-height: calc(100vh - 50px);
     display: flex;
     flex-flow: column;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 15px;
     align-items: center;
     width: 390px;
     background-color: var(--theme-background-color);
