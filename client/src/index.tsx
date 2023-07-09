@@ -12,6 +12,7 @@ import Artistpage from './pages/artistpage';
 import Artistregist from './pages/artistregistpage';
 import Cancelpage from './pages/cancelpage';
 import SignUpPage from './pages/SignUpIn/SignUpPage';
+import SignInPage from './pages/SignUpIn/SignInPage';
 
 /** @todo 도메인 주소 입력 */
 axios.defaults.baseURL = '';
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <div>로그인</div>,
+        element: <SignInPage />,
       },
       {
         path: '/signup',
