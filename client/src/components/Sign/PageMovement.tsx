@@ -5,14 +5,19 @@ interface OwnProps {
   infoText: string;
   pagelink: string;
   linkedText: string;
+  mt?: number;
+}
+interface PageMovementProps {
+  mt?: number;
 }
 
 const S = {
-  Div: styled.div`
+  Div: styled.div<PageMovementProps>`
     width: 100%;
     display: flex;
     justify-content: center;
     gap: 15px;
+    margin-top: ${props => props.mt}px;
   `,
   Span: styled.span`
     color: var(--font-white-color);
@@ -23,9 +28,9 @@ const S = {
   `,
 };
 
-const PageMovement = ({ infoText, pagelink, linkedText }: OwnProps) => {
+const PageMovement = ({ infoText, pagelink, linkedText, mt }: OwnProps) => {
   return (
-    <S.Div>
+    <S.Div mt={mt}>
       <S.Span>{infoText}</S.Span>
       <Link to={pagelink} style={{ textDecorationLine: 'none' }}>
         <S.ButtonSpan>{linkedText}</S.ButtonSpan>

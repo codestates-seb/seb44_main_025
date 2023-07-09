@@ -52,7 +52,7 @@ const SignInPage = () => {
       <HeaderOnlyP />
       <S.Main>
         <S.Container>
-          <S.H1>Ez to 회원가입</S.H1>
+          <S.H1 mb={145}>Ez to 회원가입</S.H1>
           <S.Form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <div>
@@ -86,6 +86,7 @@ const SignInPage = () => {
             infoText="아직 계정이 없으신가요?"
             pagelink="/signup'"
             linkedText="회원가입"
+            mt={160}
           />
         </S.Container>
       </S.Main>

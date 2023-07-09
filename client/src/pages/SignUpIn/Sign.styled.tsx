@@ -2,12 +2,14 @@ import { styled } from 'styled-components';
 
 interface SignProps {
   width?: 360 | 285;
+  mb?: number;
 }
 const S = {
-  H1: styled.h1`
+  H1: styled.h1<SignProps>`
     color: var(--font-white-color);
     font-size: var(--heading1-font-size);
     font-weight: var(--heading1-font-weight);
+    margin-bottom: ${props => props.mb}px;
   `,
   Main: styled.main`
     display: flex;
@@ -17,7 +19,7 @@ const S = {
     min-height: calc(100vh - 50px);
     display: flex;
     flex-flow: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     width: 390px;
     background-color: var(--theme-background-color);
