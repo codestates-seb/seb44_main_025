@@ -5,6 +5,7 @@ import axios from 'axios';
 import PageMovement from '../../components/Sign/PageMovement';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../utils/RegExp';
+import { useNavigate } from 'react-router-dom';
 
 interface IForm {
   email: string;
@@ -14,20 +15,25 @@ interface IForm {
 }
 
 const SignInPage = () => {
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<IForm>();
 
-  const signIn = (data: IForm) => {
+  const ajaxPostSignIn = (data: IForm) => {
     axios
       .post('/login', data)
       .then(response => {
         const { accessToken } = response.data;
-        axios.defaults.headers.common[
-          'Authorization'
-        ] = `Bearer ${accessToken}`;
+        if (response.status === 200) {
+          // token이 필요한 API 요청 시 header Authorization에 token 담아서 보내기
+          axios.defaults.headers.common[
+            'Authorization'
+          ] = `Bearer ${accessToken}`;
+          navigate('/');
+        }
       })
       .catch(error => {
         alert(`error: ${error}`);
@@ -38,7 +44,7 @@ const SignInPage = () => {
   const onSubmit: SubmitHandler<IForm> = data => {
     console.log(data);
 
-    signIn(data);
+    ajaxPostSignIn(data);
   };
 
   return (

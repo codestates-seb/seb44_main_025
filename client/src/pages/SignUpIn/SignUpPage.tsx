@@ -19,6 +19,7 @@ import {
   noNicknameDuplSubmit,
   IsSubmitClicked,
 } from '../../constants/Duplication';
+import { useNavigate } from 'react-router-dom';
 
 interface IForm {
   email: string;
@@ -38,6 +39,7 @@ const SignUpPage = () => {
   const { noNicknameDuplBtnClickedSubmit, setNoNicknameDuplBtnClickedSubmit } =
     noNicknameDuplSubmit();
   const { submitClicked, setSubmitClicked } = IsSubmitClicked();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -61,7 +63,7 @@ const SignUpPage = () => {
     setSubmitClicked(true);
     if (!noEmailDuplBtnClickedSubmit && !noNicknameDuplBtnClickedSubmit) {
       if (!emailDupl && !nicknameDupl) {
-        ajaxPost(data);
+        ajaxPostSignUp(data);
         console.log(noNicknameDuplBtnClickedSubmit);
       } else {
         if (emailDupl) {
@@ -78,15 +80,19 @@ const SignUpPage = () => {
     }
   };
   /** 회원정보를 서버로 전송하는 ajax 함수 */
-  const ajaxPost = (data: IForm) => {
-    console.log(data);
+  const ajaxPostSignUp = (data: IForm) => {
+    // console.log(data);
+    // alert('회원가입 성공');
+    // navigate('/login');
     axios
-      .post('/signup', data)
+      .post('/signup', data, {
+        headers: { 'Content-Type': 'application/json' },
+      })
       .then(response => {
-        const { accessToken } = response.data;
-        axios.defaults.headers.common[
-          'Authorization'
-        ] = `Bearer ${accessToken}`;
+        if (response.status === 200) {
+          alert('[회원가입 성공] 로그인 페이지로 이동합니다');
+          navigate('/login');
+        }
       })
       .catch(error => {
         alert(`error: ${error}`);
