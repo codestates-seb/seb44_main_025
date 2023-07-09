@@ -6,6 +6,7 @@ import { Input } from '../components/Inputs/Inputs';
 import Slogan from '../components/Slogan/Slogan';
 import NavMypage from '../components/Navs/NavMypage';
 import Artistmain from '../components/artist/artistcontainer';
+import { Link } from 'react-router-dom';
 
 const Main = () => {
   return (
@@ -18,22 +19,28 @@ const Main = () => {
           <S.MiddlePart>
             <Input height={30} placeholder="검색..." />
             <S.AllBtnsDiv>
-              <MainPageButton
-                btnH={140}
-                btnImgUrl="./images/pexels-emre-akyol-16822720.jpg"
-                btnText="진행중인 공연"
-              />
+              <Link to="/performances">
+                <MainPageButton
+                  btnH={140}
+                  btnImgUrl="./images/pexels-emre-akyol-16822720.jpg"
+                  btnText="진행중인 공연"
+                />
+              </Link>
               <div>
-                <MainPageButton
-                  btnH={60}
-                  btnImgUrl="./images/pexels-nothing-ahead-9494909.jpg"
-                  btnText="지도 검색"
-                />
-                <MainPageButton
-                  btnH={60}
-                  btnImgUrl="./images/pexels-ricardo-rojas-3608804.jpg"
-                  btnText="아티스트 등록"
-                />
+                <Link to="/">
+                  <MainPageButton
+                    btnH={60}
+                    btnImgUrl="./images/pexels-nothing-ahead-9494909.jpg"
+                    btnText="지도 검색"
+                  />
+                </Link>
+                <Link to="/performances/register">
+                  <MainPageButton
+                    btnH={60}
+                    btnImgUrl="./images/pexels-ricardo-rojas-3608804.jpg"
+                    btnText="아티스트 등록"
+                  />
+                </Link>
               </div>
             </S.AllBtnsDiv>
           </S.MiddlePart>

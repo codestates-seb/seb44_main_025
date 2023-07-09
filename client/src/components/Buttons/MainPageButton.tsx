@@ -32,6 +32,7 @@ const S = {
       url(${props => props.backImgUrl});
     background-size: cover;
     background-position: center;
+    cursor: pointer;
   `,
   Span: styled.span`
     color: var(--font-white-color);
