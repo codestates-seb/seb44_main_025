@@ -1,12 +1,10 @@
 import { Outlet } from 'react-router-dom';
-import CarouselLogic from './components/Carousel/CarouselLogic';
-import MainPageButton from './components/Buttons/MainPageButton';
+import Main from './pages/Main';
 
 function App() {
   return (
     <div className="App">
-      <CarouselLogic />
-      <MainPageButton />
+      <Main />
       <Outlet />
     </div>
   );

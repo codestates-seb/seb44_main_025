@@ -123,6 +123,9 @@ const S = {
     width: 390px;
     height: 200px;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
   Container: styled.div<ContainerProps>`
     width: 390px;

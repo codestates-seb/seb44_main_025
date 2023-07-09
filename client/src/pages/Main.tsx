@@ -1,0 +1,83 @@
+import { styled } from 'styled-components';
+import MainPageButton from '../components/Buttons/MainPageButton';
+import HeaderLogoST from '../components/Header/HeaderLogoST';
+import CarouselLogic from '../components/Carousel/CarouselLogic';
+import { Input } from '../components/Inputs/Inputs';
+import Slogan from '../components/Slogan/Slogan';
+import NavMypage from '../components/Navs/NavMypage';
+import Artistmain from '../components/artist/artistcontainer';
+
+const Main = () => {
+  return (
+    <>
+      <HeaderLogoST />
+      <S.Main>
+        <S.Container>
+          <Slogan />
+          <CarouselLogic />
+          <S.MiddlePart>
+            <Input height={30} placeholder="검색..." />
+            <S.AllBtnsDiv>
+              <MainPageButton
+                btnH={140}
+                btnImgUrl="./images/pexels-emre-akyol-16822720.jpg"
+                btnText="진행중인 공연"
+              />
+              <div>
+                <MainPageButton
+                  btnH={60}
+                  btnImgUrl="./images/pexels-nothing-ahead-9494909.jpg"
+                  btnText="지도 검색"
+                />
+                <MainPageButton
+                  btnH={60}
+                  btnImgUrl="./images/pexels-ricardo-rojas-3608804.jpg"
+                  btnText="아티스트 등록"
+                />
+              </div>
+            </S.AllBtnsDiv>
+          </S.MiddlePart>
+          <Artistmain />
+        </S.Container>
+      </S.Main>
+      <NavMypage />
+    </>
+  );
+};
+
+const S = {
+  Main: styled.main`
+    display: flex;
+    justify-content: center;
+  `,
+  Container: styled.div`
+    min-height: calc(100vh - 50px);
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 390px;
+    background-color: var(--theme-background-color);
+  `,
+  MiddlePart: styled.div`
+    width: 390px;
+    height: 200px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+  `,
+  AllBtnsDiv: styled.div`
+    display: flex;
+    flex-flow: row;
+    width: 359px;
+    justify-content: space-between;
+    & > div {
+      display: flex;
+      flex-flow: column;
+      gap: 20px;
+    }
+  `,
+};
+
+export default Main;

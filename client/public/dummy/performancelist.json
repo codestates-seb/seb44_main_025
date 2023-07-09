@@ -1,6 +1,6 @@
 [
   {
-    "title": "우리사랑이대로",
+    "title": "우리 사랑 이대로",
     "artistId": 1,
     "content": "pop",
     "date": "2023-07-05 00:00:00",
@@ -9,7 +9,7 @@
     "nickname": "규현&은지",
     "totalSeat": 100,
     "categoryId": 1,
-    "imageUrl": "/우리사랑이대로.jpeg"   
+    "imageUrl": "./images/여성사진2.jpg"   
   },
   {
     "title": "사랑은 가슴이 시킨다",
@@ -21,7 +21,7 @@
     "nickname": "이창섭",
     "totalSeat": 100,
     "categoryId": 2,
-    "imageUrl": "/단체사진.jpg"   
+    "imageUrl": "./images/여성사진3.jpg"   
   },
   {
     "title": "You Will Be Found",
@@ -30,9 +30,9 @@
     "date": "2023-07-05 00:00:00",
     "price": 10000,
     "place": "홍대",
-    "nickname": "Sam Smith",
+    "nickname": "Sam Smith, Summer Walker",
     "totalSeat": 100,
     "categoryId": 3,
-    "imageUrl": "/여성사진.jpg"   
+    "imageUrl": "./images/여성사진.jpg"   
   }
 ]

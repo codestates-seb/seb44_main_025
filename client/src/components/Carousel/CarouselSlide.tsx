@@ -22,24 +22,26 @@ const CarouselSlide: React.FC<OwnProps> = ({
 }) => {
   return (
     <>
-      <S.ConcertpreviewWrapper>
-        <S.ConcertImg src={posterImg} />
-        <S.ConcertDetail>
-          <S.ConcertTitle>{title}</S.ConcertTitle>
-          <S.Concertcontent>{nickname}</S.Concertcontent>
-          <S.Concertcontent>{content}</S.Concertcontent>
-          <S.Concertcontent>₩ {price.toLocaleString()}</S.Concertcontent>
-          <S.Concertcontent>{date}</S.Concertcontent>
-          <Link
-            to={`/performances/:${categoryId}`}
-            style={{ textDecorationLine: 'none' }}
-          >
-            <ButtonWithArrowLight text={'공연예약'}></ButtonWithArrowLight>
-          </Link>
-        </S.ConcertDetail>
-      </S.ConcertpreviewWrapper>
+      <S.Div>
+        <S.ConcertpreviewWrapper>
+          <S.ConcertImg src={posterImg} />
+          <S.ConcertDetail>
+            <S.ConcertTitle>{title}</S.ConcertTitle>
+            <S.Concertcontent>{nickname}</S.Concertcontent>
+            <S.Concertcontent>{content}</S.Concertcontent>
+            <S.Concertcontent>₩ {price.toLocaleString()}</S.Concertcontent>
+            <S.Concertcontent>{date}</S.Concertcontent>
+            <Link
+              to={`/performances/:${categoryId}`}
+              style={{ textDecorationLine: 'none' }}
+            >
+              <ButtonWithArrowLight text={'공연예약'}></ButtonWithArrowLight>
+            </Link>
+          </S.ConcertDetail>
+        </S.ConcertpreviewWrapper>
 
-      <S.ImgDiv style={{ backgroundImage: `url(${posterImg})` }} />
+        <S.ImgDiv style={{ backgroundImage: `url(${posterImg})` }} />
+      </S.Div>
     </>
   );
 };
@@ -54,16 +56,20 @@ const S = {
     z-index: -1;
     position: relative;
   `,
-  ConcertpreviewWrapper: styled.div`
-    width: 390px;
-    height: 180px;
+  Div: styled.div`
     display: flex;
     justify-content: center;
+  `,
+  ConcertpreviewWrapper: styled.div`
+    width: 330px;
+    height: 180px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     position: absolute;
   `,
   ConcertImg: styled.img`
-    width: 200px;
+    width: 130px;
     height: 150px;
   `,
   ConcertDetail: styled.div`
