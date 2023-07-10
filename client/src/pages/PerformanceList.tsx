@@ -97,10 +97,6 @@ const PerformanceList = () => {
             />
           </S.TitleButtonFlex>
           <S.CategoryContainer>
-            {/* TODO: 해당되는 카테고리만 보여주기*/}
-            <ButtonToggle text="팝"></ButtonToggle>
-          </S.CategoryContainer>
-          <S.CategoryContainer>
             <ButtonMini>전체</ButtonMini>
             <ButtonMini>예약가능</ButtonMini>
             <ButtonMini>지난공연</ButtonMini>
