@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import axios from 'axios';
+import Notfoundpage from './pages/notfondpage';
 import PerformanceList from './pages/PerformanceList';
 import PerformanceInfo from './pages/PerformanceInfo';
 import PerformanceRegister from './pages/PerformanceRegister';
@@ -12,9 +14,14 @@ import Mypage from './pages/mypage';
 import Editmypage from './pages/editmypage';
 import Artistregist from './pages/artistregistpage';
 import Cancelpage from './pages/cancelpage';
+import SignUpPage from './pages/SignUpIn/SignUpPage';
+import SignInPage from './pages/SignUpIn/SignInPage';
 import ArtistList from './pages/ArtistList';
-import Notfoundpage from './pages/notfondpage';
 import Main from './pages/Main';
+
+/** @todo 도메인 주소 입력 */
+axios.defaults.baseURL = '';
+axios.defaults.withCredentials = true;
 
 const router = createBrowserRouter([
   {
@@ -37,11 +44,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <div>로그인</div>,
+        element: <SignInPage />,
       },
       {
         path: '/signup',
-        element: <div>회원가입</div>,
+        element: <SignUpPage />,
       },
       {
         path: '/mypage',
