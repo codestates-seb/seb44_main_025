@@ -17,7 +17,7 @@ const Main = () => {
           <Slogan />
           <CarouselLogic />
           <S.MiddlePart>
-            <Input height={30} placeholder="검색..." />
+            <Input height={30} placeholder="검색..." icon={true} />
             <S.AllBtnsDiv>
               <Link to="/performances">
                 <MainPageButton
@@ -34,7 +34,7 @@ const Main = () => {
                     btnText="지도 검색"
                   />
                 </Link>
-                <Link to="/performances/register">
+                <Link to="/artistregistpage">
                   <MainPageButton
                     btnH={60}
                     btnImgUrl="./images/pexels-ricardo-rojas-3608804.jpg"
