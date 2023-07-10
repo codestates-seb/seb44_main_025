@@ -9,6 +9,10 @@ import ArtistContainer from '../components/artist/artistcontainer';
 import NavLogin from '../components/Navs/NavLogin';
 import NavMypage from '../components/Navs/NavMypage';
 import { Input } from '../components/Inputs/Inputs';
+import { Editor } from '../components/Inputs/Editor/Editor';
+import { useNavigate } from 'react-router-dom';
+import { useRef, useState } from 'react';
+// import { useEditorStore } from '../components/Inputs/Editor/EditorStore';
 
 const S = {
   Heading3: styled.h3`
@@ -53,10 +57,16 @@ const S = {
     align-items: center;
     justify-content: space-between;
   `,
-  Poster: styled.div`
+  FileInput: styled.input`
+    display: none;
+  `,
+  Poster: styled.div<{ imageurl: string }>`
     width: 170px;
     height: 210px;
     background-color: gray;
+    cursor: pointer;
+    background-image: ${props =>
+      props.imageurl ? `url(${props.imageurl})` : 'none'};
   `,
   // align-items: flex-start 왼쪽 정렬, flex-end 오른쪽 정렬
   Form: styled.div`
@@ -124,9 +134,13 @@ const S = {
 };
 
 const PerformanceRegister = () => {
+  const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  // TODO: 로컬 이미지 업로드할 방법 찾기
+  const [imageurl, setimageurl] = useState('');
+  // const clearContent = useEditorStore(state => state.clearContent);
   // TODO: 로그인 상태관리 로직 추가하기
   const isLoggedIn = true;
-  // TODO: 공연 일자 경과 여부 로직 추가하기
   return (
     <>
       <HeaderOnlyP />
@@ -143,19 +157,31 @@ const PerformanceRegister = () => {
             <ButtonToggle text={'댄스'} />
           </S.CategoryContainer>
           <S.SummaryContainer>
-            <S.Poster></S.Poster>
+            <S.FileInput
+              type="file"
+              ref={fileInputRef}
+              value={imageurl}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setimageurl(e.target.value);
+                console.log(imageurl);
+              }}
+            />
+            <S.Poster
+              imageurl={imageurl}
+              onClick={() => fileInputRef.current?.click()}
+            ></S.Poster>
             <S.Form>
               <Input label={'공연명'} width={170} height={30} />
-              {/* TODO: type 부여 가능해지면 date로 설정 */}
-              <Input label={'날짜'} width={170} height={30} />
+              <Input label={'날짜'} width={170} height={30} type="date" />
               <S.FormFlexContainer>
-                <Input label={'금액'} width={75} height={30} />
-                <Input label={'총 좌석'} width={75} height={30} />
+                <Input label={'금액'} width={75} height={30} type="number" />
+                <Input label={'총 좌석'} width={75} height={30} type="number" />
               </S.FormFlexContainer>
             </S.Form>
           </S.SummaryContainer>
           <S.Heading3>공연설명</S.Heading3>
-          <S.TextareaContainer />
+          <Editor />
+          {/* 버그 심각하면 textarea 사용하기 <S.TextareaContainer /> */}
           <S.TitleButtonFlex>
             <S.Heading3>공연장 위치</S.Heading3>
             <ButtonPrimary75px>위치 등록</ButtonPrimary75px>
@@ -169,16 +195,26 @@ const PerformanceRegister = () => {
           <ArtistContainer />
           <S.BottomStickyContainer>
             {/* TODO: 등록 / 수정 구분하기 - 라우팅 경로로 구분하거나 별도 props 전달 */}
-            <ButtonPrimary335px onClick={() => console.log('등록/수정')}>
+            {/* TODO: 등록 후 정상적으로 응답을 수신했을 때 clearContent 호출하기 */}
+            <ButtonPrimary335px
+              onClick={() => {
+                console.log(
+                  'input + 추가 정보 담아서 등록/수정 요청 보내는 로직 추가'
+                );
+                navigate('/performances/1');
+                // TODO: 등록 완료 후 받은 응답에 따라 내용 렌더링 - 작성 내용은 삭제
+                // clearContent();
+              }}
+            >
               공연 정보 등록 / 수정
             </ButtonPrimary335px>
           </S.BottomStickyContainer>
-          {/* TODO: 웹 에디터 구현 시 이미지 등록 버튼 제거 */}
+          {/* Note: 웹 에디터 폐기할 경우 이미지 등록 버튼 되살리기
           <S.TitleButtonFlex>
             <S.Heading3>이미지 추가</S.Heading3>
             <ButtonPrimary75px>업로드</ButtonPrimary75px>
           </S.TitleButtonFlex>
-          <S.Image />
+            <S.Image /> */}
         </S.Main>
       </S.Container>
       {isLoggedIn ? <NavMypage /> : <NavLogin />}
