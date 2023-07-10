@@ -4,16 +4,16 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Notfoundpage from './pages/notfondpage';
-import Mypage from './pages/mypage';
-import Editmypage from './pages/editmypage';
-import Artistpage from './pages/artistpage';
-import Artistregist from './pages/artistregistpage';
-import Cancelpage from './pages/cancelpage';
 import PerformanceList from './pages/PerformanceList';
 import PerformanceInfo from './pages/PerformanceInfo';
 import PerformanceRegister from './pages/PerformanceRegister';
+import Artistpage from './pages/artistpage';
+import Mypage from './pages/mypage';
+import Editmypage from './pages/editmypage';
+import Artistregist from './pages/artistregistpage';
+import Cancelpage from './pages/cancelpage';
 import ArtistList from './pages/ArtistList';
+import Notfoundpage from './pages/notfondpage';
 import Main from './pages/Main';
 
 const router = createBrowserRouter([
@@ -53,6 +53,10 @@ const router = createBrowserRouter([
       },
       {
         path: '/artists/:artistId',
+        element: <Artistpage />,
+      },
+      {
+        path: '/artistpage',
         element: <Artistpage />,
       },
       {

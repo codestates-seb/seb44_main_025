@@ -106,7 +106,6 @@ const S = {
     padding: 0px 15px;
   `,
   UserImg: styled.img`
-    position: relative;
     width: 100px;
     height: 100px;
     margin-top: -60px;
@@ -123,7 +122,6 @@ const S = {
       );
     background-origin: border-box;
     background-clip: content-box, border-box;
-    z-index: 1;
   `,
   ArtistDetail: styled.div`
     display: flex;
