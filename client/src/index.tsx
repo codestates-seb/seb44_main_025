@@ -10,6 +10,10 @@ import Editmypage from './pages/editmypage';
 import Artistpage from './pages/artistpage';
 import Artistregist from './pages/artistregistpage';
 import Cancelpage from './pages/cancelpage';
+import PerformanceList from './pages/PerformanceList';
+import PerformanceInfo from './pages/PerformanceInfo';
+import PerformanceRegister from './pages/PerformanceRegister';
+import ArtistList from './pages/ArtistList';
 
 const router = createBrowserRouter([
   {
@@ -19,15 +23,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/performances',
-        element: <div>공연 리스트</div>,
+        element: <PerformanceList />,
       },
       {
         path: '/performances/:performanceId',
-        element: <div>공연 상세정보</div>,
+        element: <PerformanceInfo />,
       },
       {
         path: '/performances/register',
-        element: <div>공연 등록</div>,
+        element: <PerformanceRegister />,
       },
       {
         path: '/login',
@@ -42,7 +46,11 @@ const router = createBrowserRouter([
         element: <Mypage />,
       },
       {
-        path: '/artistpage',
+        path: '/artists',
+        element: <ArtistList />,
+      },
+      {
+        path: '/artists/:artistId',
         element: <Artistpage />,
       },
       {
