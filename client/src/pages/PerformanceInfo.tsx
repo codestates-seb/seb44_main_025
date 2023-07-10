@@ -10,6 +10,8 @@ import Review from '../components/review/review';
 import NavLogin from '../components/Navs/NavLogin';
 import NavMypage from '../components/Navs/NavMypage';
 import { useNavigate } from 'react-router-dom';
+import { useEditorStore } from '../components/Inputs/Editor/EditorStore';
+import { EditorReadOnly } from '../components/Inputs/Editor/Editor';
 
 const S = {
   Heading3: styled.h3`
@@ -37,6 +39,7 @@ const S = {
     justify-content: flex-start;
     align-items: center;
     padding-bottom: 70px;
+    color: white;
   `,
   CategoryContainer: styled.div`
     margin-top: 20px;
@@ -116,6 +119,7 @@ const S = {
 // TODO: props로 렌더링하기
 const PerformanceInfo = () => {
   const navigate = useNavigate();
+  const content = useEditorStore(state => state.content);
   // TODO: 로그인 상태관리 로직 추가하기
   const isLoggedIn = true;
   // TODO: 공연 일자 경과 여부 로직 추가하기
@@ -161,7 +165,7 @@ const PerformanceInfo = () => {
             </S.Summary>
           </S.SummaryContainer>
           <S.Heading3>공연설명</S.Heading3>
-          <S.TextContainer>공연 설명입니다.</S.TextContainer>
+          <EditorReadOnly content={content} />
           <S.Heading3>공연장 위치</S.Heading3>
           <S.Map></S.Map>
           <S.Heading3>아티스트 정보</S.Heading3>

@@ -4,12 +4,15 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Notfoundpage from './pages/notfondpage';
+import PerformanceList from './pages/PerformanceList';
+import PerformanceInfo from './pages/PerformanceInfo';
+import PerformanceRegister from './pages/PerformanceRegister';
+import Artistpage from './pages/artistpage';
 import Mypage from './pages/mypage';
 import Editmypage from './pages/editmypage';
-import Artistpage from './pages/artistpage';
 import Artistregist from './pages/artistregistpage';
 import Cancelpage from './pages/cancelpage';
+import Notfoundpage from './pages/notfondpage';
 import Main from './pages/Main';
 
 const router = createBrowserRouter([
@@ -21,15 +24,15 @@ const router = createBrowserRouter([
       { index: true, element: <Main /> },
       {
         path: '/performances',
-        element: <div>공연 리스트</div>,
+        element: <PerformanceList />,
       },
       {
         path: '/performances/:performanceId',
-        element: <div>공연 상세정보</div>,
+        element: <PerformanceInfo />,
       },
       {
         path: '/performances/register',
-        element: <div>공연 등록</div>,
+        element: <PerformanceRegister />,
       },
       {
         path: '/login',
@@ -42,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: '/mypage',
         element: <Mypage />,
+      },
+      {
+        path: '/artists',
+        element: <div>아티스트 목록</div>,
       },
       {
         path: '/artistpage',
