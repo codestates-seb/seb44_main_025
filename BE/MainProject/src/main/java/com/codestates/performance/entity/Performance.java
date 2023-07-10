@@ -1,5 +1,6 @@
 package com.codestates.performance.entity;
 
+import com.codestates.category.Category;
 import com.codestates.content.entity.Content;
 import lombok.Getter;
 
@@ -27,8 +28,9 @@ public class Performance {
     private String place;
     @Column(nullable = false)
     private int totalSeat;
-    @Column(nullable = false)
-    private long categoryId;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name="CATEGORY_ID")
+    private Category category;
     @Column(nullable = false)
     private String imageUrl;
 
@@ -41,7 +43,7 @@ public class Performance {
                         int price,
                         String place,
                         int totalSeat,
-                        long categoryId,
+                        Category category,
                        String imageUrl) {
         this.title = title;
         this.artistId = artistId;
@@ -50,7 +52,7 @@ public class Performance {
         this.price = price;
         this.place = place;
         this.totalSeat = totalSeat;
-        this.categoryId = categoryId;
+        this.category = category;
         this.imageUrl = imageUrl;
     }
 }

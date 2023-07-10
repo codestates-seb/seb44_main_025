@@ -1,9 +1,13 @@
 package com.codestates.performance.mapper;
 
+import com.codestates.category.Category;
+import com.codestates.category.CategoryService;
 import com.codestates.content.entity.Content;
+import com.codestates.image.ImageUploadService;
 import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
 import org.mapstruct.Mapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,9 +16,10 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface PerformanceMapper {
-    default Performance performancePostDtoToPerformance(PerformanceDto.Post performanceDto) {
+    default Performance performancePostDtoToPerformance(PerformanceDto.Post performanceDto, CategoryService categoryService) {
         Content content = new Content(performanceDto.getContent());
         LocalDateTime date = LocalDateTime.parse(performanceDto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        Category category = categoryService.findVerifiedCategory(performanceDto.getCategoryId());
 
         return new Performance(
                 performanceDto.getTitle(),
@@ -24,7 +29,7 @@ public interface PerformanceMapper {
                 performanceDto.getPrice(),
                 performanceDto.getPlace(),
                 performanceDto.getTotalSeat(),
-                performanceDto.getCategoryId(),
+                category,
                 performanceDto.getImageUrl()
         );
     }
@@ -39,7 +44,7 @@ public interface PerformanceMapper {
                 performance.getPrice(),
                 performance.getPlace(),
                 performance.getTotalSeat(),
-                performance.getCategoryId(),
+                performance.getCategory().getCategory(),
                 performance.getImageUrl()
         );
     }
@@ -55,7 +60,7 @@ public interface PerformanceMapper {
                         e.getPrice(),
                         e.getPlace(),
                         e.getTotalSeat(),
-                        e.getCategoryId(),
+                        e.getCategory().getCategory(),
                         e.getImageUrl()
                 )).collect(Collectors.toList());
     }

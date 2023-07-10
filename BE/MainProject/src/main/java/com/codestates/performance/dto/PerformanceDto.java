@@ -33,7 +33,7 @@ public class PerformanceDto {
         private int price;
         private String place;
         private int totalSeat;
-        private long categoryId;
+        private String category;
         private String imageUrl;
     }
 }
