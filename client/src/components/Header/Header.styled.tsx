@@ -3,7 +3,6 @@ const S = {
   Header: styled.header`
     display: flex;
     justify-content: center;
-
     position: sticky;
     top: 0px;
     z-index: 3;

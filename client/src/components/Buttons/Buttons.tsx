@@ -114,19 +114,31 @@ const ButtonWithIcon = styled.button<ButtonWithIconPropType>`
     margin-left: 8px;
   }
 `;
-export const ButtonWithArrowLight = ({ text }: { text: string }) => {
+export const ButtonWithArrowLight = ({
+  text,
+  onClick,
+}: {
+  text: string;
+  onClick?: () => void;
+}) => {
   const theme = 'light';
   return (
-    <ButtonWithIcon theme={theme}>
+    <ButtonWithIcon theme={theme} onClick={onClick}>
       <p>{text}</p>
       <ArrowIcon stroke={'#8250ca'} />
     </ButtonWithIcon>
   );
 };
-export const ButtonWithArrowDark = ({ text }: { text: string }) => {
+export const ButtonWithArrowDark = ({
+  text,
+  onClick,
+}: {
+  text: string;
+  onClick?: () => void;
+}) => {
   const theme = 'dark';
   return (
-    <ButtonWithIcon theme={theme}>
+    <ButtonWithIcon theme={theme} onClick={onClick}>
       <p>{text}</p>
       <ArrowIcon stroke={'#ffffff'} />
     </ButtonWithIcon>
