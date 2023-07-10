@@ -4,31 +4,24 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-<<<<<<< HEAD
 import axios from 'axios';
 import Notfoundpage from './pages/notfondpage';
-=======
 import PerformanceList from './pages/PerformanceList';
 import PerformanceInfo from './pages/PerformanceInfo';
 import PerformanceRegister from './pages/PerformanceRegister';
 import Artistpage from './pages/artistpage';
->>>>>>> dev
 import Mypage from './pages/mypage';
 import Editmypage from './pages/editmypage';
 import Artistregist from './pages/artistregistpage';
 import Cancelpage from './pages/cancelpage';
-<<<<<<< HEAD
 import SignUpPage from './pages/SignUpIn/SignUpPage';
 import SignInPage from './pages/SignUpIn/SignInPage';
+import ArtistList from './pages/ArtistList';
+import Main from './pages/Main';
 
 /** @todo 도메인 주소 입력 */
 axios.defaults.baseURL = '';
 axios.defaults.withCredentials = true;
-=======
-import ArtistList from './pages/ArtistList';
-import Notfoundpage from './pages/notfondpage';
-import Main from './pages/Main';
->>>>>>> dev
 
 const router = createBrowserRouter([
   {
