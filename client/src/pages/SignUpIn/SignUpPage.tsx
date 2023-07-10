@@ -58,13 +58,13 @@ const SignUpPage = () => {
   const input_nickname = useRef<string | null>(null);
   input_nickname.current = watch('nickname');
 
-  /** 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는 함수 */
+  /** 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는다 */
+  /** 아이디와 닉네임의 중복검사 여부를 확인 후 ajax함수를 실행시키는 함수  */
   const onSubmit: SubmitHandler<IForm> = data => {
     setSubmitClicked(true);
     if (!noEmailDuplBtnClickedSubmit && !noNicknameDuplBtnClickedSubmit) {
       if (!emailDupl && !nicknameDupl) {
         ajaxPostSignUp(data);
-        console.log(noNicknameDuplBtnClickedSubmit);
       } else {
         if (emailDupl) {
           if (emailDuplBtnCnt > 0) {
@@ -79,10 +79,11 @@ const SignUpPage = () => {
       }
     }
   };
+
   /** 회원정보를 서버로 전송하는 ajax 함수 */
   const ajaxPostSignUp = (data: IForm) => {
     axios
-      .post('/signup', data, {
+      .post('/member', data, {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(response => {
@@ -103,31 +104,68 @@ const SignUpPage = () => {
     email: string | null,
     nickname: string | null
   ): void => {
-    if (typeof email === 'string' && nickname === '') {
-      if (email === 'hello@naver.com') {
-        setEmailDupl(false);
-        setEmailDuplBtnCnt();
-        setNoEmailDuplBtnClickedSubmit(false);
-      } else {
-        setEmailDupl(true);
-        setEmailDuplBtnCnt();
-        setNoEmailDuplBtnClickedSubmit(false);
-      }
-    }
-    if (email === '' && typeof nickname === 'string') {
-      // 중복검사를 통과한 경우
-      if (nickname === 'hello') {
-        setNicknameDupl(false);
-        setNicknameDuplBtnCnt();
-        setNoNicknameDuplBtnClickedSubmit(false);
-      }
-      // 통과하지 못 한 경우
-      else {
-        setNicknameDupl(true);
-        setNicknameDuplBtnCnt();
-        setNoNicknameDuplBtnClickedSubmit(false);
-      }
-    }
+    // 이메일 중복확인 클릭시
+    // if (typeof email === 'string' && nickname === '') {
+    //   if (email === 'hello@naver.com') {
+    //     setEmailDupl(false);
+    //     setEmailDuplBtnCnt();
+    //     setNoEmailDuplBtnClickedSubmit(false);
+    //   } else {
+    //     setEmailDupl(true);
+    //     setEmailDuplBtnCnt();
+    //     setNoEmailDuplBtnClickedSubmit(false);
+    //   }
+    // }
+    // // 닉네임 중복확인 클릭시
+    // if (email === '' && typeof nickname === 'string') {
+    //   // 중복검사를 통과한 경우
+    //   if (nickname === 'hello') {
+    //     setNicknameDupl(false);
+    //     setNicknameDuplBtnCnt();
+    //     setNoNicknameDuplBtnClickedSubmit(false);
+    //   }
+    //   // 통과하지 못 한 경우
+    //   else {
+    //     setNicknameDupl(true);
+    //     setNicknameDuplBtnCnt();
+    //     setNoNicknameDuplBtnClickedSubmit(false);
+    //   }
+    // }
+
+    /** @todo: 엔드포인트 결정 */
+    // 같은 엔드포인트면 한 번에 가능한지 여부 확인 필요
+    axios
+      .post(
+        '/',
+        { email: email, nickname: nickname },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
+      .then(response => {
+        if (response.status === 200) {
+          if (typeof email === 'string' && nickname === '') {
+            setEmailDupl(false);
+            setEmailDuplBtnCnt();
+            setNoEmailDuplBtnClickedSubmit(false);
+          } else if (email === '' && typeof nickname === 'string') {
+            setNicknameDupl(false);
+            setNicknameDuplBtnCnt();
+            setNoNicknameDuplBtnClickedSubmit(false);
+          }
+        }
+      })
+      .catch(() => {
+        if (typeof email === 'string' && nickname === '') {
+          setEmailDupl(true);
+          setEmailDuplBtnCnt();
+          setNoEmailDuplBtnClickedSubmit(false);
+        } else if (email === '' && typeof nickname === 'string') {
+          setNicknameDupl(true);
+          setNicknameDuplBtnCnt();
+          setNoNicknameDuplBtnClickedSubmit(false);
+        }
+      });
   };
 
   return (
