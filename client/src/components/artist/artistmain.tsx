@@ -41,7 +41,7 @@ export default function Artistmain() {
 
 const S = {
   ArtistpreviewMain: styled.div`
-    width: 360px;
+    width: 390px;
     height: 160px;
   `,
   Subtitle: styled.header`
@@ -49,6 +49,7 @@ const S = {
     font-weight: var(--p-large-medium-font-weight);
     line-height: var(--p-large-medium-line-height);
     color: var(--font-light-white-color);
+    margin-left: 15px;
   `,
   veiwAll: styled.p`
     display: flex;
@@ -59,12 +60,14 @@ const S = {
     font-weight: var(--p-small-medium-font-weight);
     line-height: var(--p-small-medium-line-height);
     color: var(--button-primary-background-color);
+    margin-right: 15px;
   `,
   ArtistpreviewContainer: styled.div`
     width: 360px;
     height: 115px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    margin-left: 15px;
   `,
   ArtistpreviewWrapper: styled.div`
     width: 75px;

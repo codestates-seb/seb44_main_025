@@ -5,7 +5,7 @@ import CarouselLogic from '../components/Carousel/CarouselLogic';
 import { Input } from '../components/Inputs/Inputs';
 import Slogan from '../components/Slogan/Slogan';
 import NavMypage from '../components/Navs/NavMypage';
-import Artistmain from '../components/artist/artistcontainer';
+import Artistmain from '../components/artist/artistmain';
 import { Link } from 'react-router-dom';
 
 const Main = () => {
@@ -45,8 +45,8 @@ const Main = () => {
             </S.AllBtnsDiv>
           </S.MiddlePart>
           <Artistmain />
-        </S.Container>
-      </S.Main>
+        </S.Container>{' '}
+      </S.Main>{' '}
       <NavMypage />
     </>
   );
@@ -58,11 +58,12 @@ const S = {
     justify-content: center;
   `,
   Container: styled.div`
-    min-height: calc(100vh - 50px);
+    min-height: calc(100vh - 100px);
+    height: 800px;
     display: flex;
     flex-flow: column;
     justify-content: center;
-    gap: 15px;
+    gap: 30px;
     align-items: center;
     width: 390px;
     background-color: var(--theme-background-color);
