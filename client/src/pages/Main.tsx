@@ -7,8 +7,27 @@ import Slogan from '../components/Slogan/Slogan';
 import NavMypage from '../components/Navs/NavMypage';
 import Artistmain from '../components/artist/artistmain';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { CarouselList, ArtistList } from '../zustand/mainapi';
+import axios from 'axios';
 
 const Main = () => {
+  const { setCarouselData } = CarouselList();
+  const { setArtistData } = ArtistList();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/dummy/main.json');
+        setCarouselData(response.data.performances);
+        setArtistData(response.data.artists);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
       <HeaderLogoST />
@@ -45,8 +64,8 @@ const Main = () => {
             </S.AllBtnsDiv>
           </S.MiddlePart>
           <Artistmain />
-        </S.Container>{' '}
-      </S.Main>{' '}
+        </S.Container>
+      </S.Main>
       <NavMypage />
     </>
   );

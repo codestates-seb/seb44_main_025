@@ -32,7 +32,7 @@ const CarouselSlide: React.FC<OwnProps> = ({
             <S.Concertcontent>₩ {price.toLocaleString()}</S.Concertcontent>
             <S.Concertcontent>{date}</S.Concertcontent>
             <Link
-              to={`/performances/:${categoryId}`}
+              to={`/performances/${categoryId}`}
               style={{ textDecorationLine: 'none' }}
             >
               <ButtonWithArrowLight text={'공연예약'}></ButtonWithArrowLight>

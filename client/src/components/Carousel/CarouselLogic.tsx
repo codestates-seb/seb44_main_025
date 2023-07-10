@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import CarouselSlide from './CarouselSlide';
-import axios from 'axios';
 import styled from 'styled-components';
+import { CarouselList } from '../../zustand/mainapi';
 
 interface Dummydata {
   title: string;
@@ -22,21 +22,9 @@ interface ContainerProps {
 }
 
 const Main = () => {
-  let [data, setData] = useState<any[]>([]);
   let [movementWidth, setMovementWidth] = useState(0);
   let [time, setTime] = useState(0.5);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('/dummy/performancelist.json');
-        setData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, []);
+  const { carouselData } = CarouselList();
 
   /** 캐러셀 3초마다 동작 */
   useEffect(() => {
@@ -53,7 +41,7 @@ const Main = () => {
   function SlideTransitionControl() {
     let num = 0;
     // 마지막 슬라이드가 아닌 경우
-    if (movementWidth !== -390 * (data.length - 1)) {
+    if (movementWidth !== -390 * (carouselData.length - 1)) {
       setTime(0.5);
       num = movementWidth - 390;
       setMovementWidth(num);
@@ -80,10 +68,10 @@ const Main = () => {
           translate={`translate(${movementWidth}px)`}
           transform={`transform ${time}s`}
         >
-          {data.length !== 0 && (
+          {carouselData.length !== 0 && (
             <>
               {/* 슬라이드 리스트 */}
-              {data.map((v: Dummydata, i) => {
+              {carouselData.map((v: Dummydata, i) => {
                 return (
                   <div key={i}>
                     <CarouselSlide
@@ -101,13 +89,13 @@ const Main = () => {
               {/* 무한 슬라이드를 위해 첫번째 슬라이드 복제 */}
               <div>
                 <CarouselSlide
-                  posterImg={data[0].imageUrl}
-                  title={data[0].title}
-                  nickname={data[0].nickname}
-                  content={data[0].content}
-                  price={data[0].price}
-                  date={data[0].date}
-                  categoryId={data[0].categoryId}
+                  posterImg={carouselData[0].imageUrl}
+                  title={carouselData[0].title}
+                  nickname={carouselData[0].nickname}
+                  content={carouselData[0].content}
+                  price={carouselData[0].price}
+                  date={carouselData[0].date}
+                  categoryId={carouselData[0].categoryId}
                 />
               </div>
             </>

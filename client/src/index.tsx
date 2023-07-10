@@ -10,6 +10,7 @@ import Editmypage from './pages/editmypage';
 import Artistpage from './pages/artistpage';
 import Artistregist from './pages/artistregistpage';
 import Cancelpage from './pages/cancelpage';
+import Main from './pages/Main';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <Notfoundpage />,
     children: [
+      { index: true, element: <Main /> },
       {
         path: '/performances',
         element: <div>공연 리스트</div>,
