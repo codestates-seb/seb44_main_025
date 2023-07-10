@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.nio.file.AccessDeniedException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -42,10 +40,7 @@ public class ReservationService {
                 .orElseThrow(() -> new IllegalArgumentException("공연 정보를 찾을 수 없습니다."));
 
         // 공연자 권한 확인 -> 해당 공연의 공연자만 공연에 대한 가격을 설정할 수 있다
-        List<Long> performerId = performance.getPerformanceArtists().stream()
-                .map(e->e.getArtist()
-                        .getArtistId())
-                .collect(Collectors.toList());
+        Long performerId = performance.getArtistId();
 //        if (performerId.equals(userId)) {
 //            int price = performance.getPrice();
 //            reservation.setPrice(price);
