@@ -2,8 +2,8 @@ import SearchIcon from '../../icons/SearchIcon';
 import TicketIcon from '../../icons/TicketIcon';
 import S from './Header.styled';
 import { useState } from 'react';
-import TicketModal from '../ticket/ticket';
-import NoTicketModal from '../ticket/noticket';
+import TicketModal from '../modal/ticket';
+import NoTicketModal from '../modal/noticket';
 
 const HeaderLogoST = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +40,7 @@ const HeaderLogoST = () => {
         </S.Nav>
       </S.Header>
       {/* user가 예약한 공연이 있으면 TicketModal 없으면  NoTicketModal*/}
-      {isOpen && <NoTicketModal onClick={handleModalClick} />}
+      {isOpen && <TicketModal onClick={handleModalClick} />}
     </>
   );
 };
