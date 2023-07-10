@@ -1,7 +1,9 @@
 package com.codestates.reservation.service;
 
+<<<<<<< Updated upstream
 import com.codestates.performance.entity.Performance;
 import com.codestates.performance.repository.PerformanceRepository;
+>>>>>>> Stashed changes
 import com.codestates.reservation.dto.ReservationDto;
 import com.codestates.reservation.entity.Reservation;
 import com.codestates.reservation.mapper.ReservationMapper;
@@ -16,12 +18,13 @@ import java.nio.file.AccessDeniedException;
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
-
+<<<<<<< Updated upstream
     private final PerformanceRepository performanceRepository;
 
-    public ReservationService(ReservationRepository reservationRepository, ReservationMapper reservationMapper, PerformanceRepository performanceRepository) {
+    public ReservationService(ReservationRepository reservationRepository, ReservationMapper reservationMapper) {
         this.reservationRepository = reservationRepository;
         this.reservationMapper = reservationMapper;
+<<<<<<< Updated upstream
         this.performanceRepository = performanceRepository;
     }
 
@@ -41,6 +44,7 @@ public class ReservationService {
 
         // 공연자 권한 확인 -> 해당 공연의 공연자만 공연에 대한 가격을 설정할 수 있다
         Long performerId = performance.getArtistId();
+<<<<<<< Updated upstream
 //        if (performerId.equals(userId)) {
 //            int price = performance.getPrice();
 //            reservation.setPrice(price);
