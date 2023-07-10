@@ -6,6 +6,8 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -15,8 +17,6 @@ public class Performance {
     private long performanceId;
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false, updatable = false)
-    private long artistId;
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name="CONTENT_ID")
     private Content content;
@@ -33,11 +33,13 @@ public class Performance {
     private Category category;
     @Column(nullable = false)
     private String imageUrl;
+    @OneToMany(mappedBy = "performance")
+    private List<PerformanceArtist> performanceArtists = new ArrayList<>();
 
     public Performance() {}
 
     public Performance(String title,
-                        long artistId,
+                        List<PerformanceArtist> performanceArtists,
                         Content content,
                         LocalDateTime date,
                         int price,
@@ -46,7 +48,7 @@ public class Performance {
                         Category category,
                        String imageUrl) {
         this.title = title;
-        this.artistId = artistId;
+        this.performanceArtists = performanceArtists;
         this.content = content;
         this.date = date;
         this.price = price;

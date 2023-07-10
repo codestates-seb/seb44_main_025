@@ -1,14 +1,18 @@
 package com.codestates.performance.dto;
 
+import com.codestates.artist.Artist;
+import com.codestates.performance.entity.PerformanceArtist;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.List;
 
 public class PerformanceDto {
     @Getter
     @AllArgsConstructor
     public static class Post {
         private String title;
-        private long artistId;
+        private List<Long> artistIds;
         private String content;
         private String date;
         private int price;
@@ -27,7 +31,7 @@ public class PerformanceDto {
     public static class Response {
         private long performanceId;
         private String title;
-        private long artistId;
+        private List<Artist> artists;
         private String content;
         private String date;
         private int price;

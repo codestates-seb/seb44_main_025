@@ -1,5 +1,6 @@
 package com.codestates.performance.controller;
 
+import com.codestates.artist.ArtistService;
 import com.codestates.category.Category;
 import com.codestates.category.CategoryService;
 import com.codestates.global.dto.MultiResponseDto;
@@ -31,6 +32,7 @@ public class PerformanceController {
     private final PerformanceService performanceService;
     private final ImageUploadService imageUploadService;
     private final CategoryService categoryService;
+    private final ArtistService artistService;
 
     /* 공연 생성 */
     @PostMapping(value = "/register", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -39,7 +41,7 @@ public class PerformanceController {
         String imageUrl = imageUploadService.imageUpload(imageFile);
         performanceDto.setImageUrl(imageUrl);
 
-        Performance performance = mapper.performancePostDtoToPerformance(performanceDto, categoryService);
+        Performance performance = mapper.performancePostDtoToPerformance(performanceDto, categoryService, artistService);
         Performance response = performanceService.createPerformance(performance);
 
         return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(response)), HttpStatus.CREATED);
