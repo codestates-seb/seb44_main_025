@@ -14,6 +14,7 @@ import PerformanceList from './pages/PerformanceList';
 import PerformanceInfo from './pages/PerformanceInfo';
 import PerformanceRegister from './pages/PerformanceRegister';
 import ArtistList from './pages/ArtistList';
+import Main from './pages/Main';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <Notfoundpage />,
     children: [
+      { index: true, element: <Main /> },
       {
         path: '/performances',
         element: <PerformanceList />,
