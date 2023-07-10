@@ -183,7 +183,9 @@ const SignUpPage = () => {
                   })}
                 />
                 {errors.password && (
-                  <p>비밀번호는 8~16자의 영문, 숫자로 이루어져야 합니다</p>
+                  <p>
+                    비밀번호는 8~16자의 영문, 숫자, 특수문자로 이루어져야 합니다
+                  </p>
                 )}
               </div>
               <div>
@@ -205,6 +207,8 @@ const SignUpPage = () => {
                     {...register('nickname', {
                       required: true,
                       pattern: nicknameRegExp,
+                      minLength: 2,
+                      maxLength: 12,
                       onChange: () => setNoNicknameDuplBtnClickedSubmit(true),
                     })}
                   />
@@ -216,8 +220,14 @@ const SignUpPage = () => {
                     중복확인
                   </S.ButtonSpan>
                 </div>
-                {errors.nickname && (
-                  <p>닉네임은 한글 또는 영문으로 이루어져야 합니다</p>
+                {errors.nickname && errors.nickname.type === 'pattern' && (
+                  <p>닉네임은 한글 또는 영문을 띄어쓰기 없이 사용해야 합니다</p>
+                )}
+                {errors.nickname && errors.nickname.type === 'minLength' && (
+                  <p>닉네임은 2자 이상 12자 이하여야 합니다</p>
+                )}
+                {errors.nickname && errors.nickname.type === 'maxLength' && (
+                  <p>닉네임은 2자 이상 12자 이하여야 합니다</p>
                 )}
                 {noNicknameDuplBtnClickedSubmit ? (
                   submitClicked === true ? (

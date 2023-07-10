@@ -59,7 +59,7 @@ const SignInPage = () => {
       <HeaderOnlyP />
       <S.Main>
         <S.Container>
-          <S.H1 mb={145}>Ez to 회원가입</S.H1>
+          <S.H1 mb={145}>Ez to 로그인</S.H1>
           <S.Form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <div>
