@@ -12,6 +12,7 @@ import Mypage from './pages/mypage';
 import Editmypage from './pages/editmypage';
 import Artistregist from './pages/artistregistpage';
 import Cancelpage from './pages/cancelpage';
+import ArtistList from './pages/ArtistList';
 import Notfoundpage from './pages/notfondpage';
 import Main from './pages/Main';
 
@@ -48,7 +49,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/artists',
-        element: <div>아티스트 목록</div>,
+        element: <ArtistList />,
+      },
+      {
+        path: '/artists/:artistId',
+        element: <Artistpage />,
       },
       {
         path: '/artistpage',

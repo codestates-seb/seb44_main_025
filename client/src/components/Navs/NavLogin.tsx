@@ -23,7 +23,7 @@ const NavLogin = () => {
               <S.Span>공연정보</S.Span>
             </S.GroupDiv>
           </Link>
-          <Link to="">
+          <Link to="/artists">
             <S.GroupDiv>
               <ArtistIcon />
               <S.Span>아티스트</S.Span>
