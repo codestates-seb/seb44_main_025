@@ -11,57 +11,54 @@ import Review from '../components/review/review';
 import Footer from '../components/footer';
 import NavMypage from '../components/Navs/NavMypage';
 
-export default function Mypage() {
+export default function Artistpage() {
   return (
     <>
       <HeaderLogoST />
       <S.Main>
         <S.Section>
-          <S.Title>마이페이지</S.Title>
-          <S.ButtonWarppar>
-            <ButtonPrimary75px>로그아웃</ButtonPrimary75px>
-          </S.ButtonWarppar>
+          <S.Title>아티스트페이지</S.Title>
           <S.ProfileImg src="우리사랑이대로.jpeg" />
           <S.UserImg src="우리사랑이대로.jpeg" />
-          <S.UserDetail>
-            <S.UserNickname>닉네임</S.UserNickname>
+          <S.ArtistDetail>
+            <S.ArtistContent>아티스트</S.ArtistContent>
+            <S.ArtistContent>SNS Link</S.ArtistContent>
             <S.UserEdit>
               <EditIcon />
             </S.UserEdit>
-          </S.UserDetail>
-          {/* 아티스트 미등록 사용자는 아티스트 등록 버튼 */}
-          {/* 아티스트를 등록한 사용자는 아티스트 페이지 버튼 */}
-          <S.ButtonWarppar>
-            <ButtonWithArrowDark text={'아티스트 등록'}></ButtonWithArrowDark>
-            <ButtonWithArrowDark text={'아티스트 페이지'}></ButtonWithArrowDark>
-          </S.ButtonWarppar>
+          </S.ArtistDetail>
+          <S.ArtistIntrodution>
+            <S.SubTitle>소개</S.SubTitle>
+            <S.ArtistIntrodutionContainer>
+              <S.ArtistContent>안녕하세요~!</S.ArtistContent>
+            </S.ArtistIntrodutionContainer>
+          </S.ArtistIntrodution>
           <S.ConcertpreviewContainer>
-            <S.SubTitle>예약 중인 공연</S.SubTitle>
-            <Concertpreview />
+            <S.SubTitle>준비 중인 공연</S.SubTitle>
             <Concertpreview />
           </S.ConcertpreviewContainer>
           <S.EmptyContainer>
-            <S.SubTitle>예약 중인 공연</S.SubTitle>
+            <S.SubTitle>준비 중인 공연</S.SubTitle>
             <S.EmptyWrapper>
-              <S.EmptyTitle>현재 예약중인 공연이 없습니다.</S.EmptyTitle>
+              <S.EmptyTitle>현재 준비중인 공연이 없습니다.</S.EmptyTitle>
               <ConcertEmptyButton>
-                <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                <ButtonWithArrowDark text="공연등록"></ButtonWithArrowDark>
               </ConcertEmptyButton>
             </S.EmptyWrapper>
           </S.EmptyContainer>
-          <S.SubTitle>내가 관람한 공연</S.SubTitle>
+          <S.SubTitle>공연 기록</S.SubTitle>
           <ArtistreviewContainer />
           <S.EmptyContainer>
-            <S.SubTitle>내가 관람한 공연</S.SubTitle>
+            <S.SubTitle>공연 기록</S.SubTitle>
             <S.EmptyWrapper>
-              <S.EmptyTitle>아직 관람한 공연이 없습니다.</S.EmptyTitle>
+              <S.EmptyTitle>아직 진행한 공연이 없습니다.</S.EmptyTitle>
               <ConcertEmptyButton>
-                <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                <ButtonWithArrowDark text="공연등록"></ButtonWithArrowDark>
               </ConcertEmptyButton>
             </S.EmptyWrapper>
           </S.EmptyContainer>
           <S.MyreviewContainer>
-            <S.SubTitle>내가 작성한 후기</S.SubTitle>
+            <S.SubTitle>아티스트 후기</S.SubTitle>
             <S.ReviewWrapper>
               <Review />
               <Review />
@@ -126,23 +123,32 @@ const S = {
     background-clip: content-box, border-box;
     z-index: 1;
   `,
-  UserDetail: styled.div`
+  ArtistDetail: styled.div`
     display: flex;
+    flex-direction: column;
     margin: 20px 15px 10px 15px;
   `,
-  UserNickname: styled.p`
-    font-size: var(--p-large-medium-font-size);
-    font-weight: var(--p-large-medium-font-weight);
-    line-height: var(--p-large-medium-line-height);
+  ArtistContent: styled.p`
+    font-size: var(--p-small-medium-font-size);
+    font-weight: var(--p-small-medium-font-weight);
+    line-height: var(--p-small-medium-line-height);
     color: var(--font-white-color);
-    width: 390px;
   `,
   UserEdit: styled.div`
     display: flex;
-    align-items: center;
+    justify-content: flex-end;
     cursor: pointer;
     padding-right: 3px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    margin-top: -50px;
+  `,
+  ArtistIntrodution: styled.div`
+    margin-top: 20px;
+  `,
+  ArtistIntrodutionContainer: styled.div`
+    width: 360px;
+    height: 70px;
+    margin: 0px 15px 0px 15px;
   `,
   ConcertpreviewContainer: styled.div``,
   SubTitle: styled.header`
