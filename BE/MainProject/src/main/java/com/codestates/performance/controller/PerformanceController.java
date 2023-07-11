@@ -35,7 +35,7 @@ public class PerformanceController {
     private final ArtistService artistService;
 
     /* 공연 생성 */
-    @PostMapping(value = "/register", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity postPerformance(@RequestPart PerformanceDto.Post performanceDto,
                                           @RequestPart("image_file") MultipartFile imageFile) throws IOException {
         String imageUrl = imageUploadService.imageUpload(imageFile);
@@ -55,5 +55,12 @@ public class PerformanceController {
         List<Performance> findPerformance = pagePerformance.toList();
 
         return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);
+    }
+
+    /* 공연 삭제 */
+    @DeleteMapping("/{performance-id}")
+    public ResponseEntity deletePerformance(@PathVariable("performance-id") @Positive long performanceId) {
+        performanceService.deletePerformance(performanceId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

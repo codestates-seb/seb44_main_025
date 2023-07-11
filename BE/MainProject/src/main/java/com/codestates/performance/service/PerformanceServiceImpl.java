@@ -1,5 +1,7 @@
 package com.codestates.performance.service;
 
+import com.codestates.global.exception.BusinessLogicException;
+import com.codestates.global.exception.ExceptionCode;
 import com.codestates.performance.entity.Performance;
 import com.codestates.performance.repository.PerformanceRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -22,5 +26,17 @@ public class PerformanceServiceImpl implements PerformanceService{
     public Page<Performance> findPerformances(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("performanceId").descending());
         return performanceRepository.findAll(pageRequest);
+    }
+
+    @Override
+    public void deletePerformance(long performanceId) {
+        Performance findPerformance = findVerifyPerformance(performanceId);
+        performanceRepository.delete(findPerformance);
+    }
+
+    private Performance findVerifyPerformance(long performanceId) {
+        Optional<Performance> findPerformance = performanceRepository.findById(performanceId);
+        return findPerformance.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
     }
 }
