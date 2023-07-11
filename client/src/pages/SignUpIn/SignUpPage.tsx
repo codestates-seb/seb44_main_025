@@ -58,13 +58,14 @@ const SignUpPage = () => {
   const input_nickname = useRef<string | null>(null);
   input_nickname.current = watch('nickname');
 
-  /** 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는다 */
-  /** 아이디와 닉네임의 중복검사 여부를 확인 후 ajax함수를 실행시키는 함수  */
+  /** 아이디와 닉네임의 중복검사 여부를 확인 후 ajax함수를 실행시키는 함수
+   * 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는다
+   */
   const onSubmit: SubmitHandler<IForm> = data => {
     setSubmitClicked(true);
     if (!noEmailDuplBtnClickedSubmit && !noNicknameDuplBtnClickedSubmit) {
       if (!emailDupl && !nicknameDupl) {
-        ajaxPostSignUp(data);
+        usePostSignUp(data);
       } else {
         if (emailDupl) {
           if (emailDuplBtnCnt > 0) {
@@ -81,7 +82,7 @@ const SignUpPage = () => {
   };
 
   /** 회원정보를 서버로 전송하는 ajax 함수 */
-  const ajaxPostSignUp = (data: IForm) => {
+  const usePostSignUp = (data: IForm) => {
     axios
       .post('/member', data, {
         headers: { 'Content-Type': 'application/json' },
@@ -97,75 +98,63 @@ const SignUpPage = () => {
       });
   };
 
-  /** 중복 확인하는 함수
-   * @todo 중복확인 로직 구현
-   */
-  const DuplicateCheck = (
-    email: string | null,
-    nickname: string | null
-  ): void => {
-    // 이메일 중복확인 클릭시
-    // if (typeof email === 'string' && nickname === '') {
-    //   if (email === 'hello@naver.com') {
-    //     setEmailDupl(false);
-    //     setEmailDuplBtnCnt();
-    //     setNoEmailDuplBtnClickedSubmit(false);
-    //   } else {
-    //     setEmailDupl(true);
-    //     setEmailDuplBtnCnt();
-    //     setNoEmailDuplBtnClickedSubmit(false);
-    //   }
-    // }
-    // // 닉네임 중복확인 클릭시
-    // if (email === '' && typeof nickname === 'string') {
-    //   // 중복검사를 통과한 경우
-    //   if (nickname === 'hello') {
-    //     setNicknameDupl(false);
-    //     setNicknameDuplBtnCnt();
-    //     setNoNicknameDuplBtnClickedSubmit(false);
-    //   }
-    //   // 통과하지 못 한 경우
-    //   else {
-    //     setNicknameDupl(true);
-    //     setNicknameDuplBtnCnt();
-    //     setNoNicknameDuplBtnClickedSubmit(false);
-    //   }
-    // }
-
-    /** @todo: 엔드포인트 결정 */
-    // 같은 엔드포인트면 한 번에 가능한지 여부 확인 필요
+  /** 이메일 중복검사하는 ajax 함수 */
+  const useGetDuplicateEmail = (emailData: string | null) => {
     axios
-      .post(
-        '/',
-        { email: email, nickname: nickname },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      )
+      .post('/member/duplicate/email', { email: emailData })
       .then(response => {
         if (response.status === 200) {
-          if (typeof email === 'string' && nickname === '') {
+          if (response.data === '사용 가능한 이메일입니다') {
             setEmailDupl(false);
             setEmailDuplBtnCnt();
             setNoEmailDuplBtnClickedSubmit(false);
-          } else if (email === '' && typeof nickname === 'string') {
+          } else if (response.data === '이미 존재하는 이메일입니다') {
+            setEmailDupl(true);
+            setEmailDuplBtnCnt();
+            setNoEmailDuplBtnClickedSubmit(false);
+          }
+        }
+      })
+      .catch(err => {
+        alert(`error: ${err}`);
+      });
+  };
+
+  /** 닉네임 중복검사하는 ajax 함수 */
+  const useGetDuplicateNickname = (nicknameData: string | null) => {
+    axios
+      .post('/member/duplicate/nickname', { nickname: nicknameData })
+      .then(response => {
+        if (response.status === 200) {
+          if (response.data === '사용 가능한 이메일입니다') {
             setNicknameDupl(false);
+            setNicknameDuplBtnCnt();
+            setNoNicknameDuplBtnClickedSubmit(false);
+          } else if (response.data === '이미 존재하는 이메일입니다') {
+            setNicknameDupl(true);
             setNicknameDuplBtnCnt();
             setNoNicknameDuplBtnClickedSubmit(false);
           }
         }
       })
-      .catch(() => {
-        if (typeof email === 'string' && nickname === '') {
-          setEmailDupl(true);
-          setEmailDuplBtnCnt();
-          setNoEmailDuplBtnClickedSubmit(false);
-        } else if (email === '' && typeof nickname === 'string') {
-          setNicknameDupl(true);
-          setNicknameDuplBtnCnt();
-          setNoNicknameDuplBtnClickedSubmit(false);
-        }
+      .catch(err => {
+        alert(`error: ${err}`);
       });
+  };
+
+  /** 중복검사시 이메일, 닉네임 분기하는 함수 */
+  const DuplicateCheck = (
+    email: string | null,
+    nickname: string | null
+  ): void => {
+    // 이메일 중복확인 클릭시
+    if (typeof email === 'string' && nickname === '') {
+      useGetDuplicateEmail(email);
+    }
+    // 닉네임 중복확인 클릭시
+    if (email === '' && typeof nickname === 'string') {
+      useGetDuplicateNickname(nickname);
+    }
   };
 
   return (
