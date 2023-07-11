@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
 
 interface StyleDivProps {
-  h: 140 | 60;
-  backImgUrl: string;
+  btnh: 140 | 60;
+  backimgurl: string;
 }
 interface OwnProps {
   btnH: 140 | 60;
@@ -13,7 +13,7 @@ interface OwnProps {
 const MainPageButton = ({ btnH, btnImgUrl, btnText }: OwnProps) => {
   return (
     <>
-      <S.Container h={btnH} backImgUrl={btnImgUrl}>
+      <S.Container btnh={btnH} backimgurl={btnImgUrl}>
         <S.Span>{btnText}</S.Span>
       </S.Container>
     </>
@@ -26,10 +26,10 @@ const S = {
     justify-content: center;
     align-items: center;
     width: 170px;
-    height: ${props => props.h}px;
+    height: ${props => props.btnh}px;
     border-radius: 15px;
     background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-      url(${props => props.backImgUrl});
+      url(${props => props.backimgurl});
     background-size: cover;
     background-position: center;
     cursor: pointer;

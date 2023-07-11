@@ -11,6 +11,7 @@ import { CarouselList, ArtistList } from '../zustand/mainapi';
 import axios from 'axios';
 import { getCookie } from '../utils/Cookie';
 import NavLogin from '../components/Navs/NavLogin';
+import NavMypage from '../components/Navs/NavMypage';
 
 const Main = () => {
   const { setCarouselData } = CarouselList();
