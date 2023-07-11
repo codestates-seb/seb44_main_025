@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { CarouselList, ArtistList } from '../zustand/mainapi';
 import axios from 'axios';
+import { getCookie } from '../utils/Cookie';
 import NavLogin from '../components/Navs/NavLogin';
 
 const Main = () => {
@@ -66,7 +67,7 @@ const Main = () => {
           <Artistmain />
         </S.Container>
       </S.Main>
-      <NavLogin />
+      {getCookie('token') ? <NavMypage /> : <NavLogin />}
     </>
   );
 };
