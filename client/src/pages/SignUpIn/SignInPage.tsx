@@ -93,7 +93,7 @@ const SignInPage = () => {
           </S.Form>
           <PageMovement
             infoText="아직 계정이 없으신가요?"
-            pagelink="/signup'"
+            pagelink="/signup"
             linkedText="회원가입"
             mt={160}
           />

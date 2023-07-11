@@ -4,12 +4,12 @@ import HeaderLogoST from '../components/Header/HeaderLogoST';
 import CarouselLogic from '../components/Carousel/CarouselLogic';
 import { Input } from '../components/Inputs/Inputs';
 import Slogan from '../components/Slogan/Slogan';
-import NavMypage from '../components/Navs/NavMypage';
 import Artistmain from '../components/artist/artistmain';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { CarouselList, ArtistList } from '../zustand/mainapi';
 import axios from 'axios';
+import NavLogin from '../components/Navs/NavLogin';
 
 const Main = () => {
   const { setCarouselData } = CarouselList();
@@ -66,7 +66,7 @@ const Main = () => {
           <Artistmain />
         </S.Container>
       </S.Main>
-      <NavMypage />
+      <NavLogin />
     </>
   );
 };
