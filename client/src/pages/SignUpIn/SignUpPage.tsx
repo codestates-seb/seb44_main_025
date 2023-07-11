@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import PageMovement from '../../components/Sign/PageMovement';
+import { ErrorMessage } from '@hookform/error-message';
 import {
   emailRegExp,
   passwordRegExp,
@@ -26,6 +27,7 @@ interface IForm {
   password: string;
   password_confirm: string;
   nickname: string;
+  multipleErrorInput: string;
 }
 
 const SignUpPage = () => {
@@ -46,7 +48,9 @@ const SignUpPage = () => {
     watch,
     formState: { errors },
     handleSubmit,
-  } = useForm<IForm>();
+  } = useForm<IForm>({
+    criteriaMode: 'all',
+  });
 
   /** email 현재값 (중복확인시 사용)*/
   const input_email = useRef<string | null>(null);
@@ -232,10 +236,21 @@ const SignUpPage = () => {
                   <S.Input
                     width={285}
                     {...register('nickname', {
-                      required: true,
-                      pattern: nicknameRegExp,
-                      minLength: 2,
-                      maxLength: 12,
+                      required:
+                        '닉네임은 한글 또는 영문을 띄어쓰기 없이 사용해야 합니다',
+                      pattern: {
+                        value: nicknameRegExp,
+                        message:
+                          '닉네임은 한글 또는 영문을 띄어쓰기 없이 사용해야 합니다',
+                      },
+                      minLength: {
+                        value: 2,
+                        message: '닉네임은 2자 이상 12자 이하여야 합니다',
+                      },
+                      maxLength: {
+                        value: 12,
+                        message: '닉네임은 2자 이상 12자 이하여야 합니다',
+                      },
                       onChange: () => setNoNicknameDuplBtnClickedSubmit(true),
                     })}
                   />
@@ -247,15 +262,19 @@ const SignUpPage = () => {
                     중복확인
                   </S.ButtonSpan>
                 </div>
-                {errors.nickname && errors.nickname.type === 'pattern' && (
-                  <p>닉네임은 한글 또는 영문을 띄어쓰기 없이 사용해야 합니다</p>
-                )}
-                {errors.nickname && errors.nickname.type === 'minLength' && (
-                  <p>닉네임은 2자 이상 12자 이하여야 합니다</p>
-                )}
-                {errors.nickname && errors.nickname.type === 'maxLength' && (
-                  <p>닉네임은 2자 이상 12자 이하여야 합니다</p>
-                )}
+                <ErrorMessage
+                  errors={errors}
+                  name="nickname"
+                  render={({ messages }) => {
+                    console.log('messages', messages);
+                    return (
+                      messages &&
+                      Object.entries(messages).map(([type, message]) => (
+                        <p key={type}>{message}</p>
+                      ))
+                    );
+                  }}
+                />
                 {noNicknameDuplBtnClickedSubmit ? (
                   submitClicked === true ? (
                     <p>중복확인을 해주세요</p>
