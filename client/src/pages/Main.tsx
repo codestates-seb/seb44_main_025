@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { CarouselList, ArtistList } from '../zustand/mainapi';
 import axios from 'axios';
+import { getCookie } from '../utils/Cookie';
+import NavLogin from '../components/Navs/NavLogin';
 
 const Main = () => {
   const { setCarouselData } = CarouselList();
@@ -66,7 +68,7 @@ const Main = () => {
           <Artistmain />
         </S.Container>
       </S.Main>
-      <NavMypage />
+      {getCookie('token') ? <NavMypage /> : <NavLogin />}
     </>
   );
 };
