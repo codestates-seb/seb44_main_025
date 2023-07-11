@@ -1,23 +1,31 @@
-import { styled } from 'styled-components';
-import { ButtonWithArrowLight } from '../Buttons/Buttons';
+import { styled } from "styled-components";
+import { ButtonWithArrowLight } from "../Buttons/Buttons";
 
+import reactDom from "react-dom";
 interface Props {
   onClick: React.MouseEventHandler<HTMLElement>;
 }
 
+export const ModalPortal = ({ children }: { children: any }) => {
+  const el = document.getElementById("modal");
+  return reactDom.createPortal(children, el);
+};
+
 export default function NoTicketModal({ onClick }: Props) {
   return (
-    <S.ModalOverlay onClick={onClick}>
-      <S.TicketModal>
-        <S.TicketImg>
-          <S.Ticketcontent>예약한 공연이 없어요...</S.Ticketcontent>
-        </S.TicketImg>
-        <S.TicketDetail>
-          {/* 버튼 클릭시 공연 페이지로 이동 */}
-          <ButtonWithArrowLight text={'공연예약'}></ButtonWithArrowLight>
-        </S.TicketDetail>
-      </S.TicketModal>
-    </S.ModalOverlay>
+    <ModalPortal>
+      <S.ModalOverlay onClick={onClick}>
+        <S.TicketModal>
+          <S.TicketImg>
+            <S.Ticketcontent>예약한 공연이 없어요...</S.Ticketcontent>
+          </S.TicketImg>
+          <S.TicketDetail>
+            {/* 버튼 클릭시 공연 페이지로 이동 */}
+            <ButtonWithArrowLight text={"공연예약"}></ButtonWithArrowLight>
+          </S.TicketDetail>
+        </S.TicketModal>
+      </S.ModalOverlay>
+    </ModalPortal>
   );
 }
 

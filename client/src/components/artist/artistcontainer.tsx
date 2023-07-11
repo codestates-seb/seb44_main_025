@@ -1,33 +1,42 @@
-import { styled } from 'styled-components';
-import Img from '../.././images/우리사랑이대로.jpeg';
+import { styled } from "styled-components";
+import Img from "../.././images/우리사랑이대로.jpeg";
+import { FontStyle } from "../theme";
+import DgText from "../Text";
 
 export default function Artistmain() {
   return (
     <S.ArtistpreviewMain>
-      <S.Subtitle>이번에 함께할 아티스트예요!</S.Subtitle>
+      <DgText
+        type={"largeMedium"}
+        style={{
+          marginBottom: 20,
+        }}
+      >
+        이번에 함께할 아티스트예요!
+      </DgText>
       <S.ArtistpreviewContainer>
         <S.ArtistpreviewWrapper>
           <S.ArtistImg src={Img} />
           <S.ArtistDetail>
-            <S.Artistcontent>아티스트명</S.Artistcontent>
+            <DgText type={"smallRegular"}>아티스트명</DgText>
           </S.ArtistDetail>
         </S.ArtistpreviewWrapper>
         <S.ArtistpreviewWrapper>
           <S.ArtistImg src={Img} />
           <S.ArtistDetail>
-            <S.Artistcontent>아티스트명</S.Artistcontent>
+            <DgText type={"smallRegular"}>아티스트명</DgText>
           </S.ArtistDetail>
         </S.ArtistpreviewWrapper>
         <S.ArtistpreviewWrapper>
           <S.ArtistImg src={Img} />
           <S.ArtistDetail>
-            <S.Artistcontent>아티스트명</S.Artistcontent>
+            <DgText type={"smallRegular"}>아티스트명</DgText>
           </S.ArtistDetail>
         </S.ArtistpreviewWrapper>
         <S.ArtistpreviewWrapper>
           <S.ArtistImg src={Img} />
           <S.ArtistDetail>
-            <S.Artistcontent>아티스트명</S.Artistcontent>
+            <DgText type={"smallRegular"}>아티스트명</DgText>
           </S.ArtistDetail>
         </S.ArtistpreviewWrapper>
       </S.ArtistpreviewContainer>
@@ -39,13 +48,6 @@ const S = {
   ArtistpreviewMain: styled.div`
     width: 360px;
     height: 160px;
-  `,
-  Subtitle: styled.header`
-    font-size: var(--p-large-medium-font-size);
-    font-weight: var(--p-large-medium-font-weight);
-    line-height: var(--p-large-medium-line-height);
-    color: var(--font-light-white-color);
-    margin-bottom: 20px;
   `,
   ArtistpreviewContainer: styled.div`
     width: 360px;
@@ -67,11 +69,5 @@ const S = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  `,
-  Artistcontent: styled.p`
-    font-size: var(--p-small-regular-font-size);
-    font-weight: var(--p-small-regular-font-weight);
-    line-height: var(--p-small-regular-line-height);
-    color: var(--font-light-white-color);
   `,
 };

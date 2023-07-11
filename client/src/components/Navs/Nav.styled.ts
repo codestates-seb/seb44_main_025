@@ -1,10 +1,8 @@
-import { styled } from 'styled-components';
+import { styled } from "styled-components";
+import { AlignedRow, CenteredRow } from "../row/Row";
 
 const S = {
-  Div: styled.div`
-    display: flex;
-    justify-content: center;
-
+  Div: styled(CenteredRow)`
     height: 50px;
     position: sticky;
     bottom: 0;
@@ -30,10 +28,8 @@ const S = {
     font-weight: var(--nav-font-weight);
     line-height: var(--nav-line-height);
   `,
-  GroupDiv: styled.div`
-    display: flex;
+  GroupDiv: styled(AlignedRow)`
     flex-flow: column;
-    align-items: center;
     width: 80px;
     cursor: pointer;
   `,

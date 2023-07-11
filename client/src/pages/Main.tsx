@@ -1,17 +1,17 @@
-import { styled } from 'styled-components';
-import MainPageButton from '../components/Buttons/MainPageButton';
-import HeaderLogoST from '../components/Header/HeaderLogoST';
-import CarouselLogic from '../components/Carousel/CarouselLogic';
-import { Input } from '../components/Inputs/Inputs';
-import Slogan from '../components/Slogan/Slogan';
-import Artistmain from '../components/artist/artistmain';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { CarouselList, ArtistList } from '../zustand/mainapi';
-import axios from 'axios';
-import { getCookie } from '../utils/Cookie';
-import NavLogin from '../components/Navs/NavLogin';
-import NavMypage from '../components/Navs/NavMypage';
+import { styled } from "styled-components";
+import MainPageButton from "../components/Buttons/MainPageButton";
+import HeaderLogoST from "../components/Header/HeaderLogoST";
+import CarouselLogic from "../components/Carousel/CarouselLogic";
+import { Input } from "../components/Inputs/Inputs";
+import Slogan from "../components/Slogan/Slogan";
+import Artistmain from "../components/artist/artistmain";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { CarouselList, ArtistList } from "../zustand/mainapi";
+import axios from "axios";
+import { getCookie } from "../utils/Cookie";
+import NavLogin from "../components/Navs/NavLogin";
+import NavMypage from "../components/Navs/NavMypage";
 
 const Main = () => {
   const { setCarouselData } = CarouselList();
@@ -20,7 +20,7 @@ const Main = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/dummy/main.json');
+        const response = await axios.get("/dummy/main.json");
         setCarouselData(response.data.performances);
         setArtistData(response.data.artists);
       } catch (error) {
@@ -36,6 +36,16 @@ const Main = () => {
       <S.Main>
         <S.Container>
           <Slogan />
+          <Input
+            placeholder={"placeholder"}
+            theme={"light"}
+            height={30}
+            width={170}
+            label={"Label"}
+            icon={true}
+            value={""}
+            setValue={() => console.log(1)}
+          />
           <CarouselLogic />
           <S.MiddlePart>
             <Input height={30} placeholder="검색..." icon={true} />
@@ -68,7 +78,7 @@ const Main = () => {
           <Artistmain />
         </S.Container>
       </S.Main>
-      {getCookie('token') ? <NavMypage /> : <NavLogin />}
+      {getCookie("token") ? <NavMypage /> : <NavLogin />}
     </>
   );
 };

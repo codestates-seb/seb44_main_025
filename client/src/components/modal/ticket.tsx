@@ -1,25 +1,37 @@
-import { styled } from 'styled-components';
-import Img from '../.././images/우리사랑이대로.jpeg';
+import { styled } from "styled-components";
+import Img from "../.././images/우리사랑이대로.jpeg";
+import { ModalPortal } from "./noticket";
+import { ReactChildren, ReactNode } from "react";
 
 interface Props {
-  onClick: React.MouseEventHandler<HTMLElement>;
+  title?: string;
+  content?: ReactNode;
+  onModalClose: React.MouseEventHandler<HTMLElement>;
+  visible: boolean;
+  children?: ReactChildren;
 }
 
-export default function TicketModal({ onClick }: Props) {
-  return (
-    <S.ModalOverlay onClick={onClick}>
-      <S.TicketModal>
-        <S.TicketImg src={Img} />
-        <S.TicketDetail>
-          <S.TicketTitle>우리 사랑 이대로</S.TicketTitle>
-          <S.Ticketcontent>YD choe</S.Ticketcontent>
-          <S.Ticketcontent>신촌역 2번 출구</S.Ticketcontent>
-          <S.Ticketcontent>2023.08.03</S.Ticketcontent>
-          <S.Ticketcontent>₩10,000</S.Ticketcontent>
-        </S.TicketDetail>
-      </S.TicketModal>
-    </S.ModalOverlay>
-  );
+export default function TicketModal({
+  children,
+  title,
+  visible,
+  onModalClose,
+  content,
+}: Props) {
+  return visible ? (
+    <ModalPortal>
+      <S.ModalOverlay onClick={onModalClose}>
+        <S.TicketModal>
+          <S.TicketImg src={Img} />
+          <S.TicketDetail>
+            <S.TicketTitle>{title}</S.TicketTitle>
+
+            <S.Ticketcontent>{content}</S.Ticketcontent>
+          </S.TicketDetail>
+        </S.TicketModal>
+      </S.ModalOverlay>
+    </ModalPortal>
+  ) : null;
 }
 
 const S = {

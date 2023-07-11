@@ -1,6 +1,7 @@
-import { styled } from 'styled-components';
-import Img from '../.././images/우리사랑이대로.jpeg';
-import { ButtonHighlight, ButtonWhite } from '../Buttons/Buttons';
+import { styled } from "styled-components";
+import Img from "../.././images/우리사랑이대로.jpeg";
+import { ButtonHighlight, ButtonWhite } from "../Buttons/Buttons";
+import { ModalPortal } from "./noticket";
 
 interface Props {
   onClick: React.MouseEventHandler<HTMLElement>;
@@ -8,23 +9,25 @@ interface Props {
 
 export default function ReservationModal() {
   return (
-    <S.ModalOverlay>
-      <S.TicketModal>
-        <S.TicketImg src={Img} />
-        <S.TicketDetail>
-          <S.TicketTitle>우리 사랑 이대로</S.TicketTitle>
-          <S.Ticketcontent>YD choe</S.Ticketcontent>
-          <S.Ticketcontent>신촌역 2번 출구</S.Ticketcontent>
-          <S.Ticketcontent>2023.08.03</S.Ticketcontent>
-          <S.Ticketcontent>₩10,000</S.Ticketcontent>
-          <S.TicketMessage>예약하시겠습니까?</S.TicketMessage>
-        </S.TicketDetail>
-        <S.TicketButtons>
-          <ButtonHighlight>취소</ButtonHighlight>
-          <ButtonWhite>결제</ButtonWhite>
-        </S.TicketButtons>
-      </S.TicketModal>
-    </S.ModalOverlay>
+    <ModalPortal>
+      <S.ModalOverlay>
+        <S.TicketModal>
+          <S.TicketImg src={Img} />
+          <S.TicketDetail>
+            <S.TicketTitle>우리 사랑 이대로</S.TicketTitle>
+            <S.Ticketcontent>YD choe</S.Ticketcontent>
+            <S.Ticketcontent>신촌역 2번 출구</S.Ticketcontent>
+            <S.Ticketcontent>2023.08.03</S.Ticketcontent>
+            <S.Ticketcontent>₩10,000</S.Ticketcontent>
+            <S.TicketMessage>예약하시겠습니까?</S.TicketMessage>
+          </S.TicketDetail>
+          <S.TicketButtons>
+            <ButtonHighlight>취소</ButtonHighlight>
+            <ButtonWhite>결제</ButtonWhite>
+          </S.TicketButtons>
+        </S.TicketModal>
+      </S.ModalOverlay>
+    </ModalPortal>
   );
 }
 

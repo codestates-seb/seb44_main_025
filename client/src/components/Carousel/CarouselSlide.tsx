@@ -1,6 +1,6 @@
-import { styled } from 'styled-components';
-import { ButtonWithArrowLight } from '../Buttons/Buttons';
-import { Link } from 'react-router-dom';
+import { styled } from "styled-components";
+import { ButtonWithArrowLight } from "../Buttons/Buttons";
+import { Link } from "react-router-dom";
 
 type OwnProps = {
   posterImg: string;
@@ -33,9 +33,9 @@ const CarouselSlide: React.FC<OwnProps> = ({
             <S.Concertcontent>{date}</S.Concertcontent>
             <Link
               to={`/performances/${categoryId}`}
-              style={{ textDecorationLine: 'none' }}
+              style={{ textDecorationLine: "none" }}
             >
-              <ButtonWithArrowLight text={'공연예약'}></ButtonWithArrowLight>
+              <ButtonWithArrowLight text={"공연예약"}></ButtonWithArrowLight>
             </Link>
           </S.ConcertDetail>
         </S.ConcertpreviewWrapper>
@@ -71,6 +71,7 @@ const S = {
   ConcertImg: styled.img`
     width: 130px;
     height: 150px;
+    object-fit: cover;
   `,
   ConcertDetail: styled.div`
     margin-left: 10px;

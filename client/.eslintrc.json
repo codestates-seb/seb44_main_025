@@ -20,15 +20,15 @@
   },
   "plugins": ["react", "@typescript-eslint", "eslint-plugin-prettier"],
   "rules": {
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": true,
-        "tabWidth": 2,
-        "printWidth": 80,
-        "bracketSpacing": true,
-        "arrowParens": "avoid"
-      }
+    "prettier/prettier": [1
+//      "error",
+//      {
+//        "singleQuote": true,
+//        "tabWidth": 2,
+//        "printWidth": 80,
+//        "bracketSpacing": true,
+//        "arrowParens": "avoid"
+//      }
     ],
     "react/react-in-jsx-scope": "off",
     "spaced-comment": "error",
