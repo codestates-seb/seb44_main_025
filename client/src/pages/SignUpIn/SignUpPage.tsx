@@ -27,7 +27,6 @@ interface IForm {
   password: string;
   password_confirm: string;
   nickname: string;
-  multipleErrorInput: string;
 }
 
 const SignUpPage = () => {
