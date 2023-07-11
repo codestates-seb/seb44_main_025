@@ -1,16 +1,15 @@
 package com.codestates.category;
 
 import com.codestates.artist.Artist;
-import com.codestates.performance.Performance;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 import java.util.List;
-
+@CrossOrigin
 @Entity
 @Getter
 @Setter

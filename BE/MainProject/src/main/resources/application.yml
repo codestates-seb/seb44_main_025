@@ -13,10 +13,10 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
+servlet:
+  multipart:
+    max-file-size: 10MB
+    max-request-size: 10MB
 cloud:
   aws:
     credentials:

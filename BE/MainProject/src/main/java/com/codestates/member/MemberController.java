@@ -14,7 +14,7 @@ import javax.validation.constraints.Positive;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/member")
 @Validated
