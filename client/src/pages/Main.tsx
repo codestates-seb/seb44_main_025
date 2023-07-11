@@ -4,7 +4,6 @@ import HeaderLogoST from '../components/Header/HeaderLogoST';
 import CarouselLogic from '../components/Carousel/CarouselLogic';
 import { Input } from '../components/Inputs/Inputs';
 import Slogan from '../components/Slogan/Slogan';
-import NavMypage from '../components/Navs/NavMypage';
 import Artistmain from '../components/artist/artistmain';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
