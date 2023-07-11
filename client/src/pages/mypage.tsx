@@ -10,13 +10,18 @@ import ArtistreviewContainer from '../components/artist/artistreviewcontainer';
 import Review from '../components/review/review';
 import Footer from '../components/footer';
 import NavMypage from '../components/Navs/NavMypage';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Img from '.././images/우리사랑이대로.jpeg';
 import { removeCookie } from '../utils/Cookie';
 
 export default function Mypage() {
+  const navigate = useNavigate();
+
+  /** 로그아웃 및 main으로 페이지 이동 */
   const logoutHandler = () => {
     removeCookie('token');
+    alert('[로그아웃 성공] 로그아웃 되었습니다');
+    navigate('/');
   };
 
   return (
