@@ -1,10 +1,14 @@
 package com.codestates.artist.dto;
 
-
+import com.codestates.category.Category;
+import com.codestates.member.Member;
+import com.codestates.snslink.SnsLink;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Getter

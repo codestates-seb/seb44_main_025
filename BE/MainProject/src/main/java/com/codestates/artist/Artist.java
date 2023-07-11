@@ -2,6 +2,7 @@ package com.codestates.artist;
 
 import com.codestates.category.Category;
 import com.codestates.member.Member;
+import com.codestates.performance.entity.PerformanceArtist;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,6 +38,8 @@ public class Artist {
     private String content;
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+    @OneToMany(mappedBy = "artist")
+    private List<PerformanceArtist> performanceArtists;
 
 
 

@@ -1,6 +1,7 @@
 package com.codestates.category;
 
 import com.codestates.artist.Artist;
+import com.codestates.performance.entity.Performance;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,9 @@ public class Category {
     @JsonManagedReference
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Artist> artists;
+
+    @OneToMany(mappedBy = "category")
+    private List<Performance> performances;
 
 
     public Category(String category)
