@@ -26,7 +26,6 @@ public class PerformanceServiceImpl implements PerformanceService{
 
     @Override
     public Performance updatePerformance(Performance performance) {
-        log.info(performance.toString());
         Performance findPerformance = findVerifyPerformance(performance.getPerformanceId());
 
         Optional.ofNullable(performance.getTitle())

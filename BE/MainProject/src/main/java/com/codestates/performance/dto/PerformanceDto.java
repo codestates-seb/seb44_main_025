@@ -43,6 +43,10 @@ public class PerformanceDto {
         public void setPerformanceId(long performanceId) {
             this.performanceId = performanceId;
         }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
     }
 
     @Getter

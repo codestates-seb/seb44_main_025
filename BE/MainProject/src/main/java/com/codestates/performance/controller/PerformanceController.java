@@ -38,7 +38,7 @@ public class PerformanceController {
     /* 공연 생성 */
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity postPerformance(@RequestPart PerformanceDto.Post performanceDto,
-                                          @RequestPart("image_file") MultipartFile imageFile) throws IOException {
+                                          @RequestPart("image-file") MultipartFile imageFile) throws IOException {
         String imageUrl = imageUploadService.imageUpload(imageFile);
         performanceDto.setImageUrl(imageUrl);
 
@@ -51,7 +51,11 @@ public class PerformanceController {
     /* 공연 수정 */
     @PatchMapping("/{performance-id}")
     public ResponseEntity patchPerformance(@PathVariable("performance-id") @Positive long performanceId,
-                                           @RequestPart @Valid PerformanceDto.Patch performanceDto) {
+                                           @RequestPart("image-file") MultipartFile imageFile,
+                                           @RequestPart @Valid PerformanceDto.Patch performanceDto) throws IOException {
+        String imageUrl = imageUploadService.imageUpload(imageFile);
+        performanceDto.setImageUrl(imageUrl);
+
         performanceDto.setPerformanceId(performanceId);
         Performance performance = performanceService.updatePerformance(mapper.performancePatchDtoToPerformance(performanceDto, categoryService, artistService));
         return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(performance)), HttpStatus.OK);
