@@ -2,16 +2,30 @@ import { styled } from 'styled-components';
 import { ButtonWithArrowDark } from '../Buttons/Buttons';
 import Img from '../.././images/우리사랑이대로.jpeg';
 
-export default function Concertpreview() {
+interface ConcertPreviewPropTypes {
+  posterImg: string;
+  title: string;
+  artistname: string;
+  category: string;
+  price: number;
+  date: string;
+  categoryId: number;
+  artistId?: number;
+  place?: string;
+  totalSeat?: number;
+  imageUrl?: string;
+}
+
+export default function Concertpreview(props: ConcertPreviewPropTypes) {
   return (
     <S.ConcertpreviewWrapper>
-      <S.ConcertImg src={Img} />
+      <S.ConcertImg src={props.posterImg || Img} />
       <S.ConcertDetail>
-        <S.ConcertTitle>우리 사랑 이대로</S.ConcertTitle>
-        <S.Concertcontent>규현&은지</S.Concertcontent>
-        <S.Concertcontent>Pop</S.Concertcontent>
-        <S.Concertcontent>₩ 10,000</S.Concertcontent>
-        <S.Concertcontent>2023.08.03</S.Concertcontent>
+        <S.ConcertTitle>{props.title || '타이틀'}</S.ConcertTitle>
+        <S.Concertcontent>{props.artistname || '아티스트명'}</S.Concertcontent>
+        <S.Concertcontent>{props.category || '장르'}</S.Concertcontent>
+        <S.Concertcontent>{props.price || '가격'}</S.Concertcontent>
+        <S.Concertcontent>{props.date || '날짜'}</S.Concertcontent>
         <ButtonWithArrowDark text={'예약취소'}></ButtonWithArrowDark>
       </S.ConcertDetail>
     </S.ConcertpreviewWrapper>
