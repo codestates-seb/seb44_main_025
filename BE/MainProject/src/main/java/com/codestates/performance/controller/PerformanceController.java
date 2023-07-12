@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.util.List;
@@ -45,6 +46,15 @@ public class PerformanceController {
         Performance response = performanceService.createPerformance(performance);
 
         return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(response)), HttpStatus.CREATED);
+    }
+
+    /* 공연 수정 */
+    @PatchMapping("/{performance-id}")
+    public ResponseEntity patchPerformance(@PathVariable("performance-id") @Positive long performanceId,
+                                           @RequestPart @Valid PerformanceDto.Patch performanceDto) {
+        performanceDto.setPerformanceId(performanceId);
+        performanceService.updatePerformance(mapper.performancePatchDtoToPerformance(performanceDto, categoryService, artistService));
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /* 공연 전체 조회 */

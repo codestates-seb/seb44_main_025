@@ -28,6 +28,25 @@ public class PerformanceDto {
 
     @Getter
     @AllArgsConstructor
+    public class Patch {
+        private long performanceId;
+        private String title;
+        private List<Long> artistIds;
+        private String content;
+        private String date;
+        private int price;
+        private String place;
+        private int totalSeat;
+        private long categoryId;
+        private String imageUrl;
+
+        public void setPerformanceId(long performanceId) {
+            this.performanceId = performanceId;
+        }
+    }
+
+    @Getter
+    @AllArgsConstructor
     public static class Response {
         private long performanceId;
         private String title;
@@ -40,4 +59,5 @@ public class PerformanceDto {
         private String category;
         private String imageUrl;
     }
+
 }

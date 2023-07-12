@@ -9,4 +9,6 @@ public interface PerformanceService {
     Page<Performance> findPerformances(int page, int size);
 
     void deletePerformance(long performanceId);
+
+    Performance updatePerformance(Performance performance);
 }

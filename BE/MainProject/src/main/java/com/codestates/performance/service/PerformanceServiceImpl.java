@@ -5,6 +5,7 @@ import com.codestates.global.exception.ExceptionCode;
 import com.codestates.performance.entity.Performance;
 import com.codestates.performance.repository.PerformanceRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PerformanceServiceImpl implements PerformanceService{
@@ -20,6 +22,12 @@ public class PerformanceServiceImpl implements PerformanceService{
     @Override
     public Performance createPerformance(Performance performance) {
         return performanceRepository.save(performance);
+    }
+
+    @Override
+    public Performance updatePerformance(Performance performance) {
+        log.info(performance.toString());
+        return null;
     }
 
     @Override

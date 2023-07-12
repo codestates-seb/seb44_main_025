@@ -46,6 +46,33 @@ public interface PerformanceMapper {
         );
     }
 
+    default Performance performancePatchDtoToPerformance(PerformanceDto.Patch performanceDto,
+                                                         CategoryService categoryService,
+                                                         ArtistService artistService) {
+        List<PerformanceArtist> performanceArtists = performanceDto.getArtistIds()
+                .stream()
+                .map(e->new PerformanceArtist(
+                        new Performance(),
+                        artistService.findArtist(e)
+                )).collect(Collectors.toList());
+
+        Content content = new Content(performanceDto.getContent());
+        LocalDateTime date = LocalDateTime.parse(performanceDto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        Category category = categoryService.findVerifiedCategory(performanceDto.getCategoryId());
+
+        return new Performance(
+                performanceDto.getTitle(),
+                performanceArtists,
+                content,
+                date,
+                performanceDto.getPrice(),
+                performanceDto.getPlace(),
+                performanceDto.getTotalSeat(),
+                category,
+                performanceDto.getImageUrl()
+        );
+    }
+
     default PerformanceDto.Response performanceToPerformanceResponseDto(Performance performance) {
         List<Artist> artist = performance.getPerformanceArtists().stream()
                 .map(e -> e.getArtist()).collect(Collectors.toList());
@@ -63,8 +90,8 @@ public interface PerformanceMapper {
         );
     }
 
-    default List<PerformanceDto.Response> performancesToPerformanceResponseDtos(List<Performance> findPerformance) {
-        return findPerformance.stream()
+    default List<PerformanceDto.Response> performancesToPerformanceResponseDtos(List<Performance> performances) {
+        return performances.stream()
                 .map(data->new PerformanceDto.Response(
                         data.getPerformanceId(),
                         data.getTitle(),
