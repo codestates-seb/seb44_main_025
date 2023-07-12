@@ -28,13 +28,12 @@ public class ReservationService {
     }
 
     // 예약 생성
-    public Reservation.ReservationStatus createReservation(ReservationDto.ReservationRequestDto reservationRequestDto) throws AccessDeniedException {
+    public ReservationDto.ReservationResponseDto createReservation(ReservationDto.ReservationRequestDto reservationRequestDto) throws AccessDeniedException {
         // 예약 정보를 생성하고 저장
-        Reservation reservation = new Reservation();
-        reservation.setPerformanceId(reservationRequestDto.getPerformanceId());
-        reservation.setMemberId(reservationRequestDto.getMemberId());
-        reservation.setNickName(reservationRequestDto.getNickName());
-        reservation.setReservationStatus(Reservation.ReservationStatus.PENDING);
+        // 해당 DTO를 Reservation 엔티티로 변환하여 예약 정보를 생성하고 저장
+        Reservation reservation = reservationMapper.reservationRequestDtoToReservation(reservationRequestDto);
+        // getMemberId()); // jwt 후 레포지스토리 - findbyid
+        reservation.setReservationStatus(Reservation.ReservationStatus.WAITING);
 
         Performance performance = performanceRepository.findById(reservationRequestDto.getPerformanceId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
@@ -51,7 +50,8 @@ public class ReservationService {
         // 예약 정보 저장
         Reservation savedReservation = reservationRepository.save(reservation);
 
-        return savedReservation.getReservationStatus(); // 예약 상태만 보여주고 있 예약 상세 정보를 보여주는게 좋을까?
+        // 예약 정보를 DTO로 매핑하여 반환
+        return reservationMapper.reservationToReservationResponseDto(savedReservation);
     }
 
     // 예약 조회 및 상세 정보 반환
@@ -61,23 +61,12 @@ public class ReservationService {
         Reservation reservation = optionalReservation.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND));
 
-    // 예약을 ReservatioResponseDto로 변환
-        ReservationDto.ReservationResponseDto responseDto = new ReservationDto.ReservationResponseDto();
-        responseDto.setReservationId(reservation.getReservationId());
-        responseDto.setPerformanceId(reservation.getPerformanceId());
-        responseDto.setMemberId(reservation.getMemberId());
-        responseDto.setNickName(reservation.getNickName());
-        responseDto.setPaymentId(reservation.getPaymentId());
-        responseDto.setDate(reservation.getDate());
-        responseDto.setReservationStatus(reservation.getReservationStatus());
-        responseDto.setPrice(reservation.getPrice());
-
-        return responseDto;
+        return reservationMapper.reservationToReservationResponseDto(reservation);
     }
 
     // 예약 확인 로직 구현
     public ReservationDto.ReservationResponseDto checkReservation(Long reservationId) {
-        // 예약 ID로 예약 정보를 조회하고 예약 상태를 "CONFIRMED"로 변경한 뒤 ReservatioResponseDto로 변환하여 반환하는 코드 작성
+        // 예약 ID로 예약 정보를 조회하고 예약 상태 변경한 뒤 ReservatioResponseDto로 변환하여 반환하는 코드 작성
         // 예약 조회
         Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
         if (reservation == null) {
@@ -85,22 +74,12 @@ public class ReservationService {
             throw new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND);
         }
         // 예약 상태 변경
-        reservation.setReservationStatus(Reservation.ReservationStatus.CONFIRMED);
+        reservation.setReservationStatus(Reservation.ReservationStatus.COMPLETED);
         // 예약 정보 저장
         Reservation savedReservation = reservationRepository.save(reservation);
 
         // ReservatioResponseDto로 변환
-        ReservationDto.ReservationResponseDto responseDto = new ReservationDto.ReservationResponseDto();
-        responseDto.setReservationId(savedReservation.getReservationId());
-        responseDto.setPerformanceId(savedReservation.getPerformanceId());
-        responseDto.setMemberId(savedReservation.getMemberId());
-        responseDto.setNickName(savedReservation.getNickName());
-        responseDto.setPaymentId(savedReservation.getPaymentId());
-        responseDto.setDate(savedReservation.getDate());
-        responseDto.setReservationStatus(savedReservation.getReservationStatus());
-        responseDto.setPrice(savedReservation.getPrice());
-
-        return responseDto;
+        return reservationMapper.reservationToReservationResponseDto(savedReservation);
     }
 
     // 예약 삭제 로직

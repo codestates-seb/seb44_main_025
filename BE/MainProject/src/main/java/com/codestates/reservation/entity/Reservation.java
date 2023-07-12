@@ -37,11 +37,8 @@ public class Reservation {
 
     @Getter
     public enum ReservationStatus {
-        PENDING("Pending"), // 대기 중 - 예약이 아직 처리되지 않은 상태
-        CONFIRMED("Confirmed"), // 확인된 상태를 - 예약이 확인되고 처리된 상태
-        // 예약이 접수되었으나 아직 필요한 작업(결제, 자원 예약 등)이 진행 중이거나 아직 완료되지않았을 수 있을 때의 상태
+        WAITING("Waiting"), // 대기 중 - 예약은 되었으나 결제 완료 단계 전 (최종 결제 확인중)
         // 결제 여부를 따로 확인하는 과정이 필요
-        CANCELLED("Cancelled"), // 취소된 상태 -  예약이 취소된 상태
         COMPLETED("Completed"); //완료된 상태 - 예약이 정상적으로 완료된 상태
         // 예약 확인, 결제, 좌석 선택 등등 모든 완료가 되었을때 최종 완료
         private String status;
