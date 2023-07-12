@@ -36,6 +36,25 @@ const ButtonMiniToggle = styled.button<ButtonMiniTogglePropType>`
       ? 'var(--font-white-color)'
       : 'var(--font-light-white-color)'};
 `;
+export const ButtonMiniToggleSelect = styled.button`
+  cursor: pointer;
+  width: 40px;
+  height: 34px;
+  background-color: var(--button-highlight-background-color);
+  border: none;
+  border-radius: 100px;
+  color: var(--font-white-color);
+`;
+export const ButtonMiniToggleUnselect = styled.button`
+  cursor: pointer;
+  width: 40px;
+  height: 34px;
+  background-color: var(--theme-background-color);
+  border: 1.5px solid var(--button-primary-border-color);
+  border-radius: 100px;
+  color: var(--font-light-white-color);
+`;
+
 export const ButtonToggle = ({ text }: { text: string }) => {
   const [isSelected, setIsSelected] = useState(false);
   return (

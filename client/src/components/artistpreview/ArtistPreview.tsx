@@ -1,13 +1,12 @@
 import { styled } from 'styled-components';
 import Img from '../.././images/우리사랑이대로.jpeg';
 import { useNavigate } from 'react-router-dom';
-import { ButtonWithArrowDark } from '../Buttons/Buttons';
+import { ButtonWithArrowDark } from '../buttons/Buttons';
 
 interface ArtistPreviewPropTypes {
   imgurl: string;
   nickname: string;
   snsLink: string[];
-  date: Date;
   id: number;
 }
 export default function ArtistPreview(props: ArtistPreviewPropTypes) {

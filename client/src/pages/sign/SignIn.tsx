@@ -1,8 +1,8 @@
 import S from './Sign.styled';
-import HeaderOnlyP from '../../components/Header/HeaderOnlyP';
-import { ButtonPrimary160px } from '../../components/Buttons/Buttons';
+import HeaderOnlyP from '../../components/header/HeaderOnlyP';
+import { ButtonPrimary160px } from '../../components/buttons/Buttons';
 import axios from 'axios';
-import PageMovement from '../../components/Sign/PageMovement';
+import PageMovement from '../../components/sign/PageMovement';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';

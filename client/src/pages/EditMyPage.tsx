@@ -1,15 +1,15 @@
 import { styled } from 'styled-components';
-import HeaderOnlyP from '../components/Header/HeaderOnlyP';
+import HeaderOnlyP from '../components/header/HeaderOnlyP';
 import {
   ButtonPrimary75px,
   ButtonHighlightBorder,
-} from '../components/Buttons/Buttons';
+} from '../components/buttons/Buttons';
 import {
   Input,
   InputWithButton,
   InputSuccess,
   InputWarning,
-} from '../components/Inputs/Inputs';
+} from '../components/inputs/Inputs';
 import { useState } from 'react';
 import Img from '.././images/우리사랑이대로.jpeg';
 import { Link } from 'react-router-dom';
