@@ -59,6 +59,7 @@ export default function Artistpage() {
     const fetchData = async () => {
       try {
         // 아티스트 등록했을때 응답으로 오는 아티스트Id를 filter값으로 넣기
+        // 아티스트 등록하면 그 정보가 돌아오고 그 안에 아티스트아이디 있고 그거를 아티스트페이지 주소 뒤에 붙여줌 그리고 페이지 전환을 시켜줌 :/artistid
         const response = await axios.get('http://localhost:5000/artist');
         const responseperformance = await axios.get(
           '/dummy/performancelist.json'
