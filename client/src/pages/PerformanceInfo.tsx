@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import HeaderOnlyP from '../components/header/HeaderOnlyP';
+import Header from '../components/header/Header';
 import {
   ButtonMini,
   ButtonPrimary160px,
@@ -7,8 +7,7 @@ import {
 } from '../components/buttons/Buttons';
 import ArtistContainer from '../components/artist/artistcontainer';
 import Review from '../components/review/Review';
-import NavLogin from '../components/navs/NavLogin';
-import NavMypage from '../components/navs/NavMypage';
+import Navbar from '../components/nav/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { useEditorStore } from '../components/inputs/editor/EditorStore';
 import { EditorReadOnly } from '../components/inputs/editor/Editor';
@@ -128,7 +127,7 @@ const PerformanceInfo = () => {
   const isStale = true;
   return (
     <>
-      <HeaderOnlyP />
+      <Header precious={true} />
       <S.Container>
         <S.Main>
           <S.CategoryContainer>
@@ -191,7 +190,7 @@ const PerformanceInfo = () => {
           </S.BottomStickyContainer>
         </S.Main>
       </S.Container>
-      {isLoggedIn ? <NavMypage /> : <NavLogin />}
+      <Navbar />
     </>
   );
 };

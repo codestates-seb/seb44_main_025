@@ -1,35 +1,20 @@
 import { styled } from 'styled-components';
 
 interface StyleDivProps {
-  btnh: 140 | 60;
-  backimgurl: string;
-}
-interface OwnProps {
-  btnH: 140 | 60;
-  btnImgUrl: string;
-  btnText: string;
+  height: 140 | 60;
+  imageurl: string;
 }
 
-const MainPageButton = ({ btnH, btnImgUrl, btnText }: OwnProps) => {
-  return (
-    <>
-      <S.Container btnh={btnH} backimgurl={btnImgUrl}>
-        <S.Span>{btnText}</S.Span>
-      </S.Container>
-    </>
-  );
-};
-
-const S = {
+export const Styled_HomePageButton = {
   Container: styled.div<StyleDivProps>`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 170px;
-    height: ${props => props.btnh}px;
+    height: ${props => props.height}px;
     border-radius: 15px;
     background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-      url(${props => props.backimgurl});
+      url(${props => props.imageurl});
     background-size: cover;
     background-position: center;
     cursor: pointer;
@@ -38,5 +23,3 @@ const S = {
     color: var(--font-white-color);
   `,
 };
-
-export default MainPageButton;

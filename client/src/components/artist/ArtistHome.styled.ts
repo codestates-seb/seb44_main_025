@@ -1,44 +1,6 @@
 import { styled } from 'styled-components';
-import { ArtistList } from '../../zustand/mainapi';
-import { Link } from 'react-router-dom';
 
-interface Artist {
-  nickname: string;
-  imageUrl: string;
-  artistId: number;
-}
-
-export default function Artistmain() {
-  const { artistData } = ArtistList();
-  return (
-    <S.ArtistpreviewMain>
-      <S.Subtitle>Ez to Play에서 활동중인 아티스트예요!</S.Subtitle>
-      <Link to="/artists">
-        <S.veiwAll>전체보기</S.veiwAll>
-      </Link>
-      <S.ArtistpreviewContainer>
-        {artistData.map((v: Artist, i) => {
-          return (
-            <Link
-              to={`/artistpage/${v.artistId}`}
-              style={{ textDecorationLine: 'none' }}
-              key={i}
-            >
-              <S.ArtistpreviewWrapper>
-                <S.ArtistImg src={v.imageUrl} />
-                <S.ArtistDetail>
-                  <S.Artistcontent>{v.nickname}</S.Artistcontent>
-                </S.ArtistDetail>
-              </S.ArtistpreviewWrapper>
-            </Link>
-          );
-        })}
-      </S.ArtistpreviewContainer>
-    </S.ArtistpreviewMain>
-  );
-}
-
-const S = {
+export const Styled_ArtistHome = {
   ArtistpreviewMain: styled.div`
     width: 390px;
     height: 160px;
@@ -82,11 +44,16 @@ const S = {
     flex-direction: column;
     align-items: center;
     margin-top: 5px;
+    text-align: center;
   `,
   Artistcontent: styled.p`
     font-size: var(--p-small-regular-font-size);
     font-weight: var(--p-small-regular-font-weight);
     line-height: var(--p-small-regular-line-height);
     color: var(--font-light-white-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
   `,
 };

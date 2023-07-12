@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import HeaderLogoST from '../components/header/HeaderLogoST';
+import Header from '../components/header/Header';
 import {
   ButtonPrimary75px,
   ButtonWithArrowDark,
@@ -9,7 +9,7 @@ import Concertpreview from '../components/concert-preview/ConcertPreview';
 import ArtistreviewContainer from '../components/artist/artistreviewcontainer';
 import Review from '../components/review/Review';
 import Footer from '../components/footer/Footer';
-import NavMypage from '../components/navs/NavMypage';
+import Navbar from '../components/nav/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
 import Img from '.././images/우리사랑이대로.jpeg';
 import { removeCookie } from '../utils/Cookie';
@@ -26,7 +26,7 @@ export default function Mypage() {
 
   return (
     <>
-      <HeaderLogoST />
+      <Header />
       <S.Main>
         <S.Section>
           <S.Title>마이페이지</S.Title>
@@ -87,7 +87,7 @@ export default function Mypage() {
           <Footer />
         </S.Section>
       </S.Main>
-      <NavMypage />
+      <Navbar />
     </>
   );
 }

@@ -4,7 +4,7 @@ interface SignProps {
   width?: 360 | 285;
   mb?: number;
 }
-const S = {
+export const Styled_Sign = {
   H1: styled.h1<SignProps>`
     color: var(--font-white-color);
     font-size: var(--heading1-font-size);
@@ -97,4 +97,3 @@ const S = {
     color: var(--font-primary--color);
   `,
 };
-export default S;

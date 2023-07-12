@@ -6,11 +6,10 @@ import {
   ButtonPrimary75px,
 } from '../components/buttons/Buttons';
 import { TabPerformance } from '../components/tabs/Tabs';
-import NavLogin from '../components/navs/NavLogin';
-import NavMypage from '../components/navs/NavMypage';
+import Navbar from '../components/nav/Navbar';
 import { useNavigate } from 'react-router-dom';
 import ConcertPreview from '../components/concert-preview/ConcertPreview';
-import HeaderLogoST from '../components/header/HeaderLogoST';
+import Header from '../components/header/Header';
 
 const S = {
   Heading1: styled.h1`
@@ -85,7 +84,7 @@ const PerformanceList = () => {
   // TODO: 공연 일정 경과 여부 필터링 로직 추가하기
   return (
     <>
-      <HeaderLogoST />
+      <Header />
       <S.Container>
         <S.Main>
           <S.TitleButtonFlex>
@@ -126,7 +125,7 @@ const PerformanceList = () => {
           </S.PerformanceContainer>
         </S.Main>
       </S.Container>
-      {isLoggedIn ? <NavMypage /> : <NavLogin />}
+      <Navbar />
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import HeaderOnlyP from '../components/header/HeaderOnlyP';
+import Header from '../components/header/Header';
 import { ButtonPrimary75px } from '../components/buttons/Buttons';
 import { Input, InputWithButton } from '../components/inputs/Inputs';
 import { useState } from 'react';
@@ -11,7 +11,7 @@ export default function Artistregist() {
 
   return (
     <>
-      <HeaderOnlyP />
+      <Header precious={true} />
       <S.Main>
         <S.Section>
           <S.Title>아티스트 등록하기</S.Title>

@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-const S = {
+export const Styled_Navbar = {
   Div: styled.div`
     display: flex;
     justify-content: center;
@@ -38,5 +38,3 @@ const S = {
     cursor: pointer;
   `,
 };
-
-export default S;

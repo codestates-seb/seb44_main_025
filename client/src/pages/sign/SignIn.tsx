@@ -1,5 +1,5 @@
-import S from './Sign.styled';
-import HeaderOnlyP from '../../components/header/HeaderOnlyP';
+import { Styled_Sign } from './Sign.styled';
+import Header from '../../components/header/Header';
 import { ButtonPrimary160px } from '../../components/buttons/Buttons';
 import axios from 'axios';
 import PageMovement from '../../components/sign/PageMovement';
@@ -57,16 +57,16 @@ const SignInPage = () => {
 
   return (
     <>
-      <HeaderOnlyP />
-      <S.Main>
-        <S.Container>
-          <S.H1 mb={145}>Ez to 로그인</S.H1>
-          <S.Form onSubmit={handleSubmit(onSubmit)}>
+      <Header precious={true} />
+      <Styled_Sign.Main>
+        <Styled_Sign.Container>
+          <Styled_Sign.H1 mb={145}>Ez to 로그인</Styled_Sign.H1>
+          <Styled_Sign.Form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <div>
                 <label htmlFor="email">이메일</label>
                 <div>
-                  <S.Input
+                  <Styled_Sign.Input
                     width={360}
                     {...register('email', {
                       required: true,
@@ -80,7 +80,7 @@ const SignInPage = () => {
               </div>
               <div>
                 <label htmlFor="password">비밀번호</label>
-                <S.Input
+                <Styled_Sign.Input
                   type="password"
                   {...register('password', {
                     required: true,
@@ -90,15 +90,15 @@ const SignInPage = () => {
               </div>
             </div>
             <ButtonPrimary160px>로그인하기</ButtonPrimary160px>
-          </S.Form>
+          </Styled_Sign.Form>
           <PageMovement
             infoText="아직 계정이 없으신가요?"
             pagelink="/signup"
             linkedText="회원가입"
-            mt={160}
+            marginTop={160}
           />
-        </S.Container>
-      </S.Main>
+        </Styled_Sign.Container>
+      </Styled_Sign.Main>
     </>
   );
 };

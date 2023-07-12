@@ -1,12 +1,12 @@
 import { styled } from 'styled-components';
-import HeaderOnlyP from '../components/header/HeaderOnlyP';
+import Header from '../components/header/Header';
 import { ButtonHighlightBorder } from '../components/buttons/Buttons';
 import { Input, InputSuccess, InputWarning } from '../components/inputs/Inputs';
 
 export default function Cancelpage() {
   return (
     <>
-      <HeaderOnlyP />
+      <Header precious={true} />
       <S.Main>
         <S.Section>
           <S.Title>회원탈퇴</S.Title>

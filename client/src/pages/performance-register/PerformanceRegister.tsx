@@ -1,5 +1,5 @@
 import S from './PerformanceRegister.style';
-import HeaderOnlyP from '../../components/header/HeaderOnlyP';
+import Header from '../../components/header/Header';
 import {
   ButtonMiniToggleSelect,
   ButtonMiniToggleUnselect,
@@ -7,8 +7,7 @@ import {
   ButtonPrimary335px,
 } from '../../components/buttons/Buttons';
 import ArtistContainer from '../../components/artist/artistcontainer';
-import NavLogin from '../../components/navs/NavLogin';
-import NavMypage from '../../components/navs/NavMypage';
+import Navbar from '../../components/nav/Navbar';
 import { Input } from '../../components/inputs/StyledInputs';
 import { Editor } from '../../components/inputs/editor/Editor';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +15,7 @@ import { useRef, useState } from 'react';
 import { useEditorStore } from '../../components/inputs/editor/EditorStore';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { postPerformance } from '../../api/fetchAPI';
+
 // import { isLoggedIn } from '../../zustand/Token';
 interface Inputs {
   title: string;
@@ -73,7 +73,7 @@ const PerformanceRegister = () => {
   const isLoggedIn = true;
   return (
     <>
-      <HeaderOnlyP />
+      <Header precious={true} />
       <S.Container>
         <S.Main>
           <S.CategoryContainer>
@@ -209,7 +209,7 @@ const PerformanceRegister = () => {
             <S.Image /> */}
         </S.Main>
       </S.Container>
-      {isLoggedIn ? <NavMypage /> : <NavLogin />}
+      <Navbar />
     </>
   );
 };
