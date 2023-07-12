@@ -63,11 +63,19 @@ const router = createBrowserRouter([
         element: <Artistpage />,
       },
       {
-        path: '/artistpage',
+        path: '/artist',
         element: <Artistpage />,
       },
       {
-        path: '/mypage/artistpage',
+        path: '/mypage/artist',
+        element: <Artistpage />,
+      },
+      {
+        path: '/artistregist/artist',
+        element: <Artistpage />,
+      },
+      {
+        path: '/mypage/artistregist/artist',
         element: <Artistpage />,
       },
       {
@@ -75,15 +83,15 @@ const router = createBrowserRouter([
         element: <Editmypage />,
       },
       {
-        path: '/mypage/artistregistpage',
+        path: '/mypage/artistregist',
         element: <Artistregist />,
       },
       {
-        path: '/artistregistpage',
+        path: '/artistregist',
         element: <Artistregist />,
       },
       {
-        path: '/mypage/editmypage/cancelpage',
+        path: '/mypage/editmypage/cancel',
         element: <Cancelpage />,
       },
     ],

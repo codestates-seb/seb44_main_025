@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 interface Artistpage {
+  id?: number;
   artistId: number;
   artistname: string;
   imageUrl: string;

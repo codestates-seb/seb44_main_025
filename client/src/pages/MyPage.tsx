@@ -48,10 +48,10 @@ export default function Mypage() {
           {/* 아티스트 미등록 사용자는 아티스트 등록 버튼 */}
           {/* 아티스트를 등록한 사용자는 아티스트 페이지 버튼 */}
           <S.ButtonWarppar>
-            <Link to="artistregistpage">
+            <Link to="artistregist">
               <ButtonWithArrowDark text={'아티스트 등록'}></ButtonWithArrowDark>
             </Link>
-            <Link to="artistpage">
+            <Link to="artist">
               <ButtonWithArrowDark
                 text={'아티스트 페이지'}
               ></ButtonWithArrowDark>

@@ -4,10 +4,37 @@ import { ButtonPrimary75px } from '../components/buttons/Buttons';
 import { Input, InputWithButton } from '../components/inputs/Inputs';
 import { useState } from 'react';
 import Img from '.././images/우리사랑이대로.jpeg';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
+interface bodyType {
+  [x: string]: any;
+}
 
 export default function Artistregist() {
-  const [Artist, SetArtist] = useState('');
-  const [Video, SetVideo] = useState('');
+  const [Artist, setArtist] = useState('');
+  const [Snslink, setSnslink] = useState('');
+  const [Introduction, setIntroduction] = useState('');
+  const [Video, setVideo] = useState('');
+
+  const body = {
+    artistname: Artist,
+    snslink: Snslink,
+    content: Introduction,
+  };
+  // dummy데이터로 저장하기
+  const handleSubmit = async (body: bodyType) => {
+    const data = await axios
+      .post('http://localhost:5000/artist', JSON.stringify(body), {
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .then(data => {
+        return data;
+      })
+      .catch(err => console.error(err));
+
+    return data;
+  };
 
   return (
     <>
@@ -20,26 +47,36 @@ export default function Artistregist() {
           <S.ArtistDetail>
             <S.SubTitle>아티스트 정보</S.SubTitle>
             <S.ButtonWarppar>
-              <ButtonPrimary75px>등록</ButtonPrimary75px>
+              <Link to={'artist'}>
+                <ButtonPrimary75px onClick={() => handleSubmit(body)}>
+                  등록
+                </ButtonPrimary75px>
+              </Link>
             </S.ButtonWarppar>
             <S.InputContainer>
               <S.InputLabel>아티스트</S.InputLabel>
               <InputWithButton
-                value={Artist}
+                // value={Artist}
                 icon={true}
                 width={285}
                 height={30}
                 buttonText={'중복확인'}
+                setValue={setArtist}
               ></InputWithButton>
             </S.InputContainer>
             <S.InputContainer>
               <S.InputLabel>SNS Link</S.InputLabel>
-              <Input height={30}></Input>
+              <Input height={30} setValue={setSnslink}></Input>
             </S.InputContainer>
             <S.InputContainer>
               <S.ArtistIntrodution>
                 <S.InputLabel>아티스트 소개</S.InputLabel>
-                <S.ArtistIntrodutionTextarea />
+                {/* 스타일드 컴포넌트는 value값을 받을 때 onChange로 받기 */}
+                <S.ArtistIntrodutionTextarea
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                    setIntroduction(e.target.value)
+                  }
+                />
               </S.ArtistIntrodution>
             </S.InputContainer>
             <S.InputContainer>
@@ -141,5 +178,6 @@ const S = {
     height: 100px;
     resize: none;
     border-radius: 15px;
+    padding: 10px;
   `,
 };

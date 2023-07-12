@@ -18,6 +18,7 @@ import {
 } from '../zustand/artistpage.stores';
 
 interface Artistpage {
+  id?: number;
   artistId: number;
   artistname: string;
   imageUrl: string;
@@ -57,12 +58,14 @@ export default function Artistpage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/dummy/artistpage.json');
+        // 아티스트 등록했을때 응답으로 오는 아티스트Id를 filter값으로 넣기
+        const response = await axios.get('http://localhost:5000/artist');
         const responseperformance = await axios.get(
           '/dummy/performancelist.json'
         );
         const responsereview = await axios.get('/dummy/review.json');
-        setArtistpageData(response.data.artist);
+        console.log(response.data);
+        setArtistpageData(response.data);
         setPerformanceData(responseperformance.data);
         setReviewData(responsereview.data);
       } catch (error) {
@@ -85,7 +88,7 @@ export default function Artistpage() {
             <S.Title>아티스트페이지</S.Title>
             {/* 로그인한 userId에 맞는 artistId를 보여주는거 */}
             {artistpageData
-              .filter((item: Artistpage) => item.artistId === 1)
+              .filter((item: Artistpage) => item.id === 3)
               .map((el: Artistpage) => {
                 return (
                   <S.ProfileWarppar key={el.artistId}>
@@ -95,7 +98,7 @@ export default function Artistpage() {
                       <S.ArtistContent>{el.artistname}</S.ArtistContent>
                       <S.ArtistContent>{el.snslink}</S.ArtistContent>
                       <S.UserEdit>
-                        <Link to="/artistregistpage">
+                        <Link to="/artistregist">
                           <EditIcon />
                         </Link>
                       </S.UserEdit>
