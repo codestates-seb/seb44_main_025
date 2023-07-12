@@ -8,7 +8,7 @@ import {
 import NavLogin from '../components/Navs/NavLogin';
 import NavMypage from '../components/Navs/NavMypage';
 import { useNavigate } from 'react-router-dom';
-import ConcertPreview from '../components/concertpreview/concertpreview';
+import ConcertPreview from '../components/concert-preview/ConcertPreview';
 import HeaderLogoST from '../components/Header/HeaderLogoST';
 
 const S = {

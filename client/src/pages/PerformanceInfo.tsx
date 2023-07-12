@@ -6,7 +6,7 @@ import {
   ButtonPrimary335px,
 } from '../components/Buttons/Buttons';
 import ArtistContainer from '../components/artist/artistcontainer';
-import Review from '../components/review/review';
+import Review from '../components/review/Review';
 import NavLogin from '../components/Navs/NavLogin';
 import NavMypage from '../components/Navs/NavMypage';
 import { useNavigate } from 'react-router-dom';
