@@ -18,6 +18,7 @@ export default function ArtistHome() {
       <Link to="/artists" style={{ textDecorationLine: 'none' }}>
         <Styled_ArtistHome.veiwAll>전체보기</Styled_ArtistHome.veiwAll>
       </Link>
+
       <Styled_ArtistHome.ArtistpreviewContainer>
         {artistData.map((v: Artist, i) => {
           return (

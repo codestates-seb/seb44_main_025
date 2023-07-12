@@ -40,9 +40,6 @@ export const Styled_ArtistHome = {
   `,
   ArtistDetail: styled.div`
     height: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     margin-top: 5px;
     text-align: center;
   `,
@@ -54,6 +51,5 @@ export const Styled_ArtistHome = {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 100%;
   `,
 };
