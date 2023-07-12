@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import Img from '../.././images/우리사랑이대로.jpeg';
-import { ButtonHighlight, ButtonWhite } from '../Buttons/Buttons';
+import { ButtonHighlight, ButtonWhite } from '../buttons/Buttons';
 
 interface Props {
   onClick: React.MouseEventHandler<HTMLElement>;

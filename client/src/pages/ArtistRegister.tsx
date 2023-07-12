@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
-import HeaderOnlyP from '../components/Header/HeaderOnlyP';
-import { ButtonPrimary75px } from '../components/Buttons/Buttons';
-import { Input, InputWithButton } from '../components/Inputs/Inputs';
+import HeaderOnlyP from '../components/header/HeaderOnlyP';
+import { ButtonPrimary75px } from '../components/buttons/Buttons';
+import { Input, InputWithButton } from '../components/inputs/Inputs';
 import { useState } from 'react';
 import Img from '.././images/우리사랑이대로.jpeg';
 

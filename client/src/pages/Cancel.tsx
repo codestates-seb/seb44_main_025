@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
-import HeaderOnlyP from '../components/Header/HeaderOnlyP';
-import { ButtonHighlightBorder } from '../components/Buttons/Buttons';
-import { Input, InputSuccess, InputWarning } from '../components/Inputs/Inputs';
+import HeaderOnlyP from '../components/header/HeaderOnlyP';
+import { ButtonHighlightBorder } from '../components/buttons/Buttons';
+import { Input, InputSuccess, InputWarning } from '../components/inputs/Inputs';
 
 export default function Cancelpage() {
   return (

@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { ButtonWithArrowLight } from '../Buttons/Buttons';
+import { ButtonWithArrowLight } from '../buttons/Buttons';
 import { Link } from 'react-router-dom';
 
 type OwnProps = {

@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { ButtonWithArrowLight } from '../Buttons/Buttons';
+import { ButtonWithArrowLight } from '../buttons/Buttons';
 
 interface Props {
   onClick: React.MouseEventHandler<HTMLElement>;

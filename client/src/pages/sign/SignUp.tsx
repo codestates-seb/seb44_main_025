@@ -1,10 +1,10 @@
 import S from './Sign.styled';
-import HeaderOnlyP from '../../components/Header/HeaderOnlyP';
-import { ButtonPrimary160px } from '../../components/Buttons/Buttons';
+import HeaderOnlyP from '../../components/header/HeaderOnlyP';
+import { ButtonPrimary160px } from '../../components/buttons/Buttons';
 import { useRef } from 'react';
 import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import PageMovement from '../../components/Sign/PageMovement';
+import PageMovement from '../../components/sign/PageMovement';
 import { ErrorMessage } from '@hookform/error-message';
 import {
   emailRegExp,

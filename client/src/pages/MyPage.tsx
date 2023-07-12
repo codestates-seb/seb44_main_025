@@ -1,65 +1,83 @@
 import { styled } from 'styled-components';
-import HeaderLogoST from '../components/Header/HeaderLogoST';
-import { ButtonWithArrowDark } from '../components/Buttons/Buttons';
+import HeaderLogoST from '../components/header/HeaderLogoST';
+import {
+  ButtonPrimary75px,
+  ButtonWithArrowDark,
+} from '../components/buttons/Buttons';
 import EditIcon from '../icons/EditIcon';
-import Concertpreview from '../components/concertpreview/concertpreview';
+import Concertpreview from '../components/concert-preview/ConcertPreview';
 import ArtistreviewContainer from '../components/artist/artistreviewcontainer';
-import Review from '../components/review/review';
-import Footer from '../components/footer';
-import NavMypage from '../components/Navs/NavMypage';
+import Review from '../components/review/Review';
+import Footer from '../components/footer/Footer';
+import NavMypage from '../components/navs/NavMypage';
+import { Link, useNavigate } from 'react-router-dom';
 import Img from '.././images/우리사랑이대로.jpeg';
-import { Link } from 'react-router-dom';
+import { removeCookie } from '../utils/Cookie';
 
-export default function Artistpage() {
+export default function Mypage() {
+  const navigate = useNavigate();
+
+  /** 로그아웃 및 main으로 페이지 이동 */
+  const logoutHandler = () => {
+    removeCookie('token');
+    alert('[로그아웃 성공] 로그아웃 되었습니다');
+    navigate('/');
+  };
+
   return (
     <>
       <HeaderLogoST />
       <S.Main>
         <S.Section>
-          <S.Title>아티스트페이지</S.Title>
+          <S.Title>마이페이지</S.Title>
+          <S.ButtonWarppar>
+            <ButtonPrimary75px onClick={logoutHandler}>
+              로그아웃
+            </ButtonPrimary75px>
+          </S.ButtonWarppar>
           <S.ProfileImg src={Img} />
           <S.UserImg src={Img} />
-          <S.ArtistDetail>
-            <S.ArtistContent>아티스트</S.ArtistContent>
-            <S.ArtistContent>SNS Link</S.ArtistContent>
+          <S.UserDetail>
+            <S.UserNickname>닉네임</S.UserNickname>
             <S.UserEdit>
-              <Link to="/artistregistpage">
+              <Link to="editmypage">
                 <EditIcon />
               </Link>
             </S.UserEdit>
-          </S.ArtistDetail>
-          <S.ArtistIntrodution>
-            <S.SubTitle>소개</S.SubTitle>
-            <S.ArtistIntrodutionContainer>
-              <S.ArtistContent>안녕하세요~!</S.ArtistContent>
-            </S.ArtistIntrodutionContainer>
-          </S.ArtistIntrodution>
+          </S.UserDetail>
+          {/* 아티스트 미등록 사용자는 아티스트 등록 버튼 */}
+          {/* 아티스트를 등록한 사용자는 아티스트 페이지 버튼 */}
+          <S.ButtonWarppar>
+            <ButtonWithArrowDark text={'아티스트 등록'}></ButtonWithArrowDark>
+            <ButtonWithArrowDark text={'아티스트 페이지'}></ButtonWithArrowDark>
+          </S.ButtonWarppar>
           <S.ConcertpreviewContainer>
-            <S.SubTitle>준비 중인 공연</S.SubTitle>
+            <S.SubTitle>예약 중인 공연</S.SubTitle>
+            <Concertpreview />
             <Concertpreview />
           </S.ConcertpreviewContainer>
           <S.EmptyContainer>
-            <S.SubTitle>준비 중인 공연</S.SubTitle>
+            <S.SubTitle>예약 중인 공연</S.SubTitle>
             <S.EmptyWrapper>
-              <S.EmptyTitle>현재 준비중인 공연이 없습니다.</S.EmptyTitle>
+              <S.EmptyTitle>현재 예약중인 공연이 없습니다.</S.EmptyTitle>
               <ConcertEmptyButton>
-                <ButtonWithArrowDark text="공연등록"></ButtonWithArrowDark>
+                <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
               </ConcertEmptyButton>
             </S.EmptyWrapper>
           </S.EmptyContainer>
-          <S.SubTitle>공연 기록</S.SubTitle>
+          <S.SubTitle>내가 관람한 공연</S.SubTitle>
           <ArtistreviewContainer />
           <S.EmptyContainer>
-            <S.SubTitle>공연 기록</S.SubTitle>
+            <S.SubTitle>내가 관람한 공연</S.SubTitle>
             <S.EmptyWrapper>
-              <S.EmptyTitle>아직 진행한 공연이 없습니다.</S.EmptyTitle>
+              <S.EmptyTitle>아직 관람한 공연이 없습니다.</S.EmptyTitle>
               <ConcertEmptyButton>
-                <ButtonWithArrowDark text="공연등록"></ButtonWithArrowDark>
+                <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
               </ConcertEmptyButton>
             </S.EmptyWrapper>
           </S.EmptyContainer>
           <S.MyreviewContainer>
-            <S.SubTitle>아티스트 후기</S.SubTitle>
+            <S.SubTitle>내가 작성한 후기</S.SubTitle>
             <S.ReviewWrapper>
               <Review />
               <Review />
@@ -123,32 +141,23 @@ const S = {
     background-origin: border-box;
     background-clip: content-box, border-box;
   `,
-  ArtistDetail: styled.div`
+  UserDetail: styled.div`
     display: flex;
-    flex-direction: column;
     margin: 20px 15px 10px 15px;
   `,
-  ArtistContent: styled.p`
-    font-size: var(--p-small-medium-font-size);
-    font-weight: var(--p-small-medium-font-weight);
-    line-height: var(--p-small-medium-line-height);
+  UserNickname: styled.p`
+    font-size: var(--p-large-medium-font-size);
+    font-weight: var(--p-large-medium-font-weight);
+    line-height: var(--p-large-medium-line-height);
     color: var(--font-white-color);
+    width: 390px;
   `,
   UserEdit: styled.div`
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
     cursor: pointer;
     padding-right: 3px;
-    margin-bottom: 20px;
-    margin-top: -50px;
-  `,
-  ArtistIntrodution: styled.div`
-    margin-top: 20px;
-  `,
-  ArtistIntrodutionContainer: styled.div`
-    width: 360px;
-    height: 70px;
-    margin: 0px 15px 0px 15px;
+    margin-bottom: 10px;
   `,
   ConcertpreviewContainer: styled.div``,
   SubTitle: styled.header`
