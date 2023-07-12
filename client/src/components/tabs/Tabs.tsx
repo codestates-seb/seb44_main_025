@@ -21,7 +21,7 @@ const Tab = styled.div`
   align-items: center;
 `;
 
-const TabPage = () => {
+export const TabPage = () => {
   return (
     <Tab>
       <Heading3
@@ -43,7 +43,7 @@ const TabPage = () => {
   );
 };
 
-const TabPerformance = () => {
+export const TabPerformance = () => {
   return (
     <Tab>
       <Heading3

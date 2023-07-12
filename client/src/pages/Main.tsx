@@ -1,15 +1,17 @@
 import { styled } from 'styled-components';
-import MainPageButton from '../components/Buttons/MainPageButton';
-import HeaderLogoST from '../components/Header/HeaderLogoST';
-import CarouselLogic from '../components/Carousel/CarouselLogic';
-import { Input } from '../components/Inputs/Inputs';
-import Slogan from '../components/Slogan/Slogan';
-import NavMypage from '../components/Navs/NavMypage';
+import MainPageButton from '../components/buttons/MainPageButton';
+import HeaderLogoST from '../components/header/HeaderLogoST';
+import CarouselLogic from '../components/carousel/CarouselLogic';
+import { Input } from '../components/inputs/Inputs';
+import Slogan from '../components/slogan/Slogan';
 import Artistmain from '../components/artist/artistmain';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { CarouselList, ArtistList } from '../zustand/mainapi';
 import axios from 'axios';
+import { getCookie } from '../utils/Cookie';
+import NavLogin from '../components/navs/NavLogin';
+import NavMypage from '../components/navs/NavMypage';
 
 const Main = () => {
   const { setCarouselData } = CarouselList();
@@ -66,7 +68,7 @@ const Main = () => {
           <Artistmain />
         </S.Container>
       </S.Main>
-      <NavMypage />
+      {getCookie('token') ? <NavMypage /> : <NavLogin />}
     </>
   );
 };

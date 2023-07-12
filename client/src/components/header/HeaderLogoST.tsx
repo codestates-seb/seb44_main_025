@@ -2,8 +2,8 @@ import SearchIcon from '../../icons/SearchIcon';
 import TicketIcon from '../../icons/TicketIcon';
 import S from './Header.styled';
 import { useState } from 'react';
-import TicketModal from '../modal/ticket';
-import NoTicketModal from '../modal/noticket';
+import TicketModal from '../modal/Ticket';
+import NoTicketModal from '../modal/NoTicket';
 
 const HeaderLogoST = () => {
   const [isOpen, setIsOpen] = useState(false);

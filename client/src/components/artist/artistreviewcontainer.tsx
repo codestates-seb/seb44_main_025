@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import Img from '../.././images/우리사랑이대로.jpeg';
-import { ButtonPrimary75px } from '../Buttons/Buttons';
+import { ButtonPrimary75px } from '../buttons/Buttons';
 
 interface ArtistPreviewPropTypes {
   artistId?: number;

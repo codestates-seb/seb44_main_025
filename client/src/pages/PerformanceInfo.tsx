@@ -1,17 +1,18 @@
 import { styled } from 'styled-components';
-import HeaderOnlyP from '../components/Header/HeaderOnlyP';
+import HeaderOnlyP from '../components/header/HeaderOnlyP';
 import {
   ButtonMini,
   ButtonPrimary160px,
   ButtonPrimary335px,
-} from '../components/Buttons/Buttons';
+} from '../components/buttons/Buttons';
 import ArtistContainer from '../components/artist/artistcontainer';
 import Review from '../components/review/Review';
-import NavLogin from '../components/Navs/NavLogin';
-import NavMypage from '../components/Navs/NavMypage';
+import NavLogin from '../components/navs/NavLogin';
+import NavMypage from '../components/navs/NavMypage';
 import { useNavigate } from 'react-router-dom';
-import { useEditorStore } from '../components/Inputs/Editor/EditorStore';
-import { EditorReadOnly } from '../components/Inputs/Editor/Editor';
+import { useEditorStore } from '../components/inputs/editor/EditorStore';
+import { EditorReadOnly } from '../components/inputs/editor/Editor';
+import { useGetPerformance } from '../api/useFetch';
 
 const S = {
   Heading3: styled.h3`
@@ -118,6 +119,7 @@ const S = {
 
 // TODO: props로 렌더링하기
 const PerformanceInfo = () => {
+  const data = useGetPerformance({ id: 1 });
   const navigate = useNavigate();
   const content = useEditorStore(state => state.content);
   // TODO: 로그인 상태관리 로직 추가하기
@@ -155,13 +157,13 @@ const PerformanceInfo = () => {
             <S.Poster></S.Poster>
             <S.Summary>
               <p>공연명</p>
-              <p>신나는 공연</p>
+              <p>{data?.title}</p>
               <p>날짜</p>
-              <p>2023년 8월 3일</p>
+              <p>{data?.date}</p>
               <p>금액</p>
-              <p>10,000원</p>
+              <p>{data?.price}원</p>
               <p>남은 좌석 수</p>
-              <p>30석</p>
+              <p>{data?.leftseat}석</p>
             </S.Summary>
           </S.SummaryContainer>
           <S.Heading3>공연설명</S.Heading3>

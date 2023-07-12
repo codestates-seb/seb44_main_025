@@ -1,10 +1,10 @@
 import { styled } from 'styled-components';
-import { ButtonPrimary160px } from '../components/Buttons/Buttons';
-import NavLogin from '../components/Navs/NavLogin';
-import NavMypage from '../components/Navs/NavMypage';
+import { ButtonPrimary160px } from '../components/buttons/Buttons';
+import NavLogin from '../components/navs/NavLogin';
+import NavMypage from '../components/navs/NavMypage';
 import { useNavigate } from 'react-router-dom';
 import ArtistPreview from '../components/artistpreview/ArtistPreview';
-import HeaderLogoST from '../components/Header/HeaderLogoST';
+import HeaderLogoST from '../components/header/HeaderLogoST';
 
 const S = {
   Heading1: styled.h1`
@@ -104,7 +104,6 @@ const ArtistList = () => {
                 imgurl=""
                 nickname=""
                 snsLink={['']}
-                date={new Date()}
               />
             ))}
           </S.ArtistContainer>

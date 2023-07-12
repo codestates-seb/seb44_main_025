@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import Img from '.././images/우리사랑이대로.jpeg';
+import Img from '../../images/우리사랑이대로.jpeg';
 
 export default function Footer() {
   return (

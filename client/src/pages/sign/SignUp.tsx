@@ -1,10 +1,11 @@
 import S from './Sign.styled';
-import HeaderOnlyP from '../../components/Header/HeaderOnlyP';
-import { ButtonPrimary160px } from '../../components/Buttons/Buttons';
+import HeaderOnlyP from '../../components/header/HeaderOnlyP';
+import { ButtonPrimary160px } from '../../components/buttons/Buttons';
 import { useRef } from 'react';
 import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import PageMovement from '../../components/Sign/PageMovement';
+import PageMovement from '../../components/sign/PageMovement';
+import { ErrorMessage } from '@hookform/error-message';
 import {
   emailRegExp,
   passwordRegExp,
@@ -46,7 +47,9 @@ const SignUpPage = () => {
     watch,
     formState: { errors },
     handleSubmit,
-  } = useForm<IForm>();
+  } = useForm<IForm>({
+    criteriaMode: 'all',
+  });
 
   /** email 현재값 (중복확인시 사용)*/
   const input_email = useRef<string | null>(null);
@@ -58,13 +61,14 @@ const SignUpPage = () => {
   const input_nickname = useRef<string | null>(null);
   input_nickname.current = watch('nickname');
 
-  /** 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는 함수 */
+  /** 아이디와 닉네임의 중복검사 여부를 확인 후 ajax함수를 실행시키는 함수
+   * 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는다
+   */
   const onSubmit: SubmitHandler<IForm> = data => {
     setSubmitClicked(true);
     if (!noEmailDuplBtnClickedSubmit && !noNicknameDuplBtnClickedSubmit) {
       if (!emailDupl && !nicknameDupl) {
-        ajaxPostSignUp(data);
-        console.log(noNicknameDuplBtnClickedSubmit);
+        usePostSignUp(data);
       } else {
         if (emailDupl) {
           if (emailDuplBtnCnt > 0) {
@@ -79,10 +83,11 @@ const SignUpPage = () => {
       }
     }
   };
+
   /** 회원정보를 서버로 전송하는 ajax 함수 */
-  const ajaxPostSignUp = (data: IForm) => {
+  const usePostSignUp = (data: IForm) => {
     axios
-      .post('/signup', data, {
+      .post('/member', data, {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(response => {
@@ -96,37 +101,62 @@ const SignUpPage = () => {
       });
   };
 
-  /** 중복 확인하는 함수
-   * @todo 중복확인 로직 구현
-   */
+  /** 이메일 중복검사하는 ajax 함수 */
+  const useGetDuplicateEmail = (emailData: string | null) => {
+    axios
+      .post('/member/duplicate/email', { email: emailData })
+      .then(response => {
+        if (response.status === 200) {
+          if (response.data === '사용 가능한 이메일입니다') {
+            setEmailDupl(false);
+            setEmailDuplBtnCnt();
+            setNoEmailDuplBtnClickedSubmit(false);
+          } else if (response.data === '이미 존재하는 이메일입니다') {
+            setEmailDupl(true);
+            setEmailDuplBtnCnt();
+            setNoEmailDuplBtnClickedSubmit(false);
+          }
+        }
+      })
+      .catch(err => {
+        alert(`error: ${err}`);
+      });
+  };
+
+  /** 닉네임 중복검사하는 ajax 함수 */
+  const useGetDuplicateNickname = (nicknameData: string | null) => {
+    axios
+      .post('/member/duplicate/nickname', { nickname: nicknameData })
+      .then(response => {
+        if (response.status === 200) {
+          if (response.data === '사용 가능한 이메일입니다') {
+            setNicknameDupl(false);
+            setNicknameDuplBtnCnt();
+            setNoNicknameDuplBtnClickedSubmit(false);
+          } else if (response.data === '이미 존재하는 이메일입니다') {
+            setNicknameDupl(true);
+            setNicknameDuplBtnCnt();
+            setNoNicknameDuplBtnClickedSubmit(false);
+          }
+        }
+      })
+      .catch(err => {
+        alert(`error: ${err}`);
+      });
+  };
+
+  /** 중복검사시 이메일, 닉네임 분기하는 함수 */
   const DuplicateCheck = (
     email: string | null,
     nickname: string | null
   ): void => {
+    // 이메일 중복확인 클릭시
     if (typeof email === 'string' && nickname === '') {
-      if (email === 'hello@naver.com') {
-        setEmailDupl(false);
-        setEmailDuplBtnCnt();
-        setNoEmailDuplBtnClickedSubmit(false);
-      } else {
-        setEmailDupl(true);
-        setEmailDuplBtnCnt();
-        setNoEmailDuplBtnClickedSubmit(false);
-      }
+      useGetDuplicateEmail(email);
     }
+    // 닉네임 중복확인 클릭시
     if (email === '' && typeof nickname === 'string') {
-      // 중복검사를 통과한 경우
-      if (nickname === 'hello') {
-        setNicknameDupl(false);
-        setNicknameDuplBtnCnt();
-        setNoNicknameDuplBtnClickedSubmit(false);
-      }
-      // 통과하지 못 한 경우
-      else {
-        setNicknameDupl(true);
-        setNicknameDuplBtnCnt();
-        setNoNicknameDuplBtnClickedSubmit(false);
-      }
+      useGetDuplicateNickname(nickname);
     }
   };
 
@@ -183,7 +213,9 @@ const SignUpPage = () => {
                   })}
                 />
                 {errors.password && (
-                  <p>비밀번호는 8~16자의 영문, 숫자로 이루어져야 합니다</p>
+                  <p>
+                    비밀번호는 8~16자의 영문, 숫자, 특수문자로 이루어져야 합니다
+                  </p>
                 )}
               </div>
               <div>
@@ -203,8 +235,21 @@ const SignUpPage = () => {
                   <S.Input
                     width={285}
                     {...register('nickname', {
-                      required: true,
-                      pattern: nicknameRegExp,
+                      required:
+                        '닉네임은 한글 또는 영문을 띄어쓰기 없이 사용해야 합니다',
+                      pattern: {
+                        value: nicknameRegExp,
+                        message:
+                          '닉네임은 한글 또는 영문을 띄어쓰기 없이 사용해야 합니다',
+                      },
+                      minLength: {
+                        value: 2,
+                        message: '닉네임은 2자 이상 12자 이하여야 합니다',
+                      },
+                      maxLength: {
+                        value: 12,
+                        message: '닉네임은 2자 이상 12자 이하여야 합니다',
+                      },
                       onChange: () => setNoNicknameDuplBtnClickedSubmit(true),
                     })}
                   />
@@ -216,9 +261,19 @@ const SignUpPage = () => {
                     중복확인
                   </S.ButtonSpan>
                 </div>
-                {errors.nickname && (
-                  <p>닉네임은 한글 또는 영문으로 이루어져야 합니다</p>
-                )}
+                <ErrorMessage
+                  errors={errors}
+                  name="nickname"
+                  render={({ messages }) => {
+                    console.log('messages', messages);
+                    return (
+                      messages &&
+                      Object.entries(messages).map(([type, message]) => (
+                        <p key={type}>{message}</p>
+                      ))
+                    );
+                  }}
+                />
                 {noNicknameDuplBtnClickedSubmit ? (
                   submitClicked === true ? (
                     <p>중복확인을 해주세요</p>

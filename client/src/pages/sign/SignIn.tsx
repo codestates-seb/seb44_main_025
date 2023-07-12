@@ -1,8 +1,8 @@
 import S from './Sign.styled';
-import HeaderOnlyP from '../../components/Header/HeaderOnlyP';
-import { ButtonPrimary160px } from '../../components/Buttons/Buttons';
+import HeaderOnlyP from '../../components/header/HeaderOnlyP';
+import { ButtonPrimary160px } from '../../components/buttons/Buttons';
 import axios from 'axios';
-import PageMovement from '../../components/Sign/PageMovement';
+import PageMovement from '../../components/sign/PageMovement';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
@@ -41,6 +41,7 @@ const SignInPage = () => {
             httpOnly: true,
           });
           // 메인페이지로 이동
+          alert('[로그인 성공] 메인 페이지로 이동합니다');
           navigate('/');
         }
       })
@@ -59,7 +60,7 @@ const SignInPage = () => {
       <HeaderOnlyP />
       <S.Main>
         <S.Container>
-          <S.H1 mb={145}>Ez to 회원가입</S.H1>
+          <S.H1 mb={145}>Ez to 로그인</S.H1>
           <S.Form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <div>
@@ -92,7 +93,7 @@ const SignInPage = () => {
           </S.Form>
           <PageMovement
             infoText="아직 계정이 없으신가요?"
-            pagelink="/signup'"
+            pagelink="/signup"
             linkedText="회원가입"
             mt={160}
           />

@@ -1,19 +1,29 @@
 import { styled } from 'styled-components';
-import HeaderLogoST from '../components/Header/HeaderLogoST';
+import HeaderLogoST from '../components/header/HeaderLogoST';
 import {
   ButtonPrimary75px,
   ButtonWithArrowDark,
-} from '../components/Buttons/Buttons';
+} from '../components/buttons/Buttons';
 import EditIcon from '../icons/EditIcon';
 import Concertpreview from '../components/concert-preview/ConcertPreview';
 import ArtistreviewContainer from '../components/artist/artistreviewcontainer';
 import Review from '../components/review/Review';
-import Footer from '../components/footer';
-import NavMypage from '../components/Navs/NavMypage';
-import { Link } from 'react-router-dom';
+import Footer from '../components/footer/Footer';
+import NavMypage from '../components/navs/NavMypage';
+import { Link, useNavigate } from 'react-router-dom';
 import Img from '.././images/우리사랑이대로.jpeg';
+import { removeCookie } from '../utils/Cookie';
 
 export default function Mypage() {
+  const navigate = useNavigate();
+
+  /** 로그아웃 및 main으로 페이지 이동 */
+  const logoutHandler = () => {
+    removeCookie('token');
+    alert('[로그아웃 성공] 로그아웃 되었습니다');
+    navigate('/');
+  };
+
   return (
     <>
       <HeaderLogoST />
@@ -21,7 +31,9 @@ export default function Mypage() {
         <S.Section>
           <S.Title>마이페이지</S.Title>
           <S.ButtonWarppar>
-            <ButtonPrimary75px>로그아웃</ButtonPrimary75px>
+            <ButtonPrimary75px onClick={logoutHandler}>
+              로그아웃
+            </ButtonPrimary75px>
           </S.ButtonWarppar>
           <S.ProfileImg src={Img} />
           <S.UserImg src={Img} />

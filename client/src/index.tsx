@@ -5,23 +5,23 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import axios from 'axios';
-import Notfoundpage from './pages/notfondpage';
+import Notfoundpage from './pages/NotFound';
 import PerformanceList from './pages/PerformanceList';
 import PerformanceInfo from './pages/PerformanceInfo';
-import PerformanceRegister from './pages/PerformanceRegister';
+import PerformanceRegister from './pages/performance-register/PerformanceRegister';
 import Artistpage from './pages/Artist';
 import Mypage from './pages/MyPage';
-import Editmypage from './pages/editmypage';
-import Artistregist from './pages/artistregistpage';
-import Cancelpage from './pages/cancelpage';
-import SignUpPage from './pages/SignUpIn/SignUpPage';
-import SignInPage from './pages/SignUpIn/SignInPage';
+import Editmypage from './pages/EditMyPage';
+import Artistregist from './pages/ArtistRegister';
+import Cancelpage from './pages/Cancel';
+import SignUpPage from './pages/sign/SignUp';
+import SignInPage from './pages/sign/SignIn';
 import ArtistList from './pages/ArtistList';
 import Main from './pages/Main';
 
 /** @todo 도메인 주소 입력 */
-axios.defaults.baseURL = '';
-axios.defaults.withCredentials = true;
+// axios.defaults.baseURL = '';
+// axios.defaults.withCredentials = true;
 
 const router = createBrowserRouter([
   {

@@ -3,13 +3,14 @@ import { ReactComponent as MapIcon } from '../icons/icon_map_search.svg';
 import {
   ButtonMini,
   ButtonToggle,
-  ButtonPrimary160px,
-} from '../components/Buttons/Buttons';
-import NavLogin from '../components/Navs/NavLogin';
-import NavMypage from '../components/Navs/NavMypage';
+  ButtonPrimary75px,
+} from '../components/buttons/Buttons';
+import { TabPerformance } from '../components/tabs/Tabs';
+import NavLogin from '../components/navs/NavLogin';
+import NavMypage from '../components/navs/NavMypage';
 import { useNavigate } from 'react-router-dom';
 import ConcertPreview from '../components/concert-preview/ConcertPreview';
-import HeaderLogoST from '../components/Header/HeaderLogoST';
+import HeaderLogoST from '../components/header/HeaderLogoST';
 
 const S = {
   Heading1: styled.h1`
@@ -97,16 +98,14 @@ const PerformanceList = () => {
             />
           </S.TitleButtonFlex>
           <S.CategoryContainer>
-            <ButtonMini>전체</ButtonMini>
-            <ButtonMini>예약가능</ButtonMini>
-            <ButtonMini>지난공연</ButtonMini>
+            <TabPerformance />
             {/* TODO: 공연 일정 이전 && 공연을 등록한 유저에게만 보여주기 */}
             <S.ButtonContainer>
-              <ButtonPrimary160px
+              <ButtonPrimary75px
                 onClick={() => navigate('/performances/register')}
               >
-                공연 등록하기
-              </ButtonPrimary160px>
+                공연 등록
+              </ButtonPrimary75px>
             </S.ButtonContainer>
           </S.CategoryContainer>
           <S.CategoryContainer>

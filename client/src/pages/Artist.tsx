@@ -1,12 +1,12 @@
 import { styled } from 'styled-components';
-import HeaderLogoST from '../components/Header/HeaderLogoST';
-import { ButtonWithArrowDark } from '../components/Buttons/Buttons';
+import HeaderLogoST from '../components/header/HeaderLogoST';
+import { ButtonWithArrowDark } from '../components/buttons/Buttons';
 import EditIcon from '../icons/EditIcon';
 import Concertpreview from '../components/concert-preview/ConcertPreview';
 import ArtistreviewContainer from '../components/artist/artistreviewcontainer';
 import Review from '../components/review/Review';
-import Footer from '../components/footer';
-import NavMypage from '../components/Navs/NavMypage';
+import Footer from '../components/footer/Footer';
+import NavMypage from '../components/navs/NavMypage';
 import Img from '.././images/우리사랑이대로.jpeg';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
