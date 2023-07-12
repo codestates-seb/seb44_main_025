@@ -14,6 +14,7 @@ import axios from 'axios';
 import {
   ArtistpageList,
   ArtistpagePerformanceList,
+  ArtistpageReviewList,
 } from '../zustand/artistpage.stores';
 
 interface Artistpage {
@@ -38,18 +39,20 @@ interface Performancelist {
   imageUrl: string;
 }
 
-interface Performancelist {
+interface Reviewlist {
   nickname: string;
   title: string;
-  artistId: number;
+  artistId?: number;
   content: string;
 }
 
 export default function Artistpage() {
-  const { setArtistpageData } = ArtistpageList();
   const { artistpageData } = ArtistpageList();
+  const { setArtistpageData } = ArtistpageList();
   const { performanceData } = ArtistpagePerformanceList();
   const { setPerformanceData } = ArtistpagePerformanceList();
+  const { reviewData } = ArtistpageReviewList();
+  const { setReviewData } = ArtistpageReviewList();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,8 +61,10 @@ export default function Artistpage() {
         const responseperformance = await axios.get(
           '/dummy/performancelist.json'
         );
+        const responsereview = await axios.get('/dummy/review.json');
         setArtistpageData(response.data.artist);
         setPerformanceData(responseperformance.data);
+        setReviewData(responsereview.data);
       } catch (error) {
         console.error(error);
       }
@@ -164,9 +169,19 @@ export default function Artistpage() {
 
             <S.MyreviewContainer>
               <S.SubTitle>아티스트 후기</S.SubTitle>
-              <S.ReviewWrapper>
-                <Review />
-              </S.ReviewWrapper>
+              {reviewData
+                .filter((item: Reviewlist) => item.artistId === 1)
+                .map((el: Reviewlist, i) => {
+                  return (
+                    <S.ReviewWrapper key={i}>
+                      <Review
+                        nickname={el.nickname}
+                        title={el.title}
+                        content={el.content}
+                      />
+                    </S.ReviewWrapper>
+                  );
+                })}
             </S.MyreviewContainer>
 
             <Footer />

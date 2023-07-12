@@ -101,9 +101,9 @@ export default function Mypage() {
           <S.MyreviewContainer>
             <S.SubTitle>내가 작성한 후기</S.SubTitle>
             <S.ReviewWrapper>
-              <Review />
-              <Review />
-              <Review />
+              <Review nickname={''} title={''} content={''} />
+              <Review nickname={''} title={''} content={''} />
+              <Review nickname={''} title={''} content={''} />
             </S.ReviewWrapper>
           </S.MyreviewContainer>
           <Footer />

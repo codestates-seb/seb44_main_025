@@ -1,12 +1,19 @@
 import { styled } from 'styled-components';
 
-export default function Review() {
+interface Reviewlist {
+  nickname: string;
+  title: string;
+  artistId?: number;
+  content: string;
+}
+
+export default function Review(props: Reviewlist) {
   return (
     <S.ReviewWrapper>
       <S.ReviewDetail>
-        <S.UserNickname>화난도깨비</S.UserNickname>
-        <S.Reviewcontent>창섭오빠짱~!</S.Reviewcontent>
-        <S.Reviewcontent>창섭오빠 목소리 너무 좋아요</S.Reviewcontent>
+        <S.UserNickname>{props.nickname}</S.UserNickname>
+        <S.Reviewcontent>{props.title}</S.Reviewcontent>
+        <S.Reviewcontent>{props.content}</S.Reviewcontent>
       </S.ReviewDetail>
     </S.ReviewWrapper>
   );
