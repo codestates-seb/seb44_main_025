@@ -45,6 +45,11 @@ public class PerformanceServiceImpl implements PerformanceService{
     }
 
     @Override
+    public Performance findPerformance(long performanceId) {
+        return findVerifyPerformance(performanceId);
+    }
+
+    @Override
     public Page<Performance> findPerformances(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("performanceId").descending());
         return performanceRepository.findAll(pageRequest);

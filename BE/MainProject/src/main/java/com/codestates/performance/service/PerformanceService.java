@@ -11,4 +11,6 @@ public interface PerformanceService {
     void deletePerformance(long performanceId);
 
     Performance updatePerformance(Performance performance);
+
+    Performance findPerformance(long performanceId);
 }

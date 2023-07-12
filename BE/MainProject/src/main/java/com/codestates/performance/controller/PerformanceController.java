@@ -61,6 +61,13 @@ public class PerformanceController {
         return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(performance)), HttpStatus.OK);
     }
 
+    /* 공연 조회 */
+    @GetMapping("{performance-id}")
+    public ResponseEntity getPerformance(@PathVariable("performance-id") @Positive long performanceId) {
+        Performance performance = performanceService.findPerformance(performanceId);
+        return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(performance)), HttpStatus.OK);
+    }
+
     /* 공연 전체 조회 */
     @GetMapping
     public ResponseEntity getPerformance(@RequestParam("page") @Positive int page,
