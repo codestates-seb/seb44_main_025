@@ -61,6 +61,7 @@ public interface PerformanceMapper {
         Category category = categoryService.findVerifiedCategory(performanceDto.getCategoryId());
 
         return new Performance(
+                performanceDto.getPerformanceId(),
                 performanceDto.getTitle(),
                 performanceArtists,
                 content,

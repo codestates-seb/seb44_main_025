@@ -53,8 +53,8 @@ public class PerformanceController {
     public ResponseEntity patchPerformance(@PathVariable("performance-id") @Positive long performanceId,
                                            @RequestPart @Valid PerformanceDto.Patch performanceDto) {
         performanceDto.setPerformanceId(performanceId);
-        performanceService.updatePerformance(mapper.performancePatchDtoToPerformance(performanceDto, categoryService, artistService));
-        return new ResponseEntity(HttpStatus.OK);
+        Performance performance = performanceService.updatePerformance(mapper.performancePatchDtoToPerformance(performanceDto, categoryService, artistService));
+        return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(performance)), HttpStatus.OK);
     }
 
     /* 공연 전체 조회 */

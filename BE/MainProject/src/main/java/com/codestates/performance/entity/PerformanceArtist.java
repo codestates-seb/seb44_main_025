@@ -20,6 +20,9 @@ public class PerformanceArtist {
     @JoinColumn(name="ARTIST_ID")
     private Artist artist;
 
+    public PerformanceArtist() {
+    }
+
     public PerformanceArtist(Performance performance, Artist artist) {
         this.performance = performance;
         this.artist = artist;

@@ -28,7 +28,7 @@ public class PerformanceDto {
 
     @Getter
     @AllArgsConstructor
-    public class Patch {
+    public static class Patch {
         private long performanceId;
         private String title;
         private List<Long> artistIds;

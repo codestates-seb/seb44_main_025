@@ -27,7 +27,22 @@ public class PerformanceServiceImpl implements PerformanceService{
     @Override
     public Performance updatePerformance(Performance performance) {
         log.info(performance.toString());
-        return null;
+        Performance findPerformance = findVerifyPerformance(performance.getPerformanceId());
+
+        Optional.ofNullable(performance.getTitle())
+                .ifPresent(title -> findPerformance.setTitle(title));
+        Optional.ofNullable(performance.getContent())
+                .ifPresent(content -> findPerformance.setContent(content));
+        Optional.ofNullable(performance.getPerformanceArtists())
+                .ifPresent(performanceArtists -> findPerformance.setPerformanceArtists(performanceArtists));
+        Optional.ofNullable(performance.getPlace())
+                .ifPresent(place -> findPerformance.setPlace(place));
+        Optional.ofNullable(performance.getCategory())
+                .ifPresent(category -> findPerformance.setCategory(category));
+        Optional.ofNullable(performance.getImageUrl())
+                .ifPresent(imageUrl -> findPerformance.setImageUrl(imageUrl));
+
+        return performanceRepository.save(findPerformance);
     }
 
     @Override

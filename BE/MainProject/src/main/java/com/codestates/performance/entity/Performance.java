@@ -3,12 +3,16 @@ package com.codestates.performance.entity;
 import com.codestates.category.Category;
 import com.codestates.content.entity.Content;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@ToString
+@Setter
 @Getter
 @Entity
 public class Performance {
@@ -47,6 +51,28 @@ public class Performance {
                         int totalSeat,
                         Category category,
                        String imageUrl) {
+        this.title = title;
+        this.performanceArtists = performanceArtists;
+        this.content = content;
+        this.date = date;
+        this.price = price;
+        this.place = place;
+        this.totalSeat = totalSeat;
+        this.category = category;
+        this.imageUrl = imageUrl;
+    }
+
+    public Performance(long performanceId,
+                       String title,
+                       List<PerformanceArtist> performanceArtists,
+                       Content content,
+                       LocalDateTime date,
+                       int price,
+                       String place,
+                       int totalSeat,
+                       Category category,
+                       String imageUrl) {
+        this.performanceId = performanceId;
         this.title = title;
         this.performanceArtists = performanceArtists;
         this.content = content;
