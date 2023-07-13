@@ -5,7 +5,7 @@ interface ContainerProps {
   transform: string;
 }
 
-export const Styled_CarouselLogicStyled = {
+export const Styled_CarouselLogic = {
   Div: styled.div`
     width: 390px;
     height: 200px;

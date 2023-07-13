@@ -10,7 +10,7 @@ const HomePageButton = ({ Height, ImageUrl, Text }: HomePageButtonProps) => {
   return (
     <>
       <Styled_HomePageButton.Container height={Height} imageurl={ImageUrl}>
-        <Styled_HomePageButton.Span>{Text}</Styled_HomePageButton.Span>
+        {Text}
       </Styled_HomePageButton.Container>
     </>
   );

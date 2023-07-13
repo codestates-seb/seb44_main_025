@@ -33,6 +33,10 @@ export const Styled_ArtistHome = {
   ArtistpreviewWrapper: styled.div`
     width: 75px;
     height: 115px;
+    transition: all 0.1s linear;
+    &:hover {
+      transform: scale(1.13);
+    }
   `,
   ArtistImg: styled.img`
     width: 75px;

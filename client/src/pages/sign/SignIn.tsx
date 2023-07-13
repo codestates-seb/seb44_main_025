@@ -27,7 +27,8 @@ const SignInPage = () => {
     axios
       .post('/login', data)
       .then(response => {
-        const { accessToken } = response.data;
+        // 헤더에 담긴 토큰 가져오기
+        const accessToken = response.headers['Authorization'];
         if (response.status === 200) {
           // token이 필요한 API 요청 시 header Authorization에 token 담아 전송
           axios.defaults.headers.common[

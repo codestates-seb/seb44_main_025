@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CarouselList } from '../../zustand/mainapi';
 import CarouselSlide from './CarouselSlide';
-import { Styled_CarouselLogicStyled } from './CarouselLogic.styled';
+import { Styled_CarouselLogic } from './CarouselLogic.styled';
 
 interface CarouselItemType {
   title: string;
@@ -34,23 +34,19 @@ const Main = () => {
 
   /** 캐러셀 슬라이드 좌표 지정하는 함수 */
   function SlideTransitionControl() {
-    let num = 0;
     // 마지막 슬라이드가 아닌 경우
     if (movementWidth !== -390 * (carouselData.length - 1)) {
       setTime(0.5);
-      num = movementWidth - 390;
-      setMovementWidth(num);
+      setMovementWidth(movementWidth - 390);
     }
     // 마지막 슬라이드인 경우
     else {
       /** 마지막 슬라이드에서 첫 슬라이드로 */
       // 0.5초동안 슬라이드 넘김
-      num = movementWidth - 390;
-      setMovementWidth(num);
+      setMovementWidth(movementWidth - 390);
       // 0.5초 후, 0초동안 첫 번째 슬라이드로 이동(사람 눈엔 보이지 않음)
       setTimeout(function () {
-        num = 0;
-        setMovementWidth(num);
+        setMovementWidth(0);
         setTime(0);
       }, 500);
     }
@@ -58,8 +54,8 @@ const Main = () => {
 
   return (
     <>
-      <Styled_CarouselLogicStyled.Div>
-        <Styled_CarouselLogicStyled.Container
+      <Styled_CarouselLogic.Div>
+        <Styled_CarouselLogic.Container
           translate={`translate(${movementWidth}px)`}
           transform={`transform ${time}s`}
         >
@@ -95,8 +91,8 @@ const Main = () => {
               </div>
             </>
           )}
-        </Styled_CarouselLogicStyled.Container>
-      </Styled_CarouselLogicStyled.Div>
+        </Styled_CarouselLogic.Container>
+      </Styled_CarouselLogic.Div>
     </>
   );
 };
