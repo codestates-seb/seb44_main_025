@@ -19,7 +19,7 @@ interface ConcertPreviewPropTypes {
 
 export default function Concertpreview(props: ConcertPreviewPropTypes) {
   const navigate = useNavigate();
-  const date = new Date(props.date);
+  const date = new Date(props.date as string);
   return (
     <S.ConcertpreviewWrapper
       onClick={() => {
