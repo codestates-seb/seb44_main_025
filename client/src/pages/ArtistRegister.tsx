@@ -5,7 +5,7 @@ import {
   ButtonMiniToggleSelect,
   ButtonMiniToggleUnselect,
 } from '../components/buttons/Buttons';
-import { Input, InputWithButton } from '../components/inputs/Inputs';
+import { Input } from '../components/inputs/Inputs';
 import { useState, useRef } from 'react';
 import Img from '.././images/우리사랑이대로.jpeg';
 import axios from 'axios';
@@ -158,14 +158,14 @@ export default function Artistregist() {
             </S.CategoryContainer>
             <S.InputContainer>
               <S.InputLabel>아티스트</S.InputLabel>
-              <InputWithButton
-                // value={Artist}
-                icon={true}
+              <Input
+                value={Artist}
+                suffix={true}
                 width={285}
                 height={30}
                 buttonText={'중복확인'}
                 setValue={setArtist}
-              ></InputWithButton>
+              />
             </S.InputContainer>
             <S.InputContainer>
               <S.InputLabel>SNS Link</S.InputLabel>
@@ -184,13 +184,14 @@ export default function Artistregist() {
             </S.InputContainer>
             <S.InputContainer>
               <S.InputLabel>동영상 첨부</S.InputLabel>
-              <InputWithButton
+              <Input
                 value={Video}
-                icon={true}
+                suffix={true}
                 width={285}
                 height={30}
                 buttonText={'찾아보기'}
-              ></InputWithButton>
+                disabled={true}
+              />
             </S.InputContainer>
           </S.ArtistDetail>
         </S.Section>
