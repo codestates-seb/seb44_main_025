@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import CarouselSlide from './CarouselSlide';
-import styled from 'styled-components';
 import { CarouselList } from '../../zustand/mainapi';
+import CarouselSlide from './CarouselSlide';
+import { Styled_CarouselLogic } from './CarouselLogic.styled';
 
-interface Dummydata {
+interface CarouselItemType {
   title: string;
   artistId: number;
   content: string;
@@ -14,11 +14,6 @@ interface Dummydata {
   totalSeat: number;
   categoryId: number;
   imageUrl: string;
-}
-
-interface ContainerProps {
-  translate: string;
-  transform: string;
 }
 
 const Main = () => {
@@ -39,23 +34,19 @@ const Main = () => {
 
   /** 캐러셀 슬라이드 좌표 지정하는 함수 */
   function SlideTransitionControl() {
-    let num = 0;
     // 마지막 슬라이드가 아닌 경우
     if (movementWidth !== -390 * (carouselData.length - 1)) {
       setTime(0.5);
-      num = movementWidth - 390;
-      setMovementWidth(num);
+      setMovementWidth(movementWidth - 390);
     }
-    // 마지막 슬라이드인 경우s
+    // 마지막 슬라이드인 경우
     else {
       /** 마지막 슬라이드에서 첫 슬라이드로 */
       // 0.5초동안 슬라이드 넘김
-      num = movementWidth - 390;
-      setMovementWidth(num);
+      setMovementWidth(movementWidth - 390);
       // 0.5초 후, 0초동안 첫 번째 슬라이드로 이동(사람 눈엔 보이지 않음)
       setTimeout(function () {
-        num = 0;
-        setMovementWidth(num);
+        setMovementWidth(0);
         setTime(0);
       }, 500);
     }
@@ -63,15 +54,15 @@ const Main = () => {
 
   return (
     <>
-      <S.Something>
-        <S.Container
+      <Styled_CarouselLogic.Div>
+        <Styled_CarouselLogic.Container
           translate={`translate(${movementWidth}px)`}
           transform={`transform ${time}s`}
         >
           {carouselData.length !== 0 && (
             <>
               {/* 슬라이드 리스트 */}
-              {carouselData.map((v: Dummydata, i) => {
+              {carouselData.map((v: CarouselItemType, i) => {
                 return (
                   <div key={i}>
                     <CarouselSlide
@@ -100,28 +91,10 @@ const Main = () => {
               </div>
             </>
           )}
-        </S.Container>
-      </S.Something>
+        </Styled_CarouselLogic.Container>
+      </Styled_CarouselLogic.Div>
     </>
   );
-};
-
-const S = {
-  Something: styled.div`
-    width: 390px;
-    height: 200px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-  Container: styled.div<ContainerProps>`
-    width: 390px;
-    display: flex;
-    flex-flow: row;
-    transition: ${props => props.transform};
-    transform: ${props => props.translate};
-  `,
 };
 
 export default Main;

@@ -1,10 +1,9 @@
 import { styled } from 'styled-components';
 import { ButtonPrimary160px } from '../components/buttons/Buttons';
-import NavLogin from '../components/navs/NavLogin';
-import NavMypage from '../components/navs/NavMypage';
 import { useNavigate } from 'react-router-dom';
 import ArtistPreview from '../components/artistpreview/ArtistPreview';
-import HeaderLogoST from '../components/header/HeaderLogoST';
+import Header from '../components/header/Header';
+import Navbar from '../components/nav/Navbar';
 
 const S = {
   Heading1: styled.h1`
@@ -72,7 +71,7 @@ const ArtistList = () => {
   // TODO: 공연 일정 경과 여부 필터링 로직 추가하기
   return (
     <>
-      <HeaderLogoST />
+      <Header />
       <S.Container>
         <S.Main>
           <S.Heading1>아티스트 리스트</S.Heading1>
@@ -109,7 +108,7 @@ const ArtistList = () => {
           </S.ArtistContainer>
         </S.Main>
       </S.Container>
-      {isLoggedIn ? <NavMypage /> : <NavLogin />}
+      <Navbar />
     </>
   );
 };

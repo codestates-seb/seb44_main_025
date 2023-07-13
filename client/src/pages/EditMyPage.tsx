@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import HeaderOnlyP from '../components/header/HeaderOnlyP';
+import Header from '../components/header/Header';
 import {
   ButtonPrimary75px,
   ButtonHighlightBorder,
@@ -14,7 +14,7 @@ export default function Editmypage() {
 
   return (
     <>
-      <HeaderOnlyP />
+      <Header precious={true} />
       <S.Main>
         <S.Section>
           <S.Title>개인정보 수정하기</S.Title>

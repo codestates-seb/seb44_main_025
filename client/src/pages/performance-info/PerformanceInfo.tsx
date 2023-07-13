@@ -1,5 +1,5 @@
 import * as S from './PerformanceInfo.style';
-import HeaderOnlyP from '../../components/header/HeaderOnlyP';
+import Header from '../../components/header/Header';
 import {
   ButtonMini,
   ButtonPrimary335px,
@@ -8,8 +8,6 @@ import {
 } from '../../components/buttons/Buttons';
 import ArtistContainer from '../../components/artist/artistcontainer';
 import Review from '../../components/review/Review';
-import NavLogin from '../../components/navs/NavLogin';
-import NavMypage from '../../components/navs/NavMypage';
 import { useNavigate, useParams } from 'react-router-dom';
 // import { useEditorStore } from '../components/inputs/editor/EditorStore';
 import { EditorReadOnly } from '../../components/inputs/editor/Editor';
@@ -17,6 +15,7 @@ import { useGetPerformance, useTestGetPerformance } from '../../api/useFetch';
 import ReservationModal from '../../components/modal/Reservation';
 import { useEffect, useState } from 'react';
 import { categoryObj } from '../../utils/Category';
+import Navbar from '../../components/nav/Navbar';
 
 // TODO: props로 렌더링하기
 const PerformanceInfo = () => {
@@ -39,7 +38,7 @@ const PerformanceInfo = () => {
   const isLoggedIn = true;
   return (
     <>
-      <HeaderOnlyP />
+      <Header precious={true} />
       <S.Container>
         <S.Main>
           <S.Heading1>공연정보</S.Heading1>
@@ -122,7 +121,7 @@ const PerformanceInfo = () => {
           </S.BottomStickyContainer>
         </S.Main>
       </S.Container>
-      {isLoggedIn ? <NavMypage /> : <NavLogin />}
+      <Navbar />
     </>
   );
 };

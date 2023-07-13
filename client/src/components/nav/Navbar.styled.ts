@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
+import { FontStyle } from '../../utils/Theme';
 
-const S = {
+export const Styled_Navbar = {
   Div: styled.div`
     display: flex;
     justify-content: center;
@@ -26,9 +27,7 @@ const S = {
   `,
   Span: styled.span`
     color: var(--font-white-color);
-    font-size: var(--nav-font-size);
-    font-weight: var(--nav-font-weight);
-    line-height: var(--nav-line-height);
+    ${FontStyle.nav}
   `,
   GroupDiv: styled.div`
     display: flex;
@@ -38,5 +37,3 @@ const S = {
     cursor: pointer;
   `,
 };
-
-export default S;

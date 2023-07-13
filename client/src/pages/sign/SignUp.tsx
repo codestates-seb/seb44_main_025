@@ -1,7 +1,7 @@
-import S from './Sign.styled';
-import HeaderOnlyP from '../../components/header/HeaderOnlyP';
+import { Styled_Sign } from './Sign.styled';
+import Header from '../../components/header/Header';
 import { ButtonPrimary160px } from '../../components/buttons/Buttons';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import PageMovement from '../../components/sign/PageMovement';
@@ -11,15 +11,6 @@ import {
   passwordRegExp,
   nicknameRegExp,
 } from '../../utils/RegExp';
-import {
-  emailDuplication,
-  nicknameDuplication,
-  emailDuplBtnCounter,
-  nicknameDuplBtnCounter,
-  noEmailDuplSubmit,
-  noNicknameDuplSubmit,
-  IsSubmitClicked,
-} from '../../zustand/Duplication';
 import { useNavigate } from 'react-router-dom';
 
 interface IForm {
@@ -30,16 +21,24 @@ interface IForm {
 }
 
 const SignUpPage = () => {
-  const { emailDupl, setEmailDupl } = emailDuplication();
-  const { nicknameDupl, setNicknameDupl } = nicknameDuplication();
-  const { emailDuplBtnCnt, setEmailDuplBtnCnt } = emailDuplBtnCounter();
-  const { nicknameDuplBtnCnt, setNicknameDuplBtnCnt } =
-    nicknameDuplBtnCounter();
-  const { noEmailDuplBtnClickedSubmit, setNoEmailDuplBtnClickedSubmit } =
-    noEmailDuplSubmit();
-  const { noNicknameDuplBtnClickedSubmit, setNoNicknameDuplBtnClickedSubmit } =
-    noNicknameDuplSubmit();
-  const { submitClicked, setSubmitClicked } = IsSubmitClicked();
+  /** 중복여부
+   * @true :중복되지 않음
+   * @false :중복됨
+   */
+  let [emailDupl, setEmailDupl] = useState(false);
+  let [nicknameDupl, setNicknameDupl] = useState(false);
+  /** 중복확인버튼 클릭 여부 */
+  let [emailDuplBtnCnt, setEmailDuplBtnCnt] = useState(0);
+  let [nicknameDuplBtnCnt, setNicknameDuplBtnCnt] = useState(0);
+  /** 중복확인 클릭하지 않고 submit 했을 때
+   * @ture :중복확인 X
+   * @false :중복확인 O
+   */
+  let [noEmailDuplBtnClickedSubmit, setNoEmailDuplBtnClickedSubmit] =
+    useState(true);
+  let [noNicknameDuplBtnClickedSubmit, setNoNicknameDuplBtnClickedSubmit] =
+    useState(true);
+  let [submitClicked, setSubmitClicked] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -109,11 +108,11 @@ const SignUpPage = () => {
         if (response.status === 200) {
           if (response.data === '사용 가능한 이메일입니다') {
             setEmailDupl(false);
-            setEmailDuplBtnCnt();
+            setEmailDuplBtnCnt(nicknameDuplBtnCnt + 1);
             setNoEmailDuplBtnClickedSubmit(false);
           } else if (response.data === '이미 존재하는 이메일입니다') {
             setEmailDupl(true);
-            setEmailDuplBtnCnt();
+            setEmailDuplBtnCnt(0);
             setNoEmailDuplBtnClickedSubmit(false);
           }
         }
@@ -131,11 +130,11 @@ const SignUpPage = () => {
         if (response.status === 200) {
           if (response.data === '사용 가능한 이메일입니다') {
             setNicknameDupl(false);
-            setNicknameDuplBtnCnt();
+            setNicknameDuplBtnCnt(emailDuplBtnCnt + 1);
             setNoNicknameDuplBtnClickedSubmit(false);
           } else if (response.data === '이미 존재하는 이메일입니다') {
             setNicknameDupl(true);
-            setNicknameDuplBtnCnt();
+            setNicknameDuplBtnCnt(0);
             setNoNicknameDuplBtnClickedSubmit(false);
           }
         }
@@ -162,16 +161,16 @@ const SignUpPage = () => {
 
   return (
     <>
-      <HeaderOnlyP />
-      <S.Main>
-        <S.Container>
-          <S.H1 mb={75}>Ez to 회원가입</S.H1>
-          <S.Form onSubmit={handleSubmit(onSubmit)}>
+      <Header precious={true} />
+      <Styled_Sign.Main>
+        <Styled_Sign.Container>
+          <Styled_Sign.H1 mb={75}>Ez to 회원가입</Styled_Sign.H1>
+          <Styled_Sign.Form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <div>
                 <label htmlFor="email">이메일</label>
                 <div>
-                  <S.Input
+                  <Styled_Sign.Input
                     width={285}
                     {...register('email', {
                       required: true,
@@ -179,13 +178,13 @@ const SignUpPage = () => {
                       onChange: () => setNoEmailDuplBtnClickedSubmit(true),
                     })}
                   />
-                  <S.ButtonSpan
+                  <Styled_Sign.ButtonSpan
                     onClick={() => {
                       DuplicateCheck(input_email.current, '');
                     }}
                   >
                     중복확인
-                  </S.ButtonSpan>
+                  </Styled_Sign.ButtonSpan>
                 </div>
                 <div>
                   {errors.email && <p>이메일 형식에 맞게 입력해주세요</p>}
@@ -205,7 +204,7 @@ const SignUpPage = () => {
               </div>
               <div>
                 <label htmlFor="password">비밀번호</label>
-                <S.Input
+                <Styled_Sign.Input
                   type="password"
                   {...register('password', {
                     required: true,
@@ -220,7 +219,7 @@ const SignUpPage = () => {
               </div>
               <div>
                 <label htmlFor="password_fonfirm">비밀번호 확인</label>
-                <S.Input
+                <Styled_Sign.Input
                   type="password"
                   {...register('password_confirm', {
                     required: true,
@@ -232,7 +231,7 @@ const SignUpPage = () => {
               <div>
                 <label htmlFor="nickname">닉네임</label>
                 <div>
-                  <S.Input
+                  <Styled_Sign.Input
                     width={285}
                     {...register('nickname', {
                       required:
@@ -253,13 +252,13 @@ const SignUpPage = () => {
                       onChange: () => setNoNicknameDuplBtnClickedSubmit(true),
                     })}
                   />
-                  <S.ButtonSpan
+                  <Styled_Sign.ButtonSpan
                     onClick={() => {
                       DuplicateCheck('', input_nickname.current);
                     }}
                   >
                     중복확인
-                  </S.ButtonSpan>
+                  </Styled_Sign.ButtonSpan>
                 </div>
                 <ErrorMessage
                   errors={errors}
@@ -288,15 +287,15 @@ const SignUpPage = () => {
               </div>
             </div>
             <ButtonPrimary160px>회원가입하기</ButtonPrimary160px>
-          </S.Form>
+          </Styled_Sign.Form>
           <PageMovement
             infoText="이미 계정이 있으신가요?"
             pagelink="/login"
             linkedText="로그인"
-            mt={50}
+            marginTop={50}
           />
-        </S.Container>
-      </S.Main>
+        </Styled_Sign.Container>
+      </Styled_Sign.Main>
     </>
   );
 };

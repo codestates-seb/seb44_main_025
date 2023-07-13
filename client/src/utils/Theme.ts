@@ -42,9 +42,9 @@ export const FontStyle = {
     line-height: var(--p-small-medium-line-height);
   `,
   nav: css`
-    font-size: var(nav-font-size);
-    font-weight: var(nav-font-weight);
-    line-height: var(nav-line-height);
+    font-size: var(--nav-font-size);
+    font-weight: var(--nav-font-weight);
+    line-height: var(--nav-line-height);
   `,
 };
 

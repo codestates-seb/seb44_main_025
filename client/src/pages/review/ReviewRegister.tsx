@@ -1,7 +1,7 @@
 import S from './ReviewRegister.style';
-import HeaderOnlyP from '../../components/header/HeaderOnlyP';
+import Header from '../../components/header/Header';
 import { ButtonPrimary335px } from '../../components/buttons/Buttons';
-import NavMypage from '../../components/navs/NavMypage';
+import Navbar from '../../components/nav/Navbar';
 import { Input } from '../../components/inputs/Inputs';
 import { Editor } from '../../components/inputs/editor/Editor';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -53,7 +53,7 @@ const ReviewRegister = () => {
   const isLoggedIn = true;
   return (
     <>
-      <HeaderOnlyP />
+      <Header precious={true} />
       <S.Container>
         <S.Main>
           <S.Heading1>후기등록</S.Heading1>
@@ -112,7 +112,7 @@ const ReviewRegister = () => {
             <S.Image /> */}
         </S.Main>
       </S.Container>
-      <NavMypage />
+      <Navbar />
     </>
   );
 };

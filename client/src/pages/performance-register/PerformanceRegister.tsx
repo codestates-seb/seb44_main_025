@@ -1,5 +1,5 @@
 import S from './PerformanceRegister.style';
-import HeaderOnlyP from '../../components/header/HeaderOnlyP';
+import Header from '../../components/header/Header';
 import {
   ButtonMiniToggleSelect,
   ButtonMiniToggleUnselect,
@@ -7,8 +7,7 @@ import {
   ButtonPrimary335px,
 } from '../../components/buttons/Buttons';
 import ArtistContainer from '../../components/artist/artistcontainer';
-import NavLogin from '../../components/navs/NavLogin';
-import NavMypage from '../../components/navs/NavMypage';
+import Navbar from '../../components/nav/Navbar';
 import { Input } from '../../components/inputs/Inputs';
 import { Editor } from '../../components/inputs/editor/Editor';
 import { useNavigate } from 'react-router-dom';
@@ -92,7 +91,7 @@ const PerformanceRegister = () => {
   const isLoggedIn = true;
   return (
     <>
-      <HeaderOnlyP />
+      <Header precious={true} />
       <S.Container>
         <S.Main>
           <S.Heading1>공연등록</S.Heading1>
@@ -266,7 +265,7 @@ const PerformanceRegister = () => {
             <S.Image /> */}
         </S.Main>
       </S.Container>
-      {isLoggedIn ? <NavMypage /> : <NavLogin />}
+      <Navbar />
     </>
   );
 };

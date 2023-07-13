@@ -17,7 +17,7 @@ import Cancelpage from './pages/Cancel';
 import SignUpPage from './pages/sign/SignUp';
 import SignInPage from './pages/sign/SignIn';
 import ArtistList from './pages/ArtistList';
-import Main from './pages/Main';
+import Home from './pages/home/Home';
 import ReviewRegister from './pages/review/ReviewRegister';
 
 /** @todo 도메인 주소 입력 */
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <Notfoundpage />,
     children: [
-      { index: true, element: <Main /> },
+      { index: true, element: <Home /> },
       {
         path: '/performances',
         element: <PerformanceList />,

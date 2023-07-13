@@ -1,14 +1,14 @@
 import { styled } from 'styled-components';
-import HeaderLogoST from '../components/header/HeaderLogoST';
+import Header from '../components/header/Header';
 import { ButtonWithArrowDark } from '../components/buttons/Buttons';
 import EditIcon from '../icons/EditIcon';
 import Concertpreview from '../components/concert-preview/ConcertPreview';
 import ArtistreviewContainer from '../components/artist/artistreviewcontainer';
 import Review from '../components/review/Review';
 import Footer from '../components/footer/Footer';
-import NavMypage from '../components/navs/NavMypage';
 import Img from '.././images/우리사랑이대로.jpeg';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/nav/Navbar';
 import { useEffect } from 'react';
 import axios from 'axios';
 import {
@@ -84,7 +84,7 @@ export default function Artistpage() {
 
   return (
     <>
-      <HeaderLogoST />
+      <Header />
       <S.Main>
         <S.Section>
           <S.Title>아티스트페이지</S.Title>
@@ -198,7 +198,7 @@ export default function Artistpage() {
           <Footer />
         </S.Section>
       </S.Main>
-      <NavMypage />
+      <Navbar />
     </>
   );
 }

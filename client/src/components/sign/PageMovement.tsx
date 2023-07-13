@@ -1,41 +1,29 @@
 import { Link } from 'react-router-dom';
-import { styled } from 'styled-components';
+import { Styled_PageMovement } from './PageMovement.styled';
 
 interface OwnProps {
   infoText: string;
   pagelink: string;
   linkedText: string;
-  mt?: number;
-}
-interface PageMovementProps {
-  mt?: number;
+  marginTop?: number;
 }
 
-const S = {
-  Div: styled.div<PageMovementProps>`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: ${props => props.mt}px;
-  `,
-  Span: styled.span`
-    color: var(--font-white-color);
-  `,
-  ButtonSpan: styled.span`
-    cursor: pointer;
-    color: var(--font-primary--color);
-  `,
-};
-
-const PageMovement = ({ infoText, pagelink, linkedText, mt }: OwnProps) => {
+/** 로그인, 로그아웃 페이지 서로를 연결하는 하단 링크 */
+const PageMovement = ({
+  infoText,
+  pagelink,
+  linkedText,
+  marginTop,
+}: OwnProps) => {
   return (
-    <S.Div mt={mt}>
-      <S.Span>{infoText}</S.Span>
+    <Styled_PageMovement.Div margintop={marginTop}>
+      <Styled_PageMovement.Span>{infoText}</Styled_PageMovement.Span>
       <Link to={pagelink} style={{ textDecorationLine: 'none' }}>
-        <S.ButtonSpan>{linkedText}</S.ButtonSpan>
+        <Styled_PageMovement.ButtonSpan>
+          {linkedText}
+        </Styled_PageMovement.ButtonSpan>
       </Link>
-    </S.Div>
+    </Styled_PageMovement.Div>
   );
 };
 

@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-const S = {
+export const Styled_Header = {
   Header: styled.header`
     display: flex;
     justify-content: center;
@@ -33,5 +33,3 @@ const S = {
     cursor: pointer;
   `,
 };
-
-export default S;
