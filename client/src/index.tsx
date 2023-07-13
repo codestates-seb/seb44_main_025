@@ -6,8 +6,8 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import axios from 'axios';
 import Notfoundpage from './pages/NotFound';
-import PerformanceList from './pages/PerformanceList';
-import PerformanceInfo from './pages/PerformanceInfo';
+import PerformanceList from './pages/performance-list/PerformanceList';
+import PerformanceInfo from './pages/performance-info/PerformanceInfo';
 import PerformanceRegister from './pages/performance-register/PerformanceRegister';
 import Artistpage from './pages/Artist';
 import Mypage from './pages/MyPage';
@@ -18,6 +18,7 @@ import SignUpPage from './pages/sign/SignUp';
 import SignInPage from './pages/sign/SignIn';
 import ArtistList from './pages/ArtistList';
 import Main from './pages/Main';
+import ReviewRegister from './pages/review/ReviewRegister';
 
 /** @todo 도메인 주소 입력 */
 // axios.defaults.baseURL = '';
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: '/mypage/editmypage/cancel',
         element: <Cancelpage />,
+      },
+      {
+        path: '/performances/review/write/:performanceId',
+        element: <ReviewRegister />,
       },
     ],
   },
