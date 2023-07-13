@@ -56,7 +56,7 @@ public class PerformanceDto {
     public static class Response {
         private long performanceId;
         private String title;
-        private List<PerformanceArtist> artists;
+        private PerformanceArtistDto.Response performanceArtist;
         private Content content;
         private String date;
         private int price;

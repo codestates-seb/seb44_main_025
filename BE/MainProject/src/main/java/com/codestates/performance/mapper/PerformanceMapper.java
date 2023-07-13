@@ -5,6 +5,7 @@ import com.codestates.artist.ArtistService;
 import com.codestates.category.Category;
 import com.codestates.category.CategoryService;
 import com.codestates.content.entity.Content;
+import com.codestates.performance.dto.PerformanceArtistDto;
 import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
 import com.codestates.performance.entity.PerformanceArtist;
@@ -13,7 +14,10 @@ import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
@@ -97,10 +101,20 @@ public interface PerformanceMapper {
     }
 
     default PerformanceDto.Response performanceToPerformanceResponseDto(Performance performance) {
+        PerformanceArtistDto.Response performanceArtistDto = new PerformanceArtistDto.Response();
+        performanceArtistDto.setPerformanceId(performance.getPerformanceId());
+
+        Map<Long, Artist> performanceArtistMap = new HashMap<>();
+        for(PerformanceArtist el : performance.getPerformanceArtists()) {
+            performanceArtistMap.put(el.getPerformanceArtistId(), el.getArtist());
+        }
+
+        performanceArtistDto.setPerformanceArtist(performanceArtistMap);
+
         return new PerformanceDto.Response(
                 performance.getPerformanceId(),
                 performance.getTitle(),
-                performance.getPerformanceArtists(),
+                performanceArtistDto,
                 performance.getContent(),
                 performance.getDate().toString(),
                 performance.getPrice(),
@@ -113,17 +127,29 @@ public interface PerformanceMapper {
 
     default List<PerformanceDto.Response> performancesToPerformanceResponseDtos(List<Performance> performances) {
         return performances.stream()
-                .map(data->new PerformanceDto.Response(
-                        data.getPerformanceId(),
-                        data.getTitle(),
-                        data.getPerformanceArtists(),
-                        data.getContent(),
-                        data.getDate().toString(),
-                        data.getPrice(),
-                        data.getPlace(),
-                        data.getTotalSeat(),
-                        data.getCategory().getCategory(),
-                        data.getImageUrl()
-                )).collect(Collectors.toList());
+                .map(data-> {
+                    PerformanceArtistDto.Response performanceArtistResponseDto = new PerformanceArtistDto.Response();
+                    performanceArtistResponseDto.setPerformanceId(data.getPerformanceId());
+
+                    Map<Long, Artist> performanceArtistMap = new HashMap<>();
+                    for(PerformanceArtist el : data.getPerformanceArtists()) {
+                        performanceArtistMap.put(el.getPerformanceArtistId(), el.getArtist());
+                    }
+
+                    performanceArtistResponseDto.setPerformanceArtist(performanceArtistMap);
+
+                    return new PerformanceDto.Response(
+                            data.getPerformanceId(),
+                            data.getTitle(),
+                            performanceArtistResponseDto,
+                            data.getContent(),
+                            data.getDate().toString(),
+                            data.getPrice(),
+                            data.getPlace(),
+                            data.getTotalSeat(),
+                            data.getCategory().getCategory(),
+                            data.getImageUrl()
+                    );
+                }).collect(Collectors.toList());
     }
 }
