@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { FontStyle } from '../../utils/Theme';
 
 interface StyleDivProps {
   height: 140 | 60;
@@ -19,8 +20,8 @@ export const Styled_HomePageButton = {
     background-size: cover;
     background-position: center;
     color: var(--font-white-color);
-    font-size: var(--heading6-font-size);
-    font-weight: var(--p-small-medium-font-weight);
+    ${FontStyle.heading6}
+
     cursor: pointer;
     &:hover {
       background-image: url(${props => props.imageurl});

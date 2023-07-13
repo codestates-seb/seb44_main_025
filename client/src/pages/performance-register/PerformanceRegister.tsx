@@ -8,23 +8,34 @@ import {
 } from '../../components/buttons/Buttons';
 import ArtistContainer from '../../components/artist/artistcontainer';
 import Navbar from '../../components/nav/Navbar';
-import { Input } from '../../components/inputs/StyledInputs';
+import { Input } from '../../components/inputs/Inputs';
 import { Editor } from '../../components/inputs/editor/Editor';
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { useEditorStore } from '../../components/inputs/editor/EditorStore';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { postPerformance } from '../../api/fetchAPI';
 
 // import { isLoggedIn } from '../../zustand/Token';
-interface Inputs {
+interface FormValues {
   title: string;
   date: string;
   price: string;
-  totalseat: string;
+  totalSeat: string;
   artists: string[] | number[];
 }
 
+interface BodyType {
+  title: string;
+  artistIds: number[];
+  content: string;
+  date: string;
+  price: number;
+  place: string;
+  totalSeat: number;
+  categoryId: number;
+  imageUrl?: string;
+}
 const categoryObj = {
   팝: 1,
   락: 2,
@@ -34,20 +45,32 @@ const categoryObj = {
   댄스: 6,
 };
 const PerformanceRegister = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = data => {
+  const { handleSubmit, control } = useForm<FormValues>();
+  const onSubmit: SubmitHandler<FormValues> = data => {
     const result = {};
-    Object.assign(result, data);
+    Object.assign(result, {
+      ...data,
+      price: +data.price,
+      totalSeat: +data.totalSeat,
+    });
     // TODO: place, artistIds 구현하기
     Object.assign(result, {
       categoryId,
       content,
       place: '홍대',
       artistIds: [1],
+      imageUrl: '',
     });
     let formData = new FormData();
-    formData.append('image-file', file as Blob);
-    formData.append('performanceDto', JSON.stringify(result));
+    formData.append('image-file', file as Blob, 'image');
+    // formData.append('performanceDto', JSON.stringify(result));
+    formData.append(
+      'performanceDto',
+      new Blob([JSON.stringify(result)], {
+        type: 'application/json',
+      }),
+      'performanceDto'
+    );
     postPerformance(formData);
   };
   const content = useEditorStore(state => state.content);
@@ -130,48 +153,86 @@ const PerformanceRegister = () => {
               onClick={() => fileInputRef.current?.click()}
             ></S.Poster>
             <S.Form onSubmit={handleSubmit(onSubmit)}>
-              <label htmlFor="title">공연명</label>
-              <Input
-                id="title"
-                height={30}
-                width={170}
-                {...register('title', { required: true })}
+              <Controller
+                control={control}
+                name={'title'}
+                defaultValue={''}
+                rules={{
+                  required: '반드시 입력해야 합니다',
+                }}
+                render={({ field }) => {
+                  return (
+                    <Input
+                      label={'공연명'}
+                      height={30}
+                      width={170}
+                      onChange={field.onChange}
+                      value={field.value}
+                    />
+                  );
+                }}
               />
-              <label htmlFor="date">날짜</label>
-              <Input
-                id="date"
-                height={30}
-                width={170}
-                type="datetime-local"
-                {...register('date', { required: true })}
+              <Controller
+                control={control}
+                name={'date'}
+                defaultValue={''}
+                rules={{
+                  required: '반드시 입력해야 합니다',
+                }}
+                render={({ field }) => {
+                  return (
+                    <Input
+                      label={'날짜'}
+                      height={30}
+                      width={170}
+                      type="datetime-local"
+                      onChange={field.onChange}
+                      value={field.value}
+                    />
+                  );
+                }}
               />
-              <label htmlFor="price">금액</label>
-              <Input
-                id="price"
-                height={30}
-                width={170}
-                type="number"
-                step="1000"
-                min="0"
-                {...register('price', { required: true, min: 0 })}
+              <Controller
+                control={control}
+                name={'price'}
+                defaultValue={''}
+                rules={{
+                  required: '반드시 입력해야 합니다',
+                }}
+                render={({ field }) => {
+                  return (
+                    <Input
+                      label={'금액'}
+                      height={30}
+                      width={170}
+                      type="number"
+                      onChange={field.onChange}
+                      value={field.value}
+                    />
+                  );
+                }}
               />
-              <label htmlFor="totalseat">총 좌석</label>
-              <Input
-                id="totalseat"
-                height={30}
-                width={170}
-                type="number"
-                {...register('totalseat', { required: true })}
+              <Controller
+                control={control}
+                name={'totalSeat'}
+                defaultValue={''}
+                rules={{
+                  required: '반드시 입력해야 합니다',
+                }}
+                render={({ field }) => {
+                  return (
+                    <Input
+                      label={'총 좌석'}
+                      height={30}
+                      width={170}
+                      type="number"
+                      onChange={field.onChange}
+                      value={field.value}
+                    />
+                  );
+                }}
               />
             </S.Form>
-            {/* <S.Form>
-              <Input label={'공연명'} width={170} height={30} />
-              <Input label={'날짜'} width={170} height={30} type="date" />
-              <S.FormFlexContainer>
-                <Input label={'금액'} width={75} height={30} type="number" />
-                <Input label={'총 좌석'} width={75} height={30} type="number" />
-              </S.FormFlexContainer>
-            </S.Form> */}
           </S.SummaryContainer>
           <S.Heading3>공연설명</S.Heading3>
           <Editor />

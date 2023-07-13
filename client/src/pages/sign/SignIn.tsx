@@ -64,6 +64,25 @@ const SignInPage = () => {
           <Styled_Sign.H1 mb={145}>Ez to 로그인</Styled_Sign.H1>
           <Styled_Sign.Form onSubmit={handleSubmit(onSubmit)}>
             <div>
+              {/* <Controller
+                control={control}
+                name={'title'}
+                defaultValue={''}
+                rules={{
+                  required: '반드시 입력해야 합니다',
+                }}
+                render={({ field }) => {
+                  return (
+                    <Input
+                      label={'공연명'}
+                      height={30}
+                      width={170}
+                      onChange={field.onChange}
+                      value={field.value}
+                    />
+                  );
+                }}
+              /> */}
               <div>
                 <label htmlFor="email">이메일</label>
                 <div>

@@ -36,7 +36,7 @@ const Home = () => {
           <Slogan />
           <CarouselLogic />
           <Styled_Home.MiddlePart>
-            <Input height={30} placeholder="검색..." icon={true} />
+            <Input height={30} placeholder="검색..." suffix={true} />
             <Styled_Home.AllBtnsDiv>
               <Link to="/performances" style={{ textDecorationLine: 'none' }}>
                 <MainPageButton

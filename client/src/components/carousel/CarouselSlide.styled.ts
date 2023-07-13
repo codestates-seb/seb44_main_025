@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { FontStyle } from '../../utils/Theme';
 
 export const Styled_CarouselSlide = {
   ImgDiv: styled.div`
@@ -36,15 +37,11 @@ export const Styled_CarouselSlide = {
     align-items: flex-end;
   `,
   ConcertTitle: styled.header`
-    font-size: var(--heading6-font-size);
-    line-height: var(--heading6-line-height);
-    font-weight: var(--heading6-font-weight);
+    ${FontStyle.heading6}
     color: var(--font-white-color);
   `,
   Concertcontent: styled.p`
-    font-size: var(--p-small-regular-font-size);
-    font-weight: var(--p-small-regular-font-weight);
-    line-height: var(--p-small-regular-line-height);
+    ${FontStyle.smallRegular}
     color: var(--font-light-white-color);
   `,
 };

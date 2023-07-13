@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { FontStyle } from '../../utils/Theme';
 
 export const Styled_ArtistHome = {
   ArtistpreviewMain: styled.div`
@@ -6,9 +7,7 @@ export const Styled_ArtistHome = {
     height: 160px;
   `,
   Subtitle: styled.header`
-    font-size: var(--p-large-medium-font-size);
-    font-weight: var(--p-large-medium-font-weight);
-    line-height: var(--p-large-medium-line-height);
+    ${FontStyle.largeMedium}
     color: var(--font-light-white-color);
     margin-left: 15px;
   `,
@@ -17,9 +16,7 @@ export const Styled_ArtistHome = {
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 10px;
-    font-size: var(--p-small-medium-font-size);
-    font-weight: var(--p-small-medium-font-weight);
-    line-height: var(--p-small-medium-line-height);
+    ${FontStyle.smallMedium}
     color: var(--button-primary-background-color);
     margin-right: 15px;
   `,
@@ -48,9 +45,7 @@ export const Styled_ArtistHome = {
     text-align: center;
   `,
   Artistcontent: styled.p`
-    font-size: var(--p-small-regular-font-size);
-    font-weight: var(--p-small-regular-font-weight);
-    line-height: var(--p-small-regular-line-height);
+    ${FontStyle.smallRegular}
     color: var(--font-light-white-color);
     white-space: nowrap;
     overflow: hidden;

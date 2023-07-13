@@ -4,12 +4,7 @@ import {
   ButtonPrimary75px,
   ButtonHighlightBorder,
 } from '../components/buttons/Buttons';
-import {
-  Input,
-  InputWithButton,
-  InputSuccess,
-  InputWarning,
-} from '../components/inputs/Inputs';
+import { Input } from '../components/inputs/Inputs';
 import { useState } from 'react';
 import Img from '.././images/우리사랑이대로.jpeg';
 import { Link } from 'react-router-dom';
@@ -32,12 +27,12 @@ export default function Editmypage() {
             </S.ButtonWarppar>
             <S.InputContainer>
               <S.InputLabel>닉네임</S.InputLabel>
-              <InputWithButton
+              <Input
                 value={Artist}
-                icon={true}
+                suffix={true}
                 width={285}
                 buttonText={'중복확인'}
-              ></InputWithButton>
+              />
             </S.InputContainer>
             <S.InputContainer>
               <S.InputLabel>비밀번호 변경</S.InputLabel>
@@ -49,13 +44,17 @@ export default function Editmypage() {
             </S.InputContainer>
             <S.InputContainer>
               <S.InputLabel>비밀번호 변경 확인</S.InputLabel>
-              <InputSuccess message={'비밀번호가 일치합니다.'}></InputSuccess>
+              <Input
+                theme={'success'}
+                successMessage={'비밀번호가 일치합니다.'}
+              />
             </S.InputContainer>
             <S.InputContainer>
               <S.InputLabel>비밀번호 변경 확인</S.InputLabel>
-              <InputWarning
-                message={'비밀번호가 일치하지 않습니다.'}
-              ></InputWarning>
+              <Input
+                theme={'warning'}
+                errorMessage={'비밀번호가 일치하지 않습니다.'}
+              />
             </S.InputContainer>
             <S.HighlightButtonWarppar>
               <Link to="cancelpage">
