@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.util.List;
@@ -35,9 +36,9 @@ public class PerformanceController {
     private final ArtistService artistService;
 
     /* 공연 생성 */
-    @PostMapping(value = "/register", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity postPerformance(@RequestPart PerformanceDto.Post performanceDto,
-                                          @RequestPart("image_file") MultipartFile imageFile) throws IOException {
+                                          @RequestPart("image-file") MultipartFile imageFile) throws IOException {
         String imageUrl = imageUploadService.imageUpload(imageFile);
         performanceDto.setImageUrl(imageUrl);
 
@@ -45,6 +46,30 @@ public class PerformanceController {
         Performance response = performanceService.createPerformance(performance);
 
         return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(response)), HttpStatus.CREATED);
+    }
+
+    /* 공연 수정 */
+    @PatchMapping("/{performance-id}")
+    public ResponseEntity patchPerformance(@PathVariable("performance-id") @Positive long performanceId,
+                                           @RequestPart("image-file") MultipartFile imageFile,
+                                           @RequestPart @Valid PerformanceDto.Patch performanceDto) throws IOException {
+        String imageUrl = imageUploadService.imageUpload(imageFile);
+        performanceDto.setImageUrl(imageUrl);
+
+        performanceDto.setPerformanceId(performanceId);
+        Performance performance = performanceService.updatePerformance(mapper.performancePatchDtoToPerformance(
+                performanceDto,
+                performanceService,
+                categoryService,
+                artistService));
+        return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(performance)), HttpStatus.OK);
+    }
+
+    /* 공연 조회 */
+    @GetMapping("{performance-id}")
+    public ResponseEntity getPerformance(@PathVariable("performance-id") @Positive long performanceId) {
+        Performance performance = performanceService.findPerformance(performanceId);
+        return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(performance)), HttpStatus.OK);
     }
 
     /* 공연 전체 조회 */
@@ -55,5 +80,12 @@ public class PerformanceController {
         List<Performance> findPerformance = pagePerformance.toList();
 
         return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);
+    }
+
+    /* 공연 삭제 */
+    @DeleteMapping("/{performance-id}")
+    public ResponseEntity deletePerformance(@PathVariable("performance-id") @Positive long performanceId) {
+        performanceService.deletePerformance(performanceId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

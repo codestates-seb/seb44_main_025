@@ -7,4 +7,10 @@ public interface PerformanceService {
     Performance createPerformance(Performance performance);
 
     Page<Performance> findPerformances(int page, int size);
+
+    void deletePerformance(long performanceId);
+
+    Performance updatePerformance(Performance performance);
+
+    Performance findPerformance(long performanceId);
 }
