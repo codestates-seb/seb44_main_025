@@ -1,6 +1,15 @@
 import { styled } from 'styled-components';
 
 export default {
+  Heading1: styled.h1`
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-right: auto;
+    color: white;
+    font-size: var(--heading1-font-size);
+    font-weight: var(--heading1-font-weight);
+    line-height: var(--heading1-line-height);
+  `,
   Heading3: styled.h3`
     margin-top: 20px;
     margin-bottom: 8px;
