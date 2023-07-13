@@ -60,6 +60,7 @@ export default function Mypage() {
           <S.ConcertpreviewContainer>
             <S.SubTitle>예약 중인 공연</S.SubTitle>
             <Concertpreview
+              performanceId={1}
               posterImg={''}
               title={''}
               artistname={''}
@@ -69,6 +70,7 @@ export default function Mypage() {
               categoryId={0}
             />
             <Concertpreview
+              performanceId={1}
               posterImg={''}
               title={''}
               artistname={''}

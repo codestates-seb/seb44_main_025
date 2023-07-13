@@ -123,6 +123,7 @@ export default function Artistpage() {
                   return (
                     <>
                       <Concertpreview
+                        performanceId={1}
                         posterImg={el.imageUrl}
                         title={el.title}
                         artistname={el.artistname}

@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
-import { ButtonWithArrowDark } from '../buttons/Buttons';
 import Img from '../.././images/우리사랑이대로.jpeg';
+import { useNavigate } from 'react-router-dom';
 
 interface ConcertPreviewPropTypes {
   posterImg: string;
@@ -14,19 +14,27 @@ interface ConcertPreviewPropTypes {
   place?: string;
   totalSeat?: number;
   imageUrl?: string;
+  performanceId: string | number;
 }
 
 export default function Concertpreview(props: ConcertPreviewPropTypes) {
+  const navigate = useNavigate();
+  const date = new Date(props.date);
   return (
-    <S.ConcertpreviewWrapper>
+    <S.ConcertpreviewWrapper
+      onClick={() => {
+        navigate(`/performances/${props.performanceId}`);
+      }}
+    >
       <S.ConcertImg src={props.posterImg || Img} />
       <S.ConcertDetail>
         <S.ConcertTitle>{props.title || '타이틀'}</S.ConcertTitle>
         <S.Concertcontent>{props.artistname || '아티스트명'}</S.Concertcontent>
-        <S.Concertcontent>{props.category || '장르'}</S.Concertcontent>
-        <S.Concertcontent>{props.price || '가격'}</S.Concertcontent>
-        <S.Concertcontent>{props.date || '날짜'}</S.Concertcontent>
-        <ButtonWithArrowDark text={'예약취소'}></ButtonWithArrowDark>
+        <S.Concertcontent>{props.category || '기타'}</S.Concertcontent>
+        <S.Concertcontent>{props.price || '가격'}원</S.Concertcontent>
+        <S.Concertcontent>{date.toLocaleDateString()}</S.Concertcontent>
+        {/* <S.Concertcontent>{date.toLocaleTimeString()}</S.Concertcontent> */}
+        {/* <ButtonWithArrowDark text={'예약취소'}></ButtonWithArrowDark> */}
       </S.ConcertDetail>
     </S.ConcertpreviewWrapper>
   );
@@ -34,12 +42,13 @@ export default function Concertpreview(props: ConcertPreviewPropTypes) {
 
 const S = {
   ConcertpreviewWrapper: styled.div`
+    cursor: pointer;
     width: 360px;
     height: 180px;
     background-color: var(--font-mid-color);
     border-radius: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
     margin-left: 15px;
@@ -57,14 +66,16 @@ const S = {
       );
     background-origin: border-box;
     background-clip: content-box, border-box;
+    margin-left: 15px;
   `,
-  ConcertDetail: styled.div`
+  ConcertDetail: styled.section`
     margin-left: 10px;
     height: 150px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-end;
+    margin-right: 15px;
   `,
   ConcertTitle: styled.header`
     font-size: var(--heading6-font-size);
