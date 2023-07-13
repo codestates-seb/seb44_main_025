@@ -10,6 +10,7 @@ import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
 import com.codestates.performance.entity.PerformanceArtist;
 import com.codestates.performance.service.PerformanceService;
+import com.codestates.performancecomment.dto.PerformanceCommentDto;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
