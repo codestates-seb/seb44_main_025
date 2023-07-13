@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../utils/Cookie';
+import { UserInfo } from '../../zustand/userInfo';
 
 interface IForm {
   email: string;
@@ -17,6 +18,7 @@ interface IForm {
 
 const SignInPage = () => {
   const navigate = useNavigate();
+  const { userData, setUserData } = UserInfo();
   const {
     register,
     formState: { errors },
@@ -30,6 +32,9 @@ const SignInPage = () => {
         // 헤더에 담긴 토큰 가져오기
         const accessToken = response.headers['Authorization'];
         if (response.status === 200) {
+          // Body에 담긴 유저 정보 UserData에 저장
+          setUserData(response.data);
+          console.log(userData);
           // token이 필요한 API 요청 시 header Authorization에 token 담아 전송
           axios.defaults.headers.common[
             'Authorization'
