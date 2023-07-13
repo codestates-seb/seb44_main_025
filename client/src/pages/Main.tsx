@@ -38,7 +38,7 @@ const Main = () => {
           <Slogan />
           <CarouselLogic />
           <S.MiddlePart>
-            <Input height={30} placeholder="검색..." icon={true} />
+            <Input height={30} placeholder="검색..." suffix={true} />
             <S.AllBtnsDiv>
               <Link to="/performances">
                 <MainPageButton
