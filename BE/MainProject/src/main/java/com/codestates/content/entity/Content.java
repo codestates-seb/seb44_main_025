@@ -1,6 +1,7 @@
 package com.codestates.content.entity;
 
 import com.codestates.performance.entity.Performance;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +16,23 @@ public class Content {
     private long contentId;
     @Column(columnDefinition = "text")
     private String body;
+    @JsonIgnore
     @OneToOne(mappedBy = "content")
     private Performance performance;
 
     public Content() {}
     public Content(String body) {
         this.body = body;
+    }
+
+    public void setPerformance(Performance performance) {
+        this.performance = performance;
+        if(this.performance.getContent() != this) {
+            this.performance.setContent(this);
+        }
+    }
+
+    public void setContentId(long contentId) {
+        this.contentId = contentId;
     }
 }
