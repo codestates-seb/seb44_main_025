@@ -13,7 +13,7 @@ public class ArtistMapper {
 
     public ArtistResponseDto artistToArtistResponseDto(Artist artist){
         return new ArtistResponseDto(
-                1,
+                artist.getMember().getMemberId(),
                 artist.getCategory().getCategory(),
                 artist.getArtistId(),
                 artist.getArtistName(),

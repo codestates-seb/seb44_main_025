@@ -73,4 +73,13 @@ public class ArtistService {
             throw new BusinessLogicException(ExceptionCode.ARTIST_EXISTS);
     }
 
+    public boolean memberHasArtist(Member member){
+
+        Optional<Artist> artist = artistRepository.findByMember(member);
+        boolean result = false;
+        if(artist.isPresent()){
+            result = true;}
+        return result;
+    }
+
 }
