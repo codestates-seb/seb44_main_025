@@ -3,13 +3,13 @@ import Img from '../.././images/우리사랑이대로.jpeg';
 import { useNavigate } from 'react-router-dom';
 
 interface ConcertPreviewPropTypes {
-  posterImg: string;
-  title: string;
-  artistname: string;
-  category: string;
-  price: number;
-  date: string;
-  categoryId: number;
+  posterImg?: string;
+  title?: string;
+  artistname?: string;
+  category?: string;
+  price?: number;
+  date?: string;
+  categoryId?: number;
   artistId?: number;
   place?: string;
   totalSeat?: number;
