@@ -48,6 +48,7 @@ public class Performance {
     @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
     private List<PerformanceArtist> performanceArtists = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
     private List<PerformanceComment> performanceComments = new ArrayList<>();
 

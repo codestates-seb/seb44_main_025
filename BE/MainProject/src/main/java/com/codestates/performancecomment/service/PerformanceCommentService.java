@@ -9,5 +9,9 @@ import org.springframework.stereotype.Service;
 public interface PerformanceCommentService {
     PerformanceComment createPerformanceComment(PerformanceComment performanceComment);
 
-    void deletePerformanceComment(long performanceId, long commentId);
+    void deletePerformanceComment(long performanceCommentId);
+
+    PerformanceComment updatePerformanceComment(PerformanceComment performanceComment);
+
+    PerformanceComment findPerformanceComment(long performanceCommentId);
 }

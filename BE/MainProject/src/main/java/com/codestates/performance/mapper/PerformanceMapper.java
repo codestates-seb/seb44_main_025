@@ -110,7 +110,7 @@ public interface PerformanceMapper {
             performanceArtistMap.put(el.getPerformanceArtistId(), el.getArtist());
         }
 
-        performanceArtistDto.setPerformanceArtist(performanceArtistMap);
+        performanceArtistDto.setPerformanceArtistList(performanceArtistMap);
 
         return new PerformanceDto.Response(
                 performance.getPerformanceId(),
@@ -137,7 +137,7 @@ public interface PerformanceMapper {
                         performanceArtistMap.put(el.getPerformanceArtistId(), el.getArtist());
                     }
 
-                    performanceArtistResponseDto.setPerformanceArtist(performanceArtistMap);
+                    performanceArtistResponseDto.setPerformanceArtistList(performanceArtistMap);
 
                     return new PerformanceDto.Response(
                             data.getPerformanceId(),
