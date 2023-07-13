@@ -8,18 +8,22 @@ import com.codestates.artist.dto.ArtistResponseDto;
 import com.codestates.category.Category;
 import com.codestates.category.CategoryService;
 import com.codestates.global.PageInfo;
+import com.codestates.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 @Slf4j
 @RequestMapping("/artist")
@@ -29,27 +33,36 @@ public class ArtistController {
     private final ArtistService artistService;
     private final ArtistMapper artistMapper;
     private final CategoryService categoryService;
+    private final MemberService memberService;
 
     private final ArtistDtoToArtist artistDtoToArtist;
 
     public ArtistController(ArtistRepository artistRepository,
                             ArtistService artistService,
                             ArtistMapper artistMapper,
+                            MemberService memberService,
                             CategoryService categoryService,
                             ArtistDtoToArtist artistDtoToArtist){
         this.artistRepository = artistRepository;
         this.artistService = artistService;
         this.artistMapper = artistMapper;
+        this.memberService = memberService;
         this.categoryService = categoryService;
         this.artistDtoToArtist = artistDtoToArtist;
     }
 
     //아티스트 등록
     @PostMapping
-    public ResponseEntity postArtist(@Valid @RequestBody ArtistDto artistDto){
+    public ResponseEntity postArtist(@Valid @RequestBody ArtistDto artistDto,
+                                     Authentication authentication){
+        Map<String, Object> principal = (Map) authentication.getPrincipal();
+        long memberId = ((Number) principal.get("memberId")).longValue();
+        System.out.println("아아아아아아아아아"+memberId);
+        artistDto.setMember(memberService.findVerifiedMember(memberId));
 
-        Artist savedartist = artistService.createArtist(artistDtoToArtist.change(artistDto));
-        ArtistResponseDto response = artistMapper.artistToArtistResponseDto(savedartist);
+        Artist savedArtist = artistService.createArtist(artistDtoToArtist.change(artistDto));
+        System.out.println("아아아아아아아아아"+savedArtist.getMember().getMemberId());
+        ArtistResponseDto response = artistMapper.artistToArtistResponseDto(savedArtist);
 
 
         return new ResponseEntity<>(response, HttpStatus.OK);
