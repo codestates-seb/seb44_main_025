@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 interface Reviewlist {
   nickname: string;
-  title: string;
+  reviewtitle: string;
   artistId?: number;
   content: string;
 }
@@ -12,7 +12,7 @@ export default function Review(props: Reviewlist) {
     <S.ReviewWrapper>
       <S.ReviewDetail>
         <S.UserNickname>{props.nickname}</S.UserNickname>
-        <S.Reviewcontent>{props.title}</S.Reviewcontent>
+        <S.Reviewcontent>{props.reviewtitle}</S.Reviewcontent>
         <S.Reviewcontent>{props.content}</S.Reviewcontent>
       </S.ReviewDetail>
     </S.ReviewWrapper>

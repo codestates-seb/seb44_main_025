@@ -54,7 +54,7 @@ export default function Artistregist() {
   // json.server사용할때 id값이 꼭 있어야 함
   const handleSubmit = async (body: bodyType) => {
     const data = await axios
-      .post('http://localhost:5000/artist', JSON.stringify(body), {
+      .post('http://localhost:5001/artist', JSON.stringify(body), {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(data => {

@@ -1,10 +1,10 @@
 import { styled } from 'styled-components';
 import Img from '../.././images/우리사랑이대로.jpeg';
-import { ButtonPrimary75px } from '../buttons/Buttons';
 
 interface ArtistPreviewPropTypes {
   artistId?: number;
-  imageUrl: string;
+  imageUrl?: string;
+  content?: string;
 }
 
 export default function ArtistreviewContainer(props: ArtistPreviewPropTypes) {
@@ -15,7 +15,7 @@ export default function ArtistreviewContainer(props: ArtistPreviewPropTypes) {
           <S.ArtistImg src={props.imageUrl || Img} />
           <S.ArtistDetail>
             {/* 일치하는 공연 정보 페이지로 이동 */}
-            <ButtonPrimary75px>공연정보</ButtonPrimary75px>
+            <S.Artistbutton>{props.content}</S.Artistbutton>
             <S.Artistreview></S.Artistreview>
           </S.ArtistDetail>
         </S.ArtistpreviewWrapper>
@@ -40,6 +40,14 @@ const S = {
   ArtistImg: styled.img`
     width: 75px;
     height: 75px;
+    cursor: pointer;
+  `,
+  Artistbutton: styled.p`
+    width: 75px;
+    display: flex;
+    justify-content: center;
+    color: var(--font-primary--color);
+    cursor: pointer;
   `,
   ArtistDetail: styled.div`
     height: 30px;
