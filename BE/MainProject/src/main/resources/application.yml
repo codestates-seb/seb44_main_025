@@ -28,3 +28,12 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
+jwt:
+  key: jwt025123412341234123412341234123412341234123412341234
+  access-token-expiration-minutes: 400
+  refresh-token-expiration-minutes: 420
+mail:
+  address:
+    admin: gustn5309@naver.com
+
+

@@ -24,6 +24,9 @@ public class MemberMapper {
         return new MemberResponseDto(member.getMemberId(),
                 member.getEmail(),
                 member.getNickname(),
-                member.getPassword());
+                member.getPassword(),
+                false
+        );
+
     }
 }
