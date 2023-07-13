@@ -15,7 +15,8 @@ public enum ExceptionCode {
     LIKE_NOT_FOUND(404, "Like not found"),
     ARTIST_NOT_FOUND(404, "아티스트가 존재하지 않음"),
     ARTIST_EXISTS(409, "이미 존재하는 아티스트명 입니다"),
-    CATEGORY_NOT_FOUND(404, "존재하지 않는 카테고리명");
+    CATEGORY_NOT_FOUND(404, "존재하지 않는 카테고리명"),
+    CONTENT_NOT_FOUND(404, "존재하지 않는 콘텐츠");
 
 
 

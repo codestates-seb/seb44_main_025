@@ -28,7 +28,8 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Artist> artists;
 
-    @OneToMany(mappedBy = "category")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Performance> performances;
 
 
