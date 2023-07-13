@@ -2,23 +2,20 @@ import * as S from './Styled_Inputs';
 import { InputContainerType } from './Styled_Inputs';
 import { ReactComponent as CloseIcon } from '../../icons/icon_close.svg';
 import { ReactComponent as SearchIcon } from '../../icons/icon_search.svg';
+import React from 'react';
 
 type InputType = {
   theme?: 'light' | 'dark' | 'warning' | 'success';
   label?: string;
   prefix?: boolean;
   suffix?: boolean;
-  value?: string;
   onChange?: (value: any) => void;
   onBlur?: (e: React.SyntheticEvent) => void;
   errorMessage?: string;
   successMessage?: string;
-  setValue?: (e: string) => void;
-  placeholder?: string;
-  type?: string;
   buttonText?: string;
-  onSubmit?: () => void;
-} & InputContainerType;
+} & InputContainerType &
+  React.InputHTMLAttributes<HTMLInputElement>;
 export const Input = (props: InputType) => {
   return (
     <S.Div>
@@ -30,21 +27,7 @@ export const Input = (props: InputType) => {
           width={props?.width}
         >
           {props?.prefix && <SearchIcon />}
-          <input
-            type={props?.type}
-            placeholder={props?.placeholder}
-            value={props?.value}
-            onChange={e => {
-              if (props.onChange) {
-                props?.onChange(e.target.value);
-              }
-            }}
-            onBlur={e => {
-              if (props?.onBlur) {
-                props?.onBlur(e);
-              }
-            }}
-          />
+          <input {...props} />
           {props?.suffix &&
             (props?.value ? (
               <CloseIcon
