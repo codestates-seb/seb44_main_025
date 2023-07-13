@@ -158,7 +158,7 @@ const PerformanceRegister = () => {
                 name={'title'}
                 defaultValue={''}
                 rules={{
-                  required: '입력해잇',
+                  required: '반드시 입력해야 합니다',
                 }}
                 render={({ field }) => {
                   return (
@@ -177,7 +177,7 @@ const PerformanceRegister = () => {
                 name={'date'}
                 defaultValue={''}
                 rules={{
-                  required: '입력해잇',
+                  required: '반드시 입력해야 합니다',
                 }}
                 render={({ field }) => {
                   return (
@@ -197,7 +197,7 @@ const PerformanceRegister = () => {
                 name={'price'}
                 defaultValue={''}
                 rules={{
-                  required: '입력해잇',
+                  required: '반드시 입력해야 합니다',
                 }}
                 render={({ field }) => {
                   return (
@@ -217,7 +217,7 @@ const PerformanceRegister = () => {
                 name={'totalSeat'}
                 defaultValue={''}
                 rules={{
-                  required: '입력해잇',
+                  required: '반드시 입력해야 합니다',
                 }}
                 render={({ field }) => {
                   return (
