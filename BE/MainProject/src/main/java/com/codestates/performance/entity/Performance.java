@@ -2,6 +2,7 @@ package com.codestates.performance.entity;
 
 import com.codestates.category.Category;
 import com.codestates.content.entity.Content;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
@@ -23,7 +24,8 @@ public class Performance {
     private long performanceId;
     @Column(nullable = false)
     private String title;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="CONTENT_ID")
     private Content content;
     @Column(nullable = false)
@@ -34,7 +36,8 @@ public class Performance {
     private String place;
     @Column(nullable = false)
     private int totalSeat;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="CATEGORY_ID")
     private Category category;
     @Column(nullable = false)
@@ -53,7 +56,7 @@ public class Performance {
         this.imageUrl = imageUrl;
     }
 
-    public Performance(long performanceId, String title, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl) {
+    public Performance(long performanceId, String title, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl, Content content) {
         this.performanceId = performanceId;
         this.title = title;
         this.date = date;
@@ -62,12 +65,20 @@ public class Performance {
         this.totalSeat = totalSeat;
         this.category = category;
         this.imageUrl = imageUrl;
+        this.content = content;
     }
 
     public void setContent(Content content) {
         this.content = content;
         if(this.content.getPerformance() != this) {
             this.content.setPerformance(this);
+        }
+    }
+
+    public void addPerformanceArtist(PerformanceArtist performanceArtist) {
+        this.performanceArtists.add(performanceArtist);
+        if(performanceArtist.getPerformance() != this) {
+            performanceArtist.setPerformance(this);
         }
     }
 }

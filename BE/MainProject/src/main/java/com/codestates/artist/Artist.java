@@ -45,8 +45,6 @@ public class Artist {
     @OneToMany(mappedBy = "artist")
     private List<PerformanceArtist> performanceArtists = new ArrayList<>();
 
-
-
     public Artist(String artistName, String imageUrl, String content, Category category,
                   Member member){
         this.artistName = artistName;
@@ -54,5 +52,12 @@ public class Artist {
         this.content = content;
         this.category = category;
         this.member = member;
+    }
+
+    public void addPerformanceArtist(PerformanceArtist performanceArtist) {
+        this.performanceArtists.add(performanceArtist);
+        if(performanceArtist.getArtist() != this) {
+            performanceArtist.setArtist(this);
+        }
     }
 }

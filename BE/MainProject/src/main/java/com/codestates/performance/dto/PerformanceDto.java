@@ -40,6 +40,7 @@ public class PerformanceDto {
         private int totalSeat;
         private long categoryId;
         private String imageUrl;
+        private long performanceArtistId;
 
         public void setPerformanceId(long performanceId) {
             this.performanceId = performanceId;
@@ -55,7 +56,7 @@ public class PerformanceDto {
     public static class Response {
         private long performanceId;
         private String title;
-        private List<Artist> artists;
+        private List<PerformanceArtist> artists;
         private Content content;
         private String date;
         private int price;

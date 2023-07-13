@@ -31,4 +31,8 @@ public class Content {
             this.performance.setContent(this);
         }
     }
+
+    public void setContentId(long contentId) {
+        this.contentId = contentId;
+    }
 }
