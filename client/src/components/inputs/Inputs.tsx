@@ -10,6 +10,8 @@ type InputType = {
   prefix?: boolean;
   suffix?: boolean;
   onChange?: (value: any) => void;
+  setValue?: React.Dispatch<React.SetStateAction<string>>;
+  // setValue 사용하지 않게 되면 삭제하기
   onBlur?: (e: React.SyntheticEvent) => void;
   errorMessage?: string;
   successMessage?: string;
@@ -27,7 +29,26 @@ export const Input = (props: InputType) => {
           width={props?.width}
         >
           {props?.prefix && <SearchIcon />}
-          <input {...props} />
+          <input
+            type={props?.type}
+            name={props?.name}
+            value={props?.value}
+            disabled={props?.disabled}
+            max={props?.max}
+            maxLength={props?.maxLength}
+            min={props?.min}
+            minLength={props?.minLength}
+            readOnly={props?.readOnly}
+            src={props?.src}
+            onChange={e => {
+              if (props.setValue) {
+                props?.setValue(e.target.value);
+              }
+              if (props.onChange) {
+                props?.onChange(e.target.value);
+              }
+            }}
+          />
           {props?.suffix &&
             (props?.value ? (
               <CloseIcon
