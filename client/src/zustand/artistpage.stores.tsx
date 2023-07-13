@@ -24,7 +24,7 @@ interface Performancelist {
 
 interface Reviewlist {
   nickname: string;
-  title: string;
+  reviewtitle: string;
   artistId?: number;
   content: string;
 }

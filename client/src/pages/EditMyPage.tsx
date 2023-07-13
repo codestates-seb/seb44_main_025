@@ -58,7 +58,7 @@ export default function Editmypage() {
               ></InputWarning>
             </S.InputContainer>
             <S.HighlightButtonWarppar>
-              <Link to="cancelpage">
+              <Link to="cancel">
                 <ButtonHighlightBorder>회원탈퇴</ButtonHighlightBorder>
               </Link>
             </S.HighlightButtonWarppar>

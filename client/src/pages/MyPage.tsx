@@ -13,9 +13,71 @@ import NavMypage from '../components/navs/NavMypage';
 import { Link, useNavigate } from 'react-router-dom';
 import Img from '.././images/우리사랑이대로.jpeg';
 import { removeCookie } from '../utils/Cookie';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { ArtistpageReviewList } from '../zustand/artistpage.stores';
+import { MyPageList, MyPagePerformanceList } from '../zustand/mypage.stores';
+
+interface MyPage {
+  id?: number;
+  userId: number;
+  nickname: string;
+  imageUrl: string;
+  profileimageUrl: string;
+}
+
+interface Performancelist {
+  userId: number;
+  title: string;
+  artistId: number;
+  category: string;
+  date: string;
+  price: number;
+  artistname: string;
+  categoryId: number;
+  imageUrl: string;
+  id?: number;
+  performanceId?: number;
+}
+
+interface Reviewlist {
+  nickname: string;
+  reviewtitle: string;
+  artistId?: number;
+  content: string;
+}
 
 export default function Mypage() {
   const navigate = useNavigate();
+  const { reviewData } = ArtistpageReviewList();
+  const { setReviewData } = ArtistpageReviewList();
+  const { myPageData } = MyPageList();
+  const { setMyPageData } = MyPageList();
+  const { performanceData } = MyPagePerformanceList();
+  const { setPerformanceData } = MyPagePerformanceList();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // 아티스트 등록했을때 응답으로 오는 아티스트Id를 filter값으로 넣기
+        // 아티스트 등록하면 그 정보가 돌아오고 그 안에 아티스트아이디 있고 그거를 아티스트페이지 주소 뒤에 붙여줌 그리고 페이지 전환을 시켜줌 :/artistid
+        const response = await axios.get('http://localhost:5000/user?userId=1');
+        const responseperformance = await axios.get(
+          'http://localhost:5000/reservation?userId=1'
+        );
+        const responsereview = await axios.get(
+          'http://localhost:5000/review?userId=1'
+        );
+        // console.log(response.data);
+        setMyPageData(response.data);
+        setPerformanceData(responseperformance.data);
+        setReviewData(responsereview.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   /** 로그아웃 및 main으로 페이지 이동 */
   const logoutHandler = () => {
@@ -35,76 +97,110 @@ export default function Mypage() {
               로그아웃
             </ButtonPrimary75px>
           </S.ButtonWarppar>
-          <S.ProfileImg src={Img} />
-          <S.UserImg src={Img} />
-          <S.UserDetail>
-            <S.UserNickname>닉네임</S.UserNickname>
-            <S.UserEdit>
-              <Link to="editmypage">
-                <EditIcon />
-              </Link>
-            </S.UserEdit>
-          </S.UserDetail>
+          {myPageData.map((el: MyPage) => {
+            return (
+              <S.ProfileWarppar key={el.userId}>
+                <S.ProfileImg src={el.profileimageUrl || Img} />
+                <S.UserImg src={el.imageUrl || Img} />
+                <S.UserDetail>
+                  <S.UserNickname>{el.nickname}</S.UserNickname>
+                  <S.UserEdit>
+                    <Link to="editmypage">
+                      <EditIcon />
+                    </Link>
+                  </S.UserEdit>
+                </S.UserDetail>
+              </S.ProfileWarppar>
+            );
+          })}
           {/* 아티스트 미등록 사용자는 아티스트 등록 버튼 */}
           {/* 아티스트를 등록한 사용자는 아티스트 페이지 버튼 */}
           <S.ButtonWarppar>
-            <Link to="artistregist">
+            <Link to="artistregist" style={{ textDecoration: 'none' }}>
               <ButtonWithArrowDark text={'아티스트 등록'}></ButtonWithArrowDark>
             </Link>
-            <Link to="artist">
+            <Link to="artist" style={{ textDecoration: 'none' }}>
               <ButtonWithArrowDark
                 text={'아티스트 페이지'}
               ></ButtonWithArrowDark>
             </Link>
           </S.ButtonWarppar>
-          <S.ConcertpreviewContainer>
-            <S.SubTitle>예약 중인 공연</S.SubTitle>
-            <Concertpreview
-              posterImg={''}
-              title={''}
-              artistname={''}
-              category={''}
-              price={0}
-              date={''}
-              categoryId={0}
-            />
-            <Concertpreview
-              posterImg={''}
-              title={''}
-              artistname={''}
-              category={''}
-              price={0}
-              date={''}
-              categoryId={0}
-            />
-          </S.ConcertpreviewContainer>
-          <S.EmptyContainer>
-            <S.SubTitle>예약 중인 공연</S.SubTitle>
-            <S.EmptyWrapper>
-              <S.EmptyTitle>현재 예약중인 공연이 없습니다.</S.EmptyTitle>
-              <ConcertEmptyButton>
-                <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
-              </ConcertEmptyButton>
-            </S.EmptyWrapper>
-          </S.EmptyContainer>
+
+          <S.SubTitle>예약 중인 공연</S.SubTitle>
+          {performanceData.length !== 0 ? (
+            performanceData.map((el: Performancelist) => {
+              return (
+                <Concertpreview
+                  key={el.userId}
+                  posterImg={el.imageUrl}
+                  title={el.title}
+                  artistname={el.artistname}
+                  category={el.category}
+                  price={el.price}
+                  date={el.date}
+                  categoryId={el.categoryId}
+                />
+              );
+            })
+          ) : (
+            <S.EmptyContainer>
+              <S.EmptyWrapper>
+                <S.EmptyTitle>현재 예약중인 공연이 없습니다.</S.EmptyTitle>
+                <ConcertEmptyButton>
+                  <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                </ConcertEmptyButton>
+              </S.EmptyWrapper>
+            </S.EmptyContainer>
+          )}
+
           <S.SubTitle>내가 관람한 공연</S.SubTitle>
-          <ArtistreviewContainer imageUrl={''} />
-          <S.EmptyContainer>
-            <S.SubTitle>내가 관람한 공연</S.SubTitle>
-            <S.EmptyWrapper>
-              <S.EmptyTitle>아직 관람한 공연이 없습니다.</S.EmptyTitle>
-              <ConcertEmptyButton>
-                <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
-              </ConcertEmptyButton>
-            </S.EmptyWrapper>
-          </S.EmptyContainer>
+          <S.ArtistreviewContainerWrappar>
+            {performanceData.length !== 0 ? (
+              performanceData.map((el: Performancelist) => {
+                return (
+                  <ArtistreviewContainer
+                    key={el.userId}
+                    imageUrl={el.imageUrl}
+                    content="후기등록"
+                  />
+                );
+              })
+            ) : (
+              <S.EmptyContainer>
+                <S.EmptyWrapper>
+                  <S.EmptyTitle>아직 관람한 공연이 없습니다.</S.EmptyTitle>
+                  <ConcertEmptyButton>
+                    <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                  </ConcertEmptyButton>
+                </S.EmptyWrapper>
+              </S.EmptyContainer>
+            )}
+          </S.ArtistreviewContainerWrappar>
+
           <S.MyreviewContainer>
             <S.SubTitle>내가 작성한 후기</S.SubTitle>
-            <S.ReviewWrapper>
-              <Review nickname={''} title={''} content={''} />
-              <Review nickname={''} title={''} content={''} />
-              <Review nickname={''} title={''} content={''} />
-            </S.ReviewWrapper>
+            {reviewData.length !== 0 ? (
+              reviewData.map((el: Reviewlist, i) => {
+                return (
+                  <S.ReviewWrapper key={i}>
+                    <Review
+                      nickname={el.nickname}
+                      reviewtitle={el.reviewtitle}
+                      content={el.content}
+                    />
+                  </S.ReviewWrapper>
+                );
+              })
+            ) : (
+              <S.EmptyContainer>
+                <S.EmptyWrapper>
+                  <S.EmptyTitle>아직 관람한 공연이 없습니다.</S.EmptyTitle>
+                  <ConcertEmptyButton>
+                    <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                  </ConcertEmptyButton>
+                </S.EmptyWrapper>
+              </S.EmptyContainer>
+            )}
           </S.MyreviewContainer>
           <Footer />
         </S.Section>
@@ -140,6 +236,7 @@ const S = {
     margin-right: 15px;
     margin-bottom: 10px;
   `,
+  ProfileWarppar: styled.div``,
   ProfileImg: styled.img`
     width: 390px;
     height: 150px;
@@ -188,6 +285,10 @@ const S = {
     line-height: var(--heading5-line-height);
     color: var(--font-white-color);
     padding: 10px 15px 10px 15px;
+  `,
+  ArtistreviewContainerWrappar: styled.div`
+    display: flex;
+    /* flex-flow: row; */
   `,
   EmptyContainer: styled.div``,
   EmptyWrapper: styled.div`
