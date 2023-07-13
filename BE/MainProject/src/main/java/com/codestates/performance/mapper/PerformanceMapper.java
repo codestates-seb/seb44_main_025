@@ -5,12 +5,10 @@ import com.codestates.artist.ArtistService;
 import com.codestates.category.Category;
 import com.codestates.category.CategoryService;
 import com.codestates.content.entity.Content;
-import com.codestates.image.ImageUploadService;
 import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
 import com.codestates.performance.entity.PerformanceArtist;
 import org.mapstruct.Mapper;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,16 +24,8 @@ public interface PerformanceMapper {
         LocalDateTime date = LocalDateTime.parse(performanceDto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         Category category = categoryService.findVerifiedCategory(performanceDto.getCategoryId());
 
-        List<PerformanceArtist> performanceArtists = performanceDto.getArtistIds()
-                .stream()
-                .map(e->new PerformanceArtist(
-                        new Performance(),
-                        artistService.findArtist(e)
-                )).collect(Collectors.toList());
-
-        return new Performance(
+        Performance performance = new Performance(
                 performanceDto.getTitle(),
-                performanceArtists,
                 content,
                 date,
                 performanceDto.getPrice(),
@@ -44,26 +34,33 @@ public interface PerformanceMapper {
                 category,
                 performanceDto.getImageUrl()
         );
+
+        List<PerformanceArtist> performanceArtists = performanceDto.getArtistIds()
+                .stream()
+                .map(key->{
+                    PerformanceArtist performanceArtist = new PerformanceArtist();
+                    Artist artist = artistService.findVerifiedArtist(key);
+
+                    performanceArtist.addPerformance(performance);
+                    performanceArtist.addArtist(artist);
+                    return performanceArtist;
+                }).collect(Collectors.toList());
+
+        performance.setPerformanceArtists(performanceArtists);
+
+        return performance;
     }
 
     default Performance performancePatchDtoToPerformance(PerformanceDto.Patch performanceDto,
                                                          CategoryService categoryService,
                                                          ArtistService artistService) {
-        List<PerformanceArtist> performanceArtists = performanceDto.getArtistIds()
-                .stream()
-                .map(e->new PerformanceArtist(
-                        new Performance(),
-                        artistService.findArtist(e)
-                )).collect(Collectors.toList());
-
         Content content = new Content(performanceDto.getContent());
         LocalDateTime date = LocalDateTime.parse(performanceDto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         Category category = categoryService.findVerifiedCategory(performanceDto.getCategoryId());
 
-        return new Performance(
+        Performance performance = new Performance(
                 performanceDto.getPerformanceId(),
                 performanceDto.getTitle(),
-                performanceArtists,
                 content,
                 date,
                 performanceDto.getPrice(),
@@ -72,6 +69,21 @@ public interface PerformanceMapper {
                 category,
                 performanceDto.getImageUrl()
         );
+
+        List<PerformanceArtist> performanceArtists = performanceDto.getArtistIds()
+                .stream()
+                .map(key->{
+                    PerformanceArtist performanceArtist = new PerformanceArtist();
+                    Artist artist = artistService.findVerifiedArtist(key);
+
+                    performanceArtist.addPerformance(performance);
+                    performanceArtist.addArtist(artist);
+                    return performanceArtist;
+                }).collect(Collectors.toList());
+
+        performance.setPerformanceArtists(performanceArtists);
+
+        return performance;
     }
 
     default PerformanceDto.Response performanceToPerformanceResponseDto(Performance performance) {
@@ -81,7 +93,7 @@ public interface PerformanceMapper {
                 performance.getPerformanceId(),
                 performance.getTitle(),
                 artist,
-                performance.getContent().getBody().toString(),
+                performance.getContent(),
                 performance.getDate().toString(),
                 performance.getPrice(),
                 performance.getPlace(),
@@ -98,7 +110,7 @@ public interface PerformanceMapper {
                         data.getTitle(),
                         data.getPerformanceArtists().stream()
                                 .map(e->e.getArtist()).collect(Collectors.toList()),
-                        data.getContent().getBody().toString(),
+                        data.getContent(),
                         data.getDate().toString(),
                         data.getPrice(),
                         data.getPlace(),

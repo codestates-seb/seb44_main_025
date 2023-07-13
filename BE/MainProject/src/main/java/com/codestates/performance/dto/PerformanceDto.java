@@ -1,6 +1,7 @@
 package com.codestates.performance.dto;
 
 import com.codestates.artist.Artist;
+import com.codestates.content.entity.Content;
 import com.codestates.performance.entity.PerformanceArtist;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -55,7 +56,7 @@ public class PerformanceDto {
         private long performanceId;
         private String title;
         private List<Artist> artists;
-        private String content;
+        private Content content;
         private String date;
         private int price;
         private String place;

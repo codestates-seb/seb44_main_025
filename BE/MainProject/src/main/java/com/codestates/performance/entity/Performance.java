@@ -2,7 +2,10 @@ package com.codestates.performance.entity;
 
 import com.codestates.category.Category;
 import com.codestates.content.entity.Content;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 @Setter
 @Getter
 @Entity
@@ -35,22 +39,12 @@ public class Performance {
     private Category category;
     @Column(nullable = false)
     private String imageUrl;
-    @OneToMany(mappedBy = "performance")
+    @JsonIgnore
+    @OneToMany(mappedBy = "performance", cascade = CascadeType.PERSIST)
     private List<PerformanceArtist> performanceArtists = new ArrayList<>();
 
-    public Performance() {}
-
-    public Performance(String title,
-                        List<PerformanceArtist> performanceArtists,
-                        Content content,
-                        LocalDateTime date,
-                        int price,
-                        String place,
-                        int totalSeat,
-                        Category category,
-                       String imageUrl) {
+    public Performance(String title, Content content, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl) {
         this.title = title;
-        this.performanceArtists = performanceArtists;
         this.content = content;
         this.date = date;
         this.price = price;
@@ -60,19 +54,9 @@ public class Performance {
         this.imageUrl = imageUrl;
     }
 
-    public Performance(long performanceId,
-                       String title,
-                       List<PerformanceArtist> performanceArtists,
-                       Content content,
-                       LocalDateTime date,
-                       int price,
-                       String place,
-                       int totalSeat,
-                       Category category,
-                       String imageUrl) {
+    public Performance(long performanceId, String title, Content content, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl) {
         this.performanceId = performanceId;
         this.title = title;
-        this.performanceArtists = performanceArtists;
         this.content = content;
         this.date = date;
         this.price = price;
