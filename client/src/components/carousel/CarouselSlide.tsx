@@ -20,6 +20,7 @@ const CarouselSlide: React.FC<OwnProps> = ({
   date,
   categoryId,
 }) => {
+  const concertDate = new Date(date);
   return (
     <>
       <Styled_CarouselSlide.Div>
@@ -39,7 +40,7 @@ const CarouselSlide: React.FC<OwnProps> = ({
               ₩ {price.toLocaleString()}
             </Styled_CarouselSlide.Concertcontent>
             <Styled_CarouselSlide.Concertcontent>
-              {date}
+              {concertDate.toLocaleDateString()}
             </Styled_CarouselSlide.Concertcontent>
             <Link
               to={`/performances/${categoryId}`}
