@@ -74,11 +74,4 @@ public class Performance {
             this.content.setPerformance(this);
         }
     }
-
-    public void addPerformanceArtist(PerformanceArtist performanceArtist) {
-        this.performanceArtists.add(performanceArtist);
-        if(performanceArtist.getPerformance() != this) {
-            performanceArtist.setPerformance(this);
-        }
-    }
 }

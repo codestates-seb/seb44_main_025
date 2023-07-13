@@ -5,7 +5,6 @@ import com.codestates.artist.ArtistService;
 import com.codestates.category.Category;
 import com.codestates.category.CategoryService;
 import com.codestates.content.entity.Content;
-import com.codestates.content.service.ContentService;
 import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
 import com.codestates.performance.entity.PerformanceArtist;

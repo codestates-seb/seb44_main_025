@@ -3,7 +3,6 @@ package com.codestates.performance.controller;
 import com.codestates.artist.ArtistService;
 import com.codestates.category.Category;
 import com.codestates.category.CategoryService;
-import com.codestates.content.service.ContentService;
 import com.codestates.global.dto.MultiResponseDto;
 import com.codestates.image.ImageUploadService;
 import com.codestates.performance.dto.PerformanceDto;
@@ -35,7 +34,6 @@ public class PerformanceController {
     private final ImageUploadService imageUploadService;
     private final CategoryService categoryService;
     private final ArtistService artistService;
-    private final ContentService contentService;
 
     /* 공연 생성 */
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})

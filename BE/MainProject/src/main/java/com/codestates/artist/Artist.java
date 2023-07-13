@@ -53,11 +53,4 @@ public class Artist {
         this.category = category;
         this.member = member;
     }
-
-    public void addPerformanceArtist(PerformanceArtist performanceArtist) {
-        this.performanceArtists.add(performanceArtist);
-        if(performanceArtist.getArtist() != this) {
-            performanceArtist.setArtist(this);
-        }
-    }
 }
