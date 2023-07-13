@@ -43,7 +43,7 @@ public class Performance {
     @Column(nullable = false)
     private String imageUrl;
     @JsonIgnore
-    @OneToMany(mappedBy = "performance", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
     private List<PerformanceArtist> performanceArtists = new ArrayList<>();
 
     public Performance(String title, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl) {
