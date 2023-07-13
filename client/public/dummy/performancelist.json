@@ -2,11 +2,11 @@
   {
     "title": "우리 사랑 이대로",
     "artistId": 1,
-    "content": "pop",
+    "category": "pop",
     "date": "2023-07-05 00:00:00",
     "price": 10000,
     "place": "홍대",
-    "nickname": "규현&은지",
+    "artistname": "규현&은지",
     "totalSeat": 100,
     "categoryId": 1,
     "imageUrl": "./images/여성사진2.jpg"   
@@ -14,23 +14,23 @@
   {
     "title": "사랑은 가슴이 시킨다",
     "artistId": 1,
-    "content": "테스트",
+    "category": "테스트",
     "date": "2023-07-05 00:00:00",
     "price": 10000,
     "place": "홍대",
-    "nickname": "이창섭",
+    "artistname": "이창섭",
     "totalSeat": 100,
     "categoryId": 2,
     "imageUrl": "./images/여성사진3.jpg"   
   },
   {
     "title": "You Will Be Found",
-    "artistId": 1,
-    "content": "테스트",
+    "artistId": 3,
+    "category": "테스트",
     "date": "2023-07-05 00:00:00",
     "price": 10000,
     "place": "홍대",
-    "nickname": "Sam Smith, Summer Walker",
+    "artistname": "Sam Smith, Summer Walker",
     "totalSeat": 100,
     "categoryId": 3,
     "imageUrl": "./images/여성사진.jpg"   

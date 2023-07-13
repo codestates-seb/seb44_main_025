@@ -17,6 +17,7 @@ interface Artist {
   imageUrl: string;
   artistId: number;
 }
+
 type Store = {
   carouselData: Perpomence[] | [];
   setCarouselData: (state: Perpomence[]) => void;

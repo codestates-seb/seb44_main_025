@@ -48,13 +48,35 @@ export default function Mypage() {
           {/* 아티스트 미등록 사용자는 아티스트 등록 버튼 */}
           {/* 아티스트를 등록한 사용자는 아티스트 페이지 버튼 */}
           <S.ButtonWarppar>
-            <ButtonWithArrowDark text={'아티스트 등록'}></ButtonWithArrowDark>
-            <ButtonWithArrowDark text={'아티스트 페이지'}></ButtonWithArrowDark>
+            <Link to="artistregist">
+              <ButtonWithArrowDark text={'아티스트 등록'}></ButtonWithArrowDark>
+            </Link>
+            <Link to="artist">
+              <ButtonWithArrowDark
+                text={'아티스트 페이지'}
+              ></ButtonWithArrowDark>
+            </Link>
           </S.ButtonWarppar>
           <S.ConcertpreviewContainer>
             <S.SubTitle>예약 중인 공연</S.SubTitle>
-            <Concertpreview />
-            <Concertpreview />
+            <Concertpreview
+              posterImg={''}
+              title={''}
+              artistname={''}
+              category={''}
+              price={0}
+              date={''}
+              categoryId={0}
+            />
+            <Concertpreview
+              posterImg={''}
+              title={''}
+              artistname={''}
+              category={''}
+              price={0}
+              date={''}
+              categoryId={0}
+            />
           </S.ConcertpreviewContainer>
           <S.EmptyContainer>
             <S.SubTitle>예약 중인 공연</S.SubTitle>
@@ -66,7 +88,7 @@ export default function Mypage() {
             </S.EmptyWrapper>
           </S.EmptyContainer>
           <S.SubTitle>내가 관람한 공연</S.SubTitle>
-          <ArtistreviewContainer />
+          <ArtistreviewContainer imageUrl={''} />
           <S.EmptyContainer>
             <S.SubTitle>내가 관람한 공연</S.SubTitle>
             <S.EmptyWrapper>
@@ -79,9 +101,9 @@ export default function Mypage() {
           <S.MyreviewContainer>
             <S.SubTitle>내가 작성한 후기</S.SubTitle>
             <S.ReviewWrapper>
-              <Review />
-              <Review />
-              <Review />
+              <Review nickname={''} title={''} content={''} />
+              <Review nickname={''} title={''} content={''} />
+              <Review nickname={''} title={''} content={''} />
             </S.ReviewWrapper>
           </S.MyreviewContainer>
           <Footer />

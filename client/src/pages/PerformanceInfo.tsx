@@ -174,8 +174,8 @@ const PerformanceInfo = () => {
           <ArtistContainer />
           <S.Heading3>후기</S.Heading3>
           <S.ReviewContainer>
-            <Review />
-            <Review />
+            <Review nickname={''} title={''} content={''} />
+            <Review nickname={''} title={''} content={''} />
           </S.ReviewContainer>
           <S.BottomStickyContainer>
             {/* TODO: 공연 일정과 현재 시각 비교 -> 예약하기 / 후기등록 조건부 렌더링 */}

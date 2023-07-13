@@ -119,10 +119,42 @@ const PerformanceList = () => {
             <ButtonMini>댄스</ButtonMini>
           </S.CategoryContainer>
           <S.PerformanceContainer>
-            <ConcertPreview />
-            <ConcertPreview />
-            <ConcertPreview />
-            <ConcertPreview />
+            <ConcertPreview
+              posterImg={''}
+              title={''}
+              artistname={''}
+              category={''}
+              price={0}
+              date={''}
+              categoryId={0}
+            />
+            <ConcertPreview
+              posterImg={''}
+              title={''}
+              artistname={''}
+              category={''}
+              price={0}
+              date={''}
+              categoryId={0}
+            />
+            <ConcertPreview
+              posterImg={''}
+              title={''}
+              artistname={''}
+              category={''}
+              price={0}
+              date={''}
+              categoryId={0}
+            />
+            <ConcertPreview
+              posterImg={''}
+              title={''}
+              artistname={''}
+              category={''}
+              price={0}
+              date={''}
+              categoryId={0}
+            />
           </S.PerformanceContainer>
         </S.Main>
       </S.Container>

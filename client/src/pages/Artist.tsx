@@ -9,64 +9,187 @@ import Footer from '../components/footer/Footer';
 import NavMypage from '../components/navs/NavMypage';
 import Img from '.././images/우리사랑이대로.jpeg';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
+import {
+  ArtistpageList,
+  ArtistpagePerformanceList,
+  ArtistpageReviewList,
+} from '../zustand/artistpage.stores';
+
+interface Artistpage {
+  id?: number;
+  artistId: number;
+  artistname: string;
+  imageUrl: string;
+  profileimageUrl: string;
+  snslink: string;
+  content: string;
+}
+
+interface Performancelist {
+  title: string;
+  artistId: number;
+  category: string;
+  date: string;
+  price: number;
+  place: string;
+  artistname: string;
+  totalSeat: number;
+  categoryId: number;
+  imageUrl: string;
+}
+
+interface Reviewlist {
+  nickname: string;
+  title: string;
+  artistId?: number;
+  content: string;
+}
 
 export default function Artistpage() {
+  const { artistpageData } = ArtistpageList();
+  const { setArtistpageData } = ArtistpageList();
+  const { performanceData } = ArtistpagePerformanceList();
+  const { setPerformanceData } = ArtistpagePerformanceList();
+  const { reviewData } = ArtistpageReviewList();
+  const { setReviewData } = ArtistpageReviewList();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // 아티스트 등록했을때 응답으로 오는 아티스트Id를 filter값으로 넣기
+        // 아티스트 등록하면 그 정보가 돌아오고 그 안에 아티스트아이디 있고 그거를 아티스트페이지 주소 뒤에 붙여줌 그리고 페이지 전환을 시켜줌 :/artistid
+        const response = await axios.get('http://localhost:5000/artist');
+        const responseperformance = await axios.get(
+          '/dummy/performancelist.json'
+        );
+        const responsereview = await axios.get('/dummy/review.json');
+        console.log(response.data);
+        setArtistpageData(response.data);
+        setPerformanceData(responseperformance.data);
+        setReviewData(responsereview.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // const filteredData: Artistpage[] = artistpageData.filter(
+  //   (item: Artistpage) => item.artistId
+  // );
+
   return (
     <>
       <HeaderLogoST />
       <S.Main>
         <S.Section>
-          <S.Title>아티스트페이지</S.Title>
-          <S.ProfileImg src={Img} />
-          <S.UserImg src={Img} />
-          <S.ArtistDetail>
-            <S.ArtistContent>아티스트</S.ArtistContent>
-            <S.ArtistContent>SNS Link</S.ArtistContent>
-            <S.UserEdit>
-              <Link to="/artistregistpage">
-                <EditIcon />
-              </Link>
-            </S.UserEdit>
-          </S.ArtistDetail>
-          <S.ArtistIntrodution>
-            <S.SubTitle>소개</S.SubTitle>
-            <S.ArtistIntrodutionContainer>
-              <S.ArtistContent>안녕하세요~!</S.ArtistContent>
-            </S.ArtistIntrodutionContainer>
-          </S.ArtistIntrodution>
-          <S.ConcertpreviewContainer>
-            <S.SubTitle>준비 중인 공연</S.SubTitle>
-            <Concertpreview />
-          </S.ConcertpreviewContainer>
-          <S.EmptyContainer>
-            <S.SubTitle>준비 중인 공연</S.SubTitle>
-            <S.EmptyWrapper>
-              <S.EmptyTitle>현재 준비중인 공연이 없습니다.</S.EmptyTitle>
-              <ConcertEmptyButton>
-                <ButtonWithArrowDark text="공연등록"></ButtonWithArrowDark>
-              </ConcertEmptyButton>
-            </S.EmptyWrapper>
-          </S.EmptyContainer>
-          <S.SubTitle>공연 기록</S.SubTitle>
-          <ArtistreviewContainer />
-          <S.EmptyContainer>
+          <>
+            <S.Title>아티스트페이지</S.Title>
+            {/* 로그인한 userId에 맞는 artistId를 보여주는거 */}
+            {artistpageData
+              .filter((item: Artistpage) => item.id === 3)
+              .map((el: Artistpage) => {
+                return (
+                  <S.ProfileWarppar key={el.artistId}>
+                    <S.ProfileImg src={el.profileimageUrl || Img} />
+                    <S.UserImg src={el.imageUrl || Img} />
+                    <S.ArtistDetail>
+                      <S.ArtistContent>{el.artistname}</S.ArtistContent>
+                      <S.ArtistContent>{el.snslink}</S.ArtistContent>
+                      <S.UserEdit>
+                        <Link to="/artistregist">
+                          <EditIcon />
+                        </Link>
+                      </S.UserEdit>
+                    </S.ArtistDetail>
+                    <S.ArtistIntrodution>
+                      <S.SubTitle>소개</S.SubTitle>
+                      <S.ArtistIntrodutionContainer>
+                        <S.ArtistContent>{el.content}</S.ArtistContent>
+                      </S.ArtistIntrodutionContainer>
+                    </S.ArtistIntrodution>
+                  </S.ProfileWarppar>
+                );
+              })}
+            {/* 해당 아티스트가 준비중인 공연이 있으면 */}
+            <S.ConcertpreviewContainer>
+              <S.SubTitle>준비 중인 공연</S.SubTitle>
+              {/* artistId에 맞는 공연 정보를 보여주는거 */}
+              {performanceData
+                .filter((item: Performancelist) => item.artistId === 1)
+                .map((el: Performancelist) => {
+                  return (
+                    <>
+                      <Concertpreview
+                        posterImg={el.imageUrl}
+                        title={el.title}
+                        artistname={el.artistname}
+                        category={el.category}
+                        price={el.price}
+                        date={el.date}
+                        categoryId={el.categoryId}
+                      />
+                    </>
+                  );
+                })}
+            </S.ConcertpreviewContainer>
+
+            {/* 준비중인 공연이 없으면 */}
+
+            <S.EmptyContainer>
+              <S.SubTitle>준비 중인 공연</S.SubTitle>
+              <S.EmptyWrapper>
+                <S.EmptyTitle>현재 준비중인 공연이 없습니다.</S.EmptyTitle>
+                <ConcertEmptyButton>
+                  <ButtonWithArrowDark text="공연등록"></ButtonWithArrowDark>
+                </ConcertEmptyButton>
+              </S.EmptyWrapper>
+            </S.EmptyContainer>
+
             <S.SubTitle>공연 기록</S.SubTitle>
-            <S.EmptyWrapper>
-              <S.EmptyTitle>아직 진행한 공연이 없습니다.</S.EmptyTitle>
-              <ConcertEmptyButton>
-                <ButtonWithArrowDark text="공연등록"></ButtonWithArrowDark>
-              </ConcertEmptyButton>
-            </S.EmptyWrapper>
-          </S.EmptyContainer>
-          <S.MyreviewContainer>
-            <S.SubTitle>아티스트 후기</S.SubTitle>
-            <S.ReviewWrapper>
-              <Review />
-              <Review />
-              <Review />
-            </S.ReviewWrapper>
-          </S.MyreviewContainer>
-          <Footer />
+            {/* 완료한 공연이 있다면 받아오고 구분해서 받아오기*/}
+            <S.ArtistreviewContainerWrappar>
+              {performanceData
+                .filter((item: Performancelist) => item.artistId === 1)
+                .map((el: Performancelist, i) => {
+                  return (
+                    <ArtistreviewContainer key={i} imageUrl={el.imageUrl} />
+                  );
+                })}
+            </S.ArtistreviewContainerWrappar>
+
+            {/* 완료한 공연이 없으면 */}
+            <S.EmptyContainer>
+              <S.SubTitle>공연 기록</S.SubTitle>
+              <S.EmptyWrapper>
+                <S.EmptyTitle>아직 진행한 공연이 없습니다.</S.EmptyTitle>
+                <ConcertEmptyButton>
+                  <ButtonWithArrowDark text="공연등록"></ButtonWithArrowDark>
+                </ConcertEmptyButton>
+              </S.EmptyWrapper>
+            </S.EmptyContainer>
+
+            <S.MyreviewContainer>
+              <S.SubTitle>아티스트 후기</S.SubTitle>
+              {reviewData
+                .filter((item: Reviewlist) => item.artistId === 1)
+                .map((el: Reviewlist, i) => {
+                  return (
+                    <S.ReviewWrapper key={i}>
+                      <Review
+                        nickname={el.nickname}
+                        title={el.title}
+                        content={el.content}
+                      />
+                    </S.ReviewWrapper>
+                  );
+                })}
+            </S.MyreviewContainer>
+
+            <Footer />
+          </>
         </S.Section>
       </S.Main>
       <NavMypage />
@@ -100,6 +223,7 @@ const S = {
     margin-right: 15px;
     margin-bottom: 10px;
   `,
+  ProfileWarppar: styled.div``,
   ProfileImg: styled.img`
     width: 390px;
     height: 150px;
@@ -158,6 +282,10 @@ const S = {
     color: var(--font-white-color);
     padding: 10px 15px 10px 15px;
   `,
+  ArtistreviewContainerWrappar: styled.div`
+    display: flex;
+    /* flex-flow: row; */
+  `,
   EmptyContainer: styled.div``,
   EmptyWrapper: styled.div`
     width: 360px;
@@ -181,6 +309,7 @@ const S = {
   ReviewWrapper: styled.div`
     display: flex;
     flex-direction: column;
+    /* height: 100px; */
   `,
 };
 
@@ -189,3 +318,6 @@ const ConcertEmptyButton = styled(S.ButtonWarppar)`
   align-self: flex-end;
   padding-bottom: 5px;
 `;
+function setArtistpageData(performances: any) {
+  throw new Error('Function not implemented.');
+}
