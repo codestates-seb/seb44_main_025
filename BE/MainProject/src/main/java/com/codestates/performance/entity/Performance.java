@@ -43,9 +43,8 @@ public class Performance {
     @OneToMany(mappedBy = "performance", cascade = CascadeType.PERSIST)
     private List<PerformanceArtist> performanceArtists = new ArrayList<>();
 
-    public Performance(String title, Content content, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl) {
+    public Performance(String title, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl) {
         this.title = title;
-        this.content = content;
         this.date = date;
         this.price = price;
         this.place = place;
@@ -54,15 +53,21 @@ public class Performance {
         this.imageUrl = imageUrl;
     }
 
-    public Performance(long performanceId, String title, Content content, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl) {
+    public Performance(long performanceId, String title, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl) {
         this.performanceId = performanceId;
         this.title = title;
-        this.content = content;
         this.date = date;
         this.price = price;
         this.place = place;
         this.totalSeat = totalSeat;
         this.category = category;
         this.imageUrl = imageUrl;
+    }
+
+    public void setContent(Content content) {
+        this.content = content;
+        if(this.content.getPerformance() != this) {
+            this.content.setPerformance(this);
+        }
     }
 }

@@ -26,7 +26,6 @@ public interface PerformanceMapper {
 
         Performance performance = new Performance(
                 performanceDto.getTitle(),
-                content,
                 date,
                 performanceDto.getPrice(),
                 performanceDto.getPlace(),
@@ -34,6 +33,8 @@ public interface PerformanceMapper {
                 category,
                 performanceDto.getImageUrl()
         );
+
+        performance.setContent(content);
 
         List<PerformanceArtist> performanceArtists = performanceDto.getArtistIds()
                 .stream()
@@ -61,7 +62,6 @@ public interface PerformanceMapper {
         Performance performance = new Performance(
                 performanceDto.getPerformanceId(),
                 performanceDto.getTitle(),
-                content,
                 date,
                 performanceDto.getPrice(),
                 performanceDto.getPlace(),
@@ -69,6 +69,8 @@ public interface PerformanceMapper {
                 category,
                 performanceDto.getImageUrl()
         );
+
+        performance.setContent(content);
 
         List<PerformanceArtist> performanceArtists = performanceDto.getArtistIds()
                 .stream()
