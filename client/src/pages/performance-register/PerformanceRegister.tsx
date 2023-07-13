@@ -15,8 +15,10 @@ import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { useEditorStore } from '../../components/inputs/editor/EditorStore';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { postPerformance } from '../../api/fetchAPI';
+import { testPostPerformance, postPerformance } from '../../api/fetchAPI';
 // import { isLoggedIn } from '../../zustand/Token';
+import { categoryObj } from '../../utils/Category';
+
 interface FormValues {
   title: string;
   date: string;
@@ -36,14 +38,7 @@ interface BodyType {
   categoryId: number;
   imageUrl?: string;
 }
-const categoryObj = {
-  팝: 1,
-  락: 2,
-  'R&B': 3,
-  재즈: 4,
-  밴드: 5,
-  댄스: 6,
-};
+
 const PerformanceRegister = () => {
   const { handleSubmit, control } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = data => {
@@ -71,7 +66,8 @@ const PerformanceRegister = () => {
       }),
       'performanceDto'
     );
-    postPerformance(formData);
+    testPostPerformance(result);
+    // postPerformance(formData);
   };
   const content = useEditorStore(state => state.content);
   const handleSubmitAll = () => {
@@ -99,33 +95,7 @@ const PerformanceRegister = () => {
       <HeaderOnlyP />
       <S.Container>
         <S.Main>
-          <S.CategoryContainer>
-            {Object.keys(categoryObj).map((key, idx) => {
-              return idx === categoryId ? (
-                <ButtonMiniToggleSelect
-                  key={idx}
-                  value={idx}
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    const value = +(e.target as HTMLInputElement).value;
-                    handleClickCategory(value);
-                  }}
-                >
-                  {key}
-                </ButtonMiniToggleSelect>
-              ) : (
-                <ButtonMiniToggleUnselect
-                  key={idx}
-                  value={idx}
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    const value = +(e.target as HTMLInputElement).value;
-                    handleClickCategory(value);
-                  }}
-                >
-                  {key}
-                </ButtonMiniToggleUnselect>
-              );
-            })}
-          </S.CategoryContainer>
+          <S.Heading1>공연등록</S.Heading1>
           <S.SummaryContainer>
             <S.FileInput
               type="file"
@@ -135,7 +105,6 @@ const PerformanceRegister = () => {
                 const files = e.target.files;
                 if (files === undefined || files === null) return;
                 const file = files[0];
-                console.log(file);
                 setFile(file);
                 if (file) {
                   const reader = new FileReader();
@@ -195,7 +164,7 @@ const PerformanceRegister = () => {
               <Controller
                 control={control}
                 name={'price'}
-                defaultValue={''}
+                defaultValue={'0'}
                 rules={{
                   required: '반드시 입력해야 합니다',
                 }}
@@ -215,7 +184,7 @@ const PerformanceRegister = () => {
               <Controller
                 control={control}
                 name={'totalSeat'}
-                defaultValue={''}
+                defaultValue={'0'}
                 rules={{
                   required: '반드시 입력해야 합니다',
                 }}
@@ -234,6 +203,33 @@ const PerformanceRegister = () => {
               />
             </S.Form>
           </S.SummaryContainer>
+          <S.CategoryContainer>
+            {Object.keys(categoryObj).map((key, idx) => {
+              return idx + 1 === categoryId ? (
+                <ButtonMiniToggleSelect
+                  key={key}
+                  value={key}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    const value = +(e.target as HTMLInputElement).value;
+                    handleClickCategory(value);
+                  }}
+                >
+                  {categoryObj[key]}
+                </ButtonMiniToggleSelect>
+              ) : (
+                <ButtonMiniToggleUnselect
+                  key={key}
+                  value={key}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    const value = +(e.target as HTMLInputElement).value;
+                    handleClickCategory(value);
+                  }}
+                >
+                  {categoryObj[key]}
+                </ButtonMiniToggleUnselect>
+              );
+            })}
+          </S.CategoryContainer>
           <S.Heading3>공연설명</S.Heading3>
           <Editor />
           {/* 버그 심각하면 textarea 사용하기 <S.TextareaContainer /> */}

@@ -1,12 +1,15 @@
 import { styled } from 'styled-components';
 import Img from '../.././images/우리사랑이대로.jpeg';
 import { ButtonHighlight, ButtonWhite } from '../buttons/Buttons';
-
-interface Props {
-  onClick: React.MouseEventHandler<HTMLElement>;
-}
+import { postReservation } from '../../api/fetchAPI';
 
 export default function ReservationModal() {
+  const body = {
+    performanceId: 1,
+    memberId: 1,
+    nickName: '닉네임',
+    seatValue: 20,
+  };
   return (
     <S.ModalOverlay>
       <S.TicketModal>
@@ -21,7 +24,14 @@ export default function ReservationModal() {
         </S.TicketDetail>
         <S.TicketButtons>
           <ButtonHighlight>취소</ButtonHighlight>
-          <ButtonWhite>결제</ButtonWhite>
+          <ButtonWhite
+            onClick={() => {
+              console.log('clicked');
+              postReservation(1, body);
+            }}
+          >
+            결제
+          </ButtonWhite>
         </S.TicketButtons>
       </S.TicketModal>
     </S.ModalOverlay>

@@ -120,6 +120,7 @@ export default function Artistpage() {
             performanceData.map((el: Performancelist) => {
               return (
                 <Concertpreview
+                  performanceId={el.performanceId || 1}
                   key={el.userId}
                   posterImg={el.imageUrl}
                   title={el.title}

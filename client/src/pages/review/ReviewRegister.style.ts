@@ -52,6 +52,20 @@ export default {
     align-items: center;
     justify-content: space-between;
   `,
+  Summary: styled.div`
+    width: 170px;
+    height: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    & p {
+      color: white;
+      font-size: var(--p-small-medium-font-size);
+      font-weight: var(--p-small-medium-font-weight);
+      line-height: var(--p-small-medium-line-height);
+    }
+  `,
   FileInput: styled.input`
     display: none;
   `,
@@ -67,11 +81,10 @@ export default {
   `,
   // align-items: flex-start 왼쪽 정렬, flex-end 오른쪽 정렬
   Form: styled.form`
-    width: 170px;
-    height: 210px;
+    width: 360px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     & label {
       color: white;

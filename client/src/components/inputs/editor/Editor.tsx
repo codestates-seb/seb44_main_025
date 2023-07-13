@@ -64,7 +64,7 @@ export const Editor = () => {
 };
 
 // readOnly, 테마: bubble
-export const EditorReadOnly = ({ content }: { content: string }) => {
+export const EditorReadOnly = ({ content }: { content?: string }) => {
   return (
     <>
       <EditorGlobalStyle />
