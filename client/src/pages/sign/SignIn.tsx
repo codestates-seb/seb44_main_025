@@ -35,7 +35,7 @@ const SignInPage = () => {
         const accessToken = response.headers['authorization'];
         if (response.status === 200) {
           // Body에 담긴 유저 정보 UserData에 저장
-          setUserData(response.data);
+          setUserData(response.data.userId);
           console.log(userData);
           // token이 필요한 API 요청 시 header Authorization에 token 담아 전송
           axios.defaults.headers.common['authorization'] = `${accessToken}`;
