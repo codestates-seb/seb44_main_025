@@ -68,7 +68,6 @@ const SignInPage = () => {
         <Styled_Sign.Container>
           <Styled_Sign.H1 marginBottom={145}>
             <H1Title.H1>
-              {/* mb={145} */}
               <H1Title.H1span>Ez to 로그인</H1Title.H1span>
             </H1Title.H1>
           </Styled_Sign.H1>

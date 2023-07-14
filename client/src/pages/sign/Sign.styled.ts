@@ -8,6 +8,7 @@ interface SignProps {
 export const Styled_Sign = {
   H1: styled.h1<SignProps>`
     margin-bottom: ${props => props.marginBottom}px;
+    margin-top: 20px;
   `,
   Main: styled.main`
     display: flex;
