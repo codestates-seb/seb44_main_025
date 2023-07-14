@@ -82,6 +82,17 @@ public class PerformanceController {
         return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);
     }
 
+    /* 카테고리별 공연 조회 */
+    @GetMapping("/{category-id}")
+    public ResponseEntity getPerformance(@PathVariable("category-id") @Positive long categoryId,
+                                         @RequestParam("page") @Positive int page,
+                                         @RequestParam("size") @Positive int size) {
+        Page<Performance> pagePerformance = performanceService.findPerformances(page - 1, size, categoryId);
+        List<Performance> findPerformance = pagePerformance.toList();
+
+        return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);
+    }
+
     /* 공연 삭제 */
     @DeleteMapping("/{performance-id}")
     public ResponseEntity deletePerformance(@PathVariable("performance-id") @Positive long performanceId) {
