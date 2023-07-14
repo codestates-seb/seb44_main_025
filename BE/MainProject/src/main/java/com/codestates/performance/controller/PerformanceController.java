@@ -83,7 +83,7 @@ public class PerformanceController {
     }
 
     /* 카테고리별 공연 조회 */
-    @GetMapping("/{category-id}")
+    @GetMapping("/category/{category-id}")
     public ResponseEntity getPerformance(@PathVariable("category-id") @Positive long categoryId,
                                          @RequestParam("page") @Positive int page,
                                          @RequestParam("size") @Positive int size) {

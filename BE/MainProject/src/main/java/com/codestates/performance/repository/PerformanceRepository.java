@@ -14,6 +14,6 @@ public interface PerformanceRepository extends JpaRepository<Performance, Long> 
 
     Optional<Performance> findById(long performanceId);
 
-    @Query("SELECT p FROM Performance p GROUP BY p.category")
+    @Query(value = "SELECT p.category FROM Performance p GROUP BY p.category")
     Page<Performance> findByAllGroupByCategory(PageRequest pageRequest, long categoryId);
 }
