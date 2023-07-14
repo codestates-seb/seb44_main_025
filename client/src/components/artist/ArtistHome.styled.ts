@@ -38,6 +38,10 @@ export const Styled_ArtistHome = {
   ArtistImg: styled.img`
     width: 75px;
     height: 75px;
+    transition: 0.3s;
+    &:hover {
+      border-radius: 50%;
+    }
   `,
   ArtistDetail: styled.div`
     height: 30px;

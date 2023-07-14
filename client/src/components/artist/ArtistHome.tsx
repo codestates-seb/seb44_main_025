@@ -1,15 +1,11 @@
-import { ArtistList } from '../../zustand/mainapi';
+import { ArtistList } from '../../zustand/homepage.stores';
 import { Link } from 'react-router-dom';
 import { Styled_ArtistHome } from './ArtistHome.styled';
-
-interface Artist {
-  nickname: string;
-  imageUrl: string;
-  artistId: number;
-}
+import { ArtistData } from '../../model/Artist';
 
 export default function ArtistHome() {
   const { artistData } = ArtistList();
+
   return (
     <Styled_ArtistHome.ArtistpreviewMain>
       <Styled_ArtistHome.Subtitle>
@@ -20,7 +16,7 @@ export default function ArtistHome() {
       </Link>
 
       <Styled_ArtistHome.ArtistpreviewContainer>
-        {artistData.map((v: Artist, i) => {
+        {artistData.map((v: ArtistData, i) => {
           return (
             <Link
               to={`/artistpage/${v.artistId}`}
@@ -28,10 +24,10 @@ export default function ArtistHome() {
               key={i}
             >
               <Styled_ArtistHome.ArtistpreviewWrapper>
-                <Styled_ArtistHome.ArtistImg src={v.imageUrl} />
+                <Styled_ArtistHome.ArtistImg src={v.profileimageUrl} />
                 <Styled_ArtistHome.ArtistDetail>
                   <Styled_ArtistHome.Artistcontent>
-                    {v.nickname}
+                    {v.artistname}
                   </Styled_ArtistHome.Artistcontent>
                 </Styled_ArtistHome.ArtistDetail>
               </Styled_ArtistHome.ArtistpreviewWrapper>

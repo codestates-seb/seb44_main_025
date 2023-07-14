@@ -7,7 +7,7 @@ import Slogan from '../../components/slogan/Slogan';
 import Artistmain from '../../components/artist/ArtistHome';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { CarouselList, ArtistList } from '../../zustand/mainapi';
+import { CarouselList, ArtistList } from '../../zustand/homepage.stores';
 import axios from 'axios';
 import Navbar from '../../components/nav/Navbar';
 
@@ -16,16 +16,24 @@ const Home = () => {
   const { setArtistData } = ArtistList();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getCarouselData = async () => {
       try {
-        const response = await axios.get('/dummy/main.json');
-        setCarouselData(response.data.performances);
-        setArtistData(response.data.artists);
+        const response = await axios.get('/dummy/main_perfomancelist.json');
+        setCarouselData(response.data.data);
       } catch (error) {
         console.error(error);
       }
     };
-    fetchData();
+    getCarouselData();
+    const getArtistsData = async () => {
+      try {
+        const response = await axios.get('/dummy/main_artistlist.json');
+        setArtistData(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getArtistsData();
   }, []);
 
   return (
@@ -41,7 +49,7 @@ const Home = () => {
               <Link to="/performances" style={{ textDecorationLine: 'none' }}>
                 <MainPageButton
                   Height={140}
-                  ImageUrl="./images/pexels-emre-akyol-16822720.jpg"
+                  ImageUrl="./images/피아노.webp"
                   Text="진행중인 공연"
                 />
               </Link>

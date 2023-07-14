@@ -2,14 +2,13 @@ import { styled } from 'styled-components';
 
 interface SignProps {
   width?: 360 | 285;
-  mb?: number;
+  marginBottom?: number;
 }
+
 export const Styled_Sign = {
   H1: styled.h1<SignProps>`
-    color: var(--font-white-color);
-    font-size: var(--heading1-font-size);
-    font-weight: var(--heading1-font-weight);
-    margin-bottom: ${props => props.mb}px;
+    margin-bottom: ${props => props.marginBottom}px;
+    margin-top: 20px;
   `,
   Main: styled.main`
     display: flex;

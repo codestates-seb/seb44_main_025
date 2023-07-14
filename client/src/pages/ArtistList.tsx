@@ -98,7 +98,7 @@ const ArtistList = () => {
             <ButtonMini>댄스</ButtonMini>
           </S.CategoryContainer> */}
           <S.ArtistContainer>
-            {data?.data.map((v, i) => (
+            {data?.data.map((v: any) => (
               <ArtistPreview
                 key={v.artistId}
                 id={v.artistId}
