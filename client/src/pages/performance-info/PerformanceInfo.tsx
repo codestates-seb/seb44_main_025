@@ -51,21 +51,16 @@ const PerformanceInfo = () => {
           </ButtonPrimary160px> */}
           </S.ButtonContainer>
           <S.SummaryContainer>
-            <S.Poster
-              src={
-                data?.imageUrl ||
-                'https://image.fmkorea.com/files/attach/new2/20220816/1378413927/3489701194/4926984913/beb833fe27178fc49fbb49c5733651f0.png'
-              }
-            />
+            <S.Poster src={data?.data.imageUrl || ''} />
             <S.Summary>
               <p>공연명</p>
-              <p>{data?.title}</p>
+              <p>{data?.data.title}</p>
               <p>날짜</p>
-              <p>{data?.date}</p>
+              <p>{new Date(data?.data.date).toLocaleDateString()}</p>
               <p>금액</p>
-              <p>{data?.price}원</p>
+              <p>{data?.data.price}원</p>
               <p>남은 좌석 수</p>
-              <p>{data?.leftSeat || data?.totalSeat}석</p>
+              <p>{data?.data.leftSeat || data?.data.totalSeat}석</p>
             </S.Summary>
           </S.SummaryContainer>
           <S.CategoryContainer>
@@ -83,7 +78,7 @@ const PerformanceInfo = () => {
             {data?.categoryId === null && <ButtonMini>기타</ButtonMini>}
           </S.CategoryContainer>
           <S.Heading3>공연설명</S.Heading3>
-          <EditorReadOnly content={data?.content} />
+          <EditorReadOnly content={data?.data.content.body} />
           <S.Heading3>공연장 위치</S.Heading3>
           <S.Map></S.Map>
           <S.Heading3>아티스트 정보</S.Heading3>

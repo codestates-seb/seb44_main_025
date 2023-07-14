@@ -35,7 +35,6 @@ interface BodyType {
   place: string;
   totalSeat: number;
   categoryId: number;
-  imageUrl?: string;
 }
 
 const PerformanceRegister = () => {
@@ -46,6 +45,7 @@ const PerformanceRegister = () => {
       ...data,
       price: +data.price,
       totalSeat: +data.totalSeat,
+      date: new Date(data.date).toISOString().slice(0, 19).replace('T', ' '),
     });
     // TODO: place, artistIds 구현하기
     Object.assign(result, {
@@ -53,8 +53,8 @@ const PerformanceRegister = () => {
       content,
       place: '홍대',
       artistIds: [1],
-      imageUrl: '',
     });
+    console.log(result);
     let formData = new FormData();
     formData.append('image-file', file as Blob, 'image');
     // formData.append('performanceDto', JSON.stringify(result));
@@ -65,8 +65,8 @@ const PerformanceRegister = () => {
       }),
       'performanceDto'
     );
-    testPostPerformance(result);
-    // postPerformance(formData);
+    // testPostPerformance(result);
+    postPerformance(formData);
   };
   const content = useEditorStore(state => state.content);
   const handleSubmitAll = () => {

@@ -7,7 +7,7 @@ import { Editor } from '../../components/inputs/editor/Editor';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEditorStore } from '../../components/inputs/editor/EditorStore';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { testPostReview } from '../../api/fetchAPI';
+import { postReview, testPostReview } from '../../api/fetchAPI';
 import { useEffect } from 'react';
 
 interface FormValues {
@@ -36,7 +36,8 @@ const ReviewRegister = () => {
   const { handleSubmit, control } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = data => {
     const body = { ...data, content, performanceId };
-    testPostReview(body);
+    // testPostReview(body);
+    postReview(body);
     clearContent();
     navigate(`/performances/${performanceId}`);
   };

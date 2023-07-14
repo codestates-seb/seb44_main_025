@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ArtistPreview from '../components/artistpreview/ArtistPreview';
 import Header from '../components/header/Header';
 import Navbar from '../components/nav/Navbar';
+import { useGetArtists } from '../api/useFetch';
 
 const S = {
   Heading1: styled.h1`
@@ -63,7 +64,8 @@ const S = {
 // TODO: props로 렌더링하기
 const ArtistList = () => {
   // TODO: 실제 data로 렌더링하기
-  const data = [1, 2, 3, 4, 5];
+  const data = useGetArtists();
+  console.log(data);
   const navigate = useNavigate();
   // TODO: 로그인 상태관리 로직 추가하기
   const isLoggedIn = true;
@@ -79,7 +81,7 @@ const ArtistList = () => {
           <S.ButtonContainer>
             <ButtonPrimary160px
               // 아티스트 등록 페이지
-              onClick={() => navigate('/artistregistpage')}
+              onClick={() => navigate('/artistregist')}
             >
               아티스트 등록하기
             </ButtonPrimary160px>
@@ -96,12 +98,12 @@ const ArtistList = () => {
             <ButtonMini>댄스</ButtonMini>
           </S.CategoryContainer> */}
           <S.ArtistContainer>
-            {data.map((v, i) => (
+            {data?.data.map((v, i) => (
               <ArtistPreview
-                key={i}
-                id={i + 1}
+                key={v.artistId}
+                id={v.artistId}
                 imgurl=""
-                nickname=""
+                nickname={v.artistName}
                 snsLink={['']}
               />
             ))}
