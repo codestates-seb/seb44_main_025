@@ -74,14 +74,16 @@ export const useTestGetPerformance = (id: string | number | undefined) => {
   return data;
 };
 
+interface PageInfo {
+  page: number;
+  size: number;
+  total_elements: number;
+  total_pages: number;
+}
+
 interface PerformanceListType {
   data: PerformanceType[];
-  pageInfo: {
-    page: number;
-    size: number;
-    total_elements: number;
-    total_pages: number;
-  };
+  pageInfo: PageInfo;
 }
 export const useTestGetPerformances = () => {
   const [data, setData] = useState<PerformanceListType>();
@@ -119,12 +121,26 @@ export const useGetPerformance = (id: string | number | undefined) => {
   return data;
 };
 
+interface Artist {
+  artistId: number;
+  artistName: string;
+  category: string;
+  content: string;
+  createdAt: string;
+  imageUrl: string;
+  memberId: number;
+}
+
+interface ArtistList {
+  data: Artist[];
+  pageInfo: PageInfo;
+}
 export const useGetArtists = () => {
-  const [data, setData] = useState<AnyType>();
+  const [data, setData] = useState<ArtistList>();
 
   const getData = async () => {
     await axios
-      .get<AnyType>(`${SERVER_HOST}/artist?category=1&page=1&size=10`, {
+      .get<ArtistList>(`${SERVER_HOST}/artist?category=1&page=1&size=10`, {
         headers: { 'ngrok-skip-browser-warning': true },
       })
       .then(data => setData(data.data))

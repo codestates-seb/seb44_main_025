@@ -98,12 +98,12 @@ const ArtistList = () => {
             <ButtonMini>댄스</ButtonMini>
           </S.CategoryContainer> */}
           <S.ArtistContainer>
-            {data?.data.map((v, i) => (
+            {data?.data.map(artist => (
               <ArtistPreview
-                key={v.artistId}
-                id={v.artistId}
-                imgurl=""
-                nickname={v.artistName}
+                key={artist.artistId}
+                id={artist.artistId}
+                imgurl={artist.imageUrl}
+                nickname={artist.artistName}
                 snsLink={['']}
               />
             ))}
