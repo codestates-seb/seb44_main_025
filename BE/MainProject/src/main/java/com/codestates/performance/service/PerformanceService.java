@@ -8,7 +8,7 @@ public interface PerformanceService {
 
     Page<Performance> findPerformances(int page, int size);
 
-    Page<Performance> findPerformances(int page, int size, long categoryId);
+    Page<Performance> findPerformancesByCategory(int page, int size, long categoryId);
 
     void deletePerformance(long performanceId);
 

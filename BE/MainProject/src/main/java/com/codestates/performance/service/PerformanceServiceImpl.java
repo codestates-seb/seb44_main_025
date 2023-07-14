@@ -1,5 +1,7 @@
 package com.codestates.performance.service;
 
+import com.codestates.category.Category;
+import com.codestates.category.CategoryService;
 import com.codestates.global.exception.BusinessLogicException;
 import com.codestates.global.exception.ExceptionCode;
 import com.codestates.performance.entity.Performance;
@@ -18,6 +20,7 @@ import java.util.Optional;
 @Service
 public class PerformanceServiceImpl implements PerformanceService{
     private final PerformanceRepository performanceRepository;
+    private final CategoryService categoryService;
 
     @Override
     public Performance createPerformance(Performance performance) {
@@ -56,9 +59,10 @@ public class PerformanceServiceImpl implements PerformanceService{
     }
 
     @Override
-    public Page<Performance> findPerformances(int page, int size, long categoryId) {
+    public Page<Performance> findPerformancesByCategory(int page, int size, long categoryId) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("performance").descending());
-        return performanceRepository.findByAllGroupByCategory(pageRequest, categoryId);
+        Category category = categoryService.findVerifiedCategory(categoryId);
+        return performanceRepository.findAllByCategory(category, pageRequest);
     }
 
     @Override
