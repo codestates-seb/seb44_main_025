@@ -1,5 +1,6 @@
 package com.codestates.performance.repository;
 
+import com.codestates.category.Category;
 import com.codestates.performance.entity.Performance;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,5 @@ public interface PerformanceRepository extends JpaRepository<Performance, Long> 
 
     Optional<Performance> findById(long performanceId);
 
-    @Query("SELECT p FROM Performance p GROUP BY p.category")
-    Page<Performance> findByAllGroupByCategory(PageRequest pageRequest, long categoryId);
+    Page<Performance> findAllByCategory(Category category, Pageable pageable);
 }

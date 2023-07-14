@@ -12,8 +12,8 @@ public class MultiResponseDto<T> {
     private List<T> data;
 
     public MultiResponseDto(Page page, List<T> findPerformance) {
-        this.pageInfo = new PageInfo(page.getNumber(),
-                page.getSize() + 1,
+        this.pageInfo = new PageInfo(page.getNumber() + 1,
+                page.getSize(),
                 page.getTotalElements(),
                 page.getTotalPages());
         this.data = findPerformance;
