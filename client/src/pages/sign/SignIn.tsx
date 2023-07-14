@@ -7,7 +7,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../utils/Cookie';
-import { UserInfo } from '../../zustand/userInfo';
+import { UserLoginInfo } from '../../zustand/userloginInfo.stores';
+import { H1Title } from '../../utils/SlideUp';
 
 interface IForm {
   email: string;
@@ -18,7 +19,7 @@ interface IForm {
 
 const SignInPage = () => {
   const navigate = useNavigate();
-  const { userData, setUserData } = UserInfo();
+  const { userData, setUserData } = UserLoginInfo();
   const {
     register,
     formState: { errors },
@@ -66,7 +67,12 @@ const SignInPage = () => {
       <Header precious={true} />
       <Styled_Sign.Main>
         <Styled_Sign.Container>
-          <Styled_Sign.H1 mb={145}>Ez to 로그인</Styled_Sign.H1>
+          <Styled_Sign.H1 marginBottom={145}>
+            <H1Title.H1>
+              {/* mb={145} */}
+              <H1Title.H1span>Ez to 로그인</H1Title.H1span>
+            </H1Title.H1>
+          </Styled_Sign.H1>
           <Styled_Sign.Form onSubmit={handleSubmit(onSubmit)}>
             <div>
               {/* <Controller

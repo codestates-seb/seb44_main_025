@@ -12,6 +12,7 @@ import {
   nicknameRegExp,
 } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
+import { H1Title } from '../../utils/SlideUp';
 
 interface IForm {
   email: string;
@@ -164,7 +165,11 @@ const SignUpPage = () => {
       <Header precious={true} />
       <Styled_Sign.Main>
         <Styled_Sign.Container>
-          <Styled_Sign.H1 mb={75}>Ez to 회원가입</Styled_Sign.H1>
+          <Styled_Sign.H1 marginBottom={75}>
+            <H1Title.H1>
+              <H1Title.H1span>Ez to 회원가입</H1Title.H1span>
+            </H1Title.H1>
+          </Styled_Sign.H1>
           <Styled_Sign.Form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <div>

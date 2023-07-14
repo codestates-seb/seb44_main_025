@@ -15,7 +15,7 @@ type Store = {
   setUserData: (state: UserInfoType) => void;
 };
 
-export const UserInfo = create<Store>(set => ({
+export const UserLoginInfo = create<Store>(set => ({
   userData: {},
   setUserData: state => set({ userData: state }),
 }));
