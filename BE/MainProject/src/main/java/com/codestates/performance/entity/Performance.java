@@ -2,6 +2,7 @@ package com.codestates.performance.entity;
 
 import com.codestates.category.Category;
 import com.codestates.content.entity.Content;
+import com.codestates.performancecomment.entity.PerformanceComment;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.xml.stream.events.Comment;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +45,12 @@ public class Performance {
     @Column(nullable = false)
     private String imageUrl;
     @JsonIgnore
-    @OneToMany(mappedBy = "performance", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
     private List<PerformanceArtist> performanceArtists = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
+    private List<PerformanceComment> performanceComments = new ArrayList<>();
 
     public Performance(String title, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl) {
         this.title = title;
