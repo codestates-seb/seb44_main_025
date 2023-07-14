@@ -46,10 +46,10 @@ public class SecurityConfiguration {
     }
 
     public void addCorMapping(CorsRegistry registry) {
-        registry.addMapping("/")
-                .allowedOrigins("")
+        registry.addMapping("/**")
+                .allowedOrigins("*")
                 .allowedMethods("GET","POST","PATCH","DELETE","OPTIONS")
-                .allowedHeaders("")
+                .allowedHeaders("*")
                 .exposedHeaders("Authorization");
     }
 
@@ -83,7 +83,10 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE", "OPTIONS"));
+
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.addExposedHeader("Authorization");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
