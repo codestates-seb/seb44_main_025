@@ -1,32 +1,11 @@
+import { PerformanceListType, PerformanceType } from '../model/Performance';
+import { ArtistList } from '../model/Artist';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const TEST_HOST = process.env.REACT_APP_TEST_HOST;
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
-
-interface PerformanceType {
-  performanceId: number;
-  title: string;
-  date: string;
-  price: number;
-  content: {
-    contentId: number;
-    body: string;
-  };
-  category: string;
-  imageUrl: string;
-  performanceArtist: {
-    performanceId: number;
-    performanceArtistList: {
-      [x: string | number]: number;
-    };
-  };
-  place: string;
-  categoryId: number;
-  totalSeat: number;
-  leftSeat: number;
-}
 
 export const useGetMain = () => {
   const [data, setData] = useState<any>();
@@ -74,15 +53,6 @@ export const useTestGetPerformance = (id: string | number | undefined) => {
   return data;
 };
 
-interface PerformanceListType {
-  data: PerformanceType[];
-  pageInfo: {
-    page: number;
-    size: number;
-    total_elements: number;
-    total_pages: number;
-  };
-}
 export const useTestGetPerformances = () => {
   const [data, setData] = useState<PerformanceListType>();
 
@@ -120,11 +90,11 @@ export const useGetPerformance = (id: string | number | undefined) => {
 };
 
 export const useGetArtists = () => {
-  const [data, setData] = useState<AnyType>();
+  const [data, setData] = useState<ArtistList>();
 
   const getData = async () => {
     await axios
-      .get<AnyType>(`${SERVER_HOST}/artist?category=1&page=1&size=10`, {
+      .get<ArtistList>(`${SERVER_HOST}/artist?category=1&page=1&size=10`, {
         headers: { 'ngrok-skip-browser-warning': true },
       })
       .then(data => setData(data.data))
