@@ -97,4 +97,11 @@ public class MemberService {
         if (member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
+    public boolean duplicateEmail(String email){
+        boolean result = false;
+        Optional<Member> member = memberRepository.findByEmail(email);
+        if (member.isPresent()){
+            result = true;}
+        return result;
+    }
 }

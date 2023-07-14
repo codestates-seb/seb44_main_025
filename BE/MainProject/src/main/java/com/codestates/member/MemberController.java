@@ -3,6 +3,7 @@ package com.codestates.member;
 
 
 import com.codestates.artist.ArtistService;
+import com.codestates.member.dto.MemberEmail;
 import com.codestates.member.dto.MemberPatchDto;
 import com.codestates.member.dto.MemberPostDto;
 import com.codestates.member.dto.MemberResponseDto;
@@ -56,6 +57,13 @@ public class MemberController {
                 memberService.updateMember(memberPatchDto);
 
         return new ResponseEntity<>(memberMapper.memberToMemberResponseDto(response),
+                HttpStatus.OK);
+    }
+    @PostMapping("/duplicate/email")
+    public ResponseEntity duplicateEmail(@Valid @RequestBody MemberEmail memberEmail){
+        String email = memberEmail.getEmail();
+        boolean result = memberService.duplicateEmail(email);
+        return new ResponseEntity<>(result,
                 HttpStatus.OK);
     }
 
