@@ -1,3 +1,5 @@
+import { PageInfo } from './Common';
+
 export interface PerformanceType {
   performanceId: number;
   title: string;
@@ -23,10 +25,5 @@ export interface PerformanceType {
 
 export interface PerformanceListType {
   data: PerformanceType[];
-  pageInfo: {
-    page: number;
-    size: number;
-    total_elements: number;
-    total_pages: number;
-  };
+  pageInfo: PageInfo;
 }
