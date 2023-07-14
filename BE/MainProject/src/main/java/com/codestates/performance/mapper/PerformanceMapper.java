@@ -10,6 +10,7 @@ import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
 import com.codestates.performance.entity.PerformanceArtist;
 import com.codestates.performance.service.PerformanceService;
+import com.codestates.performancecomment.dto.PerformanceCommentDto;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
@@ -109,7 +110,7 @@ public interface PerformanceMapper {
             performanceArtistMap.put(el.getPerformanceArtistId(), el.getArtist());
         }
 
-        performanceArtistDto.setPerformanceArtist(performanceArtistMap);
+        performanceArtistDto.setPerformanceArtistList(performanceArtistMap);
 
         return new PerformanceDto.Response(
                 performance.getPerformanceId(),
@@ -136,7 +137,7 @@ public interface PerformanceMapper {
                         performanceArtistMap.put(el.getPerformanceArtistId(), el.getArtist());
                     }
 
-                    performanceArtistResponseDto.setPerformanceArtist(performanceArtistMap);
+                    performanceArtistResponseDto.setPerformanceArtistList(performanceArtistMap);
 
                     return new PerformanceDto.Response(
                             data.getPerformanceId(),

@@ -16,6 +16,6 @@ public class PerformanceArtistDto {
     @AllArgsConstructor
     public static class Response {
         private long performanceId;
-        private Map<Long, Artist> performanceArtist;
+        private Map<Long, Artist> performanceArtistList;
     }
 }
