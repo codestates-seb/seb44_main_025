@@ -40,5 +40,26 @@ export const InputStyle = {
     & input {
       color: white;
     }
+    & svg {
+      stroke: white;
+
+      &:last-child {
+        margin-right: 16px;
+      }
+    }
+  `,
+  primary: css`
+    background-color: transparent;
+    border: 2px solid var(--button-primary-background-color);
+    & input {
+      color: white;
+    }
+    & svg {
+      stroke: white;
+
+      &:last-child {
+        margin-right: 16px;
+      }
+    }
   `,
 };

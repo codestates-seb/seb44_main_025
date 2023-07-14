@@ -5,7 +5,7 @@ import { ReactComponent as SearchIcon } from '../../icons/icon_search.svg';
 import React from 'react';
 
 type InputType = {
-  theme?: 'light' | 'dark' | 'warning' | 'success';
+  theme?: 'light' | 'dark' | 'warning' | 'success' | 'primary';
   label?: string;
   prefix?: boolean;
   suffix?: boolean;
