@@ -5,8 +5,8 @@ import { Styled_CarouselSlide } from './CarouselSlide.styled';
 type OwnProps = {
   posterImg: string;
   title: string;
-  nickname: string;
-  content: string;
+  performanceArtist: number;
+  category: string;
   price: number;
   date: string;
   categoryId: number;
@@ -14,8 +14,8 @@ type OwnProps = {
 const CarouselSlide: React.FC<OwnProps> = ({
   posterImg,
   title,
-  nickname,
-  content,
+  performanceArtist,
+  category,
   price,
   date,
   categoryId,
@@ -31,10 +31,10 @@ const CarouselSlide: React.FC<OwnProps> = ({
               {title}
             </Styled_CarouselSlide.ConcertTitle>
             <Styled_CarouselSlide.Concertcontent>
-              {nickname}
+              {performanceArtist}
             </Styled_CarouselSlide.Concertcontent>
             <Styled_CarouselSlide.Concertcontent>
-              {content}
+              {category}
             </Styled_CarouselSlide.Concertcontent>
             <Styled_CarouselSlide.Concertcontent>
               ₩ {price.toLocaleString()}

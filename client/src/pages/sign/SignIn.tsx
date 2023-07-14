@@ -7,7 +7,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../utils/Cookie';
-import { UserInfo } from '../../zustand/userInfo';
+import { UserLoginInfo } from '../../zustand/userloginInfo.stores';
+import { H1Title } from '../../utils/SlideUp';
 
 interface IForm {
   email: string;
@@ -18,7 +19,7 @@ interface IForm {
 
 const SignInPage = () => {
   const navigate = useNavigate();
-  const { userData, setUserData } = UserInfo();
+  const { userData, setUserData } = UserLoginInfo();
   const {
     register,
     formState: { errors },
@@ -34,7 +35,8 @@ const SignInPage = () => {
         const accessToken = response.headers['authorization'];
         if (response.status === 200) {
           // Body에 담긴 유저 정보 UserData에 저장
-          setUserData(response.data);
+          setUserData(response.data.userId);
+          console.log(userData);
           // token이 필요한 API 요청 시 header Authorization에 token 담아 전송
           axios.defaults.headers.common['authorization'] = `${accessToken}`;
           // cookie에 토큰 저장
@@ -64,7 +66,11 @@ const SignInPage = () => {
       <Header precious={true} />
       <Styled_Sign.Main>
         <Styled_Sign.Container>
-          <Styled_Sign.H1 mb={145}>Ez to 로그인</Styled_Sign.H1>
+          <Styled_Sign.H1 marginBottom={145}>
+            <H1Title.H1>
+              <H1Title.H1span>Ez to 로그인</H1Title.H1span>
+            </H1Title.H1>
+          </Styled_Sign.H1>
           <Styled_Sign.Form onSubmit={handleSubmit(onSubmit)}>
             <div>
               {/* <Controller

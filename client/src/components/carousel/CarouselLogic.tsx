@@ -1,20 +1,8 @@
 import { useEffect, useState } from 'react';
-import { CarouselList } from '../../zustand/mainapi';
+import { CarouselList } from '../../zustand/homepage.stores';
 import CarouselSlide from './CarouselSlide';
 import { Styled_CarouselLogic } from './CarouselLogic.styled';
-
-interface CarouselItemType {
-  title: string;
-  artistId: number;
-  content: string;
-  date: string;
-  price: number;
-  place: string;
-  nickname: string;
-  totalSeat: number;
-  categoryId: number;
-  imageUrl: string;
-}
+import { PerformanceType } from '../../model/Performance';
 
 const Main = () => {
   let [movementWidth, setMovementWidth] = useState(0);
@@ -62,14 +50,14 @@ const Main = () => {
           {carouselData.length !== 0 && (
             <>
               {/* 슬라이드 리스트 */}
-              {carouselData.map((v: CarouselItemType, i) => {
+              {carouselData.map((v: PerformanceType, i) => {
                 return (
                   <div key={i}>
                     <CarouselSlide
                       posterImg={v.imageUrl}
                       title={v.title}
-                      nickname={v.nickname}
-                      content={v.content}
+                      performanceArtist={v.performanceArtist.performanceId}
+                      category={v.category}
                       price={v.price}
                       date={v.date}
                       categoryId={v.categoryId}
@@ -82,8 +70,10 @@ const Main = () => {
                 <CarouselSlide
                   posterImg={carouselData[0].imageUrl}
                   title={carouselData[0].title}
-                  nickname={carouselData[0].nickname}
-                  content={carouselData[0].content}
+                  performanceArtist={
+                    carouselData[0].performanceArtist.performanceId
+                  }
+                  category={carouselData[0].category}
                   price={carouselData[0].price}
                   date={carouselData[0].date}
                   categoryId={carouselData[0].categoryId}
