@@ -87,7 +87,7 @@ public class PerformanceController {
     public ResponseEntity getPerformance(@PathVariable("category-id") @Positive long categoryId,
                                          @RequestParam("page") @Positive int page,
                                          @RequestParam("size") @Positive int size) {
-        Page<Performance> pagePerformance = performanceService.findPerformances(page - 1, size, categoryId);
+        Page<Performance> pagePerformance = performanceService.findPerformancesByCategory(page - 1, size, categoryId);
         List<Performance> findPerformance = pagePerformance.toList();
 
         return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);
