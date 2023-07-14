@@ -59,6 +59,7 @@ public class MemberController {
                 HttpStatus.OK);
     }
 
+
     @GetMapping("/{memberId}")
     public ResponseEntity getMember(@Valid @PathVariable("memberId") long memberId){
         Member member = memberService.findMember(memberId);

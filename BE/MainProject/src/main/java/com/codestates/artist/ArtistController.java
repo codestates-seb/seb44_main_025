@@ -67,6 +67,7 @@ public class ArtistController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     //아티스트 프로필 수정
     @PatchMapping("/{artistId}")
     public ResponseEntity patchArtist(@Valid @PathVariable("artistId") long artistId,
@@ -87,6 +88,7 @@ public class ArtistController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     //카테고리별 아티스트 리스트 출력
     @GetMapping
