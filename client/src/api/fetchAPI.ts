@@ -21,8 +21,10 @@ export const testPostPerformance = async (body: BodyType) => {
 
 export const postPerformance = async (body: FormData) => {
   const data = await axios
-    .post(`${SERVER_HOST}/performance/register`, body, {
-      headers: { 'Content-Type': 'multipart/form-data' },
+    .post(`${SERVER_HOST}/performance`, body, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     })
     .then(data => {
       return data;
@@ -69,6 +71,20 @@ export const testPostReview = async (body: bodyType) => {
   const data = await axios
     .post(`${TEST_HOST}/reviews`, JSON.stringify(body), {
       headers: { 'Content-Type': 'application/json' },
+    })
+    .then(data => {
+      return data;
+    })
+    .catch(err => console.error(err));
+
+  return data;
+};
+export const postReview = async (body: bodyType) => {
+  const data = await axios
+    .post(`${SERVER_HOST}/review`, JSON.stringify(body), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
     .then(data => {
       return data;

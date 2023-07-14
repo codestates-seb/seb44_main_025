@@ -44,19 +44,25 @@ export default function Artistregist() {
   const [profileImgFile, setProfileImgFile] = useState<Blob>();
 
   const body = {
-    artistname: Artist,
-    snslink: Snslink,
+    artistName: Artist,
+    // snslink: Snslink,
     content: Introduction,
     categoryId: categoryId,
     backImagesrc: backImgFile,
-    profileImagesrc: profileImgFile,
+    // profileImagesrc: profileImgFile,
   };
   // json.server사용할때 id값이 꼭 있어야 함
   const handleSubmit = async (body: bodyType) => {
     const data = await axios
-      .post('http://localhost:5001/artist', JSON.stringify(body), {
-        headers: { 'Content-Type': 'application/json' },
-      })
+      .post(
+        'https://103f-121-187-22-182.ngrok-free.app/artist',
+        JSON.stringify(body),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(data => {
         return data;
       })
@@ -123,8 +129,16 @@ export default function Artistregist() {
           <S.ArtistDetail>
             <S.SubTitle>아티스트 정보</S.SubTitle>
             <S.ButtonWarppar>
-              <Link to={'artist'}>
-                <ButtonPrimary75px onClick={() => handleSubmit(body)}>
+              <Link to="artists">
+                <ButtonPrimary75px
+                  onClick={() =>
+                    handleSubmit(
+                      Object.assign(body, {
+                        imageUrl: 'abc.abc',
+                      })
+                    )
+                  }
+                >
                   등록
                 </ButtonPrimary75px>
               </Link>

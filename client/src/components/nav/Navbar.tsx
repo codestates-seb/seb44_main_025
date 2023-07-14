@@ -30,7 +30,7 @@ const Navbar = () => {
               <Styled_Navbar.Span>아티스트</Styled_Navbar.Span>
             </Styled_Navbar.GroupDiv>
           </Link>
-          {getCookie('token') ? (
+          {getCookie('accessToken') ? (
             <Link to="/mypage">
               <Styled_Navbar.GroupDiv>
                 <MypageIcon />

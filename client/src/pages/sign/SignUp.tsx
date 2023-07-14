@@ -86,7 +86,7 @@ const SignUpPage = () => {
   /** 회원정보를 서버로 전송하는 ajax 함수 */
   const usePostSignUp = (data: IForm) => {
     axios
-      .post('/member', data, {
+      .post('https://103f-121-187-22-182.ngrok-free.app/member', data, {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(response => {
@@ -103,14 +103,17 @@ const SignUpPage = () => {
   /** 이메일 중복검사하는 ajax 함수 */
   const useGetDuplicateEmail = (emailData: string | null) => {
     axios
-      .post('/member/duplicate/email', { email: emailData })
+      .post(
+        'https://103f-121-187-22-182.ngrok-free.app/member/duplicate/email',
+        { email: emailData }
+      )
       .then(response => {
         if (response.status === 200) {
-          if (response.data === '사용 가능한 이메일입니다') {
+          if (response.data === false) {
             setEmailDupl(false);
             setEmailDuplBtnCnt(nicknameDuplBtnCnt + 1);
             setNoEmailDuplBtnClickedSubmit(false);
-          } else if (response.data === '이미 존재하는 이메일입니다') {
+          } else if (response.data === true) {
             setEmailDupl(true);
             setEmailDuplBtnCnt(0);
             setNoEmailDuplBtnClickedSubmit(false);
@@ -125,7 +128,10 @@ const SignUpPage = () => {
   /** 닉네임 중복검사하는 ajax 함수 */
   const useGetDuplicateNickname = (nicknameData: string | null) => {
     axios
-      .post('/member/duplicate/nickname', { nickname: nicknameData })
+      .post(
+        'https://103f-121-187-22-182.ngrok-free.app/member/duplicate/nickname',
+        { nickname: nicknameData }
+      )
       .then(response => {
         if (response.status === 200) {
           if (response.data === '사용 가능한 이메일입니다') {
