@@ -102,20 +102,22 @@ public interface PerformanceMapper {
     }
 
     default PerformanceDto.Response performanceToPerformanceResponseDto(Performance performance) {
-        PerformanceArtistDto.Response performanceArtistDto = new PerformanceArtistDto.Response();
-        performanceArtistDto.setPerformanceId(performance.getPerformanceId());
+        PerformanceArtistDto.Response performanceArtistResponseDto = new PerformanceArtistDto.Response();
+        performanceArtistResponseDto.setPerformanceId(performance.getPerformanceId());
 
-        Map<Long, Artist> performanceArtistMap = new HashMap<>();
+        Map<Long, Long> performanceArtistMap = new HashMap<>();
         for(PerformanceArtist el : performance.getPerformanceArtists()) {
-            performanceArtistMap.put(el.getPerformanceArtistId(), el.getArtist());
+            Long performanceArtistId = el.getPerformanceArtistId();
+            Long artistId = el.getArtist().getArtistId();
+            performanceArtistMap.put(performanceArtistId, artistId);
         }
 
-        performanceArtistDto.setPerformanceArtistList(performanceArtistMap);
+        performanceArtistResponseDto.setPerformanceArtistList(performanceArtistMap);
 
         return new PerformanceDto.Response(
                 performance.getPerformanceId(),
                 performance.getTitle(),
-                performanceArtistDto,
+                performanceArtistResponseDto,
                 performance.getContent(),
                 performance.getDate().toString(),
                 performance.getPrice(),
@@ -132,9 +134,13 @@ public interface PerformanceMapper {
                     PerformanceArtistDto.Response performanceArtistResponseDto = new PerformanceArtistDto.Response();
                     performanceArtistResponseDto.setPerformanceId(data.getPerformanceId());
 
-                    Map<Long, Artist> performanceArtistMap = new HashMap<>();
+                    // [1,1]
+
+                    Map<Long, Long> performanceArtistMap = new HashMap<>();
                     for(PerformanceArtist el : data.getPerformanceArtists()) {
-                        performanceArtistMap.put(el.getPerformanceArtistId(), el.getArtist());
+                        Long performanceArtistId = el.getPerformanceArtistId();
+                        Long artistId = el.getArtist().getArtistId();
+                        performanceArtistMap.put(performanceArtistId, artistId);
                     }
 
                     performanceArtistResponseDto.setPerformanceArtistList(performanceArtistMap);
