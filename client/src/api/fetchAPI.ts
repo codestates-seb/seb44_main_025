@@ -3,6 +3,7 @@ import axios from 'axios';
 const TEST_HOST = process.env.REACT_APP_TEST_HOST;
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
+// TODO: 임시로 BodyType 사용중인 항목들 타입 정의하기
 interface BodyType {
   [x: string]: any;
 }
@@ -34,13 +35,9 @@ export const postPerformance = async (body: FormData) => {
   return data;
 };
 
-interface bodyType {
-  [x: string]: any;
-}
-
 export const postReservation = async (
   performanceId: number,
-  body: bodyType
+  body: BodyType
 ) => {
   const data = await axios
     .post(`${SERVER_HOST}/reservation`, JSON.stringify(body), {
@@ -54,7 +51,7 @@ export const postReservation = async (
   return data;
 };
 
-export const postArtist = async (body: bodyType) => {
+export const postArtist = async (body: BodyType) => {
   const data = await axios
     .post(`${SERVER_HOST}/artist`, JSON.stringify(body), {
       headers: { 'Content-Type': 'application/json' },
@@ -67,7 +64,7 @@ export const postArtist = async (body: bodyType) => {
   return data;
 };
 
-export const testPostReview = async (body: bodyType) => {
+export const testPostReview = async (body: BodyType) => {
   const data = await axios
     .post(`${TEST_HOST}/reviews`, JSON.stringify(body), {
       headers: { 'Content-Type': 'application/json' },
@@ -79,7 +76,7 @@ export const testPostReview = async (body: bodyType) => {
 
   return data;
 };
-export const postReview = async (body: bodyType) => {
+export const postReview = async (body: BodyType) => {
   const data = await axios
     .post(`${SERVER_HOST}/review`, JSON.stringify(body), {
       headers: {
