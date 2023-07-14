@@ -7,7 +7,7 @@ import ArtistreviewContainer from '../components/artist/artistreviewcontainer';
 import Review from '../components/review/Review';
 import Footer from '../components/footer/Footer';
 import Img from '.././images/우리사랑이대로.jpeg';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Navbar from '../components/nav/Navbar';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -55,13 +55,16 @@ export default function Artistpage() {
   const { setPerformanceData } = ArtistpagePerformanceList();
   const { reviewData } = ArtistpageReviewList();
   const { setReviewData } = ArtistpageReviewList();
-
+  const { artistId } = useParams();
   useEffect(() => {
     const fetchData = async () => {
       try {
         // 아티스트 등록했을때 응답으로 오는 아티스트Id를 filter값으로 넣기
         // 아티스트 등록하면 그 정보가 돌아오고 그 안에 아티스트아이디 있고 그거를 아티스트페이지 주소 뒤에 붙여줌 그리고 페이지 전환을 시켜줌 :/artistid
-        const response = await axios.get('http://localhost:5001/artist');
+        const response = await axios.get(
+          `https://103f-121-187-22-182.ngrok-free.app/artist/${artistId}`,
+          { headers: { 'ngrok-skip-browser-warning': true } }
+        );
         const responseperformance = await axios.get(
           'http://localhost:5001/performance?artistId=4'
         );

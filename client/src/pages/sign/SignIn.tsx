@@ -28,24 +28,23 @@ const SignInPage = () => {
 
   const ajaxPostSignIn = (data: IForm) => {
     axios
-      .post('/login', data)
+      .post('https://103f-121-187-22-182.ngrok-free.app/login', data)
       .then(response => {
         // 헤더에 담긴 토큰 가져오기
-        const accessToken = response.headers['Authorization'];
+        // const accessToken = response.headers['Authorization'];
+        const accessToken = response.headers['authorization'];
         if (response.status === 200) {
           // Body에 담긴 유저 정보 UserData에 저장
           setUserData(response.data);
           console.log(userData);
           // token이 필요한 API 요청 시 header Authorization에 token 담아 전송
-          axios.defaults.headers.common[
-            'Authorization'
-          ] = `Bearer ${accessToken}`;
+          axios.defaults.headers.common['authorization'] = `${accessToken}`;
           // cookie에 토큰 저장
-          setCookie('token', `JWT ${response.data.token}`, {
+          setCookie('accessToken', `${accessToken}`, {
             path: '/',
             sameSite: 'strict',
             secure: true,
-            httpOnly: true,
+            // httpOnly: true,
           });
           // 메인페이지로 이동
           alert('[로그인 성공] 메인 페이지로 이동합니다');
