@@ -1,0 +1,11 @@
+{
+  "user": {
+    "userId": 1,
+    "artistId": 1,
+    "nickName": "동동",
+    "imageUrl": "./images/여성사진3.jpg",
+    "profileImageUrl": "./images/여성사진3.jpg",
+    "id": 1,
+    "hasArtist": true
+   }
+}
