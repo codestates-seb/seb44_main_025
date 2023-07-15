@@ -1,9 +1,15 @@
 import { styled } from 'styled-components';
 import { ButtonWithArrowLight } from '../buttons/Buttons';
+// import reactDom from 'react-dom';
 
 interface Props {
   onClick: React.MouseEventHandler<HTMLElement>;
 }
+
+// export const ModalPotal = ({ children }: { children: any }) => {
+//   const el = document.getElementById('modal');
+//   return reactDom.createPortal(children, el);
+// };
 
 export default function NoTicketModal({ onClick }: Props) {
   return (
@@ -32,6 +38,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
   `,
   TicketModal: styled.div`
     width: 300px;

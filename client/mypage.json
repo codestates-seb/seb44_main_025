@@ -1,28 +1,14 @@
 {
-  "user": [
+  "user": 
     {
       "userId": 1,
       "artistId": 1,
-      "nickname": "동동",
+      "nickName": "동동",
       "imageUrl": "./images/여성사진3.jpg",
       "profileimageUrl": "./images/여성사진3.jpg",
-      "id": 1
+      "id": 1,
+      "hasArtist": false
     },
-    {
-      "userId": 2,
-      "nickname": "노새",
-      "imageUrl": "./images/여성사진3.jpg",
-      "profileimageUrl": "./images/여성사진3.jpg",
-      "id": 2
-    },
-    {
-      "userId": 3,
-      "nickname": "깨비",
-      "imageUrl": "./images/여성사진3.jpg",
-      "profileimageUrl": "./images/여성사진3.jpg",
-      "id": 3
-    }
-  ],
   "reservation": [
     {
       "title": "우리 사랑 이대로",

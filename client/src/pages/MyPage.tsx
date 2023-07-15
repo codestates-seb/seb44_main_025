@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import Header from '../components/header/Header';
+import HeaderLogoST from '../components/header/HeaderLogoST';
 import {
   ButtonPrimary75px,
   ButtonWithArrowDark,
@@ -9,7 +9,7 @@ import Concertpreview from '../components/concert-preview/ConcertPreview';
 import ArtistreviewContainer from '../components/artist/artistreviewcontainer';
 import Review from '../components/review/Review';
 import Footer from '../components/footer/Footer';
-import Navbar from '../components/nav/Navbar';
+import NavMypage from '../components/navs/NavMypage';
 import { Link, useNavigate } from 'react-router-dom';
 import Img from '.././images/우리사랑이대로.jpeg';
 import { removeCookie } from '../utils/Cookie';
@@ -61,18 +61,14 @@ export default function Mypage() {
       try {
         // 아티스트 등록했을때 응답으로 오는 아티스트Id를 filter값으로 넣기
         // 아티스트 등록하면 그 정보가 돌아오고 그 안에 아티스트아이디 있고 그거를 아티스트페이지 주소 뒤에 붙여줌 그리고 페이지 전환을 시켜줌 :/artistid
-
-        // 현재 /member/:memberId 형태로 요청되지만 id 들어가지 않도록 변경될 예정
-        const response = await axios.get(
-          'https://103f-121-187-22-182.ngrok-free.app/member/1',
-          { headers: { 'ngrok-skip-browser-warning': true } }
-        );
+        const response = await axios.get('http://localhost:5000/user?userId=1');
         const responseperformance = await axios.get(
-          'https://103f-121-187-22-182.ngrok-free.app/reservation?userId=1'
+          'http://localhost:5000/reservation?userId=1'
         );
         const responsereview = await axios.get(
-          'https://103f-121-187-22-182.ngrok-free.app/review?userId=1'
+          'http://localhost:5000/review?userId=1'
         );
+        // console.log(response.data);
         setMyPageData(response.data);
         setPerformanceData(responseperformance.data);
         setReviewData(responsereview.data);
@@ -85,14 +81,14 @@ export default function Mypage() {
 
   /** 로그아웃 및 main으로 페이지 이동 */
   const logoutHandler = () => {
-    removeCookie('accessToken');
+    removeCookie('token');
     alert('[로그아웃 성공] 로그아웃 되었습니다');
     navigate('/');
   };
 
   return (
     <>
-      <Header />
+      <HeaderLogoST />
       <S.Main>
         <S.Section>
           <S.Title>마이페이지</S.Title>
@@ -135,7 +131,6 @@ export default function Mypage() {
             performanceData.map((el: Performancelist) => {
               return (
                 <Concertpreview
-                  performanceId={el.performanceId || 1}
                   key={el.userId}
                   posterImg={el.imageUrl}
                   title={el.title}
@@ -210,7 +205,7 @@ export default function Mypage() {
           <Footer />
         </S.Section>
       </S.Main>
-      <Navbar />
+      <NavMypage />
     </>
   );
 }

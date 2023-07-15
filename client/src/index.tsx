@@ -10,9 +10,9 @@ import PerformanceList from './pages/performance-list/PerformanceList';
 import PerformanceInfo from './pages/performance-info/PerformanceInfo';
 import PerformanceRegister from './pages/performance-register/PerformanceRegister';
 import Artistpage from './pages/Artist';
-import Mypage from './pages/MyPage';
+import Mypage from './pages/mypage/MyPage';
 import Editmypage from './pages/EditMyPage';
-import Artistregist from './pages/ArtistRegister';
+import Artistregist from './pages/artist-register/ArtistRegister';
 import Cancelpage from './pages/Cancel';
 import SignUpPage from './pages/sign/SignUp';
 import SignInPage from './pages/sign/SignIn';
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         element: <SignUpPage />,
       },
       {
-        path: '/mypage',
+        path: '/mypage/:memberId',
         element: <Mypage />,
       },
       {
@@ -76,15 +76,19 @@ const router = createBrowserRouter([
         element: <Artistpage />,
       },
       {
-        path: '/mypage/artistregist/artist',
+        path: '/mypage/:memberId/artistregist/artist/:artistId',
         element: <Artistpage />,
       },
       {
-        path: '/mypage/editmypage',
+        path: 'mypage/:memberId/artist/:artistId',
+        element: <Artistpage />,
+      },
+      {
+        path: '/mypage/:memberId/editmypage',
         element: <Editmypage />,
       },
       {
-        path: '/mypage/artistregist',
+        path: '/mypage/:memberId/artistregist',
         element: <Artistregist />,
       },
       {
@@ -92,7 +96,7 @@ const router = createBrowserRouter([
         element: <Artistregist />,
       },
       {
-        path: '/mypage/editmypage/cancel',
+        path: '/mypage/:membId/editmypage/cancel',
         element: <Cancelpage />,
       },
       {

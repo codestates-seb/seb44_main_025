@@ -10,10 +10,12 @@ import { useEffect } from 'react';
 import { CarouselList, ArtistList } from '../../zustand/homepage.stores';
 import axios from 'axios';
 import Navbar from '../../components/nav/Navbar';
+import { UserLoginInfo } from '../../zustand/userloginInfo.stores';
 
 const Home = () => {
   const { setCarouselData } = CarouselList();
   const { setArtistData } = ArtistList();
+  const { userData, setUserData } = UserLoginInfo();
 
   useEffect(() => {
     const getCarouselData = async () => {
@@ -61,16 +63,30 @@ const Home = () => {
                     Text="지도 검색"
                   />
                 </Link>
-                <Link
-                  to="/artistregistpage"
-                  style={{ textDecorationLine: 'none' }}
-                >
-                  <MainPageButton
-                    Height={60}
-                    ImageUrl="./images/pexels-ricardo-rojas-3608804.jpg"
-                    Text="아티스트 등록"
-                  />
-                </Link>
+                {Object.keys(userData).length === 0 &&
+                userData.hasArtist === false ? (
+                  <Link
+                    to="/artistregistpage"
+                    style={{ textDecorationLine: 'none' }}
+                  >
+                    <MainPageButton
+                      Height={60}
+                      ImageUrl="./images/pexels-ricardo-rojas-3608804.jpg"
+                      Text="아티스트 등록"
+                    />
+                  </Link>
+                ) : (
+                  <Link
+                    to="/performances/register"
+                    style={{ textDecorationLine: 'none' }}
+                  >
+                    <MainPageButton
+                      Height={60}
+                      ImageUrl="./images/pexels-monica-silvestre-713149.jpg"
+                      Text="공연 등록"
+                    />
+                  </Link>
+                )}
               </div>
             </Styled_Home.AllBtnsDiv>
           </Styled_Home.MiddlePart>

@@ -18,6 +18,8 @@ export interface Artist {
   createdAt: string;
   imageUrl: string;
   memberId: number;
+  profileImageUrl?: string;
+  snsLink?: string;
 }
 
 export interface ArtistList {

@@ -3,10 +3,10 @@ import { create } from 'zustand';
 interface Artistpage {
   id?: number;
   artistId: number;
-  artistname: string;
+  artistName: string;
   imageUrl: string;
-  profileimageUrl: string;
-  snslink: string;
+  profileImageUrl: string;
+  snsLink: string;
   content: string;
 }
 interface Performancelist {
@@ -16,15 +16,15 @@ interface Performancelist {
   date: string;
   price: number;
   place: string;
-  artistname: string;
+  artistName: string;
   totalSeat: number;
   categoryId: number;
   imageUrl: string;
 }
 
 interface Reviewlist {
-  nickname: string;
-  reviewtitle: string;
+  nickName: string;
+  reviewTitle: string;
   artistId?: number;
   content: string;
 }
