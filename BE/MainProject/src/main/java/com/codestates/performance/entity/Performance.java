@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.xml.stream.events.Comment;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@ToString
 @NoArgsConstructor
 @Setter
 @Getter
@@ -61,16 +63,14 @@ public class Performance {
         this.imageUrl = imageUrl;
     }
 
-    public Performance(long performanceId, String title, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl, Content content) {
+    public Performance(long performanceId, String title, LocalDateTime date, int price, String place, int totalSeat, String imageUrl) {
         this.performanceId = performanceId;
         this.title = title;
         this.date = date;
         this.price = price;
         this.place = place;
         this.totalSeat = totalSeat;
-        this.category = category;
         this.imageUrl = imageUrl;
-        this.content = content;
     }
 
     public void addContent(Content content) {

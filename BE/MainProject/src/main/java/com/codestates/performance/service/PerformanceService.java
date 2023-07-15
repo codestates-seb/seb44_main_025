@@ -13,7 +13,7 @@ public interface PerformanceService {
 
     void deletePerformance(long performanceId);
 
-    Performance updatePerformance(Performance performance);
+    Performance updatePerformance(Performance performance, PerformanceDto.Patch performanceDto);
 
     Performance findPerformance(long performanceId);
 }

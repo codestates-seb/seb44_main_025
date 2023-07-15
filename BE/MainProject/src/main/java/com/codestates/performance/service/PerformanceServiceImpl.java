@@ -8,6 +8,7 @@ import com.codestates.content.entity.Content;
 import com.codestates.global.exception.BusinessLogicException;
 import com.codestates.global.exception.ExceptionCode;
 import com.codestates.image.ImageUploadService;
+import com.codestates.performance.dto.PerformanceArtistDto;
 import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
 import com.codestates.performance.entity.PerformanceArtist;
@@ -19,7 +20,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -53,28 +56,55 @@ public class PerformanceServiceImpl implements PerformanceService{
     }
 
     @Override
-    public Performance updatePerformance(Performance performance) {
+    public Performance updatePerformance(Performance performance, PerformanceDto.Patch performanceDto) {
         Performance findPerformance = findVerifyPerformance(performance.getPerformanceId());
+        long contentId = findPerformance.getContent().getContentId();
+
+        // content
+        Content content = new Content(performanceDto.getContent());
+        content.setContentId(contentId);
+        performance.addContent(content);
+
+        // category
+        Category category = categoryService.findVerifiedCategory(performanceDto.getCategoryId());
+        performance.addCategory(category);
+
+        // performanceArtists
+        List<PerformanceArtist> performanceArtists = performanceDto.getArtistIds()
+                .stream()
+                .map(key->{
+                    Artist artist = artistService.findVerifiedArtist(key);
+
+                    PerformanceArtist performanceArtist = new PerformanceArtist();
+                    performanceArtist.addPerformance(performance);
+                    performanceArtist.addArtist(artist);
+
+                    performanceArtist.setPerformanceArtistId(performanceDto.getPerformanceArtistId());
+                    return performanceArtist;
+                }).collect(Collectors.toList());
+
+        performance.addPerformanceArtists(performanceArtists);
 
         Optional.ofNullable(performance.getTitle())
-                .ifPresent(title -> findPerformance.setTitle(title));
+                .ifPresent(data -> findPerformance.setTitle(data));
         Optional.ofNullable(performance.getContent())
-                .ifPresent(content -> findPerformance.setContent(content));
+                .ifPresent(data -> findPerformance.setContent(data));
         Optional.ofNullable(performance.getPerformanceArtists())
-                .ifPresent(performanceArtists -> findPerformance.setPerformanceArtists(performanceArtists));
+                .ifPresent(data -> findPerformance.setPerformanceArtists(data));
         Optional.ofNullable(performance.getPlace())
-                .ifPresent(place -> findPerformance.setPlace(place));
+                .ifPresent(data -> findPerformance.setPlace(data));
         Optional.ofNullable(performance.getCategory())
-                .ifPresent(category -> findPerformance.setCategory(category));
+                .ifPresent(data -> findPerformance.setCategory(data));
         Optional.ofNullable(performance.getImageUrl())
-                .ifPresent(imageUrl -> findPerformance.setImageUrl(imageUrl));
+                .ifPresent(data -> findPerformance.setImageUrl(data));
 
         return performanceRepository.save(findPerformance);
     }
 
     @Override
     public Performance findPerformance(long performanceId) {
-        return findVerifyPerformance(performanceId);
+        Performance findPerformance = findVerifyPerformance(performanceId);
+        return findPerformance;
     }
 
     @Override
