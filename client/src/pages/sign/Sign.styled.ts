@@ -15,7 +15,7 @@ export const Styled_Sign = {
     justify-content: center;
   `,
   Container: styled.div`
-    min-height: calc(100vh - 50px);
+    min-height: calc(100vh - 60px);
     display: flex;
     flex-flow: column;
     justify-content: center;

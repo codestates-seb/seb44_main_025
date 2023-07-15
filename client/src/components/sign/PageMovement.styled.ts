@@ -11,6 +11,7 @@ export const Styled_PageMovement = {
     justify-content: center;
     gap: 15px;
     margin-top: ${props => props.margintop}px;
+    padding-bottom: 20px;
   `,
   Span: styled.span`
     color: var(--font-white-color);
