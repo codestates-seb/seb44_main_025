@@ -10,12 +10,11 @@ import { useEffect } from 'react';
 import { CarouselList, ArtistList } from '../../zustand/homepage.stores';
 import axios from 'axios';
 import Navbar from '../../components/nav/Navbar';
-import { UserLoginInfo } from '../../zustand/userloginInfo.stores';
+import { getCookie } from '../../utils/Cookie';
 
 const Home = () => {
   const { setCarouselData } = CarouselList();
   const { setArtistData } = ArtistList();
-  const { userData, setUserData } = UserLoginInfo();
 
   useEffect(() => {
     const getCarouselData = async () => {
@@ -63,8 +62,7 @@ const Home = () => {
                     Text="지도 검색"
                   />
                 </Link>
-                {Object.keys(userData).length === 0 &&
-                userData.hasArtist === false ? (
+                {getCookie('userInfo').hasArtist === false ? (
                   <Link
                     to="/artistregistpage"
                     style={{ textDecorationLine: 'none' }}

@@ -5,7 +5,7 @@ import { Styled_Cancel } from './Cancel.styled';
 import { H1Title } from '../../utils/SlideUp';
 import { useState } from 'react';
 import axios from 'axios';
-import { removeCookie } from '../../utils/Cookie';
+import { removeCookie, getCookie } from '../../utils/Cookie';
 import { useNavigate } from 'react-router-dom';
 
 export default function Cancelpage() {
@@ -14,11 +14,11 @@ export default function Cancelpage() {
   const navigate = useNavigate();
 
   const postPassword = () => {
-    console.log('hello');
     axios
       .delete('/member/delete', {
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `${getCookie('userInfo').memberId}`,
         },
         data: {
           password: password,
@@ -37,8 +37,7 @@ export default function Cancelpage() {
         }
       })
       .catch(error => {
-        // alert(`error: ${error}`);
-        console.log(error);
+        alert(`error: ${error}`);
       });
   };
 
