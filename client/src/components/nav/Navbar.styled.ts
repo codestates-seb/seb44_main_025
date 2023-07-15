@@ -36,6 +36,7 @@ export const Styled_Navbar = {
     width: 90px;
     cursor: pointer;
   `,
+  // 호버시 하단 가로선 애니메이션
   AnimationDiv: styled.div`
     display: block;
     font-weight: bold;
@@ -52,13 +53,13 @@ export const Styled_Navbar = {
     }
     &:hover {
       &:before {
-        width: 97.8%;
+        width: 100%;
         background: white;
         transition: 0.4s ease;
         bottom: -5px;
       }
       &:after {
-        width: 97.8%;
+        width: 100%;
         background: 0 0;
         transition: all 0s ease;
       }
