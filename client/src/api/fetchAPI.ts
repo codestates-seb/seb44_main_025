@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getCookie } from '../utils/Cookie';
 
 const TEST_HOST = process.env.REACT_APP_TEST_HOST;
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
@@ -54,7 +55,10 @@ export const postReservation = async (
 export const postArtist = async (body: BodyType) => {
   const data = await axios
     .post(`${SERVER_HOST}/artist`, JSON.stringify(body), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: getCookie('accessToken'),
+      },
     })
     .then(data => {
       return data;

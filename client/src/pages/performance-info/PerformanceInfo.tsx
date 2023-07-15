@@ -87,8 +87,18 @@ const PerformanceInfo = () => {
             <>
               <S.Heading3>후기</S.Heading3>
               <S.ReviewContainer>
-                <Review nickname={''} reviewtitle={''} content={''} />
-                <Review nickname={''} reviewtitle={''} content={''} />
+                <Review
+                  nickname={''}
+                  reviewTitle={''}
+                  content={''}
+                  createdAt={''}
+                />
+                <Review
+                  nickname={''}
+                  reviewTitle={''}
+                  content={''}
+                  createdAt={''}
+                />
               </S.ReviewContainer>
             </>
           )}

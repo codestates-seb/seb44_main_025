@@ -31,7 +31,7 @@ const Navbar = () => {
             </Styled_Navbar.GroupDiv>
           </Link>
           {getCookie('accessToken') ? (
-            <Link to="/mypage">
+            <Link to={`/mypage/${getCookie('userInfo').memberId}`}>
               <Styled_Navbar.GroupDiv>
                 <MypageIcon />
                 <Styled_Navbar.Span>마이페이지</Styled_Navbar.Span>
