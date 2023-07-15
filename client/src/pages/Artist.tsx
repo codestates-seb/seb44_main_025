@@ -98,7 +98,9 @@ export default function Artistpage() {
             <S.UserImg src={artistData?.imageUrl || Img} />
             <S.ArtistDetail>
               <S.ArtistContent>{artistData?.artistName}</S.ArtistContent>
-              <S.ArtistContent>{artistData?.snsLink}</S.ArtistContent>
+              <S.ArtistSns href={artistData?.snsLink} target="_blank">
+                SNS링크
+              </S.ArtistSns>
               <S.UserEdit>
                 <Link to="/artistregist">
                   <EditIcon />
@@ -260,6 +262,12 @@ const S = {
     margin: 20px 15px 0px 15px;
   `,
   ArtistContent: styled.p`
+    font-size: var(--p-small-medium-font-size);
+    font-weight: var(--p-small-medium-font-weight);
+    line-height: var(--p-small-medium-line-height);
+    color: var(--font-white-color);
+  `,
+  ArtistSns: styled.a`
     font-size: var(--p-small-medium-font-size);
     font-weight: var(--p-small-medium-font-weight);
     line-height: var(--p-small-medium-line-height);

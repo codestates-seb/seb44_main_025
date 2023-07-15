@@ -134,7 +134,12 @@ export default function Artistregist() {
           <S.ArtistDetail>
             <S.SubTitle>아티스트 정보</S.SubTitle>
             <S.ButtonWarppar>
-              <Link to="artists">
+              <Link to={''}>
+                {/* <Link
+                to={`/mypage/${getCookie('userInfo').memberId}/artistregist/${
+                  getCookie('userInfo').artistsId
+                }`}
+              > */}
                 <ButtonPrimary75px onClick={() => handleSubmitAll()}>
                   등록
                 </ButtonPrimary75px>
@@ -190,7 +195,7 @@ export default function Artistregist() {
                 }}
               />
             </S.InputContainer>
-            {/* <S.InputContainer>
+            <S.InputContainer>
               <S.InputLabel>SNS Link</S.InputLabel>
               <Controller
                 control={control}
@@ -209,7 +214,7 @@ export default function Artistregist() {
                   );
                 }}
               />
-            </S.InputContainer> */}
+            </S.InputContainer>
             <S.InputContainer>
               <S.ArtistIntrodution>
                 <S.InputLabel>아티스트 소개</S.InputLabel>

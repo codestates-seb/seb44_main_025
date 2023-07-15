@@ -12,7 +12,7 @@ import Review from '../../components/review/Review';
 import Footer from '../../components/footer/Footer';
 import Navbar from '../../components/nav/Navbar';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { removeCookie } from '../../utils/Cookie';
+import { removeCookie, getCookie } from '../../utils/Cookie';
 import {
   useGetMember,
   useGetMemberPerformance,
@@ -35,6 +35,7 @@ export default function Mypage() {
     alert('[로그아웃 성공] 로그아웃 되었습니다');
     navigate('/');
   };
+  console.log(getCookie('userInfo'));
 
   return (
     <>
@@ -63,7 +64,10 @@ export default function Mypage() {
           {/* 아티스트를 등록한 사용자는 아티스트 페이지 버튼 */}
           {memberData?.hasArtist === true ? (
             <S.ButtonWarppar>
-              <Link to="artist" style={{ textDecoration: 'none' }}>
+              <Link
+                to={`artist/${getCookie('userInfo').artistId}`}
+                style={{ textDecoration: 'none' }}
+              >
                 <ButtonWithArrowDark
                   text={'아티스트 페이지'}
                 ></ButtonWithArrowDark>
