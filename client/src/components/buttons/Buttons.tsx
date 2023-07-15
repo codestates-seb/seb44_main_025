@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { styled, css } from 'styled-components';
 import { ButtonSizeStyle, ButtonThemeStyle } from './Buttons.style';
 import { ReactComponent as ArrowIcon } from '../../icons/icon_right.svg';
@@ -112,40 +112,6 @@ export const ButtonsPreview = () => {
   );
 };
 
-export const ButtonMini = styled.button`
-  cursor: pointer;
-  width: 40px;
-  height: 34px;
-  background-color: var(--theme-background-color);
-  border: 1.5px solid var(--button-primary-border-color);
-  border-radius: 100px;
-  color: var(--font-light-white-color);
-
-  &:active {
-    border: 1.5px solid var(--button-white-border-color);
-    color: var(--button-white-border-color);
-  }
-`;
-
-interface ButtonMiniTogglePropType {
-  selected: boolean;
-}
-const ButtonMiniToggle = styled.button<ButtonMiniTogglePropType>`
-  cursor: pointer;
-  width: 40px;
-  height: 34px;
-  background-color: ${props =>
-    props.selected
-      ? 'var(--button-highlight-background-color)'
-      : 'var(--theme-background-color)'};
-  border: ${props =>
-    props.selected ? 'none' : '1.5px solid var(--button-primary-border-color)'};
-  border-radius: 100px;
-  color: ${props =>
-    props.selected
-      ? 'var(--font-white-color)'
-      : 'var(--font-light-white-color)'};
-`;
 export const ButtonMiniToggleSelect = styled.button`
   cursor: pointer;
   width: 40px;
@@ -164,18 +130,6 @@ export const ButtonMiniToggleUnselect = styled.button`
   border-radius: 100px;
   color: var(--font-light-white-color);
 `;
-
-export const ButtonToggle = ({ text }: { text: string }) => {
-  const [isSelected, setIsSelected] = useState(false);
-  return (
-    <ButtonMiniToggle
-      selected={isSelected}
-      onClick={() => setIsSelected(!isSelected)}
-    >
-      {text}
-    </ButtonMiniToggle>
-  );
-};
 
 export const ButtonPrimary75px = styled.button`
   cursor: pointer;
