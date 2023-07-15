@@ -53,13 +53,13 @@ export const Styled_Navbar = {
     }
     &:hover {
       &:before {
-        width: 97.8%;
+        width: 100%;
         background: white;
         transition: 0.4s ease;
         bottom: -5px;
       }
       &:after {
-        width: 97.8%;
+        width: 100%;
         background: 0 0;
         transition: all 0s ease;
       }
