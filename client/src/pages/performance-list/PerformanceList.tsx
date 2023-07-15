@@ -23,7 +23,7 @@ const PerformanceList = () => {
       <S.Container>
         <S.Main>
           <S.TitleButtonFlex>
-            <S.Heading1>공연 리스트</S.Heading1>
+            <S.Heading1>공연</S.Heading1>
             {/* TODO: 지도와 연계하기 */}
             <MapIcon
               onClick={() =>

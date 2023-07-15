@@ -11,7 +11,6 @@ export const ButtonHeadingContainer = styled.div`
 `;
 export const Heading1 = styled.h1`
   margin-right: auto;
-  margin-left: 15px;
   color: white;
   font-size: var(--heading1-font-size);
   font-weight: var(--heading1-font-weight);
