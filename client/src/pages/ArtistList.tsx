@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { ButtonPrimary160px } from '../components/buttons/Buttons';
+import { Button } from '../components/buttons/Buttons';
 import { useNavigate } from 'react-router-dom';
 import ArtistPreview from '../components/artistpreview/ArtistPreview';
 import Header from '../components/header/Header';
@@ -76,15 +76,17 @@ const ArtistList = () => {
       <Header />
       <S.Container>
         <S.Main>
-          <S.Heading1>아티스트 리스트</S.Heading1>
+          <S.Heading1>아티스트</S.Heading1>
           {/* TODO: 공연 일정 이전 && 공연을 등록한 유저에게만 보여주기 */}
           <S.ButtonContainer>
-            <ButtonPrimary160px
+            <Button
+              size="medium"
+              theme="primary"
               // 아티스트 등록 페이지
               onClick={() => navigate('/artistregist')}
             >
               아티스트 등록하기
-            </ButtonPrimary160px>
+            </Button>
           </S.ButtonContainer>
           {/* TODO: 클릭 시 카테고리별 검색 결과 출력하기 */}
           {/* 일단 아티스트는 장르별 분류 미구현
