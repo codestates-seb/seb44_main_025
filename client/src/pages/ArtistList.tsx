@@ -65,7 +65,6 @@ const S = {
 const ArtistList = () => {
   // TODO: 실제 data로 렌더링하기
   const data = useGetArtists();
-  console.log(data);
   const navigate = useNavigate();
   // TODO: 로그인 상태관리 로직 추가하기
   const isLoggedIn = true;
