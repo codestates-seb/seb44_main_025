@@ -14,7 +14,7 @@ interface ButtonProps {
   size?: 'mini' | 'small' | 'medium' | 'large';
   theme?: 'white' | 'highlight' | 'highlightBorder' | 'primary' | 'theme';
   border?: boolean;
-  icon?: boolean;
+  icon?: 'arrow';
   width?: number;
   height?: number;
   color?: string;
@@ -42,7 +42,7 @@ export const Button = styled.button<ButtonProps>`
             transition: 0.5s;
           }
           & p:after {
-            content: ${icon ? '"➜"' : '"➜"'};
+            content: ${icon === 'arrow' ? '"➜"' : '"➜"'};
             position: relative;
             opacity: 1;
             top: 0;
@@ -68,16 +68,19 @@ interface ButtonWithArrowProps
   text: string;
   theme: ButtonTheme;
 }
-export const ButtonWithArrow: React.FC<ButtonWithArrowProps> = props => (
+export const ButtonWithArrow: React.FC<ButtonWithArrowProps> = ({
+  text,
+  ...props
+}) => (
   <Button
     size={'medium'}
-    icon={true}
+    icon={'arrow'}
     width={120}
     height={24}
     {...props}
     theme={props.theme}
   >
-    <p>{props.text}</p>
+    <p>{text}</p>
   </Button>
 );
 
