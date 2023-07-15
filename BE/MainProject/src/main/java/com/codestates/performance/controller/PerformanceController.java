@@ -42,8 +42,8 @@ public class PerformanceController {
         String imageUrl = imageUploadService.imageUpload(imageFile);
         performanceDto.setImageUrl(imageUrl);
 
-        Performance performance = mapper.performancePostDtoToPerformance(performanceDto, categoryService, artistService);
-        Performance response = performanceService.createPerformance(performance);
+        Performance performance = mapper.performancePostDtoToPerformance(performanceDto);
+        Performance response = performanceService.createPerformance(performance, performanceDto);
 
         return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(response)), HttpStatus.CREATED);
     }

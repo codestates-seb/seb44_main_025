@@ -23,39 +23,17 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface PerformanceMapper {
-    default Performance performancePostDtoToPerformance(PerformanceDto.Post performanceDto,
-                                                        CategoryService categoryService,
-                                                        ArtistService artistService) {
-        Content content = new Content(performanceDto.getContent());
+    default Performance performancePostDtoToPerformance(PerformanceDto.Post performanceDto) {
         LocalDateTime date = LocalDateTime.parse(performanceDto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        Category category = categoryService.findVerifiedCategory(performanceDto.getCategoryId());
 
-        Performance performance = new Performance(
+        return new Performance(
                 performanceDto.getTitle(),
                 date,
                 performanceDto.getPrice(),
                 performanceDto.getPlace(),
                 performanceDto.getTotalSeat(),
-                category,
                 performanceDto.getImageUrl()
         );
-
-        performance.setContent(content);
-
-        List<PerformanceArtist> performanceArtists = performanceDto.getArtistIds()
-                .stream()
-                .map(key->{
-                    PerformanceArtist performanceArtist = new PerformanceArtist();
-                    Artist artist = artistService.findVerifiedArtist(key);
-
-                    performanceArtist.addPerformance(performance);
-                    performanceArtist.addArtist(artist);
-                    return performanceArtist;
-                }).collect(Collectors.toList());
-
-        performance.setPerformanceArtists(performanceArtists);
-
-        return performance;
     }
 
     default Performance performancePatchDtoToPerformance(PerformanceDto.Patch performanceDto,
