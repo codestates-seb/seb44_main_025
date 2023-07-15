@@ -6,18 +6,18 @@ export const Styled_Navbar = {
     display: flex;
     justify-content: center;
 
-    height: 50px;
+    height: 60px;
     position: sticky;
     bottom: 0;
   `,
   Container: styled.div`
     width: 390px;
-    height: 50px;
+    height: 60px;
     background-color: var(--theme-background-color);
   `,
   Nav: styled.nav`
     width: 390px;
-    height: 50px;
+    height: 60px;
     background-color: var(--nav-color);
     padding: 0px 12px 0px 12px;
     border-radius: 25px 25px 0px 0px;
@@ -25,15 +25,43 @@ export const Styled_Navbar = {
     justify-content: space-between;
     align-items: center;
   `,
-  Span: styled.span`
+  TextSpan: styled.span`
     color: var(--font-white-color);
     ${FontStyle.nav}
   `,
-  GroupDiv: styled.div`
+  IconAndTextDiv: styled.div`
     display: flex;
     flex-flow: column;
     align-items: center;
-    width: 80px;
+    width: 90px;
     cursor: pointer;
+  `,
+  AnimationDiv: styled.div`
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    position: relative;
+    &:before,
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      height: 1px;
+      width: 0;
+    }
+    &:hover {
+      &:before {
+        width: 97.8%;
+        background: white;
+        transition: 0.4s ease;
+        bottom: -5px;
+      }
+      &:after {
+        width: 97.8%;
+        background: 0 0;
+        transition: all 0s ease;
+      }
+    }
   `,
 };
