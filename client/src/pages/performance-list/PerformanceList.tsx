@@ -1,9 +1,6 @@
 import { S } from './PerformanceList.style';
 import { ReactComponent as MapIcon } from '../../icons/icon_map_search.svg';
-import {
-  ButtonMini,
-  ButtonPrimary75px,
-} from '../../components/buttons/Buttons';
+import { Button } from '../../components/buttons/Buttons';
 import { TabPerformance } from '../../components/tabs/Tabs';
 import { useNavigate } from 'react-router-dom';
 import ConcertPreview from '../../components/concert-preview/ConcertPreview';
@@ -38,20 +35,25 @@ const PerformanceList = () => {
             <TabPerformance />
             {/* TODO: 공연 일정 이전 && 공연을 등록한 유저에게만 보여주기 */}
             <S.ButtonContainer>
-              <ButtonPrimary75px
+              <Button
+                size="small"
+                theme="primary"
                 onClick={() => navigate('/performances/register')}
               >
                 공연 등록
-              </ButtonPrimary75px>
+              </Button>
             </S.ButtonContainer>
           </S.CategoryContainer>
           <S.CategoryContainer>
             {/* TODO: 클릭 시 카테고리별 검색 결과 출력하기 */}
-
             {Object.keys(categoryObj).map(key => (
-              <ButtonMini key={key}>{categoryObj[key]}</ButtonMini>
+              <Button theme="theme" size="mini" key={key}>
+                {categoryObj[key]}
+              </Button>
             ))}
-            <ButtonMini>기타</ButtonMini>
+            <Button theme="theme" size="mini">
+              기타
+            </Button>
           </S.CategoryContainer>
           <S.PerformanceContainer>
             {data?.data?.map(v => (

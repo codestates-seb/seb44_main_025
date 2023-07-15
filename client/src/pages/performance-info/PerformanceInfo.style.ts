@@ -1,15 +1,22 @@
 import { styled } from 'styled-components';
 
-export const Heading1 = styled.h1`
+export const ButtonHeadingContainer = styled.div`
+  width: 360px;
   margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  & button {
+    margin-top: -8px;
+  }
+`;
+export const Heading1 = styled.h1`
+  margin-right: auto;
   margin-left: 15px;
   color: white;
   font-size: var(--heading1-font-size);
   font-weight: var(--heading1-font-weight);
   line-height: var(--heading1-line-height);
-  margin-right: auto;
 `;
-
 export const Heading3 = styled.h3`
   margin-top: 20px;
   margin-bottom: 8px;
@@ -39,15 +46,6 @@ export const Main = styled.main`
 `;
 export const CategoryContainer = styled.div`
   margin-top: 20px;
-  display: flex;
-  min-width: 360px;
-  justify-content: flex-start;
-  & > button:not(:first-child) {
-    margin-left: 13px;
-  }
-`;
-export const ButtonContainer = styled.div`
-  margin-top: 12px;
   display: flex;
   min-width: 360px;
   justify-content: space-between;
