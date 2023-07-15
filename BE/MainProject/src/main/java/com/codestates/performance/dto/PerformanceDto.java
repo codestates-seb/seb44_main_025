@@ -50,23 +50,6 @@ public class PerformanceDto {
         public void setImageUrl(String imageUrl) {
             this.imageUrl = imageUrl;
         }
-
-        @Override
-        public String toString() {
-            return "Patch{" +
-                    "performanceId=" + performanceId +
-                    ", title='" + title + '\'' +
-                    ", artistIds=" + artistIds +
-                    ", content='" + content + '\'' +
-                    ", date='" + date + '\'' +
-                    ", price=" + price +
-                    ", place='" + place + '\'' +
-                    ", totalSeat=" + totalSeat +
-                    ", categoryId=" + categoryId +
-                    ", imageUrl='" + imageUrl + '\'' +
-                    ", performanceArtistId=" + performanceArtistId +
-                    '}';
-        }
     }
 
     @Getter

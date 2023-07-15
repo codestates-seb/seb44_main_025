@@ -58,16 +58,6 @@ public class PerformanceServiceImpl implements PerformanceService{
     @Override
     public Performance updatePerformance(Performance performance, PerformanceDto.Patch performanceDto) {
         Performance findPerformance = findVerifyPerformance(performance.getPerformanceId());
-        long contentId = findPerformance.getContent().getContentId();
-
-        // content
-        Content content = new Content(performanceDto.getContent());
-        content.setContentId(contentId);
-        performance.addContent(content);
-
-        // category
-        Category category = categoryService.findVerifiedCategory(performanceDto.getCategoryId());
-        performance.addCategory(category);
 
         // performanceArtists
         List<PerformanceArtist> performanceArtists = performanceDto.getArtistIds()
@@ -83,20 +73,19 @@ public class PerformanceServiceImpl implements PerformanceService{
                     return performanceArtist;
                 }).collect(Collectors.toList());
 
-        performance.addPerformanceArtists(performanceArtists);
-
         Optional.ofNullable(performance.getTitle())
                 .ifPresent(data -> findPerformance.setTitle(data));
-        Optional.ofNullable(performance.getContent())
-                .ifPresent(data -> findPerformance.setContent(data));
-        Optional.ofNullable(performance.getPerformanceArtists())
-                .ifPresent(data -> findPerformance.setPerformanceArtists(data));
         Optional.ofNullable(performance.getPlace())
                 .ifPresent(data -> findPerformance.setPlace(data));
-        Optional.ofNullable(performance.getCategory())
-                .ifPresent(data -> findPerformance.setCategory(data));
         Optional.ofNullable(performance.getImageUrl())
                 .ifPresent(data -> findPerformance.setImageUrl(data));
+
+        Optional.ofNullable(performanceDto.getContent())
+                .ifPresent(data -> findPerformance.getContent().setBody(data));
+        Optional.ofNullable(performanceDto.getCategoryId())
+                .ifPresent(data -> findPerformance.addCategory(categoryService.findVerifiedCategory(data)));
+        Optional.ofNullable(performanceDto.getArtistIds())
+                .ifPresent(data -> findPerformance.addPerformanceArtists(performanceArtists));
 
         return performanceRepository.save(findPerformance);
     }
