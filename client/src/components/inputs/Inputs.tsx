@@ -1,5 +1,5 @@
-import * as S from './Styled_Inputs';
-import { InputContainerType } from './Styled_Inputs';
+import * as S from './Inputs.style';
+import { InputContainerType } from './Inputs.style';
 import { ReactComponent as CloseIcon } from '../../icons/icon_close.svg';
 import { ReactComponent as SearchIcon } from '../../icons/icon_search.svg';
 import React from 'react';
@@ -9,6 +9,7 @@ type InputType = {
   label?: string;
   prefix?: boolean;
   suffix?: boolean;
+  placeholder?: string;
   onChange?: (value: any) => void;
   setValue?: React.Dispatch<React.SetStateAction<string>>;
   // setValue 사용하지 않게 되면 삭제하기
@@ -40,6 +41,7 @@ export const Input = (props: InputType) => {
             minLength={props?.minLength}
             readOnly={props?.readOnly}
             src={props?.src}
+            placeholder={props?.placeholder}
             onChange={e => {
               if (props.setValue) {
                 props?.setValue(e.target.value);
