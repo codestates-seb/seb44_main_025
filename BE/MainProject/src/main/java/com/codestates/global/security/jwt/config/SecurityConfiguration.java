@@ -1,5 +1,6 @@
 package com.codestates.global.security.jwt.config;
 
+import com.codestates.artist.ArtistService;
 import com.codestates.global.security.jwt.CustomAuthorityUtils;
 import com.codestates.global.security.jwt.JwtTokenizer;
 import com.codestates.global.security.jwt.exception.MemberAuthenticationEntryPoint;
@@ -10,6 +11,7 @@ import com.codestates.global.security.jwt.handler.MemberAuthenticationFailureHan
 import com.codestates.global.security.jwt.handler.MemberAuthenticationSuccessHandler;
 import com.codestates.member.MemberRepository;
 import com.codestates.member.MemberService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -33,21 +35,25 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @EnableWebSecurity
 @Configuration
+@Slf4j
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+    private final ArtistService artistService;
 
 
     public SecurityConfiguration(JwtTokenizer jwtTokenizer,
-                                 CustomAuthorityUtils authorityUtils){
+                                 CustomAuthorityUtils authorityUtils,
+                                 ArtistService artistService){
         this.jwtTokenizer = jwtTokenizer;
 
         this.authorityUtils = authorityUtils;
+        this.artistService = artistService;
     }
 
     public void addCorMapping(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOriginPatterns("*")
                 .allowedMethods("GET","POST","PATCH","DELETE","OPTIONS")
                 .allowedHeaders("*")
                 .exposedHeaders("Authorization");
@@ -71,7 +77,7 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.GET,"/member").hasRole("USER")
+                        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().permitAll()
                 );
         return http.build();
@@ -80,14 +86,13 @@ public class SecurityConfiguration {
     public static PasswordEncoder passwordEncoder(){return PasswordEncoderFactories.createDelegatingPasswordEncoder();}
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE", "OPTIONS"));
-
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // "*" 대신 출처 목록을 지정합니다.
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.addExposedHeader("Authorization");
-
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
@@ -98,7 +103,7 @@ public class SecurityConfiguration {
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, artistService);
             jwtAuthenticationFilter.setFilterProcessesUrl("/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());

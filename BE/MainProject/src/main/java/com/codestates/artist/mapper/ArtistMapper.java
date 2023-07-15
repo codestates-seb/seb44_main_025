@@ -1,4 +1,4 @@
-package com.codestates.artist;
+package com.codestates.artist.mapper;
 
 import com.codestates.artist.Artist;
 import com.codestates.artist.dto.ArtistDto;
@@ -15,10 +15,12 @@ public class ArtistMapper {
         return new ArtistResponseDto(
                 artist.getMember().getMemberId(),
                 artist.getCategory().getCategory(),
+                artist.getCategory().getCategoryId(),
                 artist.getArtistId(),
                 artist.getArtistName(),
                 artist.getImageUrl(),
                 artist.getContent(),
-                artist.getCreatedAt());
+                artist.getCreatedAt(),
+                artist.getSnsLink());
     }
 }
