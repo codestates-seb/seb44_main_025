@@ -6,71 +6,73 @@ import React from 'react';
 
 type InputType = {
   theme?: 'light' | 'dark' | 'warning' | 'success' | 'primary';
+  height?: number;
+  width?: number;
   label?: string;
   prefix?: boolean;
   suffix?: boolean;
-  placeholder?: string;
   onChange?: (value: any) => void;
   setValue?: React.Dispatch<React.SetStateAction<string>>;
   // setValue 사용하지 않게 되면 삭제하기
-  onBlur?: (e: React.SyntheticEvent) => void;
   errorMessage?: string;
   successMessage?: string;
   buttonText?: string;
 } & InputContainerType &
   React.InputHTMLAttributes<HTMLInputElement>;
-export const Input = (props: InputType) => {
+export const Input: React.FC<InputType> = ({
+  height,
+  width,
+  theme,
+  label,
+  prefix,
+  suffix,
+  onChange,
+  setValue,
+  errorMessage,
+  successMessage,
+  buttonText,
+  ...props
+}) => {
   return (
     <S.Div>
-      {props?.label && <label>{props.label}</label>}
+      {label && <label>{label}</label>}
       <S.InputFlexContainer>
         <S.InputContainer
-          theme={props?.theme || 'light'}
-          height={props?.height}
-          width={props?.width}
+          theme={theme || 'light'}
+          height={height}
+          width={width}
         >
-          {props?.prefix && <SearchIcon />}
+          {prefix && <SearchIcon />}
           <input
-            type={props?.type}
-            name={props?.name}
-            value={props?.value}
-            disabled={props?.disabled}
-            max={props?.max}
-            maxLength={props?.maxLength}
-            min={props?.min}
-            minLength={props?.minLength}
-            readOnly={props?.readOnly}
-            src={props?.src}
-            placeholder={props?.placeholder}
+            {...props}
             onChange={e => {
-              if (props.setValue) {
-                props?.setValue(e.target.value);
+              if (setValue) {
+                setValue(e.target.value);
               }
-              if (props.onChange) {
-                props?.onChange(e.target.value);
+              if (onChange) {
+                onChange(e.target.value);
               }
             }}
           />
-          {props?.suffix &&
+          {suffix &&
             (props?.value ? (
               <CloseIcon
-                onClick={() =>
-                  typeof props?.onChange === 'function' && props?.onChange('')
-                }
+                onClick={() => {
+                  typeof onChange === 'function' && onChange('');
+                  typeof setValue === 'function' && setValue('');
+                }}
               />
             ) : (
               <SearchIcon />
             ))}
         </S.InputContainer>
-        {props.buttonText && <button>{props.buttonText}</button>}
+        {buttonText && <button>{buttonText}</button>}
       </S.InputFlexContainer>
-      {props?.errorMessage && (
-        <S.ParagraphErrorMessage>{props?.errorMessage}</S.ParagraphErrorMessage>
+      {errorMessage && (
+        <S.ParagraphErrorMessage>{errorMessage}</S.ParagraphErrorMessage>
       )}
-      {props?.successMessage && (
-        <S.ParagraphSuccessMessage>
-          {props?.successMessage}
-        </S.ParagraphSuccessMessage>
+      {successMessage && (
+        <S.ParagraphSuccessMessage>{successMessage}</S.ParagraphSuccessMessage>
       )}
     </S.Div>
   );
