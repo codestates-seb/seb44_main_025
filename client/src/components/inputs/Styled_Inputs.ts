@@ -19,7 +19,7 @@ export const Div = styled.div`
   }
 `;
 
-export type ThemeType = 'light' | 'dark' | 'warning' | 'success';
+export type ThemeType = 'light' | 'dark' | 'warning' | 'success' | 'primary';
 // Input 영역과 직접적으로 관련된 컨테이너 div
 export type InputContainerType = {
   width?: 75 | 170 | 285 | 312 | 360;
