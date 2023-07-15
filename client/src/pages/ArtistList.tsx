@@ -91,13 +91,11 @@ const ArtistList = () => {
           {/* TODO: 클릭 시 카테고리별 검색 결과 출력하기 */}
           {/* 일단 아티스트는 장르별 분류 미구현
           <S.CategoryContainer>
-            <ButtonMini>팝</ButtonMini>
-            <ButtonMini>락</ButtonMini>
-            <ButtonMini>R&B</ButtonMini>
-            <ButtonMini>힙합</ButtonMini>
-            <ButtonMini>재즈</ButtonMini>
-            <ButtonMini>밴드</ButtonMini>
-            <ButtonMini>댄스</ButtonMini>
+            {Object.keys(categoryObj).map(key => (
+              <Button theme="theme" size="mini" key={key}>
+                {categoryObj[key]}
+              </Button>
+            ))}
           </S.CategoryContainer> */}
           <S.ArtistContainer>
             {data?.data.map(artist => (
