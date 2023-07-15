@@ -27,19 +27,17 @@ export const useGetMain = () => {
   return data;
 };
 
-interface AnyType {
-  [x: string | number]: any;
-}
-export const useTestGetPerformance = (id: string | number | undefined) => {
+export const useGetPerformance = (id: string | number | undefined) => {
   if (id === undefined) return;
   const navigate = useNavigate();
-  const [data, setData] = useState<AnyType>();
+  const [data, setData] = useState<PerformanceType>();
 
   const getData = async () => {
     await axios
-      .get<AnyType>(`${SERVER_HOST}/performance/${id}`, {
+      .get<{ data: PerformanceType }>(`${SERVER_HOST}/performance/${id}`, {
         headers: { 'ngrok-skip-browser-warning': true },
       })
+      .then(response => response.data)
       .then(data => setData(data?.data))
       .catch(err => {
         console.log(err);
@@ -61,24 +59,6 @@ export const useTestGetPerformances = () => {
   const getData = async () => {
     await axios
       .get<PerformanceListType>(`${SERVER_HOST}/performance?page=1&size=10`, {
-        headers: { 'ngrok-skip-browser-warning': true },
-      })
-      .then(data => setData(data.data))
-      .catch(err => console.log(err));
-  };
-  useEffect(() => {
-    getData();
-  }, []);
-
-  return data;
-};
-
-export const useGetPerformance = (id: string | number | undefined) => {
-  const [data, setData] = useState<PerformanceType>();
-
-  const getData = async () => {
-    await axios
-      .get<PerformanceType>(`${SERVER_HOST}/performance/${id}`, {
         headers: { 'ngrok-skip-browser-warning': true },
       })
       .then(data => setData(data.data))

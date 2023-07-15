@@ -28,9 +28,7 @@ export const postPerformance = async (body: FormData) => {
         'Content-Type': 'multipart/form-data',
       },
     })
-    .then(data => {
-      return data;
-    })
+    .then(data => data.data)
     .catch(err => console.error(err));
 
   return data;
