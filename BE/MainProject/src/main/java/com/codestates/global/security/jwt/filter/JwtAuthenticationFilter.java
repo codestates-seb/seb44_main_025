@@ -2,6 +2,7 @@ package com.codestates.global.security.jwt.filter;
 
 
 
+import com.codestates.artist.ArtistService;
 import com.codestates.global.security.jwt.JwtTokenizer;
 import com.codestates.global.security.jwt.dto.LoginDto;
 import com.codestates.global.security.jwt.dto.LoginResponseDto;
@@ -27,10 +28,13 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
+    private final ArtistService artistService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer){
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer,
+                                   ArtistService artistService){
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
+        this.artistService = artistService;
     }
 
     @SneakyThrows
@@ -58,10 +62,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Long memberId = member.getMemberId();
         Gson gson = new Gson();
         Integer expiration = jwtTokenizer.getAccessTokenExpirationMinutes();
+        boolean hasArtist = artistService.memberHasArtist(member);
 
         response.setHeader("Authorization", "Bearer" + accessToken);
         response.setHeader("Refresh", refreshToken);
-        response.getWriter().println(gson.toJson(new LoginResponseDto(memberId, expiration, accessToken, refreshToken)));
+        response.getWriter().println(gson.toJson(new LoginResponseDto(memberId, hasArtist, expiration, accessToken, refreshToken)));
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
     private String delegateAccessToken(Member member){

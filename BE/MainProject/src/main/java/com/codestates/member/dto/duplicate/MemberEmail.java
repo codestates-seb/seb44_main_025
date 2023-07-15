@@ -1,4 +1,4 @@
-package com.codestates.member.dto;
+package com.codestates.member.dto.duplicate;
 
 import lombok.Getter;
 

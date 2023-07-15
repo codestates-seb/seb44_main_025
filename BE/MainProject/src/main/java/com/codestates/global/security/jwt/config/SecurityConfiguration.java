@@ -1,5 +1,6 @@
 package com.codestates.global.security.jwt.config;
 
+import com.codestates.artist.ArtistService;
 import com.codestates.global.security.jwt.CustomAuthorityUtils;
 import com.codestates.global.security.jwt.JwtTokenizer;
 import com.codestates.global.security.jwt.exception.MemberAuthenticationEntryPoint;
@@ -38,13 +39,16 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+    private final ArtistService artistService;
 
 
     public SecurityConfiguration(JwtTokenizer jwtTokenizer,
-                                 CustomAuthorityUtils authorityUtils){
+                                 CustomAuthorityUtils authorityUtils,
+                                 ArtistService artistService){
         this.jwtTokenizer = jwtTokenizer;
 
         this.authorityUtils = authorityUtils;
+        this.artistService = artistService;
     }
 
     public void addCorMapping(CorsRegistry registry) {
@@ -99,7 +103,7 @@ public class SecurityConfiguration {
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, artistService);
             jwtAuthenticationFilter.setFilterProcessesUrl("/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());

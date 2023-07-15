@@ -22,14 +22,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ArtistService {
     private final ArtistRepository artistRepository;
+    private final MemberRepository memberRepository;
     private final EntityManager em;
 
 
-    public Artist createArtist(Artist artist){
+    public Artist createArtist(Artist artist, long memberId){
         verifyArtistName(artist.getArtistName());
 
-        Artist savedArtist = artistRepository.save(artist);
-        return savedArtist;
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member member = optionalMember.get();
+        boolean hasArtist = memberHasArtist(member);
+
+        if(hasArtist==false){
+            Artist savedArtist = artistRepository.save(artist);
+        return savedArtist;}
+        else throw new BusinessLogicException(ExceptionCode.MEMBER_HAS_ARTIST);
     }
 
     public Artist updateArtist(ArtistDto artistDto) {
@@ -39,6 +46,8 @@ public class ArtistService {
         artist.setArtistName(artistDto.getArtistName());
         artist.setImageUrl(artistDto.getImageUrl());
         artist.setContent(artistDto.getContent());
+        artist.setCategory(new Category(artistDto.getCategoryId()));
+        artist.setSnsLink(artistDto.getSnsLink());
 
         return artistRepository.save(artist);
     }
@@ -78,6 +87,21 @@ public class ArtistService {
         Optional<Artist> artist = artistRepository.findByMember(member);
         boolean result = false;
         if(artist.isPresent()){
+            result = true;}
+        return result;
+    }
+    public long findArtistId(Member member){
+
+        Optional<Artist> artist = artistRepository.findByMember(member);
+        long result = artist.get().getArtistId();
+
+        return result;
+    }
+
+    public boolean duplicateArtistName(String artistName){
+        boolean result = false;
+        Optional<Artist> artist = artistRepository.findByArtistName(artistName);
+        if (artist.isPresent()){
             result = true;}
         return result;
     }
