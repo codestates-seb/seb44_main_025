@@ -101,6 +101,7 @@ public class MemberController {
                                        Authentication authentication){
         Map<String, Object> principal = (Map) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
+        System.out.println("dkdkdkdkdkdkdkdk"+memberId);
 
         boolean passwordCorrect = memberService.checkPassword(memberId, memberPassword.getPassword());
 

@@ -6,7 +6,7 @@ import com.codestates.global.security.jwt.CustomAuthorityUtils;
 import com.codestates.global.security.jwt.JwtTokenizer;
 import com.codestates.member.dto.MemberPatchDto;
 
-
+import org.springframework.security.crypto.password.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +21,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final EntityManager em;
     private PasswordEncoder passwordEncoder;
+
     private JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
@@ -117,10 +118,11 @@ public class MemberService {
         Member member = findVerifiedMember(memberId);
         String findPassword = member.getPassword();
 
-        String EncodedPassword = jwtTokenizer.encodeBase64SecretKey(password);
+        boolean matches = passwordEncoder.matches(password, findPassword);
         boolean result = false;
-        if (findPassword == EncodedPassword){
+        if (matches == true){
             result = true;}
         return result;
     }
+
 }
