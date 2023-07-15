@@ -4,7 +4,7 @@ import { Input } from '../../components/inputs/Inputs';
 import { Styled_Cancel } from './Cancel.styled';
 import { H1Title } from '../../utils/SlideUp';
 import { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { removeCookie, getCookie } from '../../utils/Cookie';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,10 +15,10 @@ export default function Cancelpage() {
 
   const postPassword = () => {
     axios
-      .delete('/member/delete', {
+      .delete('https://103f-121-187-22-182.ngrok-free.app/member', {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `${getCookie('userInfo').memberId}`,
+          Authorization: `Bearer${getCookie('userInfo').accessToken}`,
         },
         data: {
           password: password,
