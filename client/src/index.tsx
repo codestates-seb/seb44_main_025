@@ -13,7 +13,7 @@ import Artistpage from './pages/Artist';
 import Mypage from './pages/MyPage';
 import Editmypage from './pages/EditMyPage';
 import Artistregist from './pages/ArtistRegister';
-import Cancelpage from './pages/Cancel';
+import Cancelpage from './pages/cancel/Cancel';
 import SignUpPage from './pages/sign/SignUp';
 import SignInPage from './pages/sign/SignIn';
 import ArtistList from './pages/ArtistList';
