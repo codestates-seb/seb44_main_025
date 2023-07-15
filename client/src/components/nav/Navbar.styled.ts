@@ -36,6 +36,7 @@ export const Styled_Navbar = {
     width: 90px;
     cursor: pointer;
   `,
+  // 호버시 하단 가로선 애니메이션
   AnimationDiv: styled.div`
     display: block;
     font-weight: bold;
