@@ -1,23 +1,15 @@
 package com.codestates.performance;
 
-import com.codestates.artist.Artist;
-import com.codestates.artist.ArtistMapper;
+import com.codestates.artist.mapper.ArtistMapper;
 import com.codestates.artist.ArtistService;
-import com.codestates.artist.dto.ArtistDto;
-import com.codestates.artist.dto.ArtistDtoToArtist;
+import com.codestates.artist.mapper.ArtistDtoToArtist;
 import com.codestates.category.Category;
 import com.codestates.category.CategoryService;
-import com.codestates.performance.dto.PerformanceDto;
-import com.codestates.performance.entity.Performance;
 import com.codestates.performance.mapper.PerformanceMapper;
 import com.codestates.performance.service.PerformanceService;
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.web.WebAppConfiguration;
-
-import java.util.List;
 
 @SpringBootTest
 public class PerformanceControllerTest {

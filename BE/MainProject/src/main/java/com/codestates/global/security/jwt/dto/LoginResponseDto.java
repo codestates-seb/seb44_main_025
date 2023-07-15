@@ -6,7 +6,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class LoginResponseDto {
-    private Long userId;
+    private Long memberId;
+    private boolean hasArtist;
     private Integer accessTokenExpirationMinutes;
     private String accessToken;
     private String refreshToken;

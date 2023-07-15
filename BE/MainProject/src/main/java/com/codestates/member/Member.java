@@ -23,7 +23,7 @@ public class Member {
     private long memberId;
     @Column(length = 50, nullable = false, updatable = true, unique = true, name = "email")
     private String email;
-    @Column(length = 50, nullable = false, updatable = true, unique = false, name = "nickname")
+    @Column(length = 50, nullable = false, updatable = true, unique = true, name = "nickname")
     private String nickname;
     @Column(nullable = false, updatable = true, unique = false, name = "password")
     private String password;

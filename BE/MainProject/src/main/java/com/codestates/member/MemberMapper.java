@@ -21,11 +21,13 @@ public class MemberMapper {
                 memberPatchDto.getPassword());
     }
     public MemberResponseDto memberToMemberResponseDto(Member member){
+
         return new MemberResponseDto(member.getMemberId(),
                 member.getEmail(),
                 member.getNickname(),
                 member.getPassword(),
-                false
+                false,
+                0
         );
 
     }

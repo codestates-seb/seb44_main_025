@@ -16,10 +16,12 @@ import java.time.LocalDateTime;
 public class ArtistResponseDto {
     private long memberId;
     private String category;
+    private long categoryId;
     private long artistId;
     private String artistName;
     private String imageUrl;
     private String content;
     private LocalDateTime createdAt;
+    private String snsLink;
 
 }
