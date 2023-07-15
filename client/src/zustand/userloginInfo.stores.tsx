@@ -1,11 +1,12 @@
 import { create } from 'zustand';
 
 interface UserInfoType {
-  memberId: number;
+  memberId?: number;
+  hasArtist?: boolean;
 }
 
 type Store = {
-  userData: UserInfoType | object;
+  userData: UserInfoType;
   setUserData: (state: UserInfoType) => void;
 };
 
