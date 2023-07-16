@@ -21,9 +21,6 @@ import {
 
 export default function Mypage() {
   const navigate = useNavigate();
-  // const { performanceData, setPerformanceData } = MyPagePerformanceList();
-  // const { reviewData, setReviewData } = ArtistpageReviewList();
-
   const { memberId } = useParams();
   const memberData = useGetMember();
   const reservationData = useGetMemberPerformance(memberId);
@@ -35,7 +32,6 @@ export default function Mypage() {
     alert('[로그아웃 성공] 로그아웃 되었습니다');
     navigate('/');
   };
-  // console.log(getCookie('userInfo'));
 
   return (
     <>

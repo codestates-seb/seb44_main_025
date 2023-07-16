@@ -1,4 +1,5 @@
 import S from './ArtistRegister.style';
+import { styled } from 'styled-components';
 import Header from '../../components/header/Header';
 import {
   ButtonPrimary75px,
@@ -11,7 +12,7 @@ import Img from '../.././images/우리사랑이대로.jpeg';
 // import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { postArtist } from '../../api/fetchAPI';
+import { postArtist, postArtistImg } from '../../api/fetchAPI';
 
 interface FormValues {
   artistName: string;
@@ -35,32 +36,31 @@ export default function Artistregist() {
     else setCategoryId(id);
   };
   const profileImgInputRef = useRef<HTMLInputElement>(null);
-  const backImgInputRef = useRef<HTMLInputElement>(null);
-  // const videoInputRef = useRef<HTMLInputElement>(null);
-  const [backImagesrc, setBeckImagesrc] = useState<string>(Img);
-  const [profileImagesrc, setProfileImagesrc] = useState<string>(Img);
+  const [artistImagesrc, setArtistImagesrc] = useState<string>(Img);
   // const [videofilesrc, setVideofilesrc] = useState<string>(Img);
-  const [profileImgFile, setProfileImgFile] = useState<Blob>();
-  const [backImgFile, setBackImgFile] = useState<Blob>();
-  const [videoFile, setVideoFile] = useState<Blob>();
+  const [artistImgFile, setArtistImgFile] = useState<Blob>();
+  // const [videoFile, setVideoFile] = useState<Blob>();
 
-  // const body = {
-  //   artistName: Artist,
-  //   // snslink: Snslink,
-  //   content: Introduction,
-  //   categoryId: categoryId,
-  //   backImagesrc: backImgFile,
-  //   // profileImagesrc: profileImgFile,
-  // };
+  /** 중복확인버튼 클릭 여부 */
+  let [nicknameDupl, setNicknameDupl] = useState(false);
+  /** 중복확인 클릭하지 않고 submit 했을 때
+   * @ture :중복확인 X
+   * @false :중복확인 O
+   */
+  let [nicknameDuplBtnCnt, setNicknameDuplBtnCnt] = useState(0);
+
+  let [noNicknameDuplBtnClickedSubmit, setNoNicknameDuplBtnClickedSubmit] =
+    useState(true);
+
+  const [getUrl, setGetUrl] = useState();
 
   const { handleSubmit, control } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = data => {
     let formData = new FormData();
-    // formData.append('image-file', backImgFile as Blob, 'image');
     // formData.append('image-file', videoFile as Blob, 'image');
-    // formData.append('image-file', profileImgFile as Blob, 'image');
+    // formData.append('image-file', artistImgFile as Blob, 'image');
     Object.assign(data, {
-      imageUrl: 'https://i.ytimg.com/vi/lOrU0MH0bMk/maxresdefault.jpg',
+      imageUrl: getUrl,
       categoryId,
     });
     formData.append(
@@ -68,13 +68,21 @@ export default function Artistregist() {
       new Blob([JSON.stringify(data)], {
         type: 'application/json',
       }),
-      'performanceDto'
+      'artistpostDto'
     );
     postArtist(data);
   };
   const handleSubmitAll = () => {
-    if (!profileImagesrc) return;
+    if (!artistImagesrc) return;
     handleSubmit(onSubmit)();
+  };
+
+  const onSubmitImg = () => {
+    let formData = new FormData();
+    formData.append('image-file', artistImgFile as Blob, 'image');
+    postArtistImg(formData).then((data: any) => {
+      setGetUrl(data.data);
+    });
   };
 
   return (
@@ -83,30 +91,7 @@ export default function Artistregist() {
       <S.Main>
         <S.Section>
           <S.Title>아티스트 등록하기</S.Title>
-          <S.FileInput
-            type="file"
-            accept="image/*"
-            ref={backImgInputRef}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const files = e.target.files;
-              if (files === undefined || files === null) return;
-              const file = files[0];
-              setBackImgFile(file);
-              if (file) {
-                const reader = new FileReader();
-                reader.onload = e => {
-                  if (!e.target?.result || e.target?.result === null) return;
-                  setBeckImagesrc(e.target?.result as string);
-                };
-                reader.readAsDataURL(file);
-              }
-            }}
-          />
-          <S.ProfileImg
-            src={backImagesrc}
-            onClick={() => backImgInputRef.current?.click()}
-          ></S.ProfileImg>
-
+          <S.LogoImg src={Img}></S.LogoImg>
           <S.FileInput
             type="file"
             accept="image/*"
@@ -116,35 +101,29 @@ export default function Artistregist() {
               if (files === undefined || files === null) return;
               const file = files[0];
               console.log(file);
-              setProfileImgFile(file);
+              setArtistImgFile(file);
               if (file) {
                 const reader = new FileReader();
                 reader.onload = e => {
                   if (!e.target?.result || e.target?.result === null) return;
-                  setProfileImagesrc(e.target?.result as string);
+                  setArtistImagesrc(e.target?.result as string);
                 };
                 reader.readAsDataURL(file);
               }
             }}
           />
-          <S.UserImg
-            src={profileImagesrc}
+          <S.ArtistImg
+            src={artistImagesrc}
             onClick={() => profileImgInputRef.current?.click()}
-          ></S.UserImg>
+          ></S.ArtistImg>
+          <ImageButton>
+            <ButtonPrimary75px onClick={() => onSubmitImg()}>
+              이미지 저장
+            </ButtonPrimary75px>
+          </ImageButton>
           <S.ArtistDetail>
             <S.SubTitle>아티스트 정보</S.SubTitle>
-            <S.ButtonWarppar>
-              <Link to={''}>
-                {/* <Link
-                to={`/mypage/${getCookie('userInfo').memberId}/artistregist/${
-                  getCookie('userInfo').artistsId
-                }`}
-              > */}
-                <ButtonPrimary75px onClick={() => handleSubmitAll()}>
-                  등록
-                </ButtonPrimary75px>
-              </Link>
-            </S.ButtonWarppar>
+
             <S.CategoryContainer>
               {Object.keys(categoryObj).map((key, idx) => {
                 return idx === categoryId ? (
@@ -270,8 +249,24 @@ export default function Artistregist() {
               />
             </S.InputContainer> */}
           </S.ArtistDetail>
+          <S.ButtonWarppar>
+            <Link to={''}>
+              {/* <Link
+                to={`/mypage/${getCookie('userInfo').memberId}/artistregist/${
+                  getCookie('userInfo').artistsId
+                }`}
+              > */}
+              <ButtonPrimary75px onClick={() => handleSubmitAll()}>
+                등록
+              </ButtonPrimary75px>
+            </Link>
+          </S.ButtonWarppar>
         </S.Section>
       </S.Main>
     </>
   );
 }
+
+const ImageButton = styled(S.ButtonWarppar)`
+  margin-top: -30px;
+`;

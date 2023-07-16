@@ -8,7 +8,7 @@ export default {
   `,
   Section: styled.section`
     width: 390px;
-    min-height: calc(100vh - 50px);
+    min-height: calc(100vh - 60px);
     background-color: var(--theme-background-color);
   `,
   Title: styled.header`
@@ -24,15 +24,13 @@ export default {
     justify-content: flex-end;
     margin-right: 15px;
     margin-bottom: 10px;
-    margin-top: -40px;
   `,
-  ProfileImg: styled.img`
+  LogoImg: styled.img`
     position: relative;
     margin-left: 15px;
     width: 360px;
     height: 150px;
     background-image: linear-gradient(#fff, #fff);
-    cursor: pointer;
     object-fit: fill;
     &[src] {
       background-color: transparent;
@@ -41,7 +39,7 @@ export default {
   FileInput: styled.input`
     display: none;
   `,
-  UserImg: styled.img`
+  ArtistImg: styled.img`
     position: relative;
     width: 100px;
     height: 100px;
