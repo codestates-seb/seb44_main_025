@@ -6,7 +6,7 @@ export const Styled_Home = {
     justify-content: center;
   `,
   Container: styled.div`
-    min-height: calc(100vh - 100px);
+    min-height: calc(100vh - 120px);
     height: 800px;
     display: flex;
     flex-flow: column;

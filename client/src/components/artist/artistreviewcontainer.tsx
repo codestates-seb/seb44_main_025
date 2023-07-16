@@ -12,7 +12,7 @@ export default function ArtistreviewContainer(props: ArtistPreviewPropTypes) {
     <S.ArtistpreviewMain>
       <S.ArtistpreviewContainer>
         <S.ArtistpreviewWrapper>
-          <S.ArtistImg src={props.imageUrl || Img} />
+          <S.ArtistImg src={props.imageUrl} />
           <S.ArtistDetail>
             {/* 일치하는 공연 정보 페이지로 이동 */}
             <S.Artistbutton>{props.content}</S.Artistbutton>

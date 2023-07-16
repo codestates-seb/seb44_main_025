@@ -9,7 +9,7 @@ export const Styled_Header = {
   `,
   Nav: styled.nav`
     width: 390px;
-    height: 50px;
+    height: 60px;
     background-color: var(--theme-background-color);
     border-bottom: 3px solid var(--nav-color);
     padding: 0px 12px 0px 12px;
