@@ -35,7 +35,14 @@ const SignInPage = () => {
           axios.defaults.headers.common['authorization'] = `${accessToken}`;
 
           // 쿠키 저장
-          setCookie('userInfo', response.data, { path: '/' });
+          setCookie(
+            'userInfo',
+            JSON.stringify({
+              memberId: response.data.memberId,
+              hasArtist: response.data.hasArtist,
+            }),
+            { path: '/' }
+          );
           setCookie('accessToken', `${accessToken}`, {
             path: '/',
             sameSite: 'strict',
