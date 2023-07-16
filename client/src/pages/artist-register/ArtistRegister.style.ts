@@ -105,5 +105,9 @@ export default {
     resize: none;
     border-radius: 15px;
     padding: 10px;
+    outline: none;
+    &:focus {
+      border: 1.5px solid #8520ca;
+    }
   `,
 };

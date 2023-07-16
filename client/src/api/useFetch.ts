@@ -8,7 +8,7 @@ import { Member, Performance, Review } from '../model/Member';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { getCookie } from '../utils/Cookie';
+import { getCookie, removeCookie, setCookie } from '../utils/Cookie';
 
 const TEST_HOST = process.env.REACT_APP_TEST_HOST;
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
@@ -176,13 +176,24 @@ export const useGetMember = () => {
           'ngrok-skip-browser-warning': true,
         },
       })
-      .then(data => setData(data.data))
+      .then(data => {
+        setData(data.data), removeCookie('userInfo');
+        setCookie(
+          'userInfo',
+          JSON.stringify({
+            memberId: data.data.memberId,
+            hasArtist: data.data.hasArtist,
+            artistId: data.data.artistId,
+          }),
+          { path: '/' }
+        );
+        console.log(getCookie('userInfo'));
+      })
       .catch(err => console.log(err));
   };
   useEffect(() => {
     getData();
   }, []);
-
   return data;
 };
 

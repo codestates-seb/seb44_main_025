@@ -62,6 +62,7 @@ export const postArtist = async (body: BodyType) => {
       return data;
     })
     .catch(err => console.error(err));
+  console.log(data);
 
   return data;
 };

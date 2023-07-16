@@ -49,7 +49,7 @@ export default function Mypage() {
           <S.SubTitleWrappar>
             <S.SubTitle>나의 정보</S.SubTitle>
             <S.UserEditButtonWrappar>
-              <Link to="editmypage">
+              <Link to="/editmypage">
                 <EditIcon />
               </Link>
             </S.UserEditButtonWrappar>
@@ -65,7 +65,7 @@ export default function Mypage() {
           {memberData?.hasArtist === true ? (
             <S.ButtonWarppar>
               <Link
-                to={`artist/${getCookie('userInfo').artistId}`}
+                to={`/artist/${getCookie('userInfo').artistId}`}
                 style={{ textDecoration: 'none' }}
               >
                 <ButtonWithArrowDark
@@ -75,7 +75,7 @@ export default function Mypage() {
             </S.ButtonWarppar>
           ) : (
             <S.ButtonWarppar>
-              <Link to="artistregist" style={{ textDecoration: 'none' }}>
+              <Link to="/artistregist" style={{ textDecoration: 'none' }}>
                 <ButtonWithArrowDark
                   text={'아티스트 등록'}
                 ></ButtonWithArrowDark>

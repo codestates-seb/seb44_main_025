@@ -1,8 +1,10 @@
 export interface Member {
   userId?: number;
+  artistId?: number;
   nickname?: string;
   hasArtist?: boolean;
   email?: string;
+  memberId?: number;
 }
 
 export interface Performance {

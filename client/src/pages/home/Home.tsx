@@ -75,7 +75,7 @@ const Home = () => {
                     </Link>
                   ) : (
                     <Link
-                      to={`/mypage/${userInfo.memberId}/artistregist`}
+                      to="/artistregist"
                       style={{ textDecorationLine: 'none' }}
                     >
                       <MainPageButton
