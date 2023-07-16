@@ -6,7 +6,7 @@ import PageMovement from '../../components/sign/PageMovement';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
-import { setCookie, getCookie } from '../../utils/Cookie';
+import { setCookie } from '../../utils/Cookie';
 import { H1Title } from '../../utils/SlideUp';
 
 interface IForm {
