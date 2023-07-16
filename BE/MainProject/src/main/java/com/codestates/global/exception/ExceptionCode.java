@@ -10,6 +10,7 @@ public enum ExceptionCode {
     CANNOT_CHANGE_PERFORMANCE(403, "Performance can not change"),
     CANNOT_CHANGE_MEMBER(403, "Member can not change"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
+    REVIEW_NOT_FOUND(404,"해당 리뷰를 찾을 수 없습니다."),
     SEATS_SOLD_OUT(400, "좌석이 모두 매진되었습니다"),
     RESERVATION_NOT_FOUND(404, "해당 공연에 대한 예약 정보를 찾을 수 없습니다."),
     SEAT_RESERVATION_EXCEEDED(400,"현재 예약 가능한 좌석 수를 초과했습니다"),
