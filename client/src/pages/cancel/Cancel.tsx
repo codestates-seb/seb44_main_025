@@ -18,7 +18,7 @@ export default function Cancelpage() {
       .delete('https://103f-121-187-22-182.ngrok-free.app/member', {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer${getCookie('userInfo').accessToken}`,
+          Authorization: `${getCookie('accessToken')}`,
         },
         data: {
           password: password,

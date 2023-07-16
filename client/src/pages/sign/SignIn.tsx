@@ -6,7 +6,7 @@ import PageMovement from '../../components/sign/PageMovement';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
-import { setCookie } from '../../utils/Cookie';
+import { setCookie, getCookie } from '../../utils/Cookie';
 import { H1Title } from '../../utils/SlideUp';
 
 interface IForm {
@@ -35,7 +35,15 @@ const SignInPage = () => {
           axios.defaults.headers.common['authorization'] = `${accessToken}`;
 
           // 쿠키 저장
-          setCookie('userInfo', response.data, { path: '/' });
+          setCookie(
+            'userInfo',
+            JSON.stringify({
+              memberId: response.data.memberId,
+              hasArtist: response.data.hasArtist,
+            }),
+            { path: '/' }
+          );
+          console.log(getCookie('userInfo'));
           setCookie('accessToken', `${accessToken}`, {
             path: '/',
             sameSite: 'strict',
