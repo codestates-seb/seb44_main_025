@@ -43,7 +43,6 @@ const SignInPage = () => {
             }),
             { path: '/' }
           );
-          console.log(getCookie('userInfo'));
           setCookie('accessToken', `${accessToken}`, {
             path: '/',
             sameSite: 'strict',
