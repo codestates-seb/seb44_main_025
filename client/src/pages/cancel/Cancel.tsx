@@ -4,7 +4,7 @@ import { Input } from '../../components/inputs/Inputs';
 import { Styled_Cancel } from './Cancel.styled';
 import { H1Title } from '../../utils/SlideUp';
 import { useState } from 'react';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { removeCookie, getCookie } from '../../utils/Cookie';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,19 +25,18 @@ export default function Cancelpage() {
         },
       })
       .then(response => {
-        if (response.status === 200) {
-          if (response.data === true) {
-            removeCookie('accessToken');
-            alert('[회원탈퇴 성공] 탈퇴 되었습니다');
-            navigate('/');
-            setIsWrongPassword('light');
-          } else if (response.data === false) {
-            setIsWrongPassword('warning');
-          }
+        if (response.status === 204) {
+          alert('[회원탈퇴 성공] 탈퇴 되었습니다');
+          navigate('/');
+          setIsWrongPassword('light');
+          removeCookie('accessToken');
+          removeCookie('refreshToken');
+          removeCookie('userInfo');
         }
       })
-      .catch(error => {
-        alert(`error: ${error}`);
+      .catch(() => {
+        setIsWrongPassword('warning');
+        alert('비밀번호를 확인해주세요');
       });
   };
 

@@ -15,6 +15,8 @@ import { getCookie } from '../../utils/Cookie';
 const Home = () => {
   const { setCarouselData } = CarouselList();
   const { setArtistData } = ArtistList();
+  const userInfo = getCookie('userInfo');
+  const accessToken = getCookie('accessToken');
 
   useEffect(() => {
     const getCarouselData = async () => {
@@ -62,17 +64,27 @@ const Home = () => {
                     Text="지도 검색"
                   />
                 </Link>
-                {getCookie('userInfo').hasArtist === false ? (
-                  <Link
-                    to="/artistregistpage"
-                    style={{ textDecorationLine: 'none' }}
-                  >
-                    <MainPageButton
-                      Height={60}
-                      ImageUrl="./images/pexels-ricardo-rojas-3608804.jpg"
-                      Text="아티스트 등록"
-                    />
-                  </Link>
+                {accessToken === undefined || userInfo.hasArtist === false ? (
+                  accessToken === undefined ? (
+                    <Link to="/login" style={{ textDecorationLine: 'none' }}>
+                      <MainPageButton
+                        Height={60}
+                        ImageUrl="./images/pexels-ricardo-rojas-3608804.jpg"
+                        Text="아티스트 등록"
+                      />
+                    </Link>
+                  ) : (
+                    <Link
+                      to={`/mypage/${userInfo.memberId}/artistregist`}
+                      style={{ textDecorationLine: 'none' }}
+                    >
+                      <MainPageButton
+                        Height={60}
+                        ImageUrl="./images/pexels-ricardo-rojas-3608804.jpg"
+                        Text="아티스트 등록"
+                      />
+                    </Link>
+                  )
                 ) : (
                   <Link
                     to="/performances/register"
