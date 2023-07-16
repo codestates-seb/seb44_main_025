@@ -1,8 +1,7 @@
 import { styled } from 'styled-components';
-import Img from '../.././images/우리사랑이대로.jpeg';
 
 interface ArtistPreviewPropTypes {
-  artistId?: number;
+  performanceId?: number;
   imageUrl?: string;
   content?: string;
 }

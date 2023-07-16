@@ -9,7 +9,7 @@ import Notfoundpage from './pages/NotFound';
 import PerformanceList from './pages/performance-list/PerformanceList';
 import PerformanceInfo from './pages/performance-info/PerformanceInfo';
 import PerformanceRegister from './pages/performance-register/PerformanceRegister';
-import Artistpage from './pages/Artist';
+import Artistpage from './pages/artist/Artist';
 import Mypage from './pages/mypage/MyPage';
 import Editmypage from './pages/EditMyPage';
 import Artistregist from './pages/artist-register/ArtistRegister';

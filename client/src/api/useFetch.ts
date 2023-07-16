@@ -1,5 +1,9 @@
-import { PerformanceListType, PerformanceType } from '../model/Performance';
-import { ArtistList, Artist } from '../model/Artist';
+import {
+  PerformanceListType,
+  PerformanceType,
+  ArtistPagePerformance,
+} from '../model/Performance';
+import { ArtistList, Artist, ArtistReview } from '../model/Artist';
 import { Member, Performance, Review } from '../model/Member';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -95,6 +99,60 @@ export const useGetArtist = (id: string | number | undefined) => {
   const getData = async () => {
     await axios
       .get<Artist>(`${SERVER_HOST}/artist/${id}`, {
+        headers: { 'ngrok-skip-browser-warning': true },
+      })
+      .then(data => setData(data.data))
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return data;
+};
+
+export const useGetArtistPerfomance = (id: string | number | undefined) => {
+  const [data, setData] = useState<ArtistPagePerformance>();
+
+  const getData = async () => {
+    await axios
+      .get<ArtistPagePerformance>(`${SERVER_HOST}/perfomance/${id}`, {
+        headers: { 'ngrok-skip-browser-warning': true },
+      })
+      .then(data => setData(data.data))
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return data;
+};
+
+export const useGetArtistPerfomanced = (id: string | number | undefined) => {
+  const [data, setData] = useState<ArtistPagePerformance>();
+
+  const getData = async () => {
+    await axios
+      .get<ArtistPagePerformance>(`${SERVER_HOST}/perfomance/${id}`, {
+        headers: { 'ngrok-skip-browser-warning': true },
+      })
+      .then(data => setData(data.data))
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return data;
+};
+
+export const useGetArtistReview = (id: string | number | undefined) => {
+  const [data, setData] = useState<ArtistReview>();
+
+  const getData = async () => {
+    await axios
+      .get<ArtistReview>(`${SERVER_HOST}/review/${id}`, {
         headers: { 'ngrok-skip-browser-warning': true },
       })
       .then(data => setData(data.data))

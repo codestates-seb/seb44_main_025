@@ -35,7 +35,7 @@ export default function Mypage() {
     alert('[로그아웃 성공] 로그아웃 되었습니다');
     navigate('/');
   };
-  console.log(getCookie('userInfo'));
+  // console.log(getCookie('userInfo'));
 
   return (
     <>
@@ -48,17 +48,19 @@ export default function Mypage() {
               로그아웃
             </ButtonPrimary75px>
           </S.ButtonWarppar>
-          <S.SubTitle>나의 정보</S.SubTitle>
-          <S.ProfileWarppar>
-            <S.UserDetail>
-              <S.UserNickname>{memberData?.email}동동</S.UserNickname>
-              <S.UserNickname>{memberData?.nickname}동동</S.UserNickname>
-            </S.UserDetail>
-            <S.UserEdit>
+          <S.SubTitleWrappar>
+            <S.SubTitle>나의 정보</S.SubTitle>
+            <S.UserEditButtonWrappar>
               <Link to="editmypage">
                 <EditIcon />
               </Link>
-            </S.UserEdit>
+            </S.UserEditButtonWrappar>
+          </S.SubTitleWrappar>
+          <S.ProfileWarppar>
+            <S.UserDetail>
+              <S.UserNickname>{memberData?.email}ehd</S.UserNickname>
+              <S.UserNickname>{memberData?.nickname}동동</S.UserNickname>
+            </S.UserDetail>
           </S.ProfileWarppar>
           {/* 아티스트 미등록 사용자는 아티스트 등록 버튼 */}
           {/* 아티스트를 등록한 사용자는 아티스트 페이지 버튼 */}
@@ -89,7 +91,7 @@ export default function Mypage() {
               key={reservationData.performanceId}
               posterImg={reservationData.imageUrl}
               title={reservationData.title}
-              artistname={reservationData.artistName}
+              artistName={reservationData.artistName}
               category={reservationData.category}
               price={reservationData.price}
               date={reservationData.date}
