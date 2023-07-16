@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { getCookie } from '../../utils/Cookie';
 
 const Navbar = () => {
+  const userInfo = getCookie('userInfo');
   return (
     <Styled_Navbar.Div>
       <Styled_Navbar.Container>
@@ -38,7 +39,10 @@ const Navbar = () => {
           </Styled_Navbar.AnimationDiv>
           {getCookie('accessToken') ? (
             <Styled_Navbar.AnimationDiv>
-              <Link to={`/mypage/${getCookie('userInfo')?.memberId}`}>
+              <Link
+                to={`/mypage/${userInfo?.memberId}`}
+                style={{ textDecorationLine: 'none' }}
+              >
                 <Styled_Navbar.IconAndTextDiv>
                   <MypageIcon />
                   <Styled_Navbar.TextSpan>마이페이지</Styled_Navbar.TextSpan>

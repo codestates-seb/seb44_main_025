@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { FontStyle } from '../../utils/Theme';
 
 interface SignProps {
   width?: 360 | 285;
@@ -25,8 +26,7 @@ export const Styled_Sign = {
   `,
   P: styled.p`
     color: var(--font-white-color);
-    font-size: var(--p-large-medium-font-size);
-    font-weight: var(--p-large-medium-font-weight);
+    ${FontStyle.largeMedium}
   `,
   Input: styled.input<SignProps>`
     border-radius: 100px;
@@ -80,7 +80,7 @@ export const Styled_Sign = {
       margin-left: 12px;
     }
     & p {
-      color: var(--button-highlight-border-color);
+      color: var(--font-highlight-color);
       font-size: var(--nav-font-size);
       margin-left: 12px;
     }

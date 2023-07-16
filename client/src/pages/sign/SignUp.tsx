@@ -139,7 +139,7 @@ const SignUpPage = () => {
             setNicknameDupl(false);
             setNicknameDuplBtnCnt(emailDuplBtnCnt + 1);
             setNoNicknameDuplBtnClickedSubmit(false);
-          } else if (response.data === '이미 존재하는 이메일입니다') {
+          } else if (response.data === true) {
             setNicknameDupl(true);
             setNicknameDuplBtnCnt(0);
             setNoNicknameDuplBtnClickedSubmit(false);
