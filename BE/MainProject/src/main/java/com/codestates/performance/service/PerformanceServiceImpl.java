@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -103,10 +104,10 @@ public class PerformanceServiceImpl implements PerformanceService{
     }
 
     @Override
-    public Page<Performance> findPerformancesByCategory(int page, int size, long categoryId) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("performance").descending());
+    public Page<Performance> findPerformancesByCategory(Pageable pageable, long categoryId) {
         Category category = categoryService.findVerifiedCategory(categoryId);
-        return performanceRepository.findAllByCategory(category, pageRequest);
+        Page<Performance> page = performanceRepository.findAllByCategory(category, pageable);
+        return page;
     }
 
     @Override

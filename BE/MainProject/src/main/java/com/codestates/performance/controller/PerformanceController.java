@@ -13,6 +13,9 @@ import com.codestates.global.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -84,7 +87,8 @@ public class PerformanceController {
     public ResponseEntity getPerformance(@PathVariable("category-id") @Positive long categoryId,
                                          @RequestParam("page") @Positive int page,
                                          @RequestParam("size") @Positive int size) {
-        Page<Performance> pagePerformance = performanceService.findPerformancesByCategory(page - 1, size, categoryId);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("performanceId").descending());
+        Page<Performance> pagePerformance = performanceService.findPerformancesByCategory(pageable, categoryId);
         List<Performance> findPerformance = pagePerformance.toList();
 
         return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);
