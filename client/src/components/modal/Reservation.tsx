@@ -1,9 +1,11 @@
 import { styled } from 'styled-components';
-import Img from '../.././images/우리사랑이대로.jpeg';
 import { ButtonHighlight, ButtonWhite } from '../buttons/Buttons';
 import { postReservation } from '../../api/fetchAPI';
+import { PerformanceType } from '../../model/Performance';
 
-export default function ReservationModal() {
+export default function ReservationModal(
+  props: PerformanceType & { closeModal: () => void }
+) {
   const body = {
     performanceId: 1,
     memberId: 1,
@@ -13,24 +15,30 @@ export default function ReservationModal() {
   return (
     <S.ModalOverlay>
       <S.TicketModal>
-        <S.TicketImg src={Img} />
+        <S.TicketImg src={props.imageUrl} />
         <S.TicketDetail>
-          <S.TicketTitle>우리 사랑 이대로</S.TicketTitle>
-          <S.Ticketcontent>YD choe</S.Ticketcontent>
-          <S.Ticketcontent>신촌역 2번 출구</S.Ticketcontent>
-          <S.Ticketcontent>2023.08.03</S.Ticketcontent>
-          <S.Ticketcontent>₩10,000</S.Ticketcontent>
+          <S.TicketTitle>{props.title}</S.TicketTitle>
+          {/* TODO: 아티스트명 받아오기 */}
+          <S.Ticketcontent>아티스트명</S.Ticketcontent>
+          <S.Ticketcontent>{props.place}</S.Ticketcontent>
+          {/* TODO: 날짜, 숫자 형식 함수 만들기 */}
+          <S.Ticketcontent>
+            {new Date(props.date).toLocaleString()}
+          </S.Ticketcontent>
+          <S.Ticketcontent>₩{props.price.toLocaleString()}</S.Ticketcontent>
           <S.TicketMessage>예약하시겠습니까?</S.TicketMessage>
         </S.TicketDetail>
         <S.TicketButtons>
-          <ButtonHighlight>취소</ButtonHighlight>
+          <ButtonHighlight onClick={() => props.closeModal()}>
+            취소
+          </ButtonHighlight>
           <ButtonWhite
             onClick={() => {
               console.log('clicked');
-              postReservation(1, body);
+              postReservation(props?.performanceId, body);
             }}
           >
-            결제
+            예약
           </ButtonWhite>
         </S.TicketButtons>
       </S.TicketModal>
