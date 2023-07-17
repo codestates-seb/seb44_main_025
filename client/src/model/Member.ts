@@ -23,4 +23,5 @@ export interface Review {
   artistId?: number;
   content: string;
   createdAt: string;
+  memberId?: number;
 }

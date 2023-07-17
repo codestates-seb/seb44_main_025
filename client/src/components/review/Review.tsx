@@ -6,6 +6,7 @@ interface Reviewlist {
   artistId?: number;
   content: string;
   createdAt: string;
+  memberId?: number;
 }
 
 export default function Review(props: Reviewlist) {
