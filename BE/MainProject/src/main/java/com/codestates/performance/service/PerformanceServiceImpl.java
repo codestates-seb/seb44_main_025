@@ -99,7 +99,6 @@ public class PerformanceServiceImpl implements PerformanceService{
 
     @Override
     public Page<Performance> findPerformances(PageRequest pageRequest, String isCompleted) {
-        // 공연완료
         if(isCompleted.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_COMPLETED.getStatus())) {
             return performanceRepository.findAllByTimeIsAfter(pageRequest);
         } else if(isCompleted.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_NOT_COMPLETED.getStatus())) {
@@ -109,10 +108,15 @@ public class PerformanceServiceImpl implements PerformanceService{
     }
 
     @Override
-    public Page<Performance> findPerformancesByCategory(Pageable pageable, long categoryId) {
+    public Page<Performance> findPerformancesByCategory(Pageable pageable, long categoryId, String isCompleted) {
         Category category = categoryService.findVerifiedCategory(categoryId);
-        Page<Performance> page = performanceRepository.findAllByCategory(category, pageable);
-        return page;
+
+        if(isCompleted.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_COMPLETED.getStatus())) {
+            return performanceRepository.findAllByCategoryAndTimeIsAfter(category, pageable);
+        } else if(isCompleted.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_NOT_COMPLETED.getStatus())) {
+            return performanceRepository.findAllByCategoryAndTimeIsBefore(category, pageable);
+        }
+        return performanceRepository.findAllByCategory(category, pageable);
     }
 
     @Override
