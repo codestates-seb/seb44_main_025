@@ -62,6 +62,23 @@ export const postArtist = async (body: BodyType) => {
       return data;
     })
     .catch(err => console.error(err));
+  console.log(data);
+
+  return data;
+};
+
+export const postArtistImg = async (body: BodyType) => {
+  const data = await axios
+    .post(`${SERVER_HOST}/image`, body, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: getCookie('accessToken'),
+      },
+    })
+    .then(data => {
+      return data;
+    })
+    .catch(err => console.error(err));
 
   return data;
 };

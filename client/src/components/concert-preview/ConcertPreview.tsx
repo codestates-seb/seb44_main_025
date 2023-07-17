@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 interface ConcertPreviewPropTypes {
   posterImg?: string;
   title?: string;
-  artistname?: string;
+  artistName?: string;
   category?: string;
   price?: number;
   date?: string;
@@ -29,7 +29,7 @@ export default function Concertpreview(props: ConcertPreviewPropTypes) {
       <S.ConcertImg src={props.posterImg || Img} />
       <S.ConcertDetail>
         <S.ConcertTitle>{props.title || '타이틀'}</S.ConcertTitle>
-        <S.Concertcontent>{props.artistname || '아티스트명'}</S.Concertcontent>
+        <S.Concertcontent>{props.artistName || '아티스트명'}</S.Concertcontent>
         <S.Concertcontent>{props.category || '기타'}</S.Concertcontent>
         <S.Concertcontent>{props.price || '가격'}원</S.Concertcontent>
         <S.Concertcontent>{date.toLocaleDateString()}</S.Concertcontent>

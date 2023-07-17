@@ -112,7 +112,7 @@ const SignUpPage = () => {
         if (response.status === 200) {
           if (response.data === false) {
             setEmailDupl(false);
-            setEmailDuplBtnCnt(nicknameDuplBtnCnt + 1);
+            setEmailDuplBtnCnt(emailDuplBtnCnt + 1);
             setNoEmailDuplBtnClickedSubmit(false);
           } else if (response.data === true) {
             setEmailDupl(true);
@@ -137,7 +137,7 @@ const SignUpPage = () => {
         if (response.status === 200) {
           if (response.data === false) {
             setNicknameDupl(false);
-            setNicknameDuplBtnCnt(emailDuplBtnCnt + 1);
+            setNicknameDuplBtnCnt(nicknameDuplBtnCnt + 1);
             setNoNicknameDuplBtnClickedSubmit(false);
           } else if (response.data === true) {
             setNicknameDupl(true);

@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import Img from '../../images/우리사랑이대로.jpeg';
+import { FontStyle } from '../../utils/Theme';
 
 export default function Footer() {
   return (
@@ -8,8 +9,20 @@ export default function Footer() {
       <S.FooterContentDiv>
         <S.FooterContent>허진우, 이도현, 최연동</S.FooterContent>
         <S.FooterContent>이현수, 선혜민, 조혜란</S.FooterContent>
-        <S.FooterContent>gitbub 바로가기</S.FooterContent>
-        <S.FooterContent>notion 바로가기</S.FooterContent>
+        <S.FooterLink
+          href={'https://github.com/codestates-seb/seb44_main_025'}
+          target="_blank"
+        >
+          gitbub 바로가기
+        </S.FooterLink>
+        <S.FooterLink
+          href={
+            'https://www.notion.so/codestates/E-5-3b6d29f174e04d838a23fdb3a95d549a'
+          }
+          target="_blank"
+        >
+          notion 바로가기
+        </S.FooterLink>
       </S.FooterContentDiv>
     </S.FooterContainer>
   );
@@ -32,14 +45,19 @@ const S = {
     align-items: center;
   `,
   FooterContentDiv: styled.div``,
-
   FooterContent: styled.p`
-    font-size: var(--heading6-font-size);
-    line-height: var(--heading6-font-weight);
-    font-weight: var(--heading6-line-height);
+    ${FontStyle.heading6}
     color: var(--font-white-color);
     margin-bottom: 3px;
     display: flex;
     justify-content: flex-end;
+  `,
+  FooterLink: styled.a`
+    ${FontStyle.smallMedium};
+    color: var(--font-primary--color);
+    margin-bottom: 3px;
+    display: flex;
+    justify-content: flex-end;
+    text-decoration: none;
   `,
 };
