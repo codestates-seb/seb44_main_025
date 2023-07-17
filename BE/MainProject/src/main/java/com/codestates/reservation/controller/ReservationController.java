@@ -24,15 +24,12 @@ import java.util.Map;
 public class ReservationController {
     private final ReservationService reservationService;
     private final MemberService memberService;
-
     public ReservationController(ReservationService reservationService,
                                  MemberService memberService) {
         this.reservationService = reservationService;
         this.memberService = memberService;
     }
-
     // 예약 생성
-
     @PostMapping
     public ReservationDto.ReservationResponseDto createReservation(@RequestBody ReservationDto.ReservationRequestDto reservationRequestDto,
                                                                    Authentication authentication) throws AccessDeniedException {
@@ -55,8 +52,6 @@ public class ReservationController {
         }
         return ResponseEntity.ok(responseDto);
     }
-
-
     // 예약 삭제
     @DeleteMapping("/{reservationId}")
     public ResponseEntity<String> deleteReservation (@PathVariable("reservationId") Long reservationId){
