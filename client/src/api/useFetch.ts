@@ -128,7 +128,9 @@ export const useGetArtistPerfomance = (
   const getData = async () => {
     await axios
       .get<ArtistPagePerformance[]>(
-        `${SERVER_HOST}/perfomance/${id}/page=1&size=5&performanceStatus=공연중`,
+        `${SERVER_HOST}/performance${
+          id ? `/artist/${id}` : ''
+        }?page=1&size=5&performanceStatus=공연중`,
         {
           headers: { 'ngrok-skip-browser-warning': true },
         }
@@ -149,7 +151,9 @@ export const useGetArtistPerfomanced = (id: string | number | undefined) => {
   const getData = async () => {
     await axios
       .get<ArtistPagePerformance[]>(
-        `${SERVER_HOST}/perfomance/${id}/page=1&size=5&performanceStatus=공연완료`,
+        `${SERVER_HOST}/performance${
+          id ? `/artist/${id}` : ''
+        }?page=1&size=5&performanceStatus=공연완료`,
         {
           headers: { 'ngrok-skip-browser-warning': true },
         }
