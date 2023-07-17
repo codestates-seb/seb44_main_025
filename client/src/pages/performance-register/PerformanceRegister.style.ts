@@ -2,7 +2,6 @@ import { styled } from 'styled-components';
 
 export default {
   Heading1: styled.h1`
-    margin-top: 20px;
     margin-left: 15px;
     margin-right: auto;
     color: white;
@@ -47,6 +46,7 @@ export default {
   `,
   SummaryContainer: styled.div`
     margin-top: 12px;
+    margin-bottom: 8px;
     width: 360px;
     display: flex;
     align-items: center;
@@ -67,6 +67,7 @@ export default {
   `,
   // align-items: flex-start 왼쪽 정렬, flex-end 오른쪽 정렬
   Form: styled.form`
+    padding-bottom: 8px;
     width: 170px;
     height: 210px;
     display: flex;
@@ -97,6 +98,7 @@ export default {
     padding: 1px;
   `,
   TitleButtonFlex: styled.div`
+    margin-top: 20px;
     width: 360px;
     display: flex;
     justify-content: space-between;
