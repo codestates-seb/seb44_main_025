@@ -36,6 +36,10 @@ public class ReservationDto {
         // 사용자가 선택한 예약 정보를 담아서 (사용자가 선택한 예약 정보에 대한 필드를 이 클래스에 담아 백엔드로 보내줌)
         private Long performanceId;
         private int seatValue;
+
+        private LocalDateTime date;
+
+
         //@Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{4}$", message = "올바른 전화번호 형식으로 작성해주세요")
         //private String phone; // 예약자의 전화번호 -> 멤버에서 관리하기로
     }

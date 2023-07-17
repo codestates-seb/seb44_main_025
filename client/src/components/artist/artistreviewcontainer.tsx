@@ -1,35 +1,21 @@
 import { styled } from 'styled-components';
 
-export default function ArtistreviewContainer() {
+interface ArtistPreviewPropTypes {
+  performanceId?: number;
+  imageUrl?: string;
+  content?: string;
+}
+
+export default function ArtistreviewContainer(props: ArtistPreviewPropTypes) {
   return (
     <S.ArtistpreviewMain>
       <S.ArtistpreviewContainer>
         <S.ArtistpreviewWrapper>
-          <S.ArtistImg src="우리사랑이대로.jpeg" />
+          <S.ArtistImg src={props.imageUrl} />
           <S.ArtistDetail>
-            <S.Artistcontent>아티스트명</S.Artistcontent>
-            <S.Artistreview>후기등록</S.Artistreview>
-          </S.ArtistDetail>
-        </S.ArtistpreviewWrapper>
-        <S.ArtistpreviewWrapper>
-          <S.ArtistImg src="우리사랑이대로.jpeg" />
-          <S.ArtistDetail>
-            <S.Artistcontent>아티스트명</S.Artistcontent>
-            <S.Artistreview>후기등록</S.Artistreview>
-          </S.ArtistDetail>
-        </S.ArtistpreviewWrapper>
-        <S.ArtistpreviewWrapper>
-          <S.ArtistImg src="우리사랑이대로.jpeg" />
-          <S.ArtistDetail>
-            <S.Artistcontent>아티스트명</S.Artistcontent>
-            <S.Artistreview>후기등록</S.Artistreview>
-          </S.ArtistDetail>
-        </S.ArtistpreviewWrapper>
-        <S.ArtistpreviewWrapper>
-          <S.ArtistImg src="우리사랑이대로.jpeg" />
-          <S.ArtistDetail>
-            <S.Artistcontent>아티스트명</S.Artistcontent>
-            <S.Artistreview>후기등록</S.Artistreview>
+            {/* 일치하는 공연 정보 페이지로 이동 */}
+            <S.Artistbutton>{props.content}</S.Artistbutton>
+            <S.Artistreview></S.Artistreview>
           </S.ArtistDetail>
         </S.ArtistpreviewWrapper>
       </S.ArtistpreviewContainer>
@@ -39,22 +25,11 @@ export default function ArtistreviewContainer() {
 
 const S = {
   ArtistpreviewMain: styled.div`
-    width: 360px;
     height: 115px;
     margin-bottom: 10px;
   `,
-  Subtitle: styled.header`
-    font-size: var(--heading5-font-size);
-    font-weight: var(--heading5-font-weight);
-    line-height: var(--heading5-line-height);
-    color: var(--font-white-color);
-    padding: 10px 15px 10px 15px;
-  `,
   ArtistpreviewContainer: styled.div`
-    width: 360px;
     height: 115px;
-    display: flex;
-    justify-content: space-evenly;
     margin-left: 15px;
   `,
   ArtistpreviewWrapper: styled.div`
@@ -64,6 +39,14 @@ const S = {
   ArtistImg: styled.img`
     width: 75px;
     height: 75px;
+    cursor: pointer;
+  `,
+  Artistbutton: styled.p`
+    width: 75px;
+    display: flex;
+    justify-content: center;
+    color: var(--font-primary--color);
+    cursor: pointer;
   `,
   ArtistDetail: styled.div`
     height: 30px;

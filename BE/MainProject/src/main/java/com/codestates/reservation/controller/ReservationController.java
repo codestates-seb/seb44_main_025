@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.nio.file.AccessDeniedException;
 import java.util.Map;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/reservation")
@@ -31,6 +32,7 @@ public class ReservationController {
     }
 
     // 예약 생성
+
     @PostMapping
     public ReservationDto.ReservationResponseDto createReservation(@RequestBody ReservationDto.ReservationRequestDto reservationRequestDto,
                                                                    Authentication authentication) throws AccessDeniedException {
@@ -38,9 +40,6 @@ public class ReservationController {
         long memberId = ((Number) principal.get("memberId")).longValue();
 
         ReservationDto.ReservationResponseDto responseDto = reservationService.createReservation(reservationRequestDto, memberId);
-
-        return responseDto;
-    }
 
     // 특정 예약 조회
     @GetMapping("/{reservationId}")

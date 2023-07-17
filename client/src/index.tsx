@@ -4,36 +4,86 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import axios from 'axios';
+import Notfoundpage from './pages/NotFound';
+import PerformanceList from './pages/performance-list/PerformanceList';
+import PerformanceInfo from './pages/performance-info/PerformanceInfo';
+import PerformanceRegister from './pages/performance-register/PerformanceRegister';
+import Artistpage from './pages/artist/Artist';
+import Mypage from './pages/mypage/MyPage';
+import Editmypage from './pages/EditMyPage';
+import Artistregist from './pages/artist-register/ArtistRegister';
+import Cancel from './pages/cancel/Cancel';
+import SignUpPage from './pages/sign/SignUp';
+import SignInPage from './pages/sign/SignIn';
+import ArtistList from './pages/artist-list/ArtistList';
+import Home from './pages/home/Home';
+import ReviewRegister from './pages/review/ReviewRegister';
+import Artistedit from './pages/artist-register/ArtistEdit';
+
+/** @todo 도메인 주소 입력 */
+// axios.defaults.baseURL = '';
+// axios.defaults.withCredentials = true;
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <div>Not Found</div>,
+    errorElement: <Notfoundpage />,
     children: [
+      { index: true, element: <Home /> },
       {
         path: '/performances',
-        element: <div>공연 리스트</div>,
+        element: <PerformanceList />,
       },
       {
         path: '/performances/:performanceId',
-        element: <div>공연 상세정보</div>,
+        element: <PerformanceInfo />,
       },
       {
         path: '/performances/register',
-        element: <div>공연 등록</div>,
+        element: <PerformanceRegister />,
       },
       {
         path: '/login',
-        element: <div>로그인</div>,
+        element: <SignInPage />,
       },
       {
         path: '/signup',
-        element: <div>회원가입</div>,
+        element: <SignUpPage />,
       },
       {
-        path: '/mypage',
-        element: <div>마이 페이지</div>,
+        path: '/mypage/:memberId',
+        element: <Mypage />,
+      },
+      {
+        path: '/artists',
+        element: <ArtistList />,
+      },
+      {
+        path: '/artist/:artistId',
+        element: <Artistpage />,
+      },
+      {
+        path: '/editmypage',
+        element: <Editmypage />,
+      },
+      {
+        path: '/artistregist',
+        element: <Artistregist />,
+      },
+      {
+        path: '/artistedit',
+        element: <Artistedit />,
+      },
+
+      {
+        path: '/cancel',
+        element: <Cancel />,
+      },
+      {
+        path: '/performances/review/write/:performanceId',
+        element: <ReviewRegister />,
       },
     ],
   },

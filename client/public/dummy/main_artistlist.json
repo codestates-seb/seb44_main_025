@@ -1,0 +1,36 @@
+{ 
+  "data": [
+    {
+      "artistId": 1,     
+      "artistname": "규현&은지",
+      "imageUrl": "./images/여성사진3.jpg",
+      "profileimageUrl": "./images/여성사진3.jpg",
+      "snslink": "instarlink.com",
+      "content": "안녕하세요"
+    },
+    {
+      "artistId": 2,     
+      "artistname": "이창섭",
+      "imageUrl": "./images/여성사진2.jpg",
+      "profileimageUrl": "./images/여성사진2.jpg",
+      "snslink": "instarlink.com",
+      "content": "안녕하세요"
+    },
+    {
+      "artistId": 3,      
+      "artistname": "Sam Smith, Summer Walker",
+      "imageUrl": "./images/여성사진.jpg",
+      "profileimageUrl": "./images/여성사진.jpg",
+      "snslink": "instarlink.com",
+      "content": "안녕하세요" 
+    },
+    {
+      "artistId": 1,     
+      "artistname": "아이유",
+      "imageUrl": "./images/pexels-cottonbro-studio-6853287.jpg",
+      "profileimageUrl": "./images/pexels-cottonbro-studio-6853287.jpg",
+      "snslink": "instarlink.com",
+      "content": "안녕하세요"
+    }
+  ]
+}
