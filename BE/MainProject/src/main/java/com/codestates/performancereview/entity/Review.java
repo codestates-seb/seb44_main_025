@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "review")
@@ -33,4 +34,6 @@ public class Review {
     private String imageUrl;
     @Column(nullable = false)
     private String reviewTitle;
+    @Column(nullable = false)
+    private LocalDateTime date;
 }

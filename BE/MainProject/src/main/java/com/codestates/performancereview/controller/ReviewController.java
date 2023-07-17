@@ -12,12 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/reviews")
@@ -32,16 +33,18 @@ public class ReviewController {
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ReviewDto.ReviewResponse> PostReview(@RequestBody ReviewDto.ReviewPost reviewPost) {
-        ReviewDto.ReviewResponse responseDto = reviewService.createReview(reviewPost);
+    public ResponseEntity<ReviewDto.ReviewResponse> PostReview(@RequestBody ReviewDto.ReviewPost reviewPost,
+                                                               @RequestParam("imageUrl") MultipartFile imageUrl) {
+        ReviewDto.ReviewResponse responseDto = reviewService.createReview(reviewPost, imageUrl);
         return ResponseEntity.ok(responseDto);
     }
 
     @PatchMapping("/{reviewId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ReviewDto.ReviewResponse> updateReview(@PathVariable Long reviewId,
-                                                  @RequestBody @Valid ReviewDto.ReviewUpdate reviewUpdate) {
-        ReviewDto.ReviewResponse responseDto = reviewService.updateReview(reviewId, reviewUpdate);
+    public ResponseEntity<ReviewDto.ReviewResponse> updateReview(@PathVariable("reviewId") Long reviewId,
+                                                                 @RequestBody @Valid ReviewDto.ReviewUpdate reviewUpdate,
+                                                                 @RequestParam("image") MultipartFile imageUrl) {
+        ReviewDto.ReviewResponse responseDto = reviewService.updateReview(reviewId, reviewUpdate, imageUrl);
         return ResponseEntity.ok(responseDto);
     }
 

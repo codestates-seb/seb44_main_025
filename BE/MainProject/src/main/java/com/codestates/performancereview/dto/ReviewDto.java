@@ -29,11 +29,13 @@ public class ReviewDto {
         private Long memberId;
         private Long performanceId;
         private String title;
+        private String nickName;
         @NotBlank(message = "내용이 작성되지 않았습니다.")
         private String reviewTitle;
         @NotBlank(message = "내용이 작성되지 않았습니다.")
         private String content;
         private String imageUrl;
+        private LocalDateTime date;
     }
 
     @Getter
@@ -55,10 +57,11 @@ public class ReviewDto {
         private Long reviewId;
         private Long memberId;
         private Long performanceId;
+        private String nickName;
         private String title;
         private String content;
         private String imageUrl;
         private String reviewTitle;
-        //private LocalDateTime date;
+        private LocalDateTime date;
     }
 }
