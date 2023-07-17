@@ -68,6 +68,7 @@ public class ReviewService {
         review.setTitle(reviewPost.getTitle());
         review.setContent(reviewPost.getContent());
         review.setImageUrl(imageUrl);
+        review.setReviewTitle(reviewPost.getReviewTitle());
 
         Review savedReview = reviewRepository.save(review);
         return reviewMapper.toResponseDto(savedReview);

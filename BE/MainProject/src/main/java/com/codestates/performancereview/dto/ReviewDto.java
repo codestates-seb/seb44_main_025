@@ -19,6 +19,8 @@ public class ReviewDto {
     private String content;
     private String imageUrl;
     private LocalDateTime date;
+    @NotBlank(message = "내용이 작성되지 않았습니다.")
+    private String reviewTitle;
 
     @Getter
     @Setter
@@ -27,6 +29,8 @@ public class ReviewDto {
         private Long memberId;
         private Long performanceId;
         private String title;
+        @NotBlank(message = "내용이 작성되지 않았습니다.")
+        private String reviewTitle;
         @NotBlank(message = "내용이 작성되지 않았습니다.")
         private String content;
         private String imageUrl;
@@ -39,6 +43,8 @@ public class ReviewDto {
         private Long reviewId;
         private String title;
         @NotBlank(message = "내용이 작성되지 않았습니다.")
+        private String reviewTitle;
+        @NotBlank(message = "내용이 작성되지 않았습니다.")
         private String content;
         private String imageUrl;
     }
@@ -50,9 +56,9 @@ public class ReviewDto {
         private Long memberId;
         private Long performanceId;
         private String title;
-        @NotBlank(message = "내용이 작성되지 않았습니다.")
         private String content;
         private String imageUrl;
+        private String reviewTitle;
         //private LocalDateTime date;
     }
 }

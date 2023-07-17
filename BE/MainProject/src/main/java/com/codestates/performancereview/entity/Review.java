@@ -31,4 +31,6 @@ public class Review {
     private String content;
     @Column(nullable = false)
     private String imageUrl;
+    @Column(nullable = false)
+    private String reviewTitle;
 }

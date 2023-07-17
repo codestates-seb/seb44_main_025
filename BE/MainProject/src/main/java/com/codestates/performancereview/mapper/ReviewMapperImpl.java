@@ -25,6 +25,7 @@ public class ReviewMapperImpl implements ReviewMapper {
                 .memberId(review.getMember().getMemberId())
                 .performanceId(review.getPerformance().getPerformanceId())
                 .title(review.getTitle())
+                .reviewTitle(review.getReviewTitle())
                 .content(review.getContent())
                 .imageUrl(review.getImageUrl())
                 .build();
@@ -34,6 +35,7 @@ public class ReviewMapperImpl implements ReviewMapper {
         Review review = new Review();
         review.setReviewId(reviewDto.getReviewId());
         review.setTitle(reviewDto.getTitle());
+        review.setReviewTitle(reviewDto.getReviewTitle());
         review.setContent(reviewDto.getContent());
         review.setImageUrl(reviewDto.getImageUrl());
 
@@ -56,6 +58,7 @@ public class ReviewMapperImpl implements ReviewMapper {
                 .memberId(review.getMember().getMemberId())
                 .performanceId(review.getPerformance().getPerformanceId())
                 .title(review.getTitle())
+                .reviewTitle(review.getReviewTitle())
                 .content(review.getContent())
                 .imageUrl(review.getImageUrl())
                 .build();
