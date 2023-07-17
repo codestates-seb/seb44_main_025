@@ -25,6 +25,7 @@ public class Content {
         this.body = body;
     }
 
+
     public void setPerformance(Performance performance) {
         this.performance = performance;
         if(this.performance.getContent() != this) {
@@ -32,7 +33,7 @@ public class Content {
         }
     }
 
-    public void setContentId(long contentId) {
-        this.contentId = contentId;
+    public void setBody(String body) {
+        this.body = body;
     }
 }
