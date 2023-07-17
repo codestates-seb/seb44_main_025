@@ -18,4 +18,6 @@ public interface PerformanceService {
     Performance findPerformance(long performanceId);
 
     Page<Performance> findPerformances(PageRequest pageRequest, String performanceStatus);
+
+    Page<Performance> findPerformancesByArtist(Pageable pageable, long artistId, String performanceStatus);
 }

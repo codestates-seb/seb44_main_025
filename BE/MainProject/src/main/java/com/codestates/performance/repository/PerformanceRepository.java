@@ -1,7 +1,9 @@
 package com.codestates.performance.repository;
 
+import com.codestates.artist.Artist;
 import com.codestates.category.Category;
 import com.codestates.performance.entity.Performance;
+import com.codestates.performance.entity.PerformanceArtist;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,4 +35,12 @@ public interface PerformanceRepository extends JpaRepository<Performance, Long> 
             countName="SELECT COUNT(p) FROM Performance p WHERE p.category = :category")
     Page<Performance> findAllByCategoryAndTimeIsAfter(@Param("category") Category category, Pageable pageable);
 
+    @Query("SELECT p FROM Performance p JOIN p.performanceArtists pa JOIN pa.artist a WHERE a.artistId = :artistId")
+    Page<Performance> findAllByArtistId(@Param("artistId") long artistId, Pageable pageable);
+
+    @Query("SELECT p FROM Performance p JOIN p.performanceArtists pa JOIN pa.artist a WHERE a.artistId = :artistId AND p.date <= now()")
+    Page<Performance> findAllByArtistIdTimeIsBefore(@Param("artistId") long artistId, Pageable pageable);
+
+    @Query("SELECT p FROM Performance p JOIN p.performanceArtists pa JOIN pa.artist a WHERE a.artistId = :artistId AND p.date > now()")
+    Page<Performance> findAllByArtistIdTimeIsAfter(@Param("artistId") long artistId, Pageable pageable);
 }
