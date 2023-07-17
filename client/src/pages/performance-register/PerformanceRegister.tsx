@@ -16,8 +16,8 @@ import { getCookie } from '../../utils/Cookie';
 interface FormValues {
   title: string;
   date: string;
-  price: string;
-  totalSeat: string;
+  price: number;
+  totalSeat: number;
 }
 
 const PerformanceRegister = () => {
@@ -35,7 +35,7 @@ const PerformanceRegister = () => {
   const { content, clearContent } = useEditorStore();
   // TODO: 로그인 상태 관리 변경하기
   useEffect(() => {
-    if (!getCookie('accessToken')) {
+    if (!getCookie('userInfo')) {
       navigate('/performances');
     }
     return () => {
@@ -78,10 +78,10 @@ const PerformanceRegister = () => {
     // });
   };
   const handleSubmitAll = () => {
-    if (!imagesrc || !content) return;
+    // if (!imagesrc || !content) return;
     return handleSubmit(onSubmit)();
   };
-
+  console.log();
   return (
     <>
       <Header precious={true} />
@@ -139,16 +139,22 @@ const PerformanceRegister = () => {
                 defaultValue={''}
                 rules={{
                   required: '반드시 입력해야 합니다',
+                  min: {
+                    value: new Date().toISOString().slice(0, 16),
+                    message: '적어도 미래의 시점을 입력해주세요...',
+                  },
                 }}
-                render={({ field }) => {
+                render={({ field, fieldState: { error } }) => {
                   return (
                     <Input
                       label={'날짜'}
                       height={30}
                       width={170}
                       type="datetime-local"
+                      min={new Date().toISOString().slice(0, 16)}
                       onChange={field.onChange}
                       value={field.value}
+                      errorMessage={error?.message}
                     />
                   );
                 }}
@@ -156,9 +162,13 @@ const PerformanceRegister = () => {
               <Controller
                 control={control}
                 name={'price'}
-                defaultValue={'0'}
+                defaultValue={0}
                 rules={{
                   required: '반드시 입력해야 합니다',
+                  min: {
+                    value: 0,
+                    message: '0 이상의 숫자를 입력해주세요',
+                  },
                 }}
                 render={({ field }) => {
                   return (
@@ -166,6 +176,7 @@ const PerformanceRegister = () => {
                       label={'금액'}
                       height={30}
                       width={170}
+                      step={1000}
                       type="number"
                       onChange={field.onChange}
                       value={field.value}
@@ -176,13 +187,18 @@ const PerformanceRegister = () => {
               <Controller
                 control={control}
                 name={'totalSeat'}
-                defaultValue={'0'}
+                defaultValue={1}
                 rules={{
                   required: '반드시 입력해야 합니다',
+                  min: {
+                    value: 1,
+                    message: '1 이상의 숫자를 입력해주세요',
+                  },
                 }}
                 render={({ field }) => {
                   return (
                     <Input
+                      min={1}
                       label={'총 좌석'}
                       height={30}
                       width={170}
@@ -228,6 +244,7 @@ const PerformanceRegister = () => {
           </S.CategoryContainer>
           <S.Heading3>공연설명</S.Heading3>
           <Editor />
+          {/*
           <S.TitleButtonFlex>
             <S.Heading3>공연장 위치</S.Heading3>
             <Button theme="primary" size="small" height={30}>
@@ -241,8 +258,7 @@ const PerformanceRegister = () => {
               추가
             </Button>
           </S.TitleButtonFlex>
-          {/* TODO: 아티스트 제거 기능 구현하려면 개별 영역에 대한 컨트롤 확보하기 */}
-          <ArtistContainer />
+          <ArtistContainer />*/}
           <S.BottomStickyContainer>
             {/* TODO: 등록 / 수정 구분하기 - 라우팅 경로로 구분하거나 별도 props 전달 */}
             <Button
@@ -252,7 +268,7 @@ const PerformanceRegister = () => {
                 handleSubmitAll();
               }}
             >
-              공연 정보 등록 / 수정
+              공연 정보 등록
             </Button>
           </S.BottomStickyContainer>
         </S.Main>

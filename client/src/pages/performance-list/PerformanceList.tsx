@@ -5,17 +5,22 @@ import { TabPerformance } from '../../components/tabs/Tabs';
 import { useNavigate } from 'react-router-dom';
 import ConcertPreview from '../../components/concert-preview/ConcertPreview';
 import Header from '../../components/header/Header';
-import { useTestGetPerformances } from '../../api/useFetch';
+import { useGetPerformances } from '../../api/useFetch';
 import { categoryObj } from '../../utils/Category';
 import Navbar from '../../components/nav/Navbar';
+import { useState } from 'react';
+import { getCookie } from '../../utils/Cookie';
 
 // TODO: props로 렌더링하기
 const PerformanceList = () => {
-  const data = useTestGetPerformances();
+  const [categoryId, setCategoryId] = useState<number | null>(null);
+  const [isStale, setIsStale] = useState<boolean | null>(null);
+  const handleClickCategory = (id: number) => {
+    if (categoryId !== id) setCategoryId(id);
+  };
+  const data = useGetPerformances(categoryId, isStale);
   const navigate = useNavigate();
-  // TODO: 로그인 상태관리 로직 추가하기
-  const isLoggedIn = true;
-  // TODO: 공연 카테고리별 필터링 로직 추가하기
+  const isLoggedIn = getCookie('accessToken');
   // TODO: 공연 일정 경과 여부 필터링 로직 추가하기
   return (
     <>
@@ -32,28 +37,73 @@ const PerformanceList = () => {
             />
           </S.TitleButtonFlex>
           <S.CategoryContainer>
-            <TabPerformance />
-            {/* TODO: 공연 일정 이전 && 공연을 등록한 유저에게만 보여주기 */}
-            <S.ButtonContainer>
-              <Button
-                size="small"
-                theme="primary"
-                onClick={() => navigate('/performances/register')}
+            <S.Tab>
+              <S.Heading3
+                onClick={() => {
+                  setIsStale(null);
+                }}
               >
-                공연 등록
-              </Button>
-            </S.ButtonContainer>
+                전체
+              </S.Heading3>
+              <S.Heading3>|</S.Heading3>
+              <S.Heading3
+                onClick={() => {
+                  setIsStale(false);
+                }}
+              >
+                진행중공연
+              </S.Heading3>
+              <S.Heading3>|</S.Heading3>
+              <S.Heading3
+                onClick={() => {
+                  setIsStale(true);
+                }}
+              >
+                지난공연
+              </S.Heading3>
+            </S.Tab>
+            {isLoggedIn && getCookie('userInfo')?.hasArtist && (
+              <S.ButtonContainer>
+                <Button
+                  size="small"
+                  theme="primary"
+                  onClick={() => navigate('/performances/register')}
+                >
+                  공연 등록
+                </Button>
+              </S.ButtonContainer>
+            )}
           </S.CategoryContainer>
           <S.CategoryContainer>
-            {/* TODO: 클릭 시 카테고리별 검색 결과 출력하기 */}
-            {Object.keys(categoryObj).map(key => (
-              <Button theme="theme" size="mini" key={key}>
-                {categoryObj[key]}
-              </Button>
-            ))}
-            <Button theme="theme" size="mini">
-              기타
-            </Button>
+            {Object.keys(categoryObj).map((key, idx) => {
+              return idx + 1 === categoryId ? (
+                <Button
+                  theme="highlight"
+                  size="mini"
+                  key={key}
+                  value={key}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    const value = +(e.target as HTMLInputElement).value;
+                    handleClickCategory(value);
+                  }}
+                >
+                  {categoryObj[key]}
+                </Button>
+              ) : (
+                <Button
+                  theme="theme"
+                  size="mini"
+                  key={key}
+                  value={key}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    const value = +(e.target as HTMLInputElement).value;
+                    handleClickCategory(value);
+                  }}
+                >
+                  {categoryObj[key]}
+                </Button>
+              );
+            })}
           </S.CategoryContainer>
           <S.PerformanceContainer>
             {data?.data?.map(v => (

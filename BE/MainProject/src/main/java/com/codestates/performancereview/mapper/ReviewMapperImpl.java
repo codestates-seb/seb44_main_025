@@ -28,6 +28,7 @@ public class ReviewMapperImpl implements ReviewMapper {
                 .reviewTitle(review.getReviewTitle())
                 .content(review.getContent())
                 .imageUrl(review.getImageUrl())
+                .date(review.getDate())
                 .build();
     }
     @Override
@@ -38,8 +39,9 @@ public class ReviewMapperImpl implements ReviewMapper {
         review.setReviewTitle(reviewDto.getReviewTitle());
         review.setContent(reviewDto.getContent());
         review.setImageUrl(reviewDto.getImageUrl());
+        review.setDate(reviewDto.getDate());
 
-        // Member와 Performance 엔티티는 ID만 설정하여 연결해줍니다.
+        // Member와 Performance 엔티티는 ID만 설정하여 연결
         Member member = new Member();
         member.setMemberId(reviewDto.getMemberId());
         review.setMember(member);
@@ -61,6 +63,7 @@ public class ReviewMapperImpl implements ReviewMapper {
                 .reviewTitle(review.getReviewTitle())
                 .content(review.getContent())
                 .imageUrl(review.getImageUrl())
+                .date(review.getDate())
                 .build();
     }
 
