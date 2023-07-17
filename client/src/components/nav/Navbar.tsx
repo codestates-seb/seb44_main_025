@@ -39,14 +39,10 @@ const Navbar = () => {
           </Styled_Navbar.AnimationDiv>
           {getCookie('accessToken') ? (
             <Styled_Navbar.AnimationDiv>
-<<<<<<< HEAD
-              <Link to="/mypage" style={{ textDecorationLine: 'none' }}>
-=======
               <Link
                 to={`/mypage/${userInfo?.memberId}`}
                 style={{ textDecorationLine: 'none' }}
               >
->>>>>>> dev
                 <Styled_Navbar.IconAndTextDiv>
                   <MypageIcon />
                   <Styled_Navbar.TextSpan>마이페이지</Styled_Navbar.TextSpan>
