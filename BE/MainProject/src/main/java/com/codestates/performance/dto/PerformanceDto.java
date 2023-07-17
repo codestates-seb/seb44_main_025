@@ -5,6 +5,7 @@ import com.codestates.content.entity.Content;
 import com.codestates.performance.entity.PerformanceArtist;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -64,6 +65,22 @@ public class PerformanceDto {
         private int totalSeat;
         private String category;
         private String imageUrl;
+
+        public Response(long performanceId, String title, Content content, String date, int price, String place, int totalSeat, String category, String imageUrl) {
+            this.performanceId = performanceId;
+            this.title = title;
+            this.content = content;
+            this.date = date;
+            this.price = price;
+            this.place = place;
+            this.totalSeat = totalSeat;
+            this.category = category;
+            this.imageUrl = imageUrl;
+        }
+
+        public void setPerformanceArtist(PerformanceArtistDto.Response performanceArtist) {
+            this.performanceArtist = performanceArtist;
+        }
     }
 
 }

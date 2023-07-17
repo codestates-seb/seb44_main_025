@@ -1,6 +1,9 @@
 package com.codestates.reservation.entity;
 
+
+import com.codestates.member.Member;
 import com.codestates.payment.entity.Payment;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +22,11 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
     private Long performanceId;
-    private Long memberId;
     private Long PaymentId;
-    @Column(nullable = false)
-    private String nickName;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
     @Column(nullable = false)
     private LocalDateTime date;
     @Column(nullable = false)
@@ -47,10 +51,14 @@ public class Reservation {
             this.status = status;
         }
 
+
         public String getReservationStatus() {
             return status;
         }
     }
+    public Reservation(Member member)
+    {this.member = member;}
+
 //public enum PaymentStatus {
 //    PENDING("Pending"),
 //    COMPLETED("Completed"),

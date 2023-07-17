@@ -16,9 +16,10 @@ import Artistregist from './pages/artist-register/ArtistRegister';
 import Cancel from './pages/cancel/Cancel';
 import SignUpPage from './pages/sign/SignUp';
 import SignInPage from './pages/sign/SignIn';
-import ArtistList from './pages/ArtistList';
+import ArtistList from './pages/artist-list/ArtistList';
 import Home from './pages/home/Home';
 import ReviewRegister from './pages/review/ReviewRegister';
+import Artistedit from './pages/artist-register/ArtistEdit';
 
 /** @todo 도메인 주소 입력 */
 // axios.defaults.baseURL = '';
@@ -72,9 +73,10 @@ const router = createBrowserRouter([
         element: <Artistregist />,
       },
       {
-        path: '/artistregist',
-        element: <Artistregist />,
+        path: '/artistedit',
+        element: <Artistedit />,
       },
+
       {
         path: '/cancel',
         element: <Cancel />,

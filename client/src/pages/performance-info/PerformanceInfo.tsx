@@ -24,12 +24,13 @@ const PerformanceInfo = () => {
       setIsStale(false);
     }
   }, [data]);
-  // const data = useGetPerformance({ id: 1 });
   const navigate = useNavigate();
   // TODO: 요청이 구현되기 전까지 등록된 글을 확인할 수 있도록 하기 위한 state 관리
   // const content = useEditorStore(state => state.content);
   // TODO: 로그인 상태관리 로직 추가하기
   const isLoggedIn = true;
+  // Note: 현재 접속중인 계정의 아티스트 Id 필요
+  const currentArtistId = 2;
   return (
     <>
       <Header precious={true} />
@@ -37,14 +38,19 @@ const PerformanceInfo = () => {
         <S.Main>
           <S.ButtonHeadingContainer>
             <S.Heading1>공연정보</S.Heading1>
-            {/* TODO: 공연 일정 이전 && 공연을 등록한 유저에게만 보여주기*/}
-            <Button
-              size="medium"
-              theme="primary"
-              onClick={() => navigate('/performances/register')}
-            >
-              공연 정보 수정하기
-            </Button>
+            {/* TODO: PerformanceArtist Id 정확한 값 가져오기*/}
+            {!isStale &&
+              data?.performanceArtist?.performanceArtistList &&
+              currentArtistId in
+                (data?.performanceArtist?.performanceArtistList ?? {}) && (
+                <Button
+                  size="medium"
+                  theme="primary"
+                  onClick={() => navigate('/performances/register')}
+                >
+                  공연 정보 수정하기
+                </Button>
+              )}
           </S.ButtonHeadingContainer>
           <S.SummaryContainer>
             <S.Poster src={data?.imageUrl || ''} />
@@ -52,7 +58,10 @@ const PerformanceInfo = () => {
               <p>공연명</p>
               <p>{data?.title}</p>
               <p>날짜</p>
-              <p>{new Date(data?.date as string).toLocaleDateString()}</p>
+              <p>
+                {data?.date &&
+                  new Date(data?.date as string).toLocaleDateString()}
+              </p>
               <p>금액</p>
               <p>{data?.price}원</p>
               <p>남은 좌석 수</p>
@@ -79,10 +88,11 @@ const PerformanceInfo = () => {
           </S.CategoryContainer>
           <S.Heading3>공연설명</S.Heading3>
           <EditorReadOnly content={data?.content.body} />
+          {/* TODO: 구현되면 그 때 보여주기
           <S.Heading3>공연장 위치</S.Heading3>
           <S.Map></S.Map>
           <S.Heading3>아티스트 정보</S.Heading3>
-          <ArtistContainer />
+            <ArtistContainer />*/}
           {isStale && (
             <>
               <S.Heading3>후기</S.Heading3>
@@ -102,10 +112,10 @@ const PerformanceInfo = () => {
               </S.ReviewContainer>
             </>
           )}
-          <S.BottomStickyContainer>
-            {/* TODO: 공연 일정과 현재 시각 비교 -> 예약하기 / 후기등록 조건부 렌더링 */}
-            {/* TODO: 현재 좌석수 > 0 ? 예약 버튼 활성화 : 예약 버튼 비활성화 */}
-            {!isModalOpen && (
+          {/* TODO: 공연 일정과 현재 시각 비교 -> 예약하기 / 후기등록 조건부 렌더링 */}
+          {/* TODO: 현재 좌석수 > 0 ? 예약 버튼 활성화 : 예약 버튼 비활성화 */}
+          {!isModalOpen && (
+            <S.BottomStickyContainer>
               <Button
                 theme="primary"
                 size="large"
@@ -123,9 +133,18 @@ const PerformanceInfo = () => {
               >
                 {isStale ? '후기 작성' : '예약하기'}
               </Button>
+            </S.BottomStickyContainer>
+          )}
+          <>
+            {isModalOpen && data && (
+              <ReservationModal
+                {...data}
+                closeModal={() => {
+                  setIsModalOpen(false);
+                }}
+              />
             )}
-            {isModalOpen && <ReservationModal />}
-          </S.BottomStickyContainer>
+          </>
         </S.Main>
       </S.Container>
       <Navbar />

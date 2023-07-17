@@ -47,6 +47,7 @@ public class MemberController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    //회원정보 수정
     @PatchMapping
     public ResponseEntity patchMember(@Valid @RequestBody MemberPatchDto memberPatchDto,
                                       Authentication authentication){

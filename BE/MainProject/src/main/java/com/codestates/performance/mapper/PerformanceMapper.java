@@ -23,85 +23,46 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface PerformanceMapper {
-    default Performance performancePostDtoToPerformance(PerformanceDto.Post performanceDto,
-                                                        CategoryService categoryService,
-                                                        ArtistService artistService) {
-        Content content = new Content(performanceDto.getContent());
+    default Performance performancePostDtoToPerformance(PerformanceDto.Post performanceDto) {
         LocalDateTime date = LocalDateTime.parse(performanceDto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        Category category = categoryService.findVerifiedCategory(performanceDto.getCategoryId());
 
-        Performance performance = new Performance(
+        return new Performance(
                 performanceDto.getTitle(),
                 date,
                 performanceDto.getPrice(),
                 performanceDto.getPlace(),
                 performanceDto.getTotalSeat(),
-                category,
                 performanceDto.getImageUrl()
         );
-
-        performance.setContent(content);
-
-        List<PerformanceArtist> performanceArtists = performanceDto.getArtistIds()
-                .stream()
-                .map(key->{
-                    PerformanceArtist performanceArtist = new PerformanceArtist();
-                    Artist artist = artistService.findVerifiedArtist(key);
-
-                    performanceArtist.addPerformance(performance);
-                    performanceArtist.addArtist(artist);
-                    return performanceArtist;
-                }).collect(Collectors.toList());
-
-        performance.setPerformanceArtists(performanceArtists);
-
-        return performance;
     }
 
-    default Performance performancePatchDtoToPerformance(PerformanceDto.Patch performanceDto,
-                                                         PerformanceService performanceService,
-                                                         CategoryService categoryService,
-                                                         ArtistService artistService) {
-        long performanceId = performanceDto.getPerformanceId();
-        Performance findPerformance = performanceService.findPerformance(performanceId);
-
-        Content content = new Content(performanceDto.getContent());
-        content.setContentId(findPerformance.getContent().getContentId());
-
+    default Performance performancePatchDtoToPerformance(PerformanceDto.Patch performanceDto) {
         LocalDateTime date = LocalDateTime.parse(performanceDto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        Category category = categoryService.findVerifiedCategory(performanceDto.getCategoryId());
 
-        Performance performance = new Performance(
+        return new Performance(
                 performanceDto.getPerformanceId(),
                 performanceDto.getTitle(),
                 date,
                 performanceDto.getPrice(),
                 performanceDto.getPlace(),
                 performanceDto.getTotalSeat(),
-                category,
-                performanceDto.getImageUrl(),
-                content
+                performanceDto.getImageUrl()
         );
-
-        List<PerformanceArtist> performanceArtists = performanceDto.getArtistIds()
-                .stream()
-                .map(key->{
-                    Artist artist = artistService.findVerifiedArtist(key);
-
-                    PerformanceArtist performanceArtist = new PerformanceArtist();
-                    performanceArtist.addPerformance(performance);
-                    performanceArtist.addArtist(artist);
-
-                    performanceArtist.setPerformanceArtistId(performanceDto.getPerformanceArtistId());
-                    return performanceArtist;
-                }).collect(Collectors.toList());
-
-        performance.setPerformanceArtists(performanceArtists);
-
-        return performance;
     }
 
     default PerformanceDto.Response performanceToPerformanceResponseDto(Performance performance) {
+        PerformanceDto.Response response = new PerformanceDto.Response(
+                performance.getPerformanceId(),
+                performance.getTitle(),
+                performance.getContent(),
+                performance.getDate().toString(),
+                performance.getPrice(),
+                performance.getPlace(),
+                performance.getTotalSeat(),
+                performance.getCategory().getCategory(),
+                performance.getImageUrl()
+        );
+
         PerformanceArtistDto.Response performanceArtistResponseDto = new PerformanceArtistDto.Response();
         performanceArtistResponseDto.setPerformanceId(performance.getPerformanceId());
 
@@ -114,18 +75,8 @@ public interface PerformanceMapper {
 
         performanceArtistResponseDto.setPerformanceArtistList(performanceArtistMap);
 
-        return new PerformanceDto.Response(
-                performance.getPerformanceId(),
-                performance.getTitle(),
-                performanceArtistResponseDto,
-                performance.getContent(),
-                performance.getDate().toString(),
-                performance.getPrice(),
-                performance.getPlace(),
-                performance.getTotalSeat(),
-                performance.getCategory().getCategory(),
-                performance.getImageUrl()
-        );
+        response.setPerformanceArtist(performanceArtistResponseDto);
+        return response;
     }
 
     default List<PerformanceDto.Response> performancesToPerformanceResponseDtos(List<Performance> performances) {

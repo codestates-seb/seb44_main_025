@@ -7,33 +7,12 @@ import { ArtistList, Artist, ArtistReview } from '../model/Artist';
 import { Member, Performance, Review } from '../model/Member';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie, setCookie } from '../utils/Cookie';
 
-const TEST_HOST = process.env.REACT_APP_TEST_HOST;
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
-
-export const useGetMain = () => {
-  const [data, setData] = useState<any>();
-
-  const getData = async () => {
-    await axios
-      .get<any>(`${TEST_HOST}`, {
-        headers: { 'ngrok-skip-browser-warning': true },
-      })
-      .then(data => setData(data.data))
-      .catch(err => console.log(err));
-  };
-  useEffect(() => {
-    getData();
-  }, []);
-
-  return data;
-};
 
 export const useGetPerformance = (id: string | number | undefined) => {
   if (id === undefined) return;
-  const navigate = useNavigate();
   const [data, setData] = useState<PerformanceType>();
 
   const getData = async () => {
@@ -57,38 +36,67 @@ export const useGetPerformance = (id: string | number | undefined) => {
   return data;
 };
 
-export const useTestGetPerformances = () => {
+export const useGetPerformances = (
+  categoryId?: number | null,
+  isStale?: boolean | null
+) => {
   const [data, setData] = useState<PerformanceListType>();
 
-  const getData = async () => {
-    await axios
-      .get<PerformanceListType>(`${SERVER_HOST}/performance?page=1&size=10`, {
-        headers: { 'ngrok-skip-browser-warning': true },
-      })
-      .then(data => setData(data.data))
-      .catch(err => console.log(err));
-  };
   useEffect(() => {
-    getData();
-  }, []);
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    axios
+      .get<PerformanceListType>(
+        `${SERVER_HOST}/performance${
+          categoryId ? `/category/${categoryId}` : ''
+        }?page=1&size=10&performanceStatus=${
+          isStale ? '공연완료' : isStale === false ? '공연중' : ''
+        }`,
+        {
+          headers: { 'ngrok-skip-browser-warning': true },
+          cancelToken: source.token,
+        }
+      )
+      .then(data => setData(data.data))
+      .catch(err => {
+        if (err.code === 'ERR_CANCELED') return;
+        console.log(err);
+      });
+
+    return () => source.cancel('요청 취소');
+  }, [categoryId, isStale]);
 
   return data;
 };
 
-export const useGetArtists = () => {
+export const useGetArtists = (categoryId?: number | null) => {
   const [data, setData] = useState<ArtistList>();
 
-  const getData = async () => {
-    await axios
-      .get<ArtistList>(`${SERVER_HOST}/artist?category=1&page=1&size=10`, {
-        headers: { 'ngrok-skip-browser-warning': true },
-      })
-      .then(data => setData(data.data))
-      .catch(err => console.log(err));
-  };
   useEffect(() => {
-    getData();
-  }, []);
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    axios
+      .get<ArtistList>(
+        `${SERVER_HOST}/artist?page=1&size=10&category=${
+          categoryId ? categoryId : '1'
+        }`,
+        {
+          headers: { 'ngrok-skip-browser-warning': true },
+          cancelToken: source.token,
+        }
+      )
+      .then(data => setData(data.data))
+      .catch(err => {
+        if (err.code === 'ERR_CANCELED') return;
+        console.log(err);
+      });
+
+    return () => {
+      source.cancel('요청 취소');
+    };
+  }, [categoryId]);
 
   return data;
 };
@@ -111,14 +119,22 @@ export const useGetArtist = (id: string | number | undefined) => {
   return data;
 };
 
-export const useGetArtistPerfomance = (id: string | number | undefined) => {
-  const [data, setData] = useState<ArtistPagePerformance>();
+export const useGetArtistPerfomance = (
+  id: string | number | undefined,
+  categoryId?: number
+) => {
+  const [data, setData] = useState<ArtistPagePerformance[]>();
 
   const getData = async () => {
     await axios
-      .get<ArtistPagePerformance>(`${SERVER_HOST}/perfomance/${id}`, {
-        headers: { 'ngrok-skip-browser-warning': true },
-      })
+      .get<ArtistPagePerformance[]>(
+        `${SERVER_HOST}/performance${
+          id ? `/artist/${id}` : ''
+        }?page=1&size=5&performanceStatus=공연중`,
+        {
+          headers: { 'ngrok-skip-browser-warning': true },
+        }
+      )
       .then(data => setData(data.data))
       .catch(err => console.log(err));
   };
@@ -130,13 +146,18 @@ export const useGetArtistPerfomance = (id: string | number | undefined) => {
 };
 
 export const useGetArtistPerfomanced = (id: string | number | undefined) => {
-  const [data, setData] = useState<ArtistPagePerformance>();
+  const [data, setData] = useState<ArtistPagePerformance[]>();
 
   const getData = async () => {
     await axios
-      .get<ArtistPagePerformance>(`${SERVER_HOST}/perfomance/${id}`, {
-        headers: { 'ngrok-skip-browser-warning': true },
-      })
+      .get<ArtistPagePerformance[]>(
+        `${SERVER_HOST}/performance${
+          id ? `/artist/${id}` : ''
+        }?page=1&size=5&performanceStatus=공연완료`,
+        {
+          headers: { 'ngrok-skip-browser-warning': true },
+        }
+      )
       .then(data => setData(data.data))
       .catch(err => console.log(err));
   };
@@ -148,11 +169,11 @@ export const useGetArtistPerfomanced = (id: string | number | undefined) => {
 };
 
 export const useGetArtistReview = (id: string | number | undefined) => {
-  const [data, setData] = useState<ArtistReview>();
+  const [data, setData] = useState<ArtistReview[]>();
 
   const getData = async () => {
     await axios
-      .get<ArtistReview>(`${SERVER_HOST}/review/${id}`, {
+      .get<ArtistReview[]>(`${SERVER_HOST}/review/${id}`, {
         headers: { 'ngrok-skip-browser-warning': true },
       })
       .then(data => setData(data.data))
@@ -187,7 +208,6 @@ export const useGetMember = () => {
           }),
           { path: '/' }
         );
-        console.log(getCookie('userInfo'));
       })
       .catch(err => console.log(err));
   };
@@ -198,14 +218,38 @@ export const useGetMember = () => {
 };
 
 export const useGetMemberPerformance = (id: string | number | undefined) => {
-  const [data, setData] = useState<Performance>();
+  const [data, setData] = useState<Performance[]>();
 
   const getData = async () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
-      .get<Performance>(`${SERVER_HOST}/member/${id}`, {
-        headers: { 'ngrok-skip-browser-warning': true },
-      })
+      .get<Performance[]>(
+        `${SERVER_HOST}/member/${id}/page=1&size=5&performanceStatus=공연중`,
+        {
+          headers: { 'ngrok-skip-browser-warning': true },
+        }
+      )
+      .then(data => setData(data.data))
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  return data;
+};
+
+export const useGetMemberPerformanced = (id: string | number | undefined) => {
+  const [data, setData] = useState<Performance[]>();
+
+  const getData = async () => {
+    await axios
+      // 공연받아오는 endpoint에 맞게 수정해주기
+      .get<Performance[]>(
+        `${SERVER_HOST}/member/${id}/page=1&size=5&performanceStatus=공연완료`,
+        {
+          headers: { 'ngrok-skip-browser-warning': true },
+        }
+      )
       .then(data => setData(data.data))
       .catch(err => console.log(err));
   };
@@ -217,12 +261,12 @@ export const useGetMemberPerformance = (id: string | number | undefined) => {
 };
 
 export const useGetMemberReview = (id: string | number | undefined) => {
-  const [data, setData] = useState<Review>();
+  const [data, setData] = useState<Review[]>();
 
   const getData = async () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
-      .get<Review>(`${SERVER_HOST}/member/${id}`, {
+      .get<Review[]>(`${SERVER_HOST}/review/${id}`, {
         headers: { 'ngrok-skip-browser-warning': true },
       })
       .then(data => setData(data.data))

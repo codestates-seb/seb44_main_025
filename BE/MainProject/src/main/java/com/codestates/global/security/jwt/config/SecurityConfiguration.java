@@ -9,9 +9,9 @@ import com.codestates.global.security.jwt.filter.JwtVerificationFilter;
 import com.codestates.global.security.jwt.handler.MemberAccessDeniedHandler;
 import com.codestates.global.security.jwt.handler.MemberAuthenticationFailureHandler;
 import com.codestates.global.security.jwt.handler.MemberAuthenticationSuccessHandler;
-import com.codestates.member.MemberRepository;
-import com.codestates.member.MemberService;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -37,6 +37,11 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @Slf4j
 public class SecurityConfiguration {
+
+    private String clientId;
+
+
+    private String clientSecret;
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final ArtistService artistService;
@@ -58,7 +63,6 @@ public class SecurityConfiguration {
                 .allowedHeaders("*")
                 .exposedHeaders("Authorization");
     }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -77,9 +81,10 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers("/h2/**").permitAll()
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .anyRequest().permitAll()
-                );
+                        .anyRequest().permitAll())
+                ;
         return http.build();
     }
     @Bean
@@ -88,7 +93,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // "*" 대신 출처 목록을 지정합니다.
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://ez-to-play.s3-website.ap-northeast-2.amazonaws.com")); // "*" 대신 출처 목록을 지정합니다.
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.addExposedHeader("Authorization");
@@ -97,6 +102,7 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 
     public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
         @Override

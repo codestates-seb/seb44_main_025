@@ -1,25 +1,26 @@
 import { styled } from 'styled-components';
 import Img from '../.././images/우리사랑이대로.jpeg';
 import { useNavigate } from 'react-router-dom';
-import { ButtonWithArrowDark } from '../buttons/Buttons';
+import { ButtonWithArrow } from '../buttons/Buttons';
 
 interface ArtistPreviewPropTypes {
-  imgurl: string;
-  nickname: string;
-  snsLink: string[];
-  id: number;
+  imageUrl: string;
+  artistName: string;
+  snsLink: string;
+  artistId: number;
 }
 export default function ArtistPreview(props: ArtistPreviewPropTypes) {
   const navigate = useNavigate();
   return (
     <S.PreviewWrapper>
-      <S.UserImg src={props.imgurl || Img} />
+      <S.UserImg src={props.imageUrl || Img} />
       <S.PreviewDetail>
-        <S.UserNickname>{props.nickname || '닉네임'}</S.UserNickname>
-        <S.Previewcontent>{props.snsLink[0] || 'snslink'}</S.Previewcontent>
-        <ButtonWithArrowDark
+        <S.UserNickname>{props.artistName || '닉네임'}</S.UserNickname>
+        <S.Previewcontent>{props.snsLink || 'snslink'}</S.Previewcontent>
+        <ButtonWithArrow
+          theme="theme"
           text="프로필 보기"
-          onClick={() => navigate(`/artists/${props.id}`)}
+          onClick={() => navigate(`/artist/${props.artistId}`)}
         />
       </S.PreviewDetail>
     </S.PreviewWrapper>

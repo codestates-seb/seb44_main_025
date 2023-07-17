@@ -1,7 +1,5 @@
 package com.codestates.global.security.jwt.filter;
 
-
-
 import com.codestates.artist.ArtistService;
 import com.codestates.global.security.jwt.JwtTokenizer;
 import com.codestates.global.security.jwt.dto.LoginDto;
@@ -23,7 +21,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
