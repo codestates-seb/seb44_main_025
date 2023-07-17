@@ -35,7 +35,7 @@ import java.util.List;
 public class PerformanceController {
     private final PerformanceMapper mapper;
     private final PerformanceService performanceService;
-    private final ImageUploadService imageUploadService;
+    
 
     /* 공연 생성 */
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -50,10 +50,8 @@ public class PerformanceController {
     /* 공연 수정 */
     @PatchMapping(value = "/{performance-id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity patchPerformance(@PathVariable("performance-id") @Positive long performanceId,
-                                           @RequestPart @Valid PerformanceDto.Patch performanceDto,
-                                           @RequestPart("image-file") MultipartFile imageFile) throws IOExceptio {
-        String imageUrl = imageUploadService.imageUpload(imageFile);
-        performanceDto.setImageUrl(imageUrl);
+                                           @RequestPart @Valid PerformanceDto.Patch performanceDto) throws IOException {
+
         performanceDto.setPerformanceId(performanceId);
 
         Performance performance = mapper.performancePatchDtoToPerformance(performanceDto);
