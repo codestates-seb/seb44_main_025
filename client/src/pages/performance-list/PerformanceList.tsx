@@ -1,7 +1,6 @@
 import { S } from './PerformanceList.style';
 import { ReactComponent as MapIcon } from '../../icons/icon_map_search.svg';
 import { Button } from '../../components/buttons/Buttons';
-import { TabPerformance } from '../../components/tabs/Tabs';
 import { useNavigate } from 'react-router-dom';
 import ConcertPreview from '../../components/concert-preview/ConcertPreview';
 import Header from '../../components/header/Header';
@@ -11,7 +10,6 @@ import Navbar from '../../components/nav/Navbar';
 import { useState } from 'react';
 import { getCookie } from '../../utils/Cookie';
 
-// TODO: props로 렌더링하기
 const PerformanceList = () => {
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const [isStale, setIsStale] = useState<boolean | null>(null);
@@ -21,7 +19,6 @@ const PerformanceList = () => {
   const data = useGetPerformances(categoryId, isStale);
   const navigate = useNavigate();
   const isLoggedIn = getCookie('accessToken');
-  // TODO: 공연 일정 경과 여부 필터링 로직 추가하기
   return (
     <>
       <Header />
