@@ -14,4 +14,5 @@ public class MemberResponseDto {
     private String password;
     private boolean hasArtist;
     private long artistId;
+    private String phone;
 }

@@ -24,8 +24,13 @@ public class ImageUploadService {
 
     public String imageUpload(MultipartFile file) throws IOException {
         String fileName = getFileName(file);
+
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentType(file.getContentType());
+        metadata.setContentLength(file.getSize());
+
         amazonS3Client.putObject(new PutObjectRequest(
-                bucket, fileName, file.getInputStream(), new ObjectMetadata()
+                bucket, fileName, file.getInputStream(), metadata
         ));
         return String.valueOf(amazonS3Client.getUrl(bucket, fileName));
     }
