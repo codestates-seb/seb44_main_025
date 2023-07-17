@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/reservation")
