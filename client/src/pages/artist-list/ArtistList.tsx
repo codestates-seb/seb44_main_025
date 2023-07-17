@@ -8,6 +8,7 @@ import { useGetArtists } from '../../api/useFetch';
 import { getCookie } from '../../utils/Cookie';
 import { categoryObj } from '../../utils/Category';
 import { useState } from 'react';
+import { H1Title } from '../../utils/SlideUp';
 
 const ArtistList = () => {
   const [categoryId, setCategoryId] = useState<number | null>(null);
@@ -23,7 +24,9 @@ const ArtistList = () => {
       <S.Container>
         <S.Main>
           <S.TitleButtonFlex>
-            <S.Heading1>아티스트</S.Heading1>
+            <H1Title.H1>
+              <H1Title.H1span>아티스트</H1Title.H1span>
+            </H1Title.H1>
             {isLoggedIn && !getCookie('userInfo')?.hasArtist && (
               <Button
                 size="medium"

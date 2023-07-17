@@ -9,6 +9,7 @@ import { categoryObj } from '../../utils/Category';
 import Navbar from '../../components/nav/Navbar';
 import { useState } from 'react';
 import { getCookie } from '../../utils/Cookie';
+import { H1Title } from '../../utils/SlideUp';
 
 const PerformanceList = () => {
   const [categoryId, setCategoryId] = useState<number | null>(null);
@@ -25,7 +26,9 @@ const PerformanceList = () => {
       <S.Container>
         <S.Main>
           <S.TitleButtonFlex>
-            <S.Heading1>공연</S.Heading1>
+            <H1Title.H1>
+              <H1Title.H1span>공연정보</H1Title.H1span>
+            </H1Title.H1>
             {/* TODO: 지도와 연계하기 */}
             <MapIcon
               onClick={() =>

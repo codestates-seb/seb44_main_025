@@ -14,6 +14,7 @@ import { categoryObj } from '../../utils/Category';
 import { getCookie } from '../../utils/Cookie';
 import { PostcodeMap } from '../../components/postcode/Postcode';
 import { getTimezoneAdjustedISOString } from '../../utils/Format';
+import { H1Title } from '../../utils/SlideUp';
 
 interface FormValues {
   title: string;
@@ -98,7 +99,9 @@ const PerformanceRegister = () => {
       <S.Container>
         <S.Main>
           <S.TitleButtonFlex>
-            <S.Heading1>공연등록</S.Heading1>
+            <H1Title.H1>
+              <H1Title.H1span>공연등록</H1Title.H1span>
+            </H1Title.H1>
             <Button
               theme="primary"
               size="small"

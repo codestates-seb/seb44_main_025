@@ -9,6 +9,7 @@ export const S = {
     line-height: var(--heading1-line-height);
   `,
   TitleButtonFlex: styled.div`
+    margin-top: 20px;
     width: 360px;
     display: flex;
     justify-content: space-between;
@@ -17,7 +18,6 @@ export const S = {
       margin-left: 0;
     }
     & > svg {
-      margin-top: 20px;
       stroke: white;
       cursor: pointer;
     }

@@ -12,6 +12,7 @@ import { categoryObj } from '../../utils/Category';
 import Navbar from '../../components/nav/Navbar';
 import { Map } from '../../components/postcode/Postcode';
 import { getCookie } from '../../utils/Cookie';
+import { H1Title } from '../../utils/SlideUp';
 
 const PerformanceInfo = () => {
   const { performanceId } = useParams();
@@ -36,7 +37,9 @@ const PerformanceInfo = () => {
       <S.Container>
         <S.Main>
           <S.ButtonHeadingContainer>
-            <S.Heading1>공연정보</S.Heading1>
+            <H1Title.H1>
+              <H1Title.H1span>공연정보</H1Title.H1span>
+            </H1Title.H1>
             {/* TODO: PerformanceArtist Id 정확한 값 가져오기*/}
             {!isStale &&
               data?.performanceArtist?.performanceArtistList &&
