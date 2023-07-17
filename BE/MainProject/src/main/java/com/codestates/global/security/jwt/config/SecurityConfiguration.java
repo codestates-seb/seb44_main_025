@@ -9,10 +9,9 @@ import com.codestates.global.security.jwt.filter.JwtVerificationFilter;
 import com.codestates.global.security.jwt.handler.MemberAccessDeniedHandler;
 import com.codestates.global.security.jwt.handler.MemberAuthenticationFailureHandler;
 import com.codestates.global.security.jwt.handler.MemberAuthenticationSuccessHandler;
-import com.codestates.member.MemberRepository;
-import com.codestates.member.MemberService;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,12 +20,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -68,7 +63,6 @@ public class SecurityConfiguration {
                 .allowedHeaders("*")
                 .exposedHeaders("Authorization");
     }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -99,7 +93,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // "*" 대신 출처 목록을 지정합니다.
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://ez-to-play.s3-website.ap-northeast-2.amazonaws.com")); // "*" 대신 출처 목록을 지정합니다.
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.addExposedHeader("Authorization");

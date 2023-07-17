@@ -18,7 +18,8 @@ public class MemberMapper {
         return new Member(
                 memberPatchDto.getEmail(),
                 memberPatchDto.getNickname(),
-                memberPatchDto.getPassword());
+                memberPatchDto.getPassword(),
+                memberPatchDto.getPhone());
     }
     public MemberResponseDto memberToMemberResponseDto(Member member){
 
@@ -27,7 +28,8 @@ public class MemberMapper {
                 member.getNickname(),
                 member.getPassword(),
                 false,
-                0
+                0,
+                null
         );
 
     }
