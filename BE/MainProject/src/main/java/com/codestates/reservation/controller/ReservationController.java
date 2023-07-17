@@ -40,10 +40,11 @@ public class ReservationController {
         long memberId = ((Number) principal.get("memberId")).longValue();
 
         ReservationDto.ReservationResponseDto responseDto = reservationService.createReservation(reservationRequestDto, memberId);
-
+        return responseDto;
+    }
     // 특정 예약 조회
     @GetMapping("/{reservationId}")
-    public ResponseEntity<?> getReservation(@PathVariable("reservationId") Long reservationId) {
+    public ResponseEntity<?> getReservation (@PathVariable("reservationId") Long reservationId){
         // 예약 조회 요청을 ReservationService에 전달
         ReservationDto.ReservationResponseDto responseDto = reservationService.getReservation(reservationId); //예약의 고유 식별자
         if (responseDto == null) {
@@ -55,9 +56,10 @@ public class ReservationController {
         return ResponseEntity.ok(responseDto);
     }
 
+
     // 예약 삭제
     @DeleteMapping("/{reservationId}")
-    public ResponseEntity<String> deleteReservation(@PathVariable("reservationId") Long reservationId) {
+    public ResponseEntity<String> deleteReservation (@PathVariable("reservationId") Long reservationId){
         try {
             reservationService.deleteReservation(reservationId);
             // 예약 삭제 성공 -> 200 OK 응답 코드와 메시지 반환
@@ -71,3 +73,4 @@ public class ReservationController {
         }
     }
 }
+
