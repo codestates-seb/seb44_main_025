@@ -24,6 +24,6 @@ public class MemberPatchDto {
     @NotBlank
 //    @Pattern(regexp = "^([a-zA-Z0-9!@#$%^&*]{8,12})$")
     private String password;
-
+    private String phone;
 
 }
