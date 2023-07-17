@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
+import { DeviceQuery } from '../../utils/Media';
+import { sizeChange } from '../../utils/MediaSize';
 
 export const Styled_Navbar = {
   Div: styled.div`
@@ -9,11 +11,19 @@ export const Styled_Navbar = {
     height: 60px;
     position: sticky;
     bottom: 0;
+
+    ${DeviceQuery.tablet`
+      height: calc(60px * ${sizeChange.tablet}); 
+    `}
   `,
   Container: styled.div`
     width: 390px;
     height: 60px;
     background-color: var(--theme-background-color);
+    ${DeviceQuery.tablet`
+      width: calc(390px * ${sizeChange.tablet}); 
+      height: calc(60px * ${sizeChange.tablet}); 
+    `}
   `,
   Nav: styled.nav`
     width: 390px;
@@ -24,6 +34,10 @@ export const Styled_Navbar = {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    ${DeviceQuery.tablet`
+      width: calc(390px * ${sizeChange.tablet}); 
+      height: calc(60px * ${sizeChange.tablet}); 
+    `}
   `,
   TextSpan: styled.span`
     color: var(--font-white-color);
@@ -35,6 +49,9 @@ export const Styled_Navbar = {
     align-items: center;
     width: 90px;
     cursor: pointer;
+    ${DeviceQuery.tablet`
+      width: calc(90px * ${sizeChange.tablet}); 
+    `}
   `,
   // 호버시 하단 가로선 애니메이션
   AnimationDiv: styled.div`

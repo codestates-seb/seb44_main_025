@@ -142,7 +142,7 @@ export default function Artistregist() {
   const onSubmitImg = () => {
     let formData = new FormData();
     if (artistImgFile) {
-      formData.append('image-file', artistImgFile as Blob, 'image');
+      formData.append('image-file', artistImgFile as Blob);
       postArtistImg(formData).then((data: any) => {
         setGetUrl(data.data);
       });

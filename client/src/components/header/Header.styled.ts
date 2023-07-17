@@ -1,4 +1,7 @@
 import { styled } from 'styled-components';
+import { DeviceQuery } from '../../utils/Media';
+import { sizeChange } from '../../utils/MediaSize';
+
 export const Styled_Header = {
   Header: styled.header`
     display: flex;
@@ -16,6 +19,10 @@ export const Styled_Header = {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    ${DeviceQuery.tablet`
+      width: calc(390px * ${sizeChange.tablet}); 
+      height: calc(60px * ${sizeChange.tablet}); 
+    `}
   `,
   Div: styled.div`
     display: flex;
