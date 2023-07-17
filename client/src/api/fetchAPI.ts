@@ -39,7 +39,7 @@ export const postReservation = async (
   body: BodyType
 ) => {
   const data = await axios
-    .post(`${SERVER_HOST}/reservation`, JSON.stringify(body), {
+    .post(`${SERVER_HOST}/reservation/${performanceId}`, JSON.stringify(body), {
       headers: { 'Content-Type': 'application/json' },
     })
     .then(data => {
