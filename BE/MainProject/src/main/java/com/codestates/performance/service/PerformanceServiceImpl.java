@@ -7,23 +7,16 @@ import com.codestates.category.CategoryService;
 import com.codestates.content.entity.Content;
 import com.codestates.global.exception.BusinessLogicException;
 import com.codestates.global.exception.ExceptionCode;
-import com.codestates.image.ImageUploadService;
-import com.codestates.performance.dto.PerformanceArtistDto;
 import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
 import com.codestates.performance.entity.PerformanceArtist;
 import com.codestates.performance.repository.PerformanceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -48,6 +41,7 @@ public class PerformanceServiceImpl implements PerformanceService{
 
                     performanceArtist.addPerformance(performance);
                     performanceArtist.addArtist(artist);
+
                     return performanceArtist;
                 }).collect(Collectors.toList());
 
@@ -108,15 +102,25 @@ public class PerformanceServiceImpl implements PerformanceService{
     }
 
     @Override
-    public Page<Performance> findPerformancesByCategory(Pageable pageable, long categoryId, String isCompleted) {
+    public Page<Performance> findPerformancesByCategory(Pageable pageable, long categoryId, String performanceStatus) {
         Category category = categoryService.findVerifiedCategory(categoryId);
 
-        if(isCompleted.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_COMPLETED.getStatus())) {
+        if(performanceStatus.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_COMPLETED.getStatus())) {
             return performanceRepository.findAllByCategoryAndTimeIsAfter(category, pageable);
-        } else if(isCompleted.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_NOT_COMPLETED.getStatus())) {
+        } else if(performanceStatus.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_NOT_COMPLETED.getStatus())) {
             return performanceRepository.findAllByCategoryAndTimeIsBefore(category, pageable);
         }
         return performanceRepository.findAllByCategory(category, pageable);
+    }
+
+    @Override
+    public Page<Performance> findPerformancesByArtist(Pageable pageable, long artistId, String performanceStatus) {
+        if(performanceStatus.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_COMPLETED.getStatus())) {
+            return performanceRepository.findAllByArtistIdTimeIsAfter(artistId, pageable);
+        } else if(performanceStatus.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_NOT_COMPLETED.getStatus())) {
+            return performanceRepository.findAllByArtistIdTimeIsBefore(artistId, pageable);
+        }
+        return performanceRepository.findAllByArtistId(artistId, pageable);
     }
 
     @Override
@@ -130,6 +134,7 @@ public class PerformanceServiceImpl implements PerformanceService{
         return findPerformance.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
     }
+
     @Override
     public Performance updatePerformanceSeats(Performance performance, int SeatValue){
 
@@ -137,4 +142,5 @@ public class PerformanceServiceImpl implements PerformanceService{
         performance.setTotalSeat(remainingSeats);
         return performanceRepository.save(performance);
     }
+
 }

@@ -82,12 +82,25 @@ public class PerformanceController {
 
     /* 카테고리별 공연 조회 */
     @GetMapping("/category/{category-id}")
-    public ResponseEntity getPerformance(@PathVariable("category-id") @Positive long categoryId,
+    public ResponseEntity getPerformanceByCategory(@PathVariable("category-id") @Positive long categoryId,
                                          @RequestParam("page") @Positive int page,
                                          @RequestParam("size") @Positive int size,
                                          @RequestParam(value="performanceStatus", required = false) String performanceStatus) {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("performanceId").descending());
         Page<Performance> pagePerformance = performanceService.findPerformancesByCategory(pageable, categoryId, performanceStatus);
+        List<Performance> findPerformance = pagePerformance.toList();
+
+        return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);
+    }
+
+    /* 아티스트별 공연 조회 */
+    @GetMapping("/artist/{artist-id}")
+    public ResponseEntity getPerformanceByArtist(@PathVariable("artist-id") @Positive long artistId,
+                                                   @RequestParam("page") @Positive int page,
+                                                   @RequestParam("size") @Positive int size,
+                                                   @RequestParam(value="performanceStatus", required = false) String performanceStatus) {
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("performanceId").descending());
+        Page<Performance> pagePerformance = performanceService.findPerformancesByArtist(pageable, artistId, performanceStatus);
         List<Performance> findPerformance = pagePerformance.toList();
 
         return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);

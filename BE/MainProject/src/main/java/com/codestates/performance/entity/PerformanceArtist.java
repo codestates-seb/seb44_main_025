@@ -30,7 +30,7 @@ public class PerformanceArtist {
     public void addPerformance(Performance performance) {
         this.performance = performance;
         if(! this.performance.getPerformanceArtists().contains(this)) {
-            this.performance.getPerformanceArtists().add(this);
+            this.performance.addPerformanceArtist(this);
         }
     }
 

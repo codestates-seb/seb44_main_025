@@ -19,5 +19,8 @@ public interface PerformanceService {
 
     Page<Performance> findPerformances(PageRequest pageRequest, String performanceStatus);
 
+
+    Page<Performance> findPerformancesByArtist(Pageable pageable, long artistId, String performanceStatus);
+  
     Performance updatePerformanceSeats(Performance performance, int SeatValue);
 }
