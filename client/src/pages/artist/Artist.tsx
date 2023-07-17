@@ -16,7 +16,8 @@ import {
   useGetArtistPerfomanced,
   useGetArtistReview,
 } from '../../api/useFetch';
-import { ArtistPagePerformance } from '../../model/Performance';
+import React, { useState } from 'react';
+import { ArtistInfoData } from '../../zustand/artist.stores';
 
 export default function Artistpage() {
   const { artistId } = useParams();
@@ -24,7 +25,23 @@ export default function Artistpage() {
   const artistPerformanceData = useGetArtistPerfomance(artistId);
   const artistPerformancedData = useGetArtistPerfomanced(artistId);
   const artistReviewData = useGetArtistReview(artistId);
-  // console.log(artistPerformanceData);
+  const { setArtistInfo } = ArtistInfoData();
+
+  const [artistNameValue, setArtistNameValue] = useState<string>(
+    artistData?.artistName || ''
+  );
+  const [artistSnsValue, setArtistSnsValue] = useState<string>(
+    artistData?.snsLink || ''
+  );
+  const [artistContentValue, setArtistContentValue] = useState<string>(
+    artistData?.content || ''
+  );
+
+  const clickEdit = () => {
+    setArtistNameValue(artistNameValue);
+    setArtistSnsValue(artistSnsValue);
+    setArtistContentValue(artistContentValue);
+  };
 
   return (
     <>
@@ -44,7 +61,9 @@ export default function Artistpage() {
             </S.ArtistDetail>
             <S.ArtistEdit>
               <Link to="/artistedit">
-                <EditIcon />
+                <div onClick={() => clickEdit()}>
+                  <EditIcon />
+                </div>
               </Link>
             </S.ArtistEdit>
             <S.ArtistIntrodution>

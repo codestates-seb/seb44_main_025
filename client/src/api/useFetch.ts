@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie, setCookie } from '../utils/Cookie';
+import { ArtistInfoData } from '../zustand/artist.stores';
 
 const TEST_HOST = process.env.REACT_APP_TEST_HOST;
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
@@ -95,13 +96,21 @@ export const useGetArtists = () => {
 
 export const useGetArtist = (id: string | number | undefined) => {
   const [data, setData] = useState<Artist>();
+  const { setArtistInfo } = ArtistInfoData();
 
   const getData = async () => {
     await axios
       .get<Artist>(`${SERVER_HOST}/artist/${id}`, {
         headers: { 'ngrok-skip-browser-warning': true },
       })
-      .then(data => setData(data.data))
+      .then(data => {
+        setArtistInfo({
+          artistname: data.data.artistName,
+          snslink: data.data.snsLink || '',
+          content: data.data.content,
+        });
+        return setData(data.data);
+      })
       .catch(err => console.log(err));
   };
   useEffect(() => {

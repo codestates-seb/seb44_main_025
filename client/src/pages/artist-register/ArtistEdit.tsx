@@ -18,6 +18,7 @@ import { artistnameRegExp } from '../../utils/RegExp';
 import { ErrorMessage } from '@hookform/error-message';
 import { getCookie } from '../../utils/Cookie';
 import { FontStyle } from '../../utils/Theme';
+import { ArtistInfoData } from '../../zustand/artist.stores';
 
 interface IForm {
   nickname: string;
@@ -62,6 +63,9 @@ export default function Artistedit() {
   let [submitClicked, setSubmitClicked] = useState(false);
   const navigate = useNavigate();
   const userInfo = getCookie('userInfo');
+
+  const { artistInfo } = ArtistInfoData();
+  console.log(artistInfo);
 
   const {
     register,
@@ -222,66 +226,71 @@ export default function Artistedit() {
             <form onSubmit={handleSubmit(handleSubmitAll)}>
               <S.InputContainer>
                 <S.InputLabel>아티스트</S.InputLabel>
-                {/* <Controller
-                control={control}
-                name={'artistName'}
-                defaultValue={''}
-                rules={{
-                  required: '반드시 입력해야 합니다',
-                  pattern: {
-                    value: artistnameRegExp,
-                    message:
-                      '아티스트이름은 한영 또는 숫자를 띄어쓰기 없이 사용해야 합니다',
-                  },
-                  minLength: {
-                    value: 1,
-                    message: '닉네임은 1자 이상 16자 이하여야 합니다',
-                  },
-                  maxLength: {
-                    value: 16,
-                    message: '닉네임은 1자 이상 16자 이하여야 합니다',
-                  },
-                }}
-                render={({ field }) => {
-                  return (
-                    <>
-                      <Input
-                        value={field.value}
-                        suffix={true}
-                        width={285}
-                        height={30}
-                        onChange={field.onChange}
-                      />
-                      <button
-                        onClick={() =>
-                          useGetDuplicateArtistname(input_nickname.current)
-                        }
-                        // onChange={() => {
-                        //   setNoNicknameDuplBtnClickedSubmit(true),
-                        // }}
-                      >
-                        중복확인
-                      </button>
-                    </>
-                  );
-                }}
-              />
-              <ErrorMessage
-                errors={errors}
-                name="nickname"
-                render={({ messages }) => {
-                  console.log('messages', messages);
-                  return (
-                    messages &&
-                    Object.entries(messages).map(([type, message]) => (
-                      <p key={type}>{message}</p>
-                    ))
-                  );
-                }}
-              /> */}
-                <div>
+                <Controller
+                  control={control}
+                  name={'artistName'}
+                  defaultValue={''}
+                  rules={{
+                    required: '반드시 입력해야 합니다',
+                    pattern: {
+                      value: artistnameRegExp,
+                      message:
+                        '아티스트이름은 한영 또는 숫자를 띄어쓰기 없이 사용해야 합니다',
+                    },
+                    minLength: {
+                      value: 1,
+                      message: '닉네임은 1자 이상 16자 이하여야 합니다',
+                    },
+                    maxLength: {
+                      value: 16,
+                      message: '닉네임은 1자 이상 16자 이하여야 합니다',
+                    },
+                  }}
+                  render={({ field }) => {
+                    return (
+                      <>
+                        <Input
+                          value={field.value}
+                          suffix={true}
+                          buttonText="중복확인"
+                          width={285}
+                          height={30}
+                          onChange={field.onChange}
+                          onClick={() =>
+                            useGetDuplicateArtistname(input_nickname.current)
+                          }
+                        />
+                        {/* <button
+                          onClick={() =>
+                            useGetDuplicateArtistname(input_nickname.current)
+                          }
+                          // onChange={() => {
+                          //   setNoNicknameDuplBtnClickedSubmit(true),
+                          // }}
+                        >
+                          중복확인
+                        </button> */}
+                      </>
+                    );
+                  }}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="nickname"
+                  render={({ messages }) => {
+                    console.log('messages', messages);
+                    return (
+                      messages &&
+                      Object.entries(messages).map(([type, message]) => (
+                        <p key={type}>{message}</p>
+                      ))
+                    );
+                  }}
+                />
+                {/* <div>
                   <O.Input
                     width={285}
+                    defaultValue={artistInfo.artistname}
                     {...register('nickname', {
                       // required:
                       //   '닉네임은 한글 또는 영문을 띄어쓰기 없이 사용해야 합니다',
@@ -311,7 +320,7 @@ export default function Artistedit() {
                   >
                     중복확인
                   </O.ButtonSpan>
-                </div>
+                </div> */}
                 <ErrorMessage
                   errors={errors}
                   name="nickname"
