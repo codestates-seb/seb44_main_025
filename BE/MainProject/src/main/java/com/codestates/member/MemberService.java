@@ -60,6 +60,7 @@ public class MemberService {
         member.setNickname(memberPatchDto.getNickname());
         member.setEmail(memberPatchDto.getEmail());
         member.setPassword(memberPatchDto.getPassword());
+        member.setPhone(memberPatchDto.getPhone());
 
         return memberRepository.save(member);
     }

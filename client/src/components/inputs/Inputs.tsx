@@ -17,6 +17,7 @@ type InputType = {
   errorMessage?: string;
   successMessage?: string;
   buttonText?: string;
+  onClick?: () => void;
 } & InputContainerType &
   React.InputHTMLAttributes<HTMLInputElement>;
 export const Input: React.FC<InputType> = ({
@@ -31,6 +32,7 @@ export const Input: React.FC<InputType> = ({
   errorMessage,
   successMessage,
   buttonText,
+  onClick,
   ...props
 }) => {
   return (
@@ -66,7 +68,7 @@ export const Input: React.FC<InputType> = ({
               <SearchIcon />
             ))}
         </S.InputContainer>
-        {buttonText && <button>{buttonText}</button>}
+        {buttonText && <button onClick={onClick}>{buttonText}</button>}
       </S.InputFlexContainer>
       {errorMessage && (
         <S.ParagraphErrorMessage>{errorMessage}</S.ParagraphErrorMessage>

@@ -25,7 +25,7 @@ export interface Artist {
   imageUrl: string;
   memberId: number;
   profileImageUrl?: string;
-  snsLink?: string;
+  snsLink: string;
 }
 
 export interface ArtistList {

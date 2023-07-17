@@ -25,7 +25,6 @@ public class Category {
     @Column(name = "category", nullable = false, unique = true, updatable = false)
     private String category;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Artist> artists;
 
