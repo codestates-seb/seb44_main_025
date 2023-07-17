@@ -59,7 +59,10 @@ export const useGetPerformances = (
         }
       )
       .then(data => setData(data.data))
-      .catch(err => console.log(err));
+      .catch(err => {
+        if (err.code === 'ERR_CANCELED') return;
+        console.log(err);
+      });
 
     return () => source.cancel('요청 취소');
   }, [categoryId, isStale]);
@@ -85,7 +88,10 @@ export const useGetArtists = (categoryId?: number | null) => {
         }
       )
       .then(data => setData(data.data))
-      .catch(err => console.log(err));
+      .catch(err => {
+        if (err.code === 'ERR_CANCELED') return;
+        console.log(err);
+      });
 
     return () => {
       source.cancel('요청 취소');
