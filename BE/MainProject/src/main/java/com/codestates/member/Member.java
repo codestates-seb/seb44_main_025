@@ -1,6 +1,7 @@
 package com.codestates.member;
 
 import com.codestates.artist.Artist;
+import com.codestates.reservation.entity.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,6 +32,8 @@ public class Member {
     private List<String> roles = new ArrayList<>();
     @OneToOne(mappedBy = "member")
     private Artist artist;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private Reservation reservation;
 
     public Member(String email, String nickname, String password){
         this.email = email;
