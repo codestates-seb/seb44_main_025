@@ -98,8 +98,13 @@ public class PerformanceServiceImpl implements PerformanceService{
     }
 
     @Override
-    public Page<Performance> findPerformances(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("performanceId").descending());
+    public Page<Performance> findPerformances(PageRequest pageRequest, String isCompleted) {
+        // 공연완료
+        if(isCompleted.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_COMPLETED.getStatus())) {
+            return performanceRepository.findAllByTimeIsAfter(pageRequest);
+        } else if(isCompleted.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_NOT_COMPLETED.getStatus())) {
+            return performanceRepository.findAllByTimeIsBefore(pageRequest);
+        }
         return performanceRepository.findAll(pageRequest);
     }
 

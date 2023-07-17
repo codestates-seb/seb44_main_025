@@ -90,4 +90,19 @@ public class Performance {
     public void addPerformanceArtists(List<PerformanceArtist> performanceArtists) {
         this.performanceArtists = performanceArtists;
     }
+
+    @Getter
+    public enum PERFORMANCE_STATUS {
+        PERFORMANCE_COMPLETED("공연중"),
+        PERFORMANCE_NOT_COMPLETED("공연완료");
+
+        private String status;
+        PERFORMANCE_STATUS(String status) {
+            this.status = status;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+    }
 }

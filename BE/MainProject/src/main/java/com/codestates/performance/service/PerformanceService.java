@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 public interface PerformanceService {
     Performance createPerformance(Performance performance, PerformanceDto.Post performanceDto);
 
-    Page<Performance> findPerformances(int page, int size);
-
     Page<Performance> findPerformancesByCategory(Pageable pageable, long categoryId);
 
     void deletePerformance(long performanceId);
@@ -18,4 +16,6 @@ public interface PerformanceService {
     Performance updatePerformance(Performance performance, PerformanceDto.Patch performanceDto);
 
     Performance findPerformance(long performanceId);
+
+    Page<Performance> findPerformances(PageRequest pageRequest, String performanceStatus);
 }

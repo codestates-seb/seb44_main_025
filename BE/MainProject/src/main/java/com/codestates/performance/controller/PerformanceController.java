@@ -7,6 +7,7 @@ import com.codestates.global.dto.MultiResponseDto;
 import com.codestates.image.ImageUploadService;
 import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
+import com.codestates.performance.entity.Performance.PERFORMANCE_STATUS;
 import com.codestates.performance.mapper.PerformanceMapper;
 import com.codestates.performance.service.PerformanceService;
 import com.codestates.global.dto.SingleResponseDto;
@@ -75,8 +76,10 @@ public class PerformanceController {
     /* 공연 전체 조회 */
     @GetMapping
     public ResponseEntity getPerformance(@RequestParam("page") @Positive int page,
-                                         @RequestParam("size") @Positive int size) {
-        Page<Performance> pagePerformance = performanceService.findPerformances(page - 1, size);
+                                         @RequestParam("size") @Positive int size,
+                                         @RequestParam(value="performanceStatus", required = false) String performanceStatus) {
+        PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("performanceId").descending());
+        Page<Performance> pagePerformance = performanceService.findPerformances(pageRequest, performanceStatus);
         List<Performance> findPerformance = pagePerformance.toList();
 
         return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);
