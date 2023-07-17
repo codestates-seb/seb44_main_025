@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 public interface PerformanceService {
     Performance createPerformance(Performance performance, PerformanceDto.Post performanceDto);
 
-    Page<Performance> findPerformancesByCategory(Pageable pageable, long categoryId);
+    Page<Performance> findPerformancesByCategory(Pageable pageable, long categoryId, String performanceStatus);
 
     void deletePerformance(long performanceId);
 

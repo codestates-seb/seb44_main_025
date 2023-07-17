@@ -25,4 +25,12 @@ public interface PerformanceRepository extends JpaRepository<Performance, Long> 
 
     @Query(value="SELECT p FROM Performance p WHERE p.date > now()")
     Page<Performance> findAllByTimeIsAfter(Pageable pageable);
+
+    @Query(value="SELECT p FROM Performance p WHERE p.category = :category and p.date <= now()",
+            countName="SELECT COUNT(p) FROM Performance p WHERE p.category = :category")
+    Page<Performance> findAllByCategoryAndTimeIsBefore(@Param("category") Category category, Pageable pageable);
+    @Query(value="SELECT p FROM Performance p WHERE p.category = :category and p.date > now()",
+            countName="SELECT COUNT(p) FROM Performance p WHERE p.category = :category")
+    Page<Performance> findAllByCategoryAndTimeIsAfter(@Param("category") Category category, Pageable pageable);
+
 }
