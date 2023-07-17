@@ -2,8 +2,12 @@ package com.codestates.reservation.service;
 
 import com.codestates.global.exception.BusinessLogicException;
 import com.codestates.global.exception.ExceptionCode;
+import com.codestates.member.Member;
+import com.codestates.member.MemberService;
 import com.codestates.performance.entity.Performance;
 import com.codestates.performance.repository.PerformanceRepository;
+import com.codestates.performance.service.PerformanceService;
+import com.codestates.performance.service.PerformanceServiceImpl;
 import com.codestates.reservation.dto.ReservationDto;
 import com.codestates.reservation.entity.Reservation;
 import com.codestates.reservation.mapper.ReservationMapper;
@@ -20,25 +24,33 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
     private final PerformanceRepository performanceRepository;
+    private final PerformanceServiceImpl performanceServiceImpl;
+    private final MemberService memberService;
 
-    public ReservationService(ReservationRepository reservationRepository, ReservationMapper reservationMapper,PerformanceRepository performanceRepository) {
+    public ReservationService(ReservationRepository reservationRepository, ReservationMapper reservationMapper,PerformanceRepository performanceRepository,
+                              PerformanceServiceImpl performanceServiceImpl, MemberService memberService) {
         this.reservationRepository = reservationRepository;
         this.reservationMapper = reservationMapper;
         this.performanceRepository = performanceRepository;
+        this.performanceServiceImpl = performanceServiceImpl;
+        this.memberService = memberService;
     }
 
     // 예약 생성
-    public ReservationDto.ReservationResponseDto createReservation(ReservationDto.ReservationRequestDto reservationRequestDto) throws AccessDeniedException {
+    public ReservationDto.ReservationResponseDto createReservation(ReservationDto.ReservationRequestDto reservationRequestDto, long memberId) throws AccessDeniedException {
         // 예약 정보를 생성하고 저장
         // 해당 DTO를 Reservation 엔티티로 변환하여 예약 정보를 생성하고 저장
+        Member member = memberService.findVerifiedMember(memberId);
+
         Reservation reservation = reservationMapper.reservationRequestDtoToReservation(reservationRequestDto);
-        // getMemberId()); // jwt 후 레포지스토리 - findbyid
+        reservation.setMember(member);
         reservation.setReservationStatus(Reservation.ReservationStatus.WAITING);
 
         Performance performance = performanceRepository.findById(reservationRequestDto.getPerformanceId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
 
         reservation.setPrice(performance.getPrice()); // 공연에 등록된 가격 정보 가져오기
+        reservation.setDate(performance.getDate());
 
         int seatValue = reservationRequestDto.getSeatValue(); // 예약한 좌석 수
         int totalSeats = performance.getTotalSeat(); // 퍼포먼스 객체의 총 남은 토탈 좌석 수
@@ -47,11 +59,16 @@ public class ReservationService {
             int maxSeats = performance.getTotalSeat();
             throw new BusinessLogicException(ExceptionCode.SEAT_RESERVATION_EXCEEDED, maxSeats);
         }
+        else{
+            performanceServiceImpl.updatePerformanceSeats(performance, seatValue);
+        }
         // 예약 정보 저장
         Reservation savedReservation = reservationRepository.save(reservation);
 
+       ReservationDto.ReservationResponseDto result = reservationMapper.reservationToReservationResponseDto(savedReservation);
+       result.setNickName(reservation.getMember().getNickname());
         // 예약 정보를 DTO로 매핑하여 반환
-        return reservationMapper.reservationToReservationResponseDto(savedReservation);
+        return result;
     }
 
     // 예약 조회 및 상세 정보 반환

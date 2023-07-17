@@ -1,16 +1,20 @@
 package com.codestates.reservation.controller;
 
 import com.codestates.global.exception.BusinessLogicException;
+import com.codestates.member.Member;
+import com.codestates.member.MemberService;
 import com.codestates.reservation.dto.ReservationDto;
 import com.codestates.reservation.entity.Reservation;
 import com.codestates.reservation.service.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -18,17 +22,23 @@ import java.nio.file.AccessDeniedException;
 @Validated
 public class ReservationController {
     private final ReservationService reservationService;
+    private final MemberService memberService;
 
-    public ReservationController(ReservationService reservationService) {
+    public ReservationController(ReservationService reservationService,
+                                 MemberService memberService) {
         this.reservationService = reservationService;
+        this.memberService = memberService;
     }
 
     // 예약 생성
     @PostMapping
-    public ReservationDto.ReservationResponseDto createReservation(@RequestBody ReservationDto.ReservationRequestDto reservationRequestDto) throws AccessDeniedException {
-        //예약을 생성하는 데 필요한 정보를 담고 있는 데이터 객체
-        // 생성된 예약의 상태를 응답 반환
-        ReservationDto.ReservationResponseDto responseDto = reservationService.createReservation(reservationRequestDto);
+    public ReservationDto.ReservationResponseDto createReservation(@RequestBody ReservationDto.ReservationRequestDto reservationRequestDto,
+                                                                   Authentication authentication) throws AccessDeniedException {
+        Map<String, Object> principal = (Map) authentication.getPrincipal();
+        long memberId = ((Number) principal.get("memberId")).longValue();
+
+        ReservationDto.ReservationResponseDto responseDto = reservationService.createReservation(reservationRequestDto, memberId);
+
         return responseDto;
     }
 
