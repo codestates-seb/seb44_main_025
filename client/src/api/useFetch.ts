@@ -220,7 +220,6 @@ export const useGetMemberPerformance = (id: string | number | undefined) => {
   useEffect(() => {
     getData();
   }, []);
-
   return data;
 };
 
