@@ -88,7 +88,20 @@ public class Performance {
     }
 
     public void addPerformanceArtists(List<PerformanceArtist> performanceArtists) {
-        this.performanceArtists = performanceArtists;
+        this.performanceArtists  = performanceArtists;
+
+        for(PerformanceArtist performanceArtist : performanceArtists) {
+            if(performanceArtist.getPerformance() != this) {
+                performanceArtist.addPerformance(this);
+            }
+        }
+    }
+
+    public void addPerformanceArtist(PerformanceArtist performanceArtist) {
+        this.performanceArtists.add(performanceArtist);
+        if(performanceArtist.getPerformance() != this) {
+            performanceArtist.addPerformance(this);
+        }
     }
 
     @Getter
