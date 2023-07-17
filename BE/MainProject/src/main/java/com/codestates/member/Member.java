@@ -1,10 +1,11 @@
 package com.codestates.member;
 
 import com.codestates.artist.Artist;
+import com.codestates.reservation.entity.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.SQLInsert;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Member {
     private long memberId;
     @Column(length = 50, nullable = false, updatable = true, unique = true, name = "email")
     private String email;
-    @Column(length = 50, nullable = false, updatable = true, unique = false, name = "nickname")
+    @Column(length = 50, nullable = false, updatable = true, unique = true, name = "nickname")
     private String nickname;
     @Column(nullable = false, updatable = true, unique = false, name = "password")
     private String password;
@@ -31,11 +32,25 @@ public class Member {
     private List<String> roles = new ArrayList<>();
     @OneToOne(mappedBy = "member")
     private Artist artist;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
+    @Column(nullable = true, updatable = true, unique = true, name= "phone")
+    private String  phone;
+
 
     public Member(String email, String nickname, String password){
         this.email = email;
         this.nickname = nickname;
         this.password = password;
+    }
+    public Member(String email, String nickname, String password, String phone){
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.phone = phone;
+    }
+    public Member(String email){
+        this.email = email;
     }
 
 }

@@ -18,14 +18,18 @@ public class MemberMapper {
         return new Member(
                 memberPatchDto.getEmail(),
                 memberPatchDto.getNickname(),
-                memberPatchDto.getPassword());
+                memberPatchDto.getPassword(),
+                memberPatchDto.getPhone());
     }
     public MemberResponseDto memberToMemberResponseDto(Member member){
+
         return new MemberResponseDto(member.getMemberId(),
                 member.getEmail(),
                 member.getNickname(),
                 member.getPassword(),
-                false
+                false,
+                0,
+                null
         );
 
     }

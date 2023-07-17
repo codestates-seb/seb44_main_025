@@ -135,4 +135,12 @@ public class PerformanceServiceImpl implements PerformanceService{
                 new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
     }
 
+    @Override
+    public Performance updatePerformanceSeats(Performance performance, int SeatValue){
+
+        int remainingSeats = performance.getTotalSeat()-SeatValue;
+        performance.setTotalSeat(remainingSeats);
+        return performanceRepository.save(performance);
+    }
+
 }

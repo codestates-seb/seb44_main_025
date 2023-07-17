@@ -3,9 +3,10 @@ package com.codestates.member;
 import com.codestates.global.exception.BusinessLogicException;
 import com.codestates.global.exception.ExceptionCode;
 import com.codestates.global.security.jwt.CustomAuthorityUtils;
+import com.codestates.global.security.jwt.JwtTokenizer;
 import com.codestates.member.dto.MemberPatchDto;
 
-
+import org.springframework.security.crypto.password.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,19 +20,20 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final EntityManager em;
-
     private PasswordEncoder passwordEncoder;
 
-
+    private JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
 
     public MemberService(MemberRepository memberRepository,
                          EntityManager em,
                          PasswordEncoder passwordEncoder,
-                         CustomAuthorityUtils authorityUtils){
+                         CustomAuthorityUtils authorityUtils,
+                         JwtTokenizer jwtTokenizer){
         this.memberRepository = memberRepository;
         this.em = em;
+        this.jwtTokenizer = jwtTokenizer;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
     }
@@ -58,6 +60,7 @@ public class MemberService {
         member.setNickname(memberPatchDto.getNickname());
         member.setEmail(memberPatchDto.getEmail());
         member.setPassword(memberPatchDto.getPassword());
+        member.setPhone(memberPatchDto.getPhone());
 
         return memberRepository.save(member);
     }
@@ -97,4 +100,30 @@ public class MemberService {
         if (member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
+    //이메일 닉네임 패스워드 검사
+    public boolean duplicateEmail(String email){
+        boolean result = false;
+        Optional<Member> member = memberRepository.findByEmail(email);
+        if (member.isPresent()){
+            result = true;}
+        return result;
+    }
+    public boolean duplicateNickname(String nickname){
+        boolean result = false;
+        Optional<Member> member = memberRepository.findByNickname(nickname);
+        if (member.isPresent()){
+            result = true;}
+        return result;
+    }
+    public boolean checkPassword(long memberId, String password){
+        Member member = findVerifiedMember(memberId);
+        String findPassword = member.getPassword();
+
+        boolean matches = passwordEncoder.matches(password, findPassword);
+        boolean result = false;
+        if (matches == true){
+            result = true;}
+        return result;
+    }
+
 }

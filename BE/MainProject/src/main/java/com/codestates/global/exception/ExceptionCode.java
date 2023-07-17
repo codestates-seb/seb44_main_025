@@ -17,7 +17,9 @@ public enum ExceptionCode {
     ARTIST_EXISTS(409, "이미 존재하는 아티스트명 입니다"),
     CATEGORY_NOT_FOUND(404, "존재하지 않는 카테고리명"),
     CONTENT_NOT_FOUND(404, "존재하지 않는 콘텐츠"),
-    PERFORMANCE_COMMENT_NOT_FOUND(404, "존재하지 않는 공연 코멘트입니다.");
+    PERFORMANCE_COMMENT_NOT_FOUND(404, "존재하지 않는 공연 코멘트입니다."),
+    PASSWORD_NOT_CORRECT(404,"패스워드가 일치하지 않습니다"),
+    MEMBER_HAS_ARTIST(500, "이미 아티스트가 등록된 회원입니다");
 
 
 

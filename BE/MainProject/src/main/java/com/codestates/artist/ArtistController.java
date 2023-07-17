@@ -1,10 +1,9 @@
 package com.codestates.artist;
 
 
-import com.codestates.artist.dto.ArtistDto;
-import com.codestates.artist.dto.ArtistDtoToArtist;
-import com.codestates.artist.dto.ArtistPageResponseDto;
-import com.codestates.artist.dto.ArtistResponseDto;
+import com.codestates.artist.dto.*;
+import com.codestates.artist.mapper.ArtistDtoToArtist;
+import com.codestates.artist.mapper.ArtistMapper;
 import com.codestates.category.Category;
 import com.codestates.category.CategoryService;
 import com.codestates.global.PageInfo;
@@ -60,13 +59,21 @@ public class ArtistController {
         System.out.println("아아아아아아아아아"+memberId);
         artistDto.setMember(memberService.findVerifiedMember(memberId));
 
-        Artist savedArtist = artistService.createArtist(artistDtoToArtist.change(artistDto));
+        Artist savedArtist = artistService.createArtist(artistDtoToArtist.change(artistDto),memberId);
         System.out.println("아아아아아아아아아"+savedArtist.getMember().getMemberId());
         ArtistResponseDto response = artistMapper.artistToArtistResponseDto(savedArtist);
 
-
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    //아티스트명 중복검사
+    @PostMapping("/duplicate/artistName")
+    public ResponseEntity duplicateArtistName(@Valid @RequestBody ArtistName artistName){
+        String getArtistName = artistName.getArtistName();
+        boolean result = artistService.duplicateArtistName(getArtistName);
+        return new ResponseEntity<>(result,
+                HttpStatus.OK);
+    }
+
     //아티스트 프로필 수정
     @PatchMapping("/{artistId}")
     public ResponseEntity patchArtist(@Valid @PathVariable("artistId") long artistId,
@@ -83,10 +90,11 @@ public class ArtistController {
     //아티스트id로 아티스트 프로필 조회
     @GetMapping("/{artistId}")
     public ResponseEntity getArtist(@PathVariable("artistId") long artistId){
-        Artist response = artistService.findArtist(artistId);
+        ArtistResponseDto response = artistMapper.artistToArtistResponseDto(artistService.findArtist(artistId));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     //카테고리별 아티스트 리스트 출력
     @GetMapping

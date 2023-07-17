@@ -26,11 +26,11 @@ public class Artist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "artist_id", nullable = false, updatable = false, unique = true)
     private long artistId;
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
@@ -42,16 +42,20 @@ public class Artist {
     private String content;
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(nullable = true)
+    private String snsLink;
     @JsonIgnore
     @OneToMany(mappedBy = "artist")
     private List<PerformanceArtist> performanceArtists = new ArrayList<>();
 
-    public Artist(String artistName, String imageUrl, String content, Category category,
+
+    public Artist(String artistName, String imageUrl, String content, Category category, String snsLink,
                   Member member){
         this.artistName = artistName;
         this.imageUrl = imageUrl;
         this.content = content;
         this.category = category;
+        this.snsLink = snsLink;
         this.member = member;
     }
 }

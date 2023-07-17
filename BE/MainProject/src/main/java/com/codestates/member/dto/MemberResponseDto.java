@@ -12,6 +12,7 @@ public class MemberResponseDto {
     private String email;
     private String nickname;
     private String password;
-
     private boolean hasArtist;
+    private long artistId;
+    private String phone;
 }
