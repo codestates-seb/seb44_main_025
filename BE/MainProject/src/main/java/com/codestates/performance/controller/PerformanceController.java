@@ -7,12 +7,16 @@ import com.codestates.global.dto.MultiResponseDto;
 import com.codestates.image.ImageUploadService;
 import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
+import com.codestates.performance.entity.Performance.PERFORMANCE_STATUS;
 import com.codestates.performance.mapper.PerformanceMapper;
 import com.codestates.performance.service.PerformanceService;
 import com.codestates.global.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,31 +36,31 @@ public class PerformanceController {
     private final PerformanceMapper mapper;
     private final PerformanceService performanceService;
     private final ImageUploadService imageUploadService;
-    private final CategoryService categoryService;
-    private final ArtistService artistService;
 
     /* 공연 생성 */
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity postPerformance(@RequestPart PerformanceDto.Post performanceDto) throws IOException {
 
-        Performance performance = mapper.performancePostDtoToPerformance(performanceDto, categoryService, artistService);
-        Performance response = performanceService.createPerformance(performance);
+        Performance performance = mapper.performancePostDtoToPerformance(performanceDto);
+        Performance response = performanceService.createPerformance(performance, performanceDto);
 
         return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(response)), HttpStatus.CREATED);
     }
 
     /* 공연 수정 */
-    @PatchMapping("/{performance-id}")
+    @PatchMapping(value = "/{performance-id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity patchPerformance(@PathVariable("performance-id") @Positive long performanceId,
-                                           @RequestPart @Valid PerformanceDto.Patch performanceDto) throws IOException {
-
+                                           @RequestPart @Valid PerformanceDto.Patch performanceDto,
+                                           @RequestPart("image-file") MultipartFile imageFile) throws IOExceptio {
+        String imageUrl = imageUploadService.imageUpload(imageFile);
+        performanceDto.setImageUrl(imageUrl);
         performanceDto.setPerformanceId(performanceId);
-        Performance performance = performanceService.updatePerformance(mapper.performancePatchDtoToPerformance(
-                performanceDto,
-                performanceService,
-                categoryService,
-                artistService));
-        return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(performance)), HttpStatus.OK);
+
+        Performance performance = mapper.performancePatchDtoToPerformance(performanceDto);
+        Performance response = performanceService.updatePerformance(performance, performanceDto);
+        PerformanceDto.Response responseDto = mapper.performanceToPerformanceResponseDto(response);
+
+        return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(response)), HttpStatus.OK);
     }
 
     /* 공연 조회 */
@@ -69,8 +73,10 @@ public class PerformanceController {
     /* 공연 전체 조회 */
     @GetMapping
     public ResponseEntity getPerformance(@RequestParam("page") @Positive int page,
-                                         @RequestParam("size") @Positive int size) {
-        Page<Performance> pagePerformance = performanceService.findPerformances(page - 1, size);
+                                         @RequestParam("size") @Positive int size,
+                                         @RequestParam(value="performanceStatus", required = false) String performanceStatus) {
+        PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("performanceId").descending());
+        Page<Performance> pagePerformance = performanceService.findPerformances(pageRequest, performanceStatus);
         List<Performance> findPerformance = pagePerformance.toList();
 
         return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);
@@ -81,7 +87,8 @@ public class PerformanceController {
     public ResponseEntity getPerformance(@PathVariable("category-id") @Positive long categoryId,
                                          @RequestParam("page") @Positive int page,
                                          @RequestParam("size") @Positive int size) {
-        Page<Performance> pagePerformance = performanceService.findPerformancesByCategory(page - 1, size, categoryId);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("performanceId").descending());
+        Page<Performance> pagePerformance = performanceService.findPerformancesByCategory(pageable, categoryId);
         List<Performance> findPerformance = pagePerformance.toList();
 
         return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);

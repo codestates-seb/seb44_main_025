@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.xml.stream.events.Comment;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@ToString
 @NoArgsConstructor
 @Setter
 @Getter
@@ -52,32 +54,55 @@ public class Performance {
     @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
     private List<PerformanceComment> performanceComments = new ArrayList<>();
 
-    public Performance(String title, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl) {
+    public Performance(String title, LocalDateTime date, int price, String place, int totalSeat, String imageUrl) {
         this.title = title;
         this.date = date;
         this.price = price;
         this.place = place;
         this.totalSeat = totalSeat;
-        this.category = category;
         this.imageUrl = imageUrl;
     }
 
-    public Performance(long performanceId, String title, LocalDateTime date, int price, String place, int totalSeat, Category category, String imageUrl, Content content) {
+    public Performance(long performanceId, String title, LocalDateTime date, int price, String place, int totalSeat, String imageUrl) {
         this.performanceId = performanceId;
         this.title = title;
         this.date = date;
         this.price = price;
         this.place = place;
         this.totalSeat = totalSeat;
-        this.category = category;
         this.imageUrl = imageUrl;
-        this.content = content;
     }
 
-    public void setContent(Content content) {
+    public void addContent(Content content) {
         this.content = content;
         if(this.content.getPerformance() != this) {
             this.content.setPerformance(this);
+        }
+    }
+
+    public void addCategory(Category category) {
+        this.category = category;
+        if(! this.category.getPerformances().contains(this)) {
+            this.category.getPerformances().add(this);
+        }
+    }
+
+    public void addPerformanceArtists(List<PerformanceArtist> performanceArtists) {
+        this.performanceArtists = performanceArtists;
+    }
+
+    @Getter
+    public enum PERFORMANCE_STATUS {
+        PERFORMANCE_COMPLETED("공연중"),
+        PERFORMANCE_NOT_COMPLETED("공연완료");
+
+        private String status;
+        PERFORMANCE_STATUS(String status) {
+            this.status = status;
+        }
+
+        public String getStatus() {
+            return status;
         }
     }
 }
