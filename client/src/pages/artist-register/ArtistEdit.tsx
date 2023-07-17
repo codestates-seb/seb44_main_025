@@ -12,7 +12,7 @@ import Img from '../.././images/우리사랑이대로.jpeg';
 // import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { postArtist, postArtistImg } from '../../api/fetchAPI';
+import { patchArtist, postArtistImg } from '../../api/fetchAPI';
 import axios from 'axios';
 import { artistnameRegExp } from '../../utils/RegExp';
 import { ErrorMessage } from '@hookform/error-message';
@@ -38,7 +38,7 @@ const categoryObj = {
   댄스: 6,
 };
 
-export default function Artistregist() {
+export default function Artistedit() {
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const handleClickCategory = (id: number) => {
     if (categoryId === id) setCategoryId(null);
@@ -86,9 +86,6 @@ export default function Artistregist() {
       categoryId,
       artistName: getArtistName,
     });
-    if (!getUrl) {
-      alert('이미지를 등록해야합니다.');
-    }
     formData.append(
       'artistpostDto',
       new Blob([JSON.stringify(data)], {
@@ -96,7 +93,7 @@ export default function Artistregist() {
       }),
       'artistpostDto'
     );
-    postArtist(data);
+    patchArtist(data);
   };
 
   /** 닉네임 중복검사하는 ajax 함수 */
@@ -141,13 +138,13 @@ export default function Artistregist() {
     } else {
       alert('빈칸없이 입력해야합니다.');
     }
-    navigate(`/mypage/${userInfo.memberId}`);
+    // navigate(`/mypage/${userInfo.memberId}`);
   };
 
   const onSubmitImg = () => {
     let formData = new FormData();
     if (artistImgFile) {
-      formData.append('image-file', artistImgFile as Blob);
+      formData.append('image-file', artistImgFile as Blob, 'image');
       postArtistImg(formData).then((data: any) => {
         setGetUrl(data.data);
       });
@@ -161,7 +158,7 @@ export default function Artistregist() {
       <Header precious={true} />
       <S.Main>
         <S.Section>
-          <S.Title>아티스트 등록하기</S.Title>
+          <S.Title>아티스트 수정하기</S.Title>
           <S.LogoImg src={Img}></S.LogoImg>
           <S.FileInput
             type="file"

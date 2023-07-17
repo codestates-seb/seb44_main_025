@@ -16,6 +16,7 @@ import {
   useGetArtistPerfomanced,
   useGetArtistReview,
 } from '../../api/useFetch';
+import { ArtistPagePerformance } from '../../model/Performance';
 
 export default function Artistpage() {
   const { artistId } = useParams();
@@ -23,6 +24,7 @@ export default function Artistpage() {
   const artistPerformanceData = useGetArtistPerfomance(artistId);
   const artistPerformancedData = useGetArtistPerfomanced(artistId);
   const artistReviewData = useGetArtistReview(artistId);
+  // console.log(artistPerformanceData);
 
   return (
     <>
@@ -35,39 +37,41 @@ export default function Artistpage() {
             <S.LogoImg src={Img} />
             <S.ArtistImg src={artistData?.imageUrl || Img} />
             <S.ArtistDetail>
-              <S.ArtistName>{artistData?.artistName}동동</S.ArtistName>
+              <S.ArtistName>{artistData?.artistName}</S.ArtistName>
               <S.ArtistSns href={artistData?.snsLink} target="_blank">
                 SNS링크
               </S.ArtistSns>
             </S.ArtistDetail>
             <S.ArtistEdit>
-              <Link to="/artistregist">
+              <Link to="/artistedit">
                 <EditIcon />
               </Link>
             </S.ArtistEdit>
             <S.ArtistIntrodution>
               {/* <S.SubTitle>소개</S.SubTitle> */}
               <S.ArtistIntrodutionContainer>
-                <S.ArtistContent>
-                  {artistData?.content}안녕 날 소개하지 내이름은 김하온
-                </S.ArtistContent>
+                <S.ArtistContent>{artistData?.content}</S.ArtistContent>
               </S.ArtistIntrodutionContainer>
             </S.ArtistIntrodution>
           </S.ProfileWarppar>
           {/* 해당 아티스트가 준비중인 공연이 있으면 */}
           <S.SubTitle>준비 중인 공연</S.SubTitle>
           {/*  artistPerformanceData있는 날짜가 현재 시간보다 뒤에 있으면*/}
-          {artistPerformanceData?.date ? (
-            <Concertpreview
-              performanceId={artistPerformanceData?.performanceId}
-              key={artistPerformanceData?.performanceId}
-              posterImg={artistPerformanceData?.imageUrl}
-              title={artistPerformanceData?.title}
-              artistName={artistPerformanceData.artistName}
-              category={artistPerformanceData?.category}
-              price={artistPerformanceData?.price}
-              date={artistPerformanceData?.date}
-            />
+          {artistPerformanceData ? (
+            artistPerformanceData.map(artistPerformanceData => {
+              return (
+                <Concertpreview
+                  performanceId={artistPerformanceData?.performanceId}
+                  key={artistPerformanceData?.performanceId}
+                  posterImg={artistPerformanceData?.imageUrl}
+                  title={artistPerformanceData?.title}
+                  artistName={artistPerformanceData.artistName}
+                  category={artistPerformanceData?.category}
+                  price={artistPerformanceData?.price}
+                  date={artistPerformanceData?.date}
+                />
+              );
+            })
           ) : (
             <S.EmptyContainer>
               <S.EmptyWrapper>
@@ -84,11 +88,15 @@ export default function Artistpage() {
           {/* 완료한 공연이 있다면 받아오고 구분해서 받아오기*/}
           <S.ArtistHistoryContainerWrappar>
             {artistPerformancedData ? (
-              <ArtistreviewContainer
-                key={artistPerformancedData?.performanceId}
-                imageUrl={artistPerformancedData?.imageUrl}
-                content="후기등록"
-              />
+              artistPerformancedData.map(artistPerformancedData => {
+                return (
+                  <ArtistreviewContainer
+                    key={artistPerformancedData?.performanceId}
+                    imageUrl={artistPerformancedData?.imageUrl}
+                    content="후기등록"
+                  />
+                );
+              })
             ) : (
               <S.EmptyContainer>
                 <S.EmptyWrapper>
@@ -104,14 +112,18 @@ export default function Artistpage() {
           <S.MyreviewContainer>
             <S.SubTitle>아티스트 후기</S.SubTitle>
             {artistReviewData ? (
-              <S.ReviewWrapper key={artistReviewData?.artistId}>
-                <Review
-                  nickname={artistReviewData?.nickName}
-                  createdAt={artistReviewData?.createdAt}
-                  reviewTitle={artistReviewData?.reviewTitle}
-                  content={artistReviewData?.content}
-                />
-              </S.ReviewWrapper>
+              artistReviewData.map(artistReviewData => {
+                return (
+                  <S.ReviewWrapper key={artistReviewData?.artistId}>
+                    <Review
+                      nickname={artistReviewData?.nickName}
+                      createdAt={artistReviewData?.createdAt}
+                      reviewTitle={artistReviewData?.reviewTitle}
+                      content={artistReviewData?.content}
+                    />
+                  </S.ReviewWrapper>
+                );
+              })
             ) : (
               <S.EmptyContainer>
                 <S.EmptyWrapper>

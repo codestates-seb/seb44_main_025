@@ -56,10 +56,12 @@ const PerformanceRegister = () => {
       categoryId,
       content,
       place: '홍대',
-      artistIds: [1, ...artistIds],
+      artistIds: [getCookie('userInfo').artistId, ...artistIds],
+      imageUrl:
+        'https://economychosun.com/site/data/img_dir/2022/11/21/2022112100038_0.jpg',
     });
     let formData = new FormData();
-    formData.append('image-file', file as Blob, 'image');
+    // formData.append('image-file', file as Blob, 'image');
     formData.append(
       'performanceDto',
       new Blob([JSON.stringify(result)], {
@@ -67,12 +69,13 @@ const PerformanceRegister = () => {
       }),
       'performanceDto'
     );
-    postPerformance(formData).then(data => {
-      if (data && 'performanceId' in data) {
-        clearContent();
-        navigate(`performances/${data.performanceId}`);
-      }
-    });
+    postPerformance(formData);
+    // postPerformance(formData).then(data => {
+    //   if (data && 'performanceId' in data) {
+    //     clearContent();
+    //     navigate(`performances/${data.performanceId}`);
+    //   }
+    // });
   };
   const handleSubmitAll = () => {
     if (!imagesrc || !content) return;
