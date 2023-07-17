@@ -67,6 +67,23 @@ export const postArtist = async (body: BodyType) => {
   return data;
 };
 
+export const patchArtist = async (body: BodyType) => {
+  const data = await axios
+    .patch(`${SERVER_HOST}/artist`, JSON.stringify(body), {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: getCookie('accessToken'),
+      },
+    })
+    .then(data => {
+      return data;
+    })
+    .catch(err => console.error(err));
+  console.log(data);
+
+  return data;
+};
+
 export const postArtistImg = async (body: BodyType) => {
   const data = await axios
     .post(`${SERVER_HOST}/image`, body, {

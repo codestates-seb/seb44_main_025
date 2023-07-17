@@ -16,6 +16,7 @@ import { removeCookie, getCookie } from '../../utils/Cookie';
 import {
   useGetMember,
   useGetMemberPerformance,
+  useGetMemberPerformanced,
   useGetMemberReview,
 } from '../../api/useFetch';
 
@@ -24,6 +25,7 @@ export default function Mypage() {
   const { memberId } = useParams();
   const memberData = useGetMember();
   const reservationData = useGetMemberPerformance(memberId);
+  const pastReservationData = useGetMemberPerformanced(memberId);
   const reviewData = useGetMemberReview(memberId);
 
   /** 로그아웃 및 main으로 페이지 이동 */
@@ -56,8 +58,8 @@ export default function Mypage() {
           </S.SubTitleWrappar>
           <S.ProfileWarppar>
             <S.UserDetail>
-              <S.UserNickname>{memberData?.email}ehd</S.UserNickname>
-              <S.UserNickname>{memberData?.nickname}동동</S.UserNickname>
+              <S.UserNickname>{memberData?.email}</S.UserNickname>
+              <S.UserNickname>{memberData?.nickname}</S.UserNickname>
             </S.UserDetail>
           </S.ProfileWarppar>
           {/* 아티스트 미등록 사용자는 아티스트 등록 버튼 */}
@@ -84,16 +86,20 @@ export default function Mypage() {
           )}
           <S.SubTitle>예약 중인 공연</S.SubTitle>
           {reservationData ? (
-            <Concertpreview
-              performanceId={reservationData.performanceId}
-              key={reservationData.performanceId}
-              posterImg={reservationData.imageUrl}
-              title={reservationData.title}
-              artistName={reservationData.artistName}
-              category={reservationData.category}
-              price={reservationData.price}
-              date={reservationData.date}
-            />
+            reservationData.map(reservationData => {
+              return (
+                <Concertpreview
+                  performanceId={reservationData.performanceId}
+                  key={reservationData.performanceId}
+                  posterImg={reservationData.imageUrl}
+                  title={reservationData.title}
+                  artistName={reservationData.artistName}
+                  category={reservationData.category}
+                  price={reservationData.price}
+                  date={reservationData.date}
+                />
+              );
+            })
           ) : (
             <S.EmptyContainer>
               <S.EmptyWrapper>
@@ -107,12 +113,16 @@ export default function Mypage() {
 
           <S.SubTitle>내가 관람한 공연</S.SubTitle>
           <S.ArtistreviewContainerWrappar>
-            {reservationData ? (
-              <ArtistreviewContainer
-                key={reservationData?.performanceId}
-                imageUrl={reservationData?.imageUrl}
-                content="후기등록"
-              />
+            {pastReservationData ? (
+              pastReservationData.map(pastReservationData => {
+                return (
+                  <ArtistreviewContainer
+                    key={pastReservationData?.performanceId}
+                    imageUrl={pastReservationData?.imageUrl}
+                    content="후기등록"
+                  />
+                );
+              })
             ) : (
               <S.EmptyContainer>
                 <S.EmptyWrapper>
@@ -127,14 +137,18 @@ export default function Mypage() {
           <S.MyreviewContainer>
             <S.SubTitle>내가 작성한 후기</S.SubTitle>
             {reviewData ? (
-              <S.ReviewWrapper>
-                <Review
-                  nickname={reviewData?.nickName}
-                  createdAt={reviewData?.createdAt}
-                  reviewTitle={reviewData?.reviewTitle}
-                  content={reviewData?.content}
-                />
-              </S.ReviewWrapper>
+              reviewData.map(reviewData => {
+                return (
+                  <S.ReviewWrapper key={reviewData?.memberId}>
+                    <Review
+                      nickname={reviewData?.nickName}
+                      createdAt={reviewData?.createdAt}
+                      reviewTitle={reviewData?.reviewTitle}
+                      content={reviewData?.content}
+                    />
+                  </S.ReviewWrapper>
+                );
+              })
             ) : (
               <S.EmptyContainer>
                 <S.EmptyWrapper>
