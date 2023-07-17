@@ -63,7 +63,7 @@ const PerformanceList = () => {
                 date={v.date}
                 performanceId={v.performanceId}
                 posterImg={v.imageUrl}
-                artistname={v.performanceArtist.performanceArtistList[
+                artistName={v.performanceArtist.performanceArtistList[
                   v.performanceId
                 ]?.toString()}
                 category={v.category}

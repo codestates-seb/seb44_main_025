@@ -43,6 +43,9 @@ public class ReservationService {
         int seatValue = reservationRequestDto.getSeatValue(); // 예약한 좌석 수
         int totalSeats = performance.getTotalSeat(); // 퍼포먼스 객체의 총 남은 토탈 좌석 수
 
+        if (totalSeats == 0) {
+            throw new BusinessLogicException(ExceptionCode.SEATS_SOLD_OUT);
+        }
         if (seatValue > totalSeats) {
             int maxSeats = performance.getTotalSeat();
             throw new BusinessLogicException(ExceptionCode.SEAT_RESERVATION_EXCEEDED, maxSeats);

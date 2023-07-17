@@ -28,12 +28,13 @@ export default {
   `,
   ProfileWarppar: styled.div`
     width: 360px;
+    /* height: 50px; */
     display: flex;
   `,
   UserDetail: styled.div`
     display: flex;
     flex-direction: column;
-    margin: 20px 15px 10px 15px;
+    margin: 0px 15px 10px 15px;
   `,
   UserNickname: styled.p`
     font-size: var(--p-large-medium-font-size);
@@ -42,13 +43,15 @@ export default {
     color: var(--font-white-color);
     width: 320px;
   `,
-  UserEdit: styled.div`
-    display: flex;
-    /* justify-self: flex-end; */
-    align-items: center;
+  UserEditButtonWrappar: styled.div`
     cursor: pointer;
-    padding-right: 3px;
-    margin-bottom: 10px;
+    margin-right: 15px;
+    margin-top: 15px;
+  `,
+  SubTitleWrappar: styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   `,
   SubTitle: styled.header`
     font-size: var(--heading5-font-size);

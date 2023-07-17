@@ -26,3 +26,11 @@ export interface ArtistList {
   data: Artist[];
   pageInfo: PageInfo;
 }
+
+export interface ArtistReview {
+  nickName: string;
+  reviewTitle: string;
+  artistId?: number;
+  content: string;
+  createdAt: string;
+}

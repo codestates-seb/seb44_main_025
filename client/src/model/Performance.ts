@@ -27,3 +27,13 @@ export interface PerformanceListType {
   data: PerformanceType[];
   pageInfo: PageInfo;
 }
+
+export interface ArtistPagePerformance {
+  performanceId: number;
+  title?: string;
+  date?: string;
+  price?: number;
+  category?: string;
+  imageUrl: string;
+  artistName?: string;
+}

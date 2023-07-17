@@ -1,10 +1,14 @@
-import { PerformanceListType, PerformanceType } from '../model/Performance';
-import { ArtistList, Artist } from '../model/Artist';
+import {
+  PerformanceListType,
+  PerformanceType,
+  ArtistPagePerformance,
+} from '../model/Performance';
+import { ArtistList, Artist, ArtistReview } from '../model/Artist';
 import { Member, Performance, Review } from '../model/Member';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { getCookie } from '../utils/Cookie';
+import { getCookie, removeCookie, setCookie } from '../utils/Cookie';
 
 const TEST_HOST = process.env.REACT_APP_TEST_HOST;
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
@@ -107,6 +111,60 @@ export const useGetArtist = (id: string | number | undefined) => {
   return data;
 };
 
+export const useGetArtistPerfomance = (id: string | number | undefined) => {
+  const [data, setData] = useState<ArtistPagePerformance>();
+
+  const getData = async () => {
+    await axios
+      .get<ArtistPagePerformance>(`${SERVER_HOST}/perfomance/${id}`, {
+        headers: { 'ngrok-skip-browser-warning': true },
+      })
+      .then(data => setData(data.data))
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return data;
+};
+
+export const useGetArtistPerfomanced = (id: string | number | undefined) => {
+  const [data, setData] = useState<ArtistPagePerformance>();
+
+  const getData = async () => {
+    await axios
+      .get<ArtistPagePerformance>(`${SERVER_HOST}/perfomance/${id}`, {
+        headers: { 'ngrok-skip-browser-warning': true },
+      })
+      .then(data => setData(data.data))
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return data;
+};
+
+export const useGetArtistReview = (id: string | number | undefined) => {
+  const [data, setData] = useState<ArtistReview>();
+
+  const getData = async () => {
+    await axios
+      .get<ArtistReview>(`${SERVER_HOST}/review/${id}`, {
+        headers: { 'ngrok-skip-browser-warning': true },
+      })
+      .then(data => setData(data.data))
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return data;
+};
+
 export const useGetMember = () => {
   const [data, setData] = useState<Member>();
 
@@ -118,13 +176,24 @@ export const useGetMember = () => {
           'ngrok-skip-browser-warning': true,
         },
       })
-      .then(data => setData(data.data))
+      .then(data => {
+        setData(data.data), removeCookie('userInfo');
+        setCookie(
+          'userInfo',
+          JSON.stringify({
+            memberId: data.data.memberId,
+            hasArtist: data.data.hasArtist,
+            artistId: data.data.artistId,
+          }),
+          { path: '/' }
+        );
+        console.log(getCookie('userInfo'));
+      })
       .catch(err => console.log(err));
   };
   useEffect(() => {
     getData();
   }, []);
-
   return data;
 };
 
