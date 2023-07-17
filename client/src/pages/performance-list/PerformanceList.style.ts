@@ -58,4 +58,23 @@ export const S = {
       margin: 8px 0px;
     }
   `,
+  Heading3: styled.h3`
+    font-size: var(--heading3-font-size);
+    font-weight: var(--heading3-font-weight);
+    line-height: var(--heading3-line-height);
+    color: white;
+    cursor: pointer;
+
+    &:not(:first-child, :last-child):nth-child(2n) {
+      margin-left: 5px;
+      margin-right: 5px;
+      padding-bottom: 5px;
+      cursor: auto;
+    }
+  `,
+  Tab: styled.div`
+    height: 24px;
+    display: flex;
+    align-items: center;
+  `,
 };
