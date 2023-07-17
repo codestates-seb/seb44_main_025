@@ -25,8 +25,9 @@ public class ReservationController {
     }
 
     // 예약 생성
-    @PostMapping
-    public ReservationDto.ReservationResponseDto createReservation(@RequestBody ReservationDto.ReservationRequestDto reservationRequestDto) throws AccessDeniedException {
+    @PostMapping ("/{performanceId}")
+    public ReservationDto.ReservationResponseDto createReservation(@PathVariable("performanceId") Long performanceId,
+            @RequestBody ReservationDto.ReservationRequestDto reservationRequestDto) throws AccessDeniedException {
         //예약을 생성하는 데 필요한 정보를 담고 있는 데이터 객체
         // 생성된 예약의 상태를 응답 반환
         ReservationDto.ReservationResponseDto responseDto = reservationService.createReservation(reservationRequestDto);
