@@ -35,5 +35,22 @@ jwt:
 mail:
   address:
     admin: gustn5309@naver.com
+security:
+  oauth2:
+    client:
+      registration:
+        google:
+          clientId: 630258186407-njojpj9hhi0eepqad4dnk48nv8qb1fm0.apps.googleusercontent.com
+          clientSecret: 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
+          scope:
+            - email
+            - profile
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+
 
 
