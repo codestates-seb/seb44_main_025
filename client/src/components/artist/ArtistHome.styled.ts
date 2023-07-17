@@ -31,14 +31,12 @@ export const Styled_ArtistHome = {
     width: 75px;
     height: 115px;
     transition: all 0.1s linear;
-    &:hover {
-      transform: scale(1.13);
-    }
   `,
   ArtistImg: styled.img`
     width: 75px;
     height: 75px;
     transition: 0.3s;
+    border-radius: 15px;
     &:hover {
       border-radius: 50%;
     }

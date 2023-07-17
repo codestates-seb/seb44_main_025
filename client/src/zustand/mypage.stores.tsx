@@ -3,10 +3,11 @@ import { create } from 'zustand';
 interface MyPage {
   id?: number;
   artistId?: number;
-  userId: number;
-  nickname: string;
-  imageUrl: string;
-  profileimageUrl: string;
+  userId?: number;
+  nickName?: string;
+  imageUrl?: string;
+  profileImageUrl?: string;
+  hasArtist?: boolean;
 }
 
 interface Performancelist {
@@ -16,28 +17,44 @@ interface Performancelist {
   category: string;
   date: string;
   price: number;
-  artistname: string;
+  artistName: string;
   categoryId: number;
   imageUrl: string;
   id?: number;
 }
 
+interface Reviewlist {
+  nickName: string;
+  reviewTitle: string;
+  artistId?: number;
+  content: string;
+}
+
 type Store1 = {
-  myPageData: MyPage[] | [];
-  setMyPageData: (state: MyPage[]) => void;
+  myPageData: MyPage;
+  setMyPageData: (state: MyPage) => void;
 };
+
+export const MyPageList = create<Store1>(set => ({
+  myPageData: {},
+  setMyPageData: state => set({ myPageData: state }),
+}));
 
 type Store2 = {
   performanceData: Performancelist[] | [];
   setPerformanceData: (state: Performancelist[]) => void;
 };
 
-export const MyPageList = create<Store1>(set => ({
-  myPageData: [],
-  setMyPageData: state => set({ myPageData: state }),
-}));
-
 export const MyPagePerformanceList = create<Store2>(set => ({
   performanceData: [],
   setPerformanceData: state => set({ performanceData: state }),
+}));
+
+type Store3 = {
+  reviewData: Reviewlist[] | [];
+  setReviewData: (state: Reviewlist[]) => void;
+};
+export const MyPageReviewList = create<Store3>(set => ({
+  reviewData: [],
+  setReviewData: state => set({ reviewData: state }),
 }));

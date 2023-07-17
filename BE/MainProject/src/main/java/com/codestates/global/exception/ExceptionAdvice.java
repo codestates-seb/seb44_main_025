@@ -1,5 +1,6 @@
 package com.codestates.global.exception;
 
+import com.codestates.reservation.service.ReservationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,5 +27,4 @@ public class ExceptionAdvice {
 
         return response;
     }
-
 }

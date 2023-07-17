@@ -16,14 +16,15 @@ import {
   ArtistpagePerformanceList,
   ArtistpageReviewList,
 } from '../zustand/artistpage.stores';
+import { useGetArtist } from '../api/useFetch';
 
 interface Artistpage {
   id?: number;
   artistId: number;
-  artistname: string;
+  artistName: string;
   imageUrl: string;
-  profileimageUrl: string;
-  snslink: string;
+  profileImageUrl: string;
+  snsLink: string;
   content: string;
 }
 
@@ -34,7 +35,7 @@ interface Performancelist {
   category: string;
   date: string;
   price: number;
-  artistname: string;
+  artistName: string;
   categoryId: number;
   imageUrl: string;
   id?: number;
@@ -42,20 +43,20 @@ interface Performancelist {
 }
 
 interface Reviewlist {
-  nickname: string;
-  reviewtitle: string;
+  nickName: string;
+  reviewTitle: string;
   artistId?: number;
   content: string;
 }
 
 export default function Artistpage() {
-  const { artistpageData } = ArtistpageList();
-  const { setArtistpageData } = ArtistpageList();
-  const { performanceData } = ArtistpagePerformanceList();
-  const { setPerformanceData } = ArtistpagePerformanceList();
-  const { reviewData } = ArtistpageReviewList();
-  const { setReviewData } = ArtistpageReviewList();
+  const { artistpageData, setArtistpageData } = ArtistpageList();
+  const { performanceData, setPerformanceData } = ArtistpagePerformanceList();
+  const { reviewData, setReviewData } = ArtistpageReviewList();
+
   const { artistId } = useParams();
+  const artistData = useGetArtist(artistId);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -92,31 +93,27 @@ export default function Artistpage() {
         <S.Section>
           <S.Title>아티스트페이지</S.Title>
           {/* 로그인한 userId에 맞는 artistId를 보여주는거 */}
-          {artistpageData
-            .filter((item: Artistpage) => item.id === 4)
-            .map((el: Artistpage) => {
-              return (
-                <S.ProfileWarppar key={el.artistId}>
-                  <S.ProfileImg src={el.profileimageUrl || Img} />
-                  <S.UserImg src={el.imageUrl || Img} />
-                  <S.ArtistDetail>
-                    <S.ArtistContent>{el.artistname}</S.ArtistContent>
-                    <S.ArtistContent>{el.snslink}</S.ArtistContent>
-                    <S.UserEdit>
-                      <Link to="/artistregist">
-                        <EditIcon />
-                      </Link>
-                    </S.UserEdit>
-                  </S.ArtistDetail>
-                  <S.ArtistIntrodution>
-                    <S.SubTitle>소개</S.SubTitle>
-                    <S.ArtistIntrodutionContainer>
-                      <S.ArtistContent>{el.content}</S.ArtistContent>
-                    </S.ArtistIntrodutionContainer>
-                  </S.ArtistIntrodution>
-                </S.ProfileWarppar>
-              );
-            })}
+          <S.ProfileWarppar key={artistData?.artistId}>
+            <S.ProfileImg src={artistData?.profileImageUrl || Img} />
+            <S.UserImg src={artistData?.imageUrl || Img} />
+            <S.ArtistDetail>
+              <S.ArtistContent>{artistData?.artistName}</S.ArtistContent>
+              <S.ArtistSns href={artistData?.snsLink} target="_blank">
+                SNS링크
+              </S.ArtistSns>
+              <S.UserEdit>
+                <Link to="/artistregist">
+                  <EditIcon />
+                </Link>
+              </S.UserEdit>
+            </S.ArtistDetail>
+            <S.ArtistIntrodution>
+              <S.SubTitle>소개</S.SubTitle>
+              <S.ArtistIntrodutionContainer>
+                <S.ArtistContent>{artistData?.content}</S.ArtistContent>
+              </S.ArtistIntrodutionContainer>
+            </S.ArtistIntrodution>
+          </S.ProfileWarppar>
           {/* 해당 아티스트가 준비중인 공연이 있으면 */}
           <S.SubTitle>준비 중인 공연</S.SubTitle>
           {performanceData.length !== 0 ? (
@@ -127,7 +124,7 @@ export default function Artistpage() {
                   key={el.userId}
                   posterImg={el.imageUrl}
                   title={el.title}
-                  artistname={el.artistname}
+                  artistname={el.artistName}
                   category={el.category}
                   price={el.price}
                   date={el.date}
@@ -179,8 +176,9 @@ export default function Artistpage() {
                 return (
                   <S.ReviewWrapper key={i}>
                     <Review
-                      nickname={el.nickname}
-                      reviewtitle={el.reviewtitle}
+                      nickname={el.nickName}
+                      createdAt={el.nickName}
+                      reviewTitle={el.reviewTitle}
                       content={el.content}
                     />
                   </S.ReviewWrapper>
@@ -215,7 +213,7 @@ const S = {
   `,
   Section: styled.section`
     width: 390px;
-    min-height: calc(100vh - 100px);
+    min-height: calc(100vh - 120px);
     background-color: var(--theme-background-color);
   `,
   Title: styled.header`
@@ -239,6 +237,8 @@ const S = {
     padding: 0px 15px;
   `,
   UserImg: styled.img`
+    position: relative;
+    z-index: 1;
     width: 100px;
     height: 100px;
     margin-top: -60px;
@@ -259,9 +259,15 @@ const S = {
   ArtistDetail: styled.div`
     display: flex;
     flex-direction: column;
-    margin: 20px 15px 10px 15px;
+    margin: 20px 15px 0px 15px;
   `,
   ArtistContent: styled.p`
+    font-size: var(--p-small-medium-font-size);
+    font-weight: var(--p-small-medium-font-weight);
+    line-height: var(--p-small-medium-line-height);
+    color: var(--font-white-color);
+  `,
+  ArtistSns: styled.a`
     font-size: var(--p-small-medium-font-size);
     font-weight: var(--p-small-medium-font-weight);
     line-height: var(--p-small-medium-line-height);
@@ -302,7 +308,7 @@ const S = {
     background-color: var(--font-mid-color);
     border-radius: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     margin-bottom: 10px;
     margin-left: 15px;

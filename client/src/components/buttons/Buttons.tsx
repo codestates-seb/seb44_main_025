@@ -1,41 +1,120 @@
-import { useState } from 'react';
-import { styled } from 'styled-components';
+import React from 'react';
+import { styled, css } from 'styled-components';
+import { ButtonSizeStyle, ButtonThemeStyle } from './Buttons.style';
 import { ReactComponent as ArrowIcon } from '../../icons/icon_right.svg';
 
-export const ButtonMini = styled.button`
-  cursor: pointer;
-  width: 40px;
-  height: 34px;
-  background-color: var(--theme-background-color);
-  border: 1.5px solid var(--button-primary-border-color);
-  border-radius: 100px;
-  color: var(--font-light-white-color);
-
-  &:active {
-    border: 1.5px solid var(--button-white-border-color);
-    color: var(--button-white-border-color);
-  }
-`;
-
-interface ButtonMiniTogglePropType {
-  selected: boolean;
+type ButtonSize = 'mini' | 'small' | 'medium' | 'large';
+type ButtonTheme =
+  | 'white'
+  | 'highlight'
+  | 'highlightBorder'
+  | 'primary'
+  | 'theme';
+interface ButtonProps {
+  size?: 'mini' | 'small' | 'medium' | 'large';
+  theme?: 'white' | 'highlight' | 'highlightBorder' | 'primary' | 'theme';
+  border?: boolean;
+  icon?: 'arrow';
+  width?: number;
+  height?: number;
+  color?: string;
 }
-const ButtonMiniToggle = styled.button<ButtonMiniTogglePropType>`
+
+export const Button = styled.button<ButtonProps>`
+  &[disabled] {
+    pointer-events: none;
+  }
   cursor: pointer;
-  width: 40px;
-  height: 34px;
-  background-color: ${props =>
-    props.selected
-      ? 'var(--button-highlight-background-color)'
-      : 'var(--theme-background-color)'};
-  border: ${props =>
-    props.selected ? 'none' : '1.5px solid var(--button-primary-border-color)'};
   border-radius: 100px;
-  color: ${props =>
-    props.selected
-      ? 'var(--font-white-color)'
-      : 'var(--font-light-white-color)'};
+  ${({ size }) => (size ? ButtonSizeStyle[size] : ButtonSizeStyle.medium)};
+  ${({ theme }: { theme: ButtonTheme }) =>
+    theme ? ButtonThemeStyle[theme] : ButtonThemeStyle.primary};
+  ${({ width }) => (width ? `width: ${width}px;` : '')};
+  ${({ height }) => (height ? `height: ${height}px;` : '')};
+  ${({ color }) => (color ? `color: ${color};` : '')};
+  ${({ icon }) =>
+    icon
+      ? css`
+          border: 1.5px solid var(--button-primary-background-color);
+          & p {
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+          }
+          & p:after {
+            content: ${icon === 'arrow' ? '"➜"' : '"➜"'};
+            position: relative;
+            opacity: 1;
+            top: 0;
+            right: -6px;
+            transition: 0.5s;
+          }
+          &:is(:hover, :active) {
+            box-shadow: 0px 0px 3px var(--button-primary-border-color);
+            & p {
+              margin-right: -14px;
+            }
+            & p:after {
+              opacity: 0;
+              right: -20px;
+            }
+          }
+        `
+      : ''};
 `;
+
+interface ButtonWithArrowProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  text: string;
+  theme: ButtonTheme;
+}
+export const ButtonWithArrow: React.FC<ButtonWithArrowProps> = ({
+  text,
+  ...props
+}) => (
+  <Button
+    size={'medium'}
+    icon={'arrow'}
+    width={120}
+    height={24}
+    {...props}
+    theme={props.theme}
+  >
+    <p>{text}</p>
+  </Button>
+);
+
+export const ButtonsPreview = () => {
+  return (
+    <>
+      {/* 기존의 ButtonMini */}
+      <Button size={'mini'} theme={'theme'}>
+        미니
+      </Button>
+      {/* 버튼 Primary 75px, 160px, 335px */}
+      <Button size={'small'} theme={'primary'}>
+        버튼
+      </Button>
+      <Button size={'medium'} theme={'primary'}>
+        버튼
+      </Button>
+      <Button size={'large'} theme={'primary'}>
+        공연 정보 등록/수정
+      </Button>
+      <ButtonWithArrow text={'공연예약'} theme="white" />
+      <Button theme="highlightBorder" size="small">
+        회원탈퇴
+      </Button>
+      <Button theme={'highlight'} size={'small'} height={34}>
+        취소
+      </Button>
+      <Button theme="white" size="small">
+        결제
+      </Button>
+    </>
+  );
+};
+
 export const ButtonMiniToggleSelect = styled.button`
   cursor: pointer;
   width: 40px;
@@ -54,18 +133,6 @@ export const ButtonMiniToggleUnselect = styled.button`
   border-radius: 100px;
   color: var(--font-light-white-color);
 `;
-
-export const ButtonToggle = ({ text }: { text: string }) => {
-  const [isSelected, setIsSelected] = useState(false);
-  return (
-    <ButtonMiniToggle
-      selected={isSelected}
-      onClick={() => setIsSelected(!isSelected)}
-    >
-      {text}
-    </ButtonMiniToggle>
-  );
-};
 
 export const ButtonPrimary75px = styled.button`
   cursor: pointer;
@@ -199,20 +266,3 @@ export const ButtonWhite = styled.button`
   border-radius: 100px;
   border: none;
 `;
-
-export const ButtonsPreview = () => {
-  return (
-    <>
-      <ButtonMini>버튼</ButtonMini>
-      <ButtonToggle text={'버튼'} />
-      <ButtonPrimary75px>버튼</ButtonPrimary75px>
-      <ButtonPrimary160px>버튼</ButtonPrimary160px>
-      <ButtonPrimary335px>공연 정보 등록/수정</ButtonPrimary335px>
-      <ButtonWithArrowLight text={'공연예약'} />
-      <ButtonWithArrowDark text={'공연예약'} />
-      <ButtonHighlightBorder>회원탈퇴</ButtonHighlightBorder>
-      <ButtonHighlight>취소</ButtonHighlight>
-      <ButtonWhite>결제</ButtonWhite>
-    </>
-  );
-};

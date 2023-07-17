@@ -33,6 +33,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
   `,
   TicketModal: styled.div`
     width: 300px;
