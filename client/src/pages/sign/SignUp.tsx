@@ -23,12 +23,15 @@ interface IForm {
 
 const SignUpPage = () => {
   /** 중복여부
-   * @true :중복되지 않음
-   * @false :중복됨
+   * @true :중복됨
+   * @false :중복되지 않음
    */
   let [emailDupl, setEmailDupl] = useState(false);
   let [nicknameDupl, setNicknameDupl] = useState(false);
-  /** 중복확인버튼 클릭 여부 */
+  /** 중복확인버튼 클릭 여부
+   * 0 :누르지 않음
+   * 1~ :누름
+   */
   let [emailDuplBtnCnt, setEmailDuplBtnCnt] = useState(0);
   let [nicknameDuplBtnCnt, setNicknameDuplBtnCnt] = useState(0);
   /** 중복확인 클릭하지 않고 submit 했을 때
@@ -39,6 +42,7 @@ const SignUpPage = () => {
     useState(true);
   let [noNicknameDuplBtnClickedSubmit, setNoNicknameDuplBtnClickedSubmit] =
     useState(true);
+
   let [submitClicked, setSubmitClicked] = useState(false);
   const navigate = useNavigate();
 
@@ -110,11 +114,14 @@ const SignUpPage = () => {
       )
       .then(response => {
         if (response.status === 200) {
+          // 사용 가능한 이메일일 경우
           if (response.data === false) {
             setEmailDupl(false);
             setEmailDuplBtnCnt(emailDuplBtnCnt + 1);
             setNoEmailDuplBtnClickedSubmit(false);
-          } else if (response.data === true) {
+          }
+          // 이미 사용중인 이메일일 경우
+          else if (response.data === true) {
             setEmailDupl(true);
             setEmailDuplBtnCnt(0);
             setNoEmailDuplBtnClickedSubmit(false);
@@ -135,11 +142,14 @@ const SignUpPage = () => {
       )
       .then(response => {
         if (response.status === 200) {
+          // 사용 가능한 이메일일 경우
           if (response.data === false) {
             setNicknameDupl(false);
             setNicknameDuplBtnCnt(nicknameDuplBtnCnt + 1);
             setNoNicknameDuplBtnClickedSubmit(false);
-          } else if (response.data === true) {
+          }
+          // 이미 사용중인 이메일일 경우
+          else if (response.data === true) {
             setNicknameDupl(true);
             setNicknameDuplBtnCnt(0);
             setNoNicknameDuplBtnClickedSubmit(false);
@@ -208,7 +218,6 @@ const SignUpPage = () => {
                   <p>같은 이메일이 이미 존재합니다</p>
                 ) : emailDuplBtnCnt > 0 ? (
                   <p style={{ color: 'var(--input-border-color)' }}>
-                    {' '}
                     사용 가능한 이메일입니다
                   </p>
                 ) : null}
