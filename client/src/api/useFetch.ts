@@ -37,7 +37,7 @@ export const useGetPerformance = (id: string | number | undefined) => {
 };
 
 export const useGetPerformances = (
-  categoryId?: number | null,
+  categoryId?: string | number | null,
   isStale?: boolean | null
 ) => {
   const [data, setData] = useState<PerformanceListType>();
@@ -123,11 +123,11 @@ export const useGetArtistPerfomance = (
   id: string | number | undefined,
   categoryId?: number
 ) => {
-  const [data, setData] = useState<ArtistPagePerformance[]>();
+  const [data, setData] = useState<PerformanceListType>();
 
   const getData = async () => {
     await axios
-      .get<ArtistPagePerformance[]>(
+      .get<PerformanceListType>(
         `${SERVER_HOST}/performance${
           id ? `/artist/${id}` : ''
         }?page=1&size=5&performanceStatus=공연중`,
@@ -135,7 +135,10 @@ export const useGetArtistPerfomance = (
           headers: { 'ngrok-skip-browser-warning': true },
         }
       )
-      .then(data => setData(data.data))
+      .then(data => {
+        console.log(data.data.data);
+        setData(data.data);
+      })
       .catch(err => console.log(err));
   };
   useEffect(() => {
@@ -146,11 +149,11 @@ export const useGetArtistPerfomance = (
 };
 
 export const useGetArtistPerfomanced = (id: string | number | undefined) => {
-  const [data, setData] = useState<ArtistPagePerformance[]>();
+  const [data, setData] = useState<PerformanceListType>();
 
   const getData = async () => {
     await axios
-      .get<ArtistPagePerformance[]>(
+      .get<PerformanceListType>(
         `${SERVER_HOST}/performance${
           id ? `/artist/${id}` : ''
         }?page=1&size=5&performanceStatus=공연완료`,
