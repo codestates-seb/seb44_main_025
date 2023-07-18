@@ -29,7 +29,7 @@ public class Reservation {
     @JoinColumn(name = "member_id")
     private Member member;
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDateTime date;
     @Column(nullable = false)
     private int price;
     @Enumerated(EnumType.STRING)
