@@ -3,8 +3,14 @@ import { PageInfo } from './Common';
 export interface ArtistData {
   artistId: 1;
   artistname: string;
-  imageUrl: string;
-  profileimageUrl: string;
+  artistImg?: string;
+  snslink: string;
+  content: string;
+}
+
+export interface ArtistDataProps {
+  artistname: string;
+  artistImg?: string;
   snslink: string;
   content: string;
 }

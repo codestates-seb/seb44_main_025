@@ -24,7 +24,7 @@ export default function ArtistHome() {
               key={i}
             >
               <Styled_ArtistHome.ArtistpreviewWrapper>
-                <Styled_ArtistHome.ArtistImg src={v.profileimageUrl} />
+                <Styled_ArtistHome.ArtistImg src={v.artistImg} />
                 <Styled_ArtistHome.ArtistDetail>
                   <Styled_ArtistHome.Artistcontent>
                     {v.artistname}

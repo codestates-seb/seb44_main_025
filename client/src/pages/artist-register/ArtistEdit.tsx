@@ -8,20 +8,18 @@ import {
 } from '../../components/buttons/Buttons';
 import { Input } from '../../components/inputs/Inputs';
 import { useState, useRef } from 'react';
-import Img from '../.././images/우리사랑이대로.jpeg';
+import Img from '../.././images/기본이미지.jpg';
+import LogoImg from '../.././images/우리사랑이대로.jpeg';
 // import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { patchArtist, postArtistImg } from '../../api/fetchAPI';
 import axios from 'axios';
 import { artistnameRegExp } from '../../utils/RegExp';
-import { ErrorMessage } from '@hookform/error-message';
 import { getCookie } from '../../utils/Cookie';
 import { FontStyle } from '../../utils/Theme';
-
-interface IForm {
-  nickname: string;
-}
+import { ArtistInfoData } from '../../zustand/artist.stores';
+import { H1Title } from '../../utils/SlideUp';
 
 interface FormValues {
   artistName: string;
@@ -44,48 +42,53 @@ export default function Artistedit() {
     if (categoryId === id) setCategoryId(null);
     else setCategoryId(id);
   };
-  const profileImgInputRef = useRef<HTMLInputElement>(null);
+
+  const artistImgInputRef = useRef<HTMLInputElement>(null);
   const [artistImagesrc, setArtistImagesrc] = useState<string>(Img);
-  // const [videofilesrc, setVideofilesrc] = useState<string>(Img);
   const [artistImgFile, setArtistImgFile] = useState<Blob>();
+  // const [videofilesrc, setVideofilesrc] = useState<string>(Img);
   // const [videoFile, setVideoFile] = useState<Blob>();
 
   /** 중복확인버튼 클릭 여부 */
-  let [nicknameDupl, setNicknameDupl] = useState(false);
+  let [artistNameDupl, setArtistNameDupl] = useState(false);
   /** 중복확인 클릭하지 않고 submit 했을 때
    * @ture :중복확인 X
    * @false :중복확인 O
    */
-  let [nicknameDuplBtnCnt, setNicknameDuplBtnCnt] = useState(0);
-  let [noNicknameDuplBtnClickedSubmit, setNoNicknameDuplBtnClickedSubmit] =
+  let [artistNameDuplBtnCnt, setArtistNameDuplBtnCnt] = useState(0);
+  let [noArtistNameDuplBtnClickedSubmit, setNoArtistNameDuplBtnClickedSubmit] =
     useState(true);
   let [submitClicked, setSubmitClicked] = useState(false);
+
   const navigate = useNavigate();
   const userInfo = getCookie('userInfo');
 
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = useForm<IForm>({
-    criteriaMode: 'all',
-  });
-  const input_nickname = useRef<string | null>(null);
-  input_nickname.current = watch('nickname');
+  /** zustand에서 상태관리하고 있는 함수의 값을 artistInfo에 넣어서 사용할 수 있음  */
+  const { artistInfo } = ArtistInfoData();
+  console.log(artistInfo);
 
   const [getUrl, setGetUrl] = useState();
-  const [getArtistName, setGetArtistName] = useState();
 
+  /** 아티스트 정보를 수정 요청하는 함수 */
   const { handleSubmit, control } = useForm<FormValues>();
+  // onSubmit: SubmitHandler<> = data를 하면 useForm에서 값을 가져와서 넣음
   const onSubmit: SubmitHandler<FormValues> = data => {
     let formData = new FormData();
     // formData.append('image-file', videoFile as Blob, 'image');
-    // formData.append('image-file', artistImgFile as Blob, 'image');
     Object.assign(data, {
       imageUrl: getUrl,
       categoryId,
-      artistName: getArtistName,
     });
+    if (!getUrl) {
+      return alert('이미지를 등록해야합니다.');
+    }
+    if (!categoryId) {
+      return alert('장르를 선택해야합니다.');
+    }
+    // 중복확인완료 후 입력 값이 바뀌면 등록되지 않게
+    if (noArtistNameDuplBtnClickedSubmit) {
+      return alert('중복확인 해야합니다.');
+    }
     formData.append(
       'artistpostDto',
       new Blob([JSON.stringify(data)], {
@@ -93,7 +96,9 @@ export default function Artistedit() {
       }),
       'artistpostDto'
     );
-    patchArtist(data);
+    // artistId를 값으로 보내줘야해서 쿠키에 저장되어 있는 artistId를 빼서 사용
+    patchArtist(getCookie('userInfo').artistId, data);
+    navigate(`/artist/${userInfo.artistId}`);
   };
 
   /** 닉네임 중복검사하는 ajax 함수 */
@@ -106,46 +111,51 @@ export default function Artistedit() {
       .then(response => {
         if (response.status === 200) {
           if (response.data === false) {
-            setNicknameDupl(false);
-            setNicknameDuplBtnCnt(nicknameDuplBtnCnt + 1);
-            setNoNicknameDuplBtnClickedSubmit(false);
+            setArtistNameDupl(false);
+            setArtistNameDuplBtnCnt(artistNameDuplBtnCnt + 1);
+            setNoArtistNameDuplBtnClickedSubmit(false);
+            alert('중복확인 성공');
           } else if (response.data === true) {
-            setNicknameDupl(true);
-            setNicknameDuplBtnCnt(0);
-            setNoNicknameDuplBtnClickedSubmit(false);
+            setArtistNameDupl(true);
+            setArtistNameDuplBtnCnt(0);
+            setNoArtistNameDuplBtnClickedSubmit(false);
           }
         }
       })
       .catch(err => {
-        alert(`error: ${err.response.data.fieldErrors[0].reason}`);
+        alert(`error: ${err?.response?.data?.fieldErrors[0]?.reason}`);
       });
   };
-  // false상태일때 중복확인을 해주세요 라고 뜸
-  // false일때 등록 돼야함 근데 지금 true 인데 등록이 돼네?
+
   const handleSubmitAll = () => {
+    handleSubmit(onSubmit)();
+  };
+
+  /** 닉네임 중복검사하는 ajax 함수 */
+  const handleDuplicat = () => {
     setSubmitClicked(true);
-    // console.log(nicknameDupl);
-    if (!noNicknameDuplBtnClickedSubmit) {
-      if (!nicknameDupl) {
-        handleSubmit(onSubmit)();
+    if (!noArtistNameDuplBtnClickedSubmit) {
+      if (!artistNameDupl) {
+        setArtistNameDuplBtnCnt(0);
       } else {
-        if (nicknameDupl) {
-          if (nicknameDuplBtnCnt > 0) {
-            setNoNicknameDuplBtnClickedSubmit(true);
+        if (artistNameDupl) {
+          if (artistNameDuplBtnCnt > 0) {
+            return setNoArtistNameDuplBtnClickedSubmit(true);
           }
         }
       }
-    } else {
-      alert('빈칸없이 입력해야합니다.');
     }
-    // navigate(`/mypage/${userInfo.memberId}`);
   };
-
+  /** 이미지를 서버에 보내는 함수 */
   const onSubmitImg = () => {
+    // FormData()는 키-값 쌍으로 데이터를 구성하며 빈객체로 만들었음
     let formData = new FormData();
+    // ImgFile을 전달 받으면 빈객체로 만든 FormData에 append메서드를 사용해 키와 값을 추가
     if (artistImgFile) {
-      formData.append('image-file', artistImgFile as Blob, 'image');
+      formData.append('image-file', artistImgFile as Blob);
+      // 이미지를 서버에 보내는 함수에 전달 후 서버로 돌려받은 데이터를 setGetUrl에 저장
       postArtistImg(formData).then((data: any) => {
+        alert('이미지가 저장 되었습니다');
         setGetUrl(data.data);
       });
     } else {
@@ -158,22 +168,29 @@ export default function Artistedit() {
       <Header precious={true} />
       <S.Main>
         <S.Section>
-          <S.Title>아티스트 수정하기</S.Title>
-          <S.LogoImg src={Img}></S.LogoImg>
+          <S.Title>
+            <H1Title.H1span>아티스트 수정하기</H1Title.H1span>
+          </S.Title>
+          <S.LogoImg src={LogoImg}></S.LogoImg>
+          {/* 파일을 첨부하는 인풋 */}
           <S.FileInput
             type="file"
             accept="image/*"
-            ref={profileImgInputRef}
+            // ref의 값을 부여해서 해당 값이 이곳으로 연결됨
+            ref={artistImgInputRef}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               const files = e.target.files;
+              // files가 undefined이거나 null이면 종료
               if (files === undefined || files === null) return;
               const file = files[0];
-              console.log(file);
               setArtistImgFile(file);
               if (file) {
+                // filReader() = 파일을 읽음
                 const reader = new FileReader();
+                // .onload는 이벤트 핸들러로 파일을 읽은 후 실행되는 로직 파일의 결과가 없거나 null이면 종료
                 reader.onload = e => {
                   if (!e.target?.result || e.target?.result === null) return;
+                  // as string은 타입 단언으로 값을 문자열로 강제변환
                   setArtistImagesrc(e.target?.result as string);
                 };
                 reader.readAsDataURL(file);
@@ -182,7 +199,7 @@ export default function Artistedit() {
           />
           <S.ArtistImg
             src={artistImagesrc}
-            onClick={() => profileImgInputRef.current?.click()}
+            onClick={() => artistImgInputRef.current?.click()}
           ></S.ArtistImg>
           <ImageButton>
             <ButtonPrimary75px onClick={() => onSubmitImg()}>
@@ -191,7 +208,6 @@ export default function Artistedit() {
           </ImageButton>
           <S.ArtistDetail>
             <S.SubTitle>아티스트 정보</S.SubTitle>
-
             <S.CategoryContainer>
               {Object.keys(categoryObj).map((key, idx) => {
                 return idx === categoryId ? (
@@ -219,122 +235,64 @@ export default function Artistedit() {
                 );
               })}
             </S.CategoryContainer>
-            <form onSubmit={handleSubmit(handleSubmitAll)}>
+            {/* useForm에서 controller를 사용하기 위해선 form버튼으로 감싸줘야하며 새로고침 기능이 추가 되는데 없애기 위해 preventDefault() 사용 */}
+            <form onSubmit={e => e.preventDefault()}>
               <S.InputContainer>
                 <S.InputLabel>아티스트</S.InputLabel>
-                {/* <Controller
-                control={control}
-                name={'artistName'}
-                defaultValue={''}
-                rules={{
-                  required: '반드시 입력해야 합니다',
-                  pattern: {
-                    value: artistnameRegExp,
-                    message:
-                      '아티스트이름은 한영 또는 숫자를 띄어쓰기 없이 사용해야 합니다',
-                  },
-                  minLength: {
-                    value: 1,
-                    message: '닉네임은 1자 이상 16자 이하여야 합니다',
-                  },
-                  maxLength: {
-                    value: 16,
-                    message: '닉네임은 1자 이상 16자 이하여야 합니다',
-                  },
-                }}
-                render={({ field }) => {
-                  return (
-                    <>
+                <Controller
+                  control={control}
+                  name={'artistName'}
+                  defaultValue={artistInfo.artistname}
+                  rules={{
+                    required: '반드시 입력해야 합니다',
+                    pattern: {
+                      value: artistnameRegExp,
+                      message:
+                        '아티스트명은 한,영,숫자 띄어쓰기 없이 사용해야 합니다',
+                    },
+                    minLength: {
+                      value: 1,
+                      message: '닉네임은 1자 이상 16자 이하여야 합니다',
+                    },
+                    maxLength: {
+                      value: 16,
+                      message: '닉네임은 1자 이상 16자 이하여야 합니다',
+                    },
+                    // 중복확인완료 후 입력 값이 바뀌면 message띄우기
+                    onChange: () => setNoArtistNameDuplBtnClickedSubmit(true),
+                  }}
+                  render={({ field, fieldState: { error } }) => {
+                    return (
                       <Input
                         value={field.value}
                         suffix={true}
                         width={285}
                         height={30}
+                        buttonText="중복확인"
                         onChange={field.onChange}
+                        // 클릭시 중복확인하는 함수로 이동
+                        onClick={() => {
+                          handleDuplicat();
+                          useGetDuplicateArtistname(field.value);
+                        }}
+                        errorMessage={error?.message}
                       />
-                      <button
-                        onClick={() =>
-                          useGetDuplicateArtistname(input_nickname.current)
-                        }
-                        // onChange={() => {
-                        //   setNoNicknameDuplBtnClickedSubmit(true),
-                        // }}
-                      >
-                        중복확인
-                      </button>
-                    </>
-                  );
-                }}
-              />
-              <ErrorMessage
-                errors={errors}
-                name="nickname"
-                render={({ messages }) => {
-                  console.log('messages', messages);
-                  return (
-                    messages &&
-                    Object.entries(messages).map(([type, message]) => (
-                      <p key={type}>{message}</p>
-                    ))
-                  );
-                }}
-              /> */}
-                <div>
-                  <O.Input
-                    width={285}
-                    {...register('nickname', {
-                      // required:
-                      //   '닉네임은 한글 또는 영문을 띄어쓰기 없이 사용해야 합니다',
-                      // pattern: {
-                      //   value: artistnameRegExp,
-                      //   message:
-                      //     '닉네임은 한글 또는 영문을 띄어쓰기 없이 사용해야 합니다',
-                      // },
-                      // minLength: {
-                      //   value: 2,
-                      //   message: '닉네임은 2자 이상 12자 이하여야 합니다',
-                      // },
-                      // maxLength: {
-                      //   value: 12,
-                      //   message: '닉네임은 2자 이상 12자 이하여야 합니다',
-                      // },
-                      onChange: e => {
-                        setNoNicknameDuplBtnClickedSubmit(true),
-                          setGetArtistName(e.target.value);
-                      },
-                    })}
-                  />
-                  <O.ButtonSpan
-                    onClick={() =>
-                      useGetDuplicateArtistname(input_nickname.current)
-                    }
-                  >
-                    중복확인
-                  </O.ButtonSpan>
-                </div>
-                <ErrorMessage
-                  errors={errors}
-                  name="nickname"
-                  render={({ messages }) => {
-                    return (
-                      messages &&
-                      Object.entries(messages).map(([type, message]) => (
-                        <p key={type}>{message}</p>
-                      ))
                     );
                   }}
                 />
-                {noNicknameDuplBtnClickedSubmit ? (
+                {noArtistNameDuplBtnClickedSubmit ? (
                   submitClicked === true ? (
                     <O.DuplicateMeg>중복확인을 해주세요</O.DuplicateMeg>
                   ) : null
-                ) : nicknameDupl ? (
-                  <O.DuplicateMeg>같은 닉네임이 이미 존재합니다</O.DuplicateMeg>
-                ) : nicknameDuplBtnCnt > 0 ? (
+                ) : artistNameDupl ? (
+                  <O.DuplicateMeg>
+                    같은 아티스트명 이미 존재합니다
+                  </O.DuplicateMeg>
+                ) : artistNameDuplBtnCnt > 0 ? (
                   <O.DuplicateMeg
                     style={{ color: 'var(--input-border-color)' }}
                   >
-                    사용 가능한 닉네임입니다
+                    사용 가능한 아티스트명입니다
                   </O.DuplicateMeg>
                 ) : null}
               </S.InputContainer>
@@ -344,7 +302,7 @@ export default function Artistedit() {
               <Controller
                 control={control}
                 name={'snsLink'}
-                defaultValue={''}
+                defaultValue={artistInfo.snslink}
                 rules={{
                   required: '반드시 입력해야 합니다',
                 }}
@@ -365,7 +323,7 @@ export default function Artistedit() {
                 <Controller
                   control={control}
                   name={'content'}
-                  defaultValue={''}
+                  defaultValue={artistInfo.content}
                   rules={{
                     required: '반드시 입력해야 합니다',
                   }}
@@ -380,39 +338,6 @@ export default function Artistedit() {
                 />
               </S.ArtistIntrodution>
             </S.InputContainer>
-            {/* 아티스트 등록시 검증단계가 있을 때 동영상 첨부 추가 */}
-            {/* <S.InputContainer>
-              <S.InputLabel>동영상 첨부</S.InputLabel>
-              <S.FileInput
-                type="file"
-                accept="video/*"
-                ref={videoInputRef}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  const files = e.target.files;
-                  if (files === undefined || files === null) return;
-                  const file = files[0];
-                  console.log(file);
-                  setVideoFile(file);
-                  if (file) {
-                    const reader = new FileReader();
-                    reader.onload = e => {
-                      if (!e.target?.result || e.target?.result === null)
-                        return;
-                      setVideofilesrc(e.target?.result as string);
-                    };
-                    reader.readAsDataURL(file);
-                  }
-                }}
-              />
-              <Input
-                // value={}
-                suffix={true}
-                width={285}
-                height={30}
-                buttonText={'찾아보기'}
-                disabled={true}
-              />
-            </S.InputContainer> */}
           </S.ArtistDetail>
           <S.ButtonWarppar>
             <ButtonPrimary75px onClick={() => handleSubmitAll()}>

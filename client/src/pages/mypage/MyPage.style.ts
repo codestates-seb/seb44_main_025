@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { FontStyle } from '../../utils/Theme';
 
 export default {
   Main: styled.main`
@@ -13,12 +14,10 @@ export default {
     background-color: var(--theme-background-color);
   `,
   Title: styled.header`
-    font-size: var(--heading1-font-size);
-    font-weight: var(--heading1-font-weight);
-    line-height: var(--heading1-line-height);
     color: var(--font-white-color);
-    width: 390px;
-    padding: 20px 15px 10px 15px;
+    ${FontStyle.heading1}
+    overflow: hidden;
+    margin: 20px 15px 10px 15px;
   `,
   ButtonWarppar: styled.div`
     display: flex;

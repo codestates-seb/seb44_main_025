@@ -8,6 +8,7 @@ import { Member, Performance, Review } from '../model/Member';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getCookie, removeCookie, setCookie } from '../utils/Cookie';
+import { ArtistInfoData } from '../zustand/artist.stores';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
@@ -101,15 +102,25 @@ export const useGetArtists = (categoryId?: number | null) => {
   return data;
 };
 
+/** 아티스트 정보를 받아오는 get함수, 아티스트 정보를 받은 후 zustand에 정보를 담아서 상태 관리(수정페이지의 input defaultValue로 넣기 위함) */
 export const useGetArtist = (id: string | number | undefined) => {
   const [data, setData] = useState<Artist>();
+  const { setArtistInfo } = ArtistInfoData();
 
   const getData = async () => {
     await axios
       .get<Artist>(`${SERVER_HOST}/artist/${id}`, {
         headers: { 'ngrok-skip-browser-warning': true },
       })
-      .then(data => setData(data.data))
+      .then(data => {
+        // 아티스트 정보를 받아온 후 zustand에 정보를 담는 변수
+        setArtistInfo({
+          artistname: data.data.artistName,
+          snslink: data.data.snsLink || '',
+          content: data.data.content,
+        });
+        return setData(data.data);
+      })
       .catch(err => console.log(err));
   };
   useEffect(() => {
@@ -120,14 +131,14 @@ export const useGetArtist = (id: string | number | undefined) => {
 };
 
 export const useGetArtistPerfomance = (
-  id: string | number | undefined,
-  categoryId?: number
+  id: string | number | undefined
+  // categoryId?: number
 ) => {
-  const [data, setData] = useState<ArtistPagePerformance[]>();
+  const [data, setData] = useState<PerformanceListType>();
 
   const getData = async () => {
     await axios
-      .get<ArtistPagePerformance[]>(
+      .get<PerformanceListType>(
         `${SERVER_HOST}/performance${
           id ? `/artist/${id}` : ''
         }?page=1&size=5&performanceStatus=공연중`,
@@ -146,11 +157,11 @@ export const useGetArtistPerfomance = (
 };
 
 export const useGetArtistPerfomanced = (id: string | number | undefined) => {
-  const [data, setData] = useState<ArtistPagePerformance[]>();
+  const [data, setData] = useState<PerformanceListType>();
 
   const getData = async () => {
     await axios
-      .get<ArtistPagePerformance[]>(
+      .get<PerformanceListType>(
         `${SERVER_HOST}/performance${
           id ? `/artist/${id}` : ''
         }?page=1&size=5&performanceStatus=공연완료`,
