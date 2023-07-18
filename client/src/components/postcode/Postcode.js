@@ -6,29 +6,32 @@ import { Button } from '../buttons/Buttons';
 // **** 중요: 타입 정의 후 tsx 파일로 변환하기 ****
 
 const { daum } = window;
-// 주소-좌표 변환 객체를 생성 - 스크립트 로딩 시 최초 1회
-const geocoder = new daum.maps.services.Geocoder();
 
 export const PostcodeMap = ({ onChangeAddress }) => {
   const [address, setAddress] = useState('');
   const divRef = useRef(null);
   const mapRef = useRef(null);
   const markerRef = useRef(null);
+  const geocoderRef = useRef(null);
   useEffect(() => {
-    const mapContainer = divRef.current, // 지도 div
-      mapOption = {
-        center: new daum.maps.LatLng(37.556944, 126.923917), // 지도 중심좌표 - 홍대
-        level: 6, // 지도의 확대 레벨
-      };
-    // 지도를 미리 생성 후 ref로 참조 유지
-    const map = new daum.maps.Map(mapContainer, mapOption);
-    mapRef.current = map;
-    // 마커를 미리 생성 후 ref로 참조 유지
-    const marker = new daum.maps.Marker({
-      position: new daum.maps.LatLng(37.556944, 126.923917),
-      map: mapRef.current,
-    });
-    markerRef.current = marker;
+    if (daum.maps?.service) {
+      const geocoder = new daum.maps.services.Geocoder();
+      geocoderRef.current = geocoder;
+      const mapContainer = divRef.current, // 지도 div
+        mapOption = {
+          center: new daum.maps.LatLng(37.556944, 126.923917), // 지도 중심좌표 - 홍대
+          level: 6, // 지도의 확대 레벨
+        };
+      // 지도를 미리 생성 후 ref로 참조 유지
+      const map = new daum.maps.Map(mapContainer, mapOption);
+      mapRef.current = map;
+      // 마커를 미리 생성 후 ref로 참조 유지
+      const marker = new daum.maps.Marker({
+        position: new daum.maps.LatLng(37.556944, 126.923917),
+        map: mapRef.current,
+      });
+      markerRef.current = marker;
+    }
   }, []);
   const handleSearch = useCallback(() => {
     new daum.Postcode({
@@ -39,7 +42,7 @@ export const PostcodeMap = ({ onChangeAddress }) => {
           setAddress(addr);
           onChangeAddress(addr);
         }
-        geocoder.addressSearch(data.address, (results, status) => {
+        geocoderRef.current?.addressSearch(data.address, (results, status) => {
           if (status === daum.maps.services.Status.OK) {
             const result = results[0];
             const coords = new daum.maps.LatLng(result.y, result.x);
@@ -79,25 +82,30 @@ export const Map = ({ address }) => {
   const divRef = useRef(null);
   const mapRef = useRef(null);
   const markerRef = useRef(null);
+  const geocoderRef = useRef(null);
   useEffect(() => {
-    const mapContainer = divRef.current, // 지도 div
-      mapOption = {
-        center: new daum.maps.LatLng(37.556944, 126.923917), // 지도 중심좌표 - 홍대
-        level: 5, // 지도의 확대 레벨
-      };
-    // map, marker 생성
-    const map = new daum.maps.Map(mapContainer, mapOption);
-    mapRef.current = map;
-    const marker = new daum.maps.Marker({
-      position: new daum.maps.LatLng(37.556944, 126.923917),
-      map: map,
-    });
-    markerRef.current = marker;
+    if (daum.maps?.services) {
+      const geocoder = new daum.maps.services.Geocoder();
+      geocoderRef.current = geocoder;
+      const mapContainer = divRef.current, // 지도 div
+        mapOption = {
+          center: new daum.maps.LatLng(37.556944, 126.923917), // 지도 중심좌표 - 홍대
+          level: 5, // 지도의 확대 레벨
+        };
+      // map, marker 생성
+      const map = new daum.maps.Map(mapContainer, mapOption);
+      mapRef.current = map;
+      const marker = new daum.maps.Marker({
+        position: new daum.maps.LatLng(37.556944, 126.923917),
+        map: map,
+      });
+      markerRef.current = marker;
+    }
   }, []);
   useEffect(() => {
     if (address) {
       // 전달된 address로 검색 후 마커 이동
-      geocoder.addressSearch(address, (results, status) => {
+      geocoderRef.current?.addressSearch(address, (results, status) => {
         if (status === daum.maps.services.Status.OK) {
           const result = results[0];
           const coords = new daum.maps.LatLng(result.y, result.x);
