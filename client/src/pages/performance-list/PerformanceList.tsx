@@ -1,7 +1,7 @@
 import { S } from './PerformanceList.style';
 import { ReactComponent as MapIcon } from '../../icons/icon_map_search.svg';
 import { Button } from '../../components/buttons/Buttons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import ConcertPreview from '../../components/concert-preview/ConcertPreview';
 import Header from '../../components/header/Header';
 import { useGetPerformances } from '../../api/useFetch';
@@ -12,14 +12,20 @@ import { getCookie } from '../../utils/Cookie';
 import { H1Title } from '../../utils/SlideUp';
 
 const PerformanceList = () => {
-  const [categoryId, setCategoryId] = useState<number | null>(null);
-  const [isStale, setIsStale] = useState<boolean | null>(null);
-  const handleClickCategory = (id: number) => {
-    if (categoryId !== id) setCategoryId(id);
-  };
-  const data = useGetPerformances(categoryId, isStale);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const category = searchParams.get('category');
+  const [isStale, setIsStale] = useState<boolean | null>(null);
+  const handleClickCategory = (id: string) => {
+    if (category === id) {
+      setSearchParams('');
+    } else {
+      setSearchParams({ category: id });
+    }
+  };
+  const data = useGetPerformances(category, isStale);
   const isLoggedIn = getCookie('accessToken');
+  // TODO: 공연 일정 경과 여부 필터링 로직 추가하기
   return (
     <>
       <Header />
@@ -76,14 +82,14 @@ const PerformanceList = () => {
           </S.CategoryContainer>
           <S.CategoryContainer>
             {Object.keys(categoryObj).map((key, idx) => {
-              return idx + 1 === categoryId ? (
+              return category && idx + 1 === +category ? (
                 <Button
                   theme="highlight"
                   size="mini"
                   key={key}
                   value={key}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    const value = +(e.target as HTMLInputElement).value;
+                    const value = (e.target as HTMLInputElement).value;
                     handleClickCategory(value);
                   }}
                 >
@@ -96,7 +102,7 @@ const PerformanceList = () => {
                   key={key}
                   value={key}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    const value = +(e.target as HTMLInputElement).value;
+                    const value = (e.target as HTMLInputElement).value;
                     handleClickCategory(value);
                   }}
                 >
