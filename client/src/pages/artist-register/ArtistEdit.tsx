@@ -8,7 +8,7 @@ import {
 } from '../../components/buttons/Buttons';
 import { Input } from '../../components/inputs/Inputs';
 import { useState, useRef } from 'react';
-import Img from '../.././images/기본이미지.jpg';
+import Img from '../.././images/기본이미지.jpg';
 import LogoImg from '../.././images/우리사랑이대로.jpeg';
 // import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +20,8 @@ import { getCookie } from '../../utils/Cookie';
 import { FontStyle } from '../../utils/Theme';
 import { ArtistInfoData } from '../../zustand/artist.stores';
 import { H1Title } from '../../utils/SlideUp';
+
+const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
 interface FormValues {
   artistName: string;
@@ -104,10 +106,9 @@ export default function Artistedit() {
   /** 닉네임 중복검사하는 ajax 함수 */
   const useGetDuplicateArtistname = (artistNameData: string | null) => {
     axios
-      .post(
-        'https://103f-121-187-22-182.ngrok-free.app/artist/duplicate/artistName',
-        { artistName: artistNameData }
-      )
+      .post(`${SERVER_HOST}/artist/duplicate/artistName`, {
+        artistName: artistNameData,
+      })
       .then(response => {
         if (response.status === 200) {
           if (response.data === false) {
