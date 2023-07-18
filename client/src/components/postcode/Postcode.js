@@ -77,6 +77,8 @@ export const PostcodeMap = ({ onChangeAddress }) => {
 
 export const Map = ({ address }) => {
   const divRef = useRef(null);
+  const mapRef = useRef(null);
+  const markerRef = useRef(null);
   useEffect(() => {
     const mapContainer = divRef.current, // 지도 div
       mapOption = {
@@ -85,22 +87,28 @@ export const Map = ({ address }) => {
       };
     // map, marker 생성
     const map = new daum.maps.Map(mapContainer, mapOption);
+    mapRef.current = map;
     const marker = new daum.maps.Marker({
       position: new daum.maps.LatLng(37.556944, 126.923917),
       map: map,
     });
-    // 전달된 address로 검색 후 마커 이동
-    geocoder.addressSearch(address, (results, status) => {
-      if (status === daum.maps.services.Status.OK) {
-        const result = results[0];
-        const coords = new daum.maps.LatLng(result.y, result.x);
-        divRef.current.style.display = 'block';
-        map.relayout();
-        map.setCenter(coords);
-        marker.setPosition(coords);
-      }
-    });
+    markerRef.current = marker;
   }, []);
+  useEffect(() => {
+    if (address) {
+      // 전달된 address로 검색 후 마커 이동
+      geocoder.addressSearch(address, (results, status) => {
+        if (status === daum.maps.services.Status.OK) {
+          const result = results[0];
+          const coords = new daum.maps.LatLng(result.y, result.x);
+          divRef.current.style.display = 'block';
+          mapRef.current.relayout();
+          mapRef.current.setCenter(coords);
+          markerRef.current.setPosition(coords);
+        }
+      });
+    }
+  }, [address]);
 
   return (
     <>
