@@ -11,12 +11,14 @@ import { CarouselList, ArtistList } from '../../zustand/homepage.stores';
 import axios from 'axios';
 import Navbar from '../../components/nav/Navbar';
 import { getCookie } from '../../utils/Cookie';
+import { useGetMember } from '../../api/useFetch';
 
 const Home = () => {
   const { setCarouselData } = CarouselList();
   const { setArtistData } = ArtistList();
   const userInfo = getCookie('userInfo');
   const accessToken = getCookie('accessToken');
+  useGetMember();
 
   useEffect(() => {
     const getCarouselData = async () => {

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.nio.file.AccessDeniedException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -49,8 +50,10 @@ public class ReservationService {
         Performance performance = performanceRepository.findById(reservationRequestDto.getPerformanceId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
 
+        LocalDateTime performanceDateTime = performance.getDate();
+
         reservation.setPrice(performance.getPrice()); // 공연에 등록된 가격 정보 가져오기
-        reservation.setDate(performance.getDate());
+        reservation.setDate(performanceDateTime);
 
         int seatValue = reservationRequestDto.getSeatValue(); // 예약한 좌석 수
         int totalSeats = performance.getTotalSeat(); // 퍼포먼스 객체의 총 남은 토탈 좌석 수
@@ -67,10 +70,10 @@ public class ReservationService {
         }
         // 예약 정보 저장
         Reservation savedReservation = reservationRepository.save(reservation);
-
-       ReservationDto.ReservationResponseDto result = reservationMapper.reservationToReservationResponseDto(savedReservation);
-       result.setNickName(reservation.getMember().getNickname());
         // 예약 정보를 DTO로 매핑하여 반환
+        ReservationDto.ReservationResponseDto result = reservationMapper.reservationToReservationResponseDto(savedReservation);
+        result.setNickName(reservation.getMember().getNickname());
+
         return result;
     }
 

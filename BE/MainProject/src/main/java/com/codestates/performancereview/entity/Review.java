@@ -21,11 +21,11 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
-
     @ManyToOne
     @JoinColumn(name = "PERFORMANCE_ID")
     private Performance performance;
-
+    @Column(nullable = false)
+    private String nickName;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)

@@ -1,4 +1,6 @@
 import { styled } from 'styled-components';
+import { DeviceQuery } from '../../utils/Media';
+import { sizeChange } from '../../utils/MediaSize';
 
 const Slogan = () => {
   return (
@@ -20,6 +22,11 @@ const S = {
       url('./images/단체사진.jpg');
     background-size: cover;
     background-position: center;
+
+    ${DeviceQuery.tablet`
+      width: calc(390px * ${sizeChange.tablet});
+      height: calc(60px * ${sizeChange.tablet});
+    `}
   `,
 };
 

@@ -72,9 +72,13 @@ export const postArtist = async (body: BodyType) => {
   return data;
 };
 
-export const patchArtist = async (body: BodyType) => {
+/** 아티스트 정보를 수정하는 함수, artistId에 맞게 요청할 수 있도록 id와 수정값을 입력 받음 */
+export const patchArtist = async (
+  id: string | number | undefined,
+  body: BodyType
+) => {
   const data = await axios
-    .patch(`${SERVER_HOST}/artist`, JSON.stringify(body), {
+    .patch(`${SERVER_HOST}/artist/${id}`, JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json',
         Authorization: getCookie('accessToken'),

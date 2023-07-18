@@ -12,4 +12,5 @@ export const passwordRegExp =
 export const nicknameRegExp = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣]*$/;
 
 /** @artistname :1 ~ 16자 한글, 영문, 숫자 가능, 띄어쓰기 불가*/
-export const artistnameRegExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{1,16}$/;
+export const artistnameRegExp =
+  /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{1,16}$/;
