@@ -11,6 +11,9 @@ export const EditorGlobalStyle = createGlobalStyle`
     min-height: 145px;
     color: black;
   }
+  iframe {
+    width: 100%;
+  }
 `;
 
 export const ViewerGlobalStyle = createGlobalStyle`

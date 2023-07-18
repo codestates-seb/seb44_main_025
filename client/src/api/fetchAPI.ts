@@ -34,13 +34,18 @@ export const postPerformance = async (body: FormData) => {
   return data;
 };
 
+// /${performanceId}
+
 export const postReservation = async (
   performanceId: number,
   body: BodyType
 ) => {
   const data = await axios
     .post(`${SERVER_HOST}/reservation/${performanceId}`, JSON.stringify(body), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: getCookie('accessToken'),
+      },
     })
     .then(data => {
       return data;

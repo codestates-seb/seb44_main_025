@@ -1,21 +1,28 @@
 import * as S from './ArtistList.style';
 import { Button } from '../../components/buttons/Buttons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import ArtistPreview from '../../components/artistpreview/ArtistPreview';
 import Header from '../../components/header/Header';
 import Navbar from '../../components/nav/Navbar';
 import { useGetArtists } from '../../api/useFetch';
 import { getCookie } from '../../utils/Cookie';
 import { categoryObj } from '../../utils/Category';
-import { useState } from 'react';
+import { H1Title } from '../../utils/SlideUp';
 
 const ArtistList = () => {
-  const [categoryId, setCategoryId] = useState<number | null>(null);
-  const handleClickCategory = (id: number) => {
-    if (categoryId !== id) setCategoryId(id);
-  };
-  const data = useGetArtists(categoryId);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const category = searchParams.get('category');
+  const page = searchParams.get('page');
+  const size = searchParams.get('size');
+  const handleClickCategory = (id: string) => {
+    if (category === id) {
+      setSearchParams('');
+    } else {
+      setSearchParams({ category: id });
+    }
+  };
+  const data = useGetArtists(category, page, size);
   const isLoggedIn = getCookie('accessToken');
   return (
     <>
@@ -23,7 +30,9 @@ const ArtistList = () => {
       <S.Container>
         <S.Main>
           <S.TitleButtonFlex>
-            <S.Heading1>아티스트</S.Heading1>
+            <H1Title.H1>
+              <H1Title.H1span>아티스트</H1Title.H1span>
+            </H1Title.H1>
             {isLoggedIn && !getCookie('userInfo')?.hasArtist && (
               <Button
                 size="medium"
@@ -36,14 +45,14 @@ const ArtistList = () => {
           </S.TitleButtonFlex>
           <S.CategoryContainer>
             {Object.keys(categoryObj).map((key, idx) => {
-              return idx + 1 === categoryId ? (
+              return category && idx + 1 === +category ? (
                 <Button
                   theme="highlight"
                   size="mini"
                   key={key}
                   value={key}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    const value = +(e.target as HTMLInputElement).value;
+                    const value = (e.target as HTMLInputElement).value;
                     handleClickCategory(value);
                   }}
                 >
@@ -56,7 +65,7 @@ const ArtistList = () => {
                   key={key}
                   value={key}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    const value = +(e.target as HTMLInputElement).value;
+                    const value = (e.target as HTMLInputElement).value;
                     handleClickCategory(value);
                   }}
                 >

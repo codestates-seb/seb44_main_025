@@ -59,7 +59,10 @@ export const SummaryContainer = styled.div`
 export const Poster = styled.img`
   width: 170px;
   height: 210px;
-  background-color: gray;
+  background-color: transparent;
+  &[src=''] {
+    background-color: gray;
+  }
 `;
 // align-items: flex-start 왼쪽 정렬, flex-end 오른쪽 정렬
 export const Summary = styled.div`

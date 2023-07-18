@@ -8,6 +8,8 @@ import axios from 'axios';
 import { removeCookie, getCookie } from '../../utils/Cookie';
 import { useNavigate } from 'react-router-dom';
 
+const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
+
 export default function Cancelpage() {
   const [password, setPassword] = useState('');
   const [isWrongPassword, setIsWrongPassword] = useState('light');
@@ -15,7 +17,7 @@ export default function Cancelpage() {
 
   const postPassword = () => {
     axios
-      .delete('https://103f-121-187-22-182.ngrok-free.app/member', {
+      .delete(`${SERVER_HOST}/member`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `${getCookie('accessToken')}`,
