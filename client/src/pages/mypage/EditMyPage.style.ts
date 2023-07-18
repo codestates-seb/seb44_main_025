@@ -9,7 +9,7 @@ export default {
   `,
   Section: styled.section`
     width: 390px;
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 50px);
     background-color: var(--theme-background-color);
   `,
   Title: styled.header`
@@ -23,22 +23,14 @@ export default {
     justify-content: flex-end;
     margin-right: 15px;
     margin-bottom: 10px;
+    margin-top: -40px;
   `,
-  LogoImg: styled.img`
-    position: relative;
-    margin-left: 15px;
-    width: 360px;
+  ProfileImg: styled.img`
+    width: 390px;
     height: 150px;
-    background-image: linear-gradient(#fff, #fff);
-    object-fit: fill;
-    &[src] {
-      background-color: transparent;
-    }
+    padding: 0px 15px;
   `,
-  FileInput: styled.input`
-    display: none;
-  `,
-  ArtistImg: styled.img`
+  UserImg: styled.img`
     position: relative;
     width: 100px;
     height: 100px;
@@ -57,22 +49,8 @@ export default {
     background-origin: border-box;
     background-clip: content-box, border-box;
     z-index: 1;
-    cursor: pointer;
-    object-fit: scale-down;
-    &[src] {
-      background-color: transparent;
-    }
   `,
-  CategoryContainer: styled.div`
-    margin: 20px 0px 20px 0px;
-    display: flex;
-    min-width: 360px;
-    justify-content: center;
-    & > button:not(:first-child) {
-      margin-left: 15px;
-    }
-  `,
-  ArtistDetail: styled.div`
+  UserDetail: styled.div`
     margin-top: 20px;
     margin-bottom: 20px;
   `,
@@ -95,18 +73,11 @@ export default {
     margin-bottom: 5px;
     margin-left: 20px;
   `,
-  ArtistIntrodution: styled.div`
-    margin-top: 20px;
-  `,
-  ArtistIntrodutionTextarea: styled.textarea`
-    width: 360px;
-    height: 100px;
-    resize: none;
-    border-radius: 15px;
-    padding: 10px;
-    outline: none;
-    &:focus {
-      border: 1.5px solid #8520ca;
-    }
+  HighlightButtonWarppar: styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 15px;
+    margin-top: 40px;
+    margin-bottom: 20px;
   `,
 };

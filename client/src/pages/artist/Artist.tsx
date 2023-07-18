@@ -16,32 +16,16 @@ import {
   useGetArtistPerfomanced,
   useGetArtistReview,
 } from '../../api/useFetch';
-import React, { useState } from 'react';
-import { ArtistInfoData } from '../../zustand/artist.stores';
 
 export default function Artistpage() {
   const { artistId } = useParams();
+  /** 불러온 fetch함수에 params로 artistId를 전달 해서 받은 데이터 */
   const artistData = useGetArtist(artistId);
   const artistPerformanceData = useGetArtistPerfomance(artistId);
   const artistPerformancedData = useGetArtistPerfomanced(artistId);
   const artistReviewData = useGetArtistReview(artistId);
-  const { setArtistInfo } = ArtistInfoData();
 
-  const [artistNameValue, setArtistNameValue] = useState<string>(
-    artistData?.artistName || ''
-  );
-  const [artistSnsValue, setArtistSnsValue] = useState<string>(
-    artistData?.snsLink || ''
-  );
-  const [artistContentValue, setArtistContentValue] = useState<string>(
-    artistData?.content || ''
-  );
-
-  const clickEdit = () => {
-    setArtistNameValue(artistNameValue);
-    setArtistSnsValue(artistSnsValue);
-    setArtistContentValue(artistContentValue);
-  };
+  // console.log(artistReviewData);
 
   return (
     <>
@@ -61,9 +45,7 @@ export default function Artistpage() {
             </S.ArtistDetail>
             <S.ArtistEdit>
               <Link to="/artistedit">
-                <div onClick={() => clickEdit()}>
-                  <EditIcon />
-                </div>
+                <EditIcon />
               </Link>
             </S.ArtistEdit>
             <S.ArtistIntrodution>
@@ -76,8 +58,8 @@ export default function Artistpage() {
           {/* 해당 아티스트가 준비중인 공연이 있으면 */}
           <S.SubTitle>준비 중인 공연</S.SubTitle>
           {/*  artistPerformanceData있는 날짜가 현재 시간보다 뒤에 있으면*/}
-          {artistPerformanceData ? (
-            artistPerformanceData.map(artistPerformanceData => {
+          {artistPerformanceData?.data.length ? (
+            artistPerformanceData?.data.map(artistPerformanceData => {
               return (
                 <Concertpreview
                   performanceId={artistPerformanceData?.performanceId}
@@ -106,13 +88,13 @@ export default function Artistpage() {
           <S.SubTitle>공연 기록</S.SubTitle>
           {/* 완료한 공연이 있다면 받아오고 구분해서 받아오기*/}
           <S.ArtistHistoryContainerWrappar>
-            {artistPerformancedData ? (
-              artistPerformancedData.map(artistPerformancedData => {
+            {artistPerformancedData?.data.length ? (
+              artistPerformancedData?.data.map(artistPerformancedData => {
                 return (
                   <ArtistreviewContainer
                     key={artistPerformancedData?.performanceId}
                     imageUrl={artistPerformancedData?.imageUrl}
-                    content="후기등록"
+                    content="후기보기"
                   />
                 );
               })

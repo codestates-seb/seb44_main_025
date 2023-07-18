@@ -1,6 +1,7 @@
 import { PageInfo } from './Common';
 
 export interface PerformanceType {
+  artistName: string | undefined;
   performanceId: number;
   title: string;
   date: string;
@@ -29,6 +30,7 @@ export interface PerformanceListType {
 }
 
 export interface ArtistPagePerformance {
+  data: PerformanceType[];
   performanceId: number;
   title?: string;
   date?: string;
