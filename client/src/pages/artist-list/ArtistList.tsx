@@ -13,6 +13,8 @@ const ArtistList = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get('category');
+  const page = searchParams.get('page');
+  const size = searchParams.get('size');
   const handleClickCategory = (id: string) => {
     if (category === id) {
       setSearchParams('');
@@ -20,7 +22,7 @@ const ArtistList = () => {
       setSearchParams({ category: id });
     }
   };
-  const data = useGetArtists(category);
+  const data = useGetArtists(category, page, size);
   const isLoggedIn = getCookie('accessToken');
   return (
     <>

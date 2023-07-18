@@ -35,8 +35,8 @@ export const useGetPerformance = (id: string | number | undefined) => {
 export const useGetPerformances = (
   categoryId?: number | string | null,
   isStale?: boolean | null,
-  page?: number | string,
-  size?: number | string
+  page?: number | string | null,
+  size?: number | string | null
 ) => {
   const [data, setData] = useState<PerformanceListType>();
 
@@ -63,12 +63,16 @@ export const useGetPerformances = (
       });
 
     return () => source.cancel('요청 취소');
-  }, [categoryId, isStale]);
+  }, [categoryId, isStale, page, size]);
 
   return data;
 };
 
-export const useGetArtists = (categoryId?: number | null) => {
+export const useGetArtists = (
+  categoryId?: string | number | null,
+  page?: number | string | null,
+  size?: number | string | null
+) => {
   const [data, setData] = useState<ArtistList>();
 
   useEffect(() => {
@@ -77,7 +81,7 @@ export const useGetArtists = (categoryId?: number | null) => {
 
     axios
       .get<ArtistList>(
-        `${SERVER_HOST}/artist?page=1&size=10&category=${
+        `${SERVER_HOST}/artist?page=${page || 1}&size=${size || 10}&category=${
           categoryId ? categoryId : '1'
         }`,
         {
@@ -94,7 +98,7 @@ export const useGetArtists = (categoryId?: number | null) => {
     return () => {
       source.cancel('요청 취소');
     };
-  }, [categoryId]);
+  }, [categoryId, page, size]);
 
   return data;
 };

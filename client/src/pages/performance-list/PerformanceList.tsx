@@ -15,15 +15,19 @@ const PerformanceList = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get('category');
+  const page = searchParams.get('page');
+  const size = searchParams.get('size');
   const [isStale, setIsStale] = useState<boolean | null>(null);
   const handleClickCategory = (id: string) => {
     if (category === id) {
       setSearchParams('');
     } else {
-      setSearchParams({ category: id });
+      setSearchParams({
+        category: id,
+      });
     }
   };
-  const data = useGetPerformances(category, isStale);
+  const data = useGetPerformances(category, isStale, page, size);
   const isLoggedIn = getCookie('accessToken');
   // TODO: 공연 일정 경과 여부 필터링 로직 추가하기
   return (
