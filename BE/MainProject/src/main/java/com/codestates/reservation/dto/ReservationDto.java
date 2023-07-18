@@ -3,6 +3,7 @@ package com.codestates.reservation.dto;
 import com.codestates.reservation.entity.Reservation;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ReservationDto {
@@ -29,16 +30,14 @@ public class ReservationDto {
         private int price;
     }
     @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class ReservationRequestDto { // 예약을 생성할 때 사용자로부터 입력받아야하는 정보를 담고 있는 DTO
-        // 사용자가 선택한 예약 정보를 담아서 (사용자가 선택한 예약 정보에 대한 필드를 이 클래스에 담아 백엔드로 보내줌)
-        private Long performanceId;
-        private int seatValue;
-
-        private LocalDateTime date;
-
+        @Setter
+        @AllArgsConstructor
+        @NoArgsConstructor
+        public static class ReservationRequestDto { // 예약을 생성할 때 사용자로부터 입력받아야하는 정보를 담고 있는 DTO
+            // 사용자가 선택한 예약 정보를 담아서 (사용자가 선택한 예약 정보에 대한 필드를 이 클래스에 담아 백엔드로 보내줌)
+            private Long performanceId;
+            private int seatValue;
+            private LocalDateTime date;
 
         //@Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{4}$", message = "올바른 전화번호 형식으로 작성해주세요")
         //private String phone; // 예약자의 전화번호 -> 멤버에서 관리하기로

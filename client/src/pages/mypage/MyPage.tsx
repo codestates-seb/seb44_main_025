@@ -19,6 +19,7 @@ import {
   useGetMemberPerformanced,
   useGetMemberReview,
 } from '../../api/useFetch';
+import { H1Title } from '../../utils/SlideUp';
 
 export default function Mypage() {
   const navigate = useNavigate();
@@ -42,7 +43,10 @@ export default function Mypage() {
       <Header />
       <S.Main>
         <S.Section>
-          <S.Title>마이페이지</S.Title>
+          <S.Title>
+            <H1Title.H1span>마이페이지</H1Title.H1span>
+          </S.Title>
+
           <S.ButtonWarppar>
             <ButtonPrimary75px onClick={logoutHandler}>
               로그아웃

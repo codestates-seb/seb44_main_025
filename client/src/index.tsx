@@ -11,7 +11,7 @@ import PerformanceInfo from './pages/performance-info/PerformanceInfo';
 import PerformanceRegister from './pages/performance-register/PerformanceRegister';
 import Artistpage from './pages/artist/Artist';
 import Mypage from './pages/mypage/MyPage';
-import Editmypage from './pages/EditMyPage';
+import Editmypage from './pages/mypage/EditMyPage';
 import Artistregist from './pages/artist-register/ArtistRegister';
 import Cancel from './pages/cancel/Cancel';
 import SignUpPage from './pages/sign/SignUp';
