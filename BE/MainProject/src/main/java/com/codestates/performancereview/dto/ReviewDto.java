@@ -14,6 +14,7 @@ public class ReviewDto {
     private Long reviewId;
     private Long memberId;
     private Long performanceId;
+    private String nickName;
     private String title;
     @NotBlank(message = "내용이 작성되지 않았습니다.")
     private String content;
