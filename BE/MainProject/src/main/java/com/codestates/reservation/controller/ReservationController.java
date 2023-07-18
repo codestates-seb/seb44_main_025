@@ -31,7 +31,8 @@ public class ReservationController {
     }
     // 예약 생성
     @PostMapping("/reservation/{performanceid}")
-    public ReservationDto.ReservationResponseDto createReservation(@RequestBody ReservationDto.ReservationRequestDto reservationRequestDto,
+    public ReservationDto.ReservationResponseDto createReservation(@PathVariable("performanceid") Long performanceId,
+                                                                   @RequestBody ReservationDto.ReservationRequestDto reservationRequestDto,
                                                                    Authentication authentication) throws AccessDeniedException {
         Map<String, Object> principal = (Map) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
