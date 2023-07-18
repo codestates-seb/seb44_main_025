@@ -30,7 +30,7 @@ public class ReservationController {
         this.memberService = memberService;
     }
     // 예약 생성
-    @PostMapping
+    @PostMapping("/reservation/{performanceid}")
     public ReservationDto.ReservationResponseDto createReservation(@RequestBody ReservationDto.ReservationRequestDto reservationRequestDto,
                                                                    Authentication authentication) throws AccessDeniedException {
         Map<String, Object> principal = (Map) authentication.getPrincipal();
@@ -40,7 +40,7 @@ public class ReservationController {
         return responseDto;
     }
     // 특정 예약 조회
-    @GetMapping("/{reservationId}")
+    @GetMapping("/reservation/{memberid}/{reservationid}")
     public ResponseEntity<?> getReservation (@PathVariable("reservationId") Long reservationId){
         // 예약 조회 요청을 ReservationService에 전달
         ReservationDto.ReservationResponseDto responseDto = reservationService.getReservation(reservationId); //예약의 고유 식별자
@@ -53,7 +53,7 @@ public class ReservationController {
         return ResponseEntity.ok(responseDto);
     }
     // 예약 삭제
-    @DeleteMapping("/{reservationId}")
+    @DeleteMapping("/reservation/{memberid}/{reservationid}")
     public ResponseEntity<String> deleteReservation (@PathVariable("reservationId") Long reservationId){
         try {
             reservationService.deleteReservation(reservationId);
