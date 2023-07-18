@@ -76,8 +76,10 @@ public class ReviewService {
         review.setPerformance(performance);
         review.setMember(member);
         review.setTitle(reviewPost.getTitle());
+        review.setNickName(reviewPost.getNickName());
         review.setContent(reviewPost.getContent());
         review.setImageUrl(uploadedImageUrl);
+        review.setDate(reviewPost.getDate());
         review.setReviewTitle(reviewPost.getReviewTitle());
 
         Review savedReview = reviewRepository.save(review);
