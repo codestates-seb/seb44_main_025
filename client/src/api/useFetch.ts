@@ -38,7 +38,9 @@ export const useGetPerformance = (id: string | number | undefined) => {
 
 export const useGetPerformances = (
   categoryId?: number | null,
-  isStale?: boolean | null
+  isStale?: boolean | null,
+  page?: number | string,
+  size?: number | string
 ) => {
   const [data, setData] = useState<PerformanceListType>();
 
@@ -50,7 +52,7 @@ export const useGetPerformances = (
       .get<PerformanceListType>(
         `${SERVER_HOST}/performance${
           categoryId ? `/category/${categoryId}` : ''
-        }?page=1&size=10&performanceStatus=${
+        }?page=${page || 1}&size=${size || 5}&performanceStatus=${
           isStale ? '공연완료' : isStale === false ? '공연중' : ''
         }`,
         {
