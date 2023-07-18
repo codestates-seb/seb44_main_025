@@ -6,24 +6,23 @@ import Header from '../../components/header/Header';
 import Navbar from '../../components/nav/Navbar';
 import { useGetArtists } from '../../api/useFetch';
 import { getCookie } from '../../utils/Cookie';
-import { categoryObj } from '../../utils/Category';
+import {categoryList, categoryObj} from '../../utils/Category';
 import { H1Title } from '../../utils/SlideUp';
+import {useState} from "react";
 
 const ArtistList = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const category = searchParams.get('category');
-  const page = searchParams.get('page');
-  const size = searchParams.get('size');
+  const [category,setCategory] = useState('1')
+const [pagenation,setPagenation] = useState({
+  page:1,
+  size:10
+})
   const handleClickCategory = (id: string) => {
-    if (category === id) {
-      setSearchParams('');
-    } else {
-      setSearchParams({ category: id });
-    }
+   setCategory(id);
   };
-  const data = useGetArtists(category, page, size);
+  const data = useGetArtists(category, pagenation.page, pagenation.size);
   const isLoggedIn = getCookie('accessToken');
+
   return (
     <>
       <Header />
@@ -44,35 +43,48 @@ const ArtistList = () => {
             )}
           </S.TitleButtonFlex>
           <S.CategoryContainer>
-            {Object.keys(categoryObj).map((key, idx) => {
-              return category && idx + 1 === +category ? (
+            {categoryList.map((el)=> (
                 <Button
-                  theme="highlight"
-                  size="mini"
-                  key={key}
-                  value={key}
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    const value = (e.target as HTMLInputElement).value;
-                    handleClickCategory(value);
-                  }}
+                    theme={category && el.value === category ?  'highlight':'theme'}
+                    size="mini"
+                    key={el.text}
+                    value={el.text}
+                    onClick={() => {
+                      handleClickCategory(el.value);
+                    }}
                 >
-                  {categoryObj[key]}
+                  {el.text}
                 </Button>
-              ) : (
-                <Button
-                  theme="theme"
-                  size="mini"
-                  key={key}
-                  value={key}
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    const value = (e.target as HTMLInputElement).value;
-                    handleClickCategory(value);
-                  }}
-                >
-                  {categoryObj[key]}
-                </Button>
-              );
-            })}
+            ))}
+            {/*{Object.keys(categoryObj).map((key, idx) => {*/}
+            {/*  return category && idx + 1 === +category ? (*/}
+            {/*    <Button*/}
+            {/*      theme="highlight"*/}
+            {/*      size="mini"*/}
+            {/*      key={key}*/}
+            {/*      value={key}*/}
+            {/*      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {*/}
+            {/*        const value = (e.target as HTMLInputElement).value;*/}
+            {/*        handleClickCategory(value);*/}
+            {/*      }}*/}
+            {/*    >*/}
+            {/*      {categoryObj[key]}*/}
+            {/*    </Button>*/}
+            {/*  ) : (*/}
+            {/*    <Button*/}
+            {/*      theme="theme"*/}
+            {/*      size="mini"*/}
+            {/*      key={key}*/}
+            {/*      value={key}*/}
+            {/*      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {*/}
+            {/*        const value = (e.target as HTMLInputElement).value;*/}
+            {/*        handleClickCategory(value);*/}
+            {/*      }}*/}
+            {/*    >*/}
+            {/*      {categoryObj[key]}*/}
+            {/*    </Button>*/}
+            {/*  );*/}
+            {/*})}*/}
           </S.CategoryContainer>
           <S.ArtistContainer>
             {data?.data.map(artist => (

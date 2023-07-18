@@ -3,7 +3,7 @@ import Header from '../../components/header/Header';
 import { ButtonPrimary160px } from '../../components/buttons/Buttons';
 import axios from 'axios';
 import PageMovement from '../../components/sign/PageMovement';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import {Controller, FormProvider, SubmitHandler, useForm, useFormContext} from 'react-hook-form';
 import { emailRegExp } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../utils/Cookie';
@@ -15,17 +15,49 @@ const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 interface IForm {
   email: string;
   password: string;
-  password_confirm: string;
-  nickname: string;
+  // password_confirm: string;
+  // nickname: string;
+}
+
+const Input = (props:{label:string; name:string }) => {
+  const {control} = useFormContext();
+  const {label,name}=props
+  return (
+      <Controller
+          name={name}
+          control={control}
+          rules={{
+            required: true,
+            pattern: name === 'email' ? emailRegExp : undefined,
+          }}
+          render={({field,formState:{errors}})=> (
+          <div>
+            <div>{label}</div>
+            <div>
+              <Styled_Sign.Input
+                  type={name}
+                  width={360}
+                  value={field.value}
+                  onChange={(e:any)=> field.onChange(e.target.value)}
+              />
+            </div>
+            {errors?.[name] ? <div><p>{name !=='email' ? '비밀번호를 입력하세요.' : '이메일 형식에 맞게 입력해주세요'}</p></div>  : null}
+          </div>
+      )}
+
+      />
+
+  )
 }
 
 const SignInPage = () => {
   const navigate = useNavigate();
+  const methods = useForm<IForm>();
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IForm>();
+  } = methods;
 
   const ajaxPostSignIn = (data: IForm) => {
     axios
@@ -82,6 +114,7 @@ const SignInPage = () => {
               <H1Title.H1span>Ez to 로그인</H1Title.H1span>
             </H1Title.H1>
           </Styled_Sign.H1>
+          <FormProvider {...methods}>
           <Styled_Sign.Form onSubmit={handleSubmit(onSubmit)}>
             <div>
               {/* <Controller
@@ -103,34 +136,19 @@ const SignInPage = () => {
                   );
                 }}
               /> */}
-              <div>
-                <label htmlFor="email">이메일</label>
-                <div>
-                  <Styled_Sign.Input
-                    width={360}
-                    {...register('email', {
-                      required: true,
-                      pattern: emailRegExp,
-                    })}
-                  />
-                </div>
-                <div>
-                  {errors.email && <p>이메일 형식에 맞게 입력해주세요</p>}
-                </div>
-              </div>
-              <div>
-                <label htmlFor="password">비밀번호</label>
-                <Styled_Sign.Input
-                  type="password"
-                  {...register('password', {
-                    required: true,
-                  })}
-                />
-                <div>{errors.password && <p>반드시 입력해야 합니다</p>}</div>
-              </div>
+              <Input
+              label={'이메일'}
+              name={'email'}
+              />
+             <Input
+             label={'비밀번호'}
+             name={'password'}
+             />
+
             </div>
             <ButtonPrimary160px>로그인하기</ButtonPrimary160px>
           </Styled_Sign.Form>
+          </FormProvider>
           <Styled_Sign.SocialSignIn>
             <GoogleLoginButton />
           </Styled_Sign.SocialSignIn>

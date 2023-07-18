@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CarouselList } from '../../zustand/homepage.stores';
+import { useHomePage} from '../../zustand/homepage.stores';
 import CarouselSlide from './CarouselSlide';
 import { Styled_CarouselLogic } from './CarouselLogic.styled';
 import { PerformanceType } from '../../model/Performance';
@@ -7,7 +7,7 @@ import { PerformanceType } from '../../model/Performance';
 const Main = () => {
   let [movementWidth, setMovementWidth] = useState(0);
   let [time, setTime] = useState(0.5);
-  const { carouselData } = CarouselList();
+  const { carouselList } = useHomePage();
   const mobileSize = 390; // 캐러셀 모바일 사이즈
   const tabletSize = 390 * 1.5; // 캐러셀 타블렛 사이즈
   const tabletbifurcationPoint = 820; // 타블렛분기점
@@ -54,7 +54,7 @@ const Main = () => {
   /** 캐러셀 슬라이드 좌표 지정하는 함수 */
   function SlideTransitionControl() {
     // 마지막 슬라이드가 아닌 경우
-    if (movementWidth !== -1 * carouselWidth * (carouselData.length - 1)) {
+    if (movementWidth !== -1 * carouselWidth * (carouselList.length - 1)) {
       setTime(0.5);
       setMovementWidth(movementWidth - carouselWidth);
     }
@@ -78,10 +78,10 @@ const Main = () => {
           translate={`translate(${movementWidth}px)`}
           transform={`transform ${time}s`}
         >
-          {carouselData.length !== 0 && (
+          {carouselList.length !== 0 && (
             <>
               {/* 슬라이드 리스트 */}
-              {carouselData.map((v: PerformanceType, i) => {
+              {carouselList.map((v: PerformanceType, i) => {
                 return (
                   <div key={i}>
                     <CarouselSlide
@@ -99,15 +99,15 @@ const Main = () => {
               {/* 무한 슬라이드를 위해 첫번째 슬라이드 복제 */}
               <div>
                 <CarouselSlide
-                  posterImg={carouselData[0].imageUrl}
-                  title={carouselData[0].title}
+                  posterImg={carouselList[0].imageUrl}
+                  title={carouselList[0].title}
                   performanceArtist={
-                    carouselData[0].performanceArtist.performanceId
+                    carouselList[0].performanceArtist.performanceId
                   }
-                  category={carouselData[0].category}
-                  price={carouselData[0].price}
-                  date={carouselData[0].date}
-                  categoryId={carouselData[0].categoryId}
+                  category={carouselList[0].category}
+                  price={carouselList[0].price}
+                  date={carouselList[0].date}
+                  categoryId={carouselList[0].categoryId}
                 />
               </div>
             </>

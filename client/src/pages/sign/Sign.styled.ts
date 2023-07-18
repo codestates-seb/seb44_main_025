@@ -7,7 +7,7 @@ interface SignProps {
 }
 
 export const Styled_Sign = {
-  H1: styled.h1<SignProps>`
+  H1: styled.h1<{marginBottom?:number}>`
     margin-bottom: ${props => props.marginBottom}px;
     margin-top: 20px;
   `,
@@ -35,7 +35,7 @@ export const Styled_Sign = {
     height: 48px;
     color: black;
     font-size: 16px;
-    font-weight: Medium;
+    font-weight: medium;
     line-height: 24px;
     padding-left: 15px;
     white-space: nowrap;

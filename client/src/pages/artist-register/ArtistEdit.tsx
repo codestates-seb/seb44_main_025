@@ -7,7 +7,7 @@ import {
   ButtonMiniToggleUnselect,
 } from '../../components/buttons/Buttons';
 import { Input } from '../../components/inputs/Inputs';
-import { useState, useRef } from 'react';
+import {useState, useRef, useEffect} from 'react';
 import Img from '../.././images/기본이미지.jpg';
 import LogoImg from '../.././images/우리사랑이대로.jpeg';
 // import axios from 'axios';
@@ -163,6 +163,15 @@ export default function Artistedit() {
       alert('이미지를 첨부해야합니다.');
     }
   };
+
+  useEffect(()=> {
+    if(!artistInfo){
+      alert('안돼 돌아가.');
+      navigate('/');
+      return ;
+
+    }
+  },[artistInfo, navigate])
 
   return (
     <>

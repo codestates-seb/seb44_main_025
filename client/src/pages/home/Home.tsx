@@ -7,15 +7,14 @@ import Slogan from '../../components/slogan/Slogan';
 import Artistmain from '../../components/artist/ArtistHome';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { CarouselList, ArtistList } from '../../zustand/homepage.stores';
+import {useHomePage} from '../../zustand/homepage.stores';
 import axios from 'axios';
 import Navbar from '../../components/nav/Navbar';
 import { getCookie } from '../../utils/Cookie';
 import { useGetMember } from '../../api/useFetch';
 
 const Home = () => {
-  const { setCarouselData } = CarouselList();
-  const { setArtistData } = ArtistList();
+  const {setCarouselList,setArtistList} =useHomePage();
   const userInfo = getCookie('userInfo');
   const accessToken = getCookie('accessToken');
   useGetMember();
@@ -24,7 +23,7 @@ const Home = () => {
     const getCarouselData = async () => {
       try {
         const response = await axios.get('/dummy/main_perfomancelist.json');
-        setCarouselData(response.data.data);
+        setCarouselList(response.data.data);
       } catch (error) {
         console.error(error);
       }
@@ -33,7 +32,7 @@ const Home = () => {
     const getArtistsData = async () => {
       try {
         const response = await axios.get('/dummy/main_artistlist.json');
-        setArtistData(response.data.data);
+        setArtistList(response.data.data);
       } catch (error) {
         console.error(error);
       }
