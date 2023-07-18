@@ -67,10 +67,10 @@ public class ReservationService {
         }
         // 예약 정보 저장
         Reservation savedReservation = reservationRepository.save(reservation);
-
-       ReservationDto.ReservationResponseDto result = reservationMapper.reservationToReservationResponseDto(savedReservation);
-       result.setNickName(reservation.getMember().getNickname());
         // 예약 정보를 DTO로 매핑하여 반환
+        ReservationDto.ReservationResponseDto result = reservationMapper.reservationToReservationResponseDto(savedReservation);
+        result.setNickName(reservation.getMember().getNickname());
+
         return result;
     }
 

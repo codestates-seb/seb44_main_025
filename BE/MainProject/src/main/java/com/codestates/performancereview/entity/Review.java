@@ -21,7 +21,6 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
-
     @ManyToOne
     @JoinColumn(name = "PERFORMANCE_ID")
     private Performance performance;
