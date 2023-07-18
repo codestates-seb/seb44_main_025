@@ -13,6 +13,7 @@ import Navbar from '../../components/nav/Navbar';
 import { Map } from '../../components/postcode/Postcode';
 import { getCookie } from '../../utils/Cookie';
 import { H1Title } from '../../utils/SlideUp';
+import { getDateTime } from '../../utils/Format';
 
 const PerformanceInfo = () => {
   const { performanceId } = useParams();
@@ -30,7 +31,7 @@ const PerformanceInfo = () => {
 
   const isLoggedIn = getCookie('accessToken');
   // Note: 현재 접속중인 계정의 아티스트 Id 필요
-  const currentArtistId = 2;
+  const currentArtistId = getCookie('userInfo')?.artistId;
   return (
     <>
       <Header precious={true} />
@@ -42,9 +43,10 @@ const PerformanceInfo = () => {
             </H1Title.H1>
             {/* TODO: PerformanceArtist Id 정확한 값 가져오기*/}
             {!isStale &&
-              data?.performanceArtist?.performanceArtistList &&
-              currentArtistId in
-                (data?.performanceArtist?.performanceArtistList ?? {}) && (
+              currentArtistId ===
+                data?.performanceArtist?.performanceArtistList[
+                  data?.performanceId
+                ] && (
                 <Button
                   size="medium"
                   theme="primary"
@@ -60,10 +62,7 @@ const PerformanceInfo = () => {
               <p>공연명</p>
               <p>{data?.title}</p>
               <p>날짜</p>
-              <p>
-                {data?.date &&
-                  new Date(data?.date as string).toLocaleDateString()}
-              </p>
+              <p>{data?.date && getDateTime(data?.date as string)}</p>
               <p>금액</p>
               <p>{data?.price}원</p>
               <p>남은 좌석 수</p>

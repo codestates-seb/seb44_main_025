@@ -23,6 +23,8 @@ interface FormValues {
   totalSeat: number;
 }
 
+const NOW = getTimezoneAdjustedISOString().slice(0, 16);
+
 const PerformanceRegister = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -49,12 +51,22 @@ const PerformanceRegister = () => {
   }, []);
   const { handleSubmit, control } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = data => {
+    if (!imgUrl) {
+      alert('이미지를 등록해주세요.');
+      return;
+    }
+    if (!content.replace(/<p><br><\/p>/g, '')) {
+      alert('공연 설명을 입력해주세요.');
+      return;
+    }
     // TODO: artistIds 구현하기
     const result = {
       ...data,
       price: +data.price,
       totalSeat: +data.totalSeat,
-      date: new Date(data.date).toISOString().slice(0, 19).replace('T', ' '),
+      date: getTimezoneAdjustedISOString(data.date)
+        .slice(0, 19)
+        .replace('T', ' '),
       categoryId,
       content,
       place: address,
@@ -77,10 +89,6 @@ const PerformanceRegister = () => {
         }
       })
       .catch(err => alert(err));
-  };
-  const handleSubmitAll = () => {
-    if (!imagesrc || !content) return;
-    handleSubmit(onSubmit)();
   };
   const onSubmitImg = () => {
     let formData = new FormData();
@@ -114,6 +122,7 @@ const PerformanceRegister = () => {
           <S.SummaryContainer>
             <S.FileInput
               type="file"
+              name="image"
               accept="image/*"
               ref={fileInputRef}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,7 +142,11 @@ const PerformanceRegister = () => {
               }}
             />
             <S.Poster
-              src={imagesrc}
+              src={
+                imagesrc ||
+                'https://cdn.pixabay.com/photo/2016/11/29/06/17/audience-1867754_640.jpg'
+              }
+              alt="공연 이미지"
               onClick={() => fileInputRef.current?.click()}
             ></S.Poster>
             <S.Form onSubmit={handleSubmit(onSubmit)}>
@@ -144,14 +157,16 @@ const PerformanceRegister = () => {
                 rules={{
                   required: '반드시 입력해야 합니다',
                 }}
-                render={({ field }) => {
+                render={({ field, fieldState: { error } }) => {
                   return (
                     <Input
                       label={'공연명'}
+                      name="title"
                       height={30}
                       width={170}
                       onChange={field.onChange}
                       value={field.value}
+                      errorMessage={error?.message}
                     />
                   );
                 }}
@@ -167,16 +182,18 @@ const PerformanceRegister = () => {
                     message: '0 이상의 숫자를 입력해주세요',
                   },
                 }}
-                render={({ field }) => {
+                render={({ field, fieldState: { error } }) => {
                   return (
                     <Input
                       label={'금액'}
+                      name="price"
                       height={30}
                       width={170}
                       step={1000}
                       type="number"
                       onChange={field.onChange}
                       value={field.value}
+                      errorMessage={error?.message}
                     />
                   );
                 }}
@@ -192,9 +209,10 @@ const PerformanceRegister = () => {
                     message: '1 이상의 숫자를 입력해주세요',
                   },
                 }}
-                render={({ field }) => {
+                render={({ field, fieldState: { error } }) => {
                   return (
                     <Input
+                      name="totalSeat"
                       min={1}
                       label={'총 좌석'}
                       height={30}
@@ -202,6 +220,7 @@ const PerformanceRegister = () => {
                       type="number"
                       onChange={field.onChange}
                       value={field.value}
+                      errorMessage={error?.message}
                     />
                   );
                 }}
@@ -211,24 +230,27 @@ const PerformanceRegister = () => {
           <Controller
             control={control}
             name={'date'}
-            defaultValue={''}
+            defaultValue={NOW}
             rules={{
               required: '반드시 입력해야 합니다',
               min: {
-                value: getTimezoneAdjustedISOString(),
+                value: NOW,
                 message: '미래의 시점을 입력해야 합니다',
               },
             }}
-            render={({ field }) => {
+            render={({ field, fieldState: { error } }) => {
               return (
                 <Input
+                  name="date"
                   label={'날짜'}
                   height={30}
                   width={360}
                   type="datetime-local"
-                  min={getTimezoneAdjustedISOString()}
+                  min={NOW}
                   onChange={field.onChange}
                   value={field.value}
+                  step={600}
+                  errorMessage={error?.message}
                 />
               );
             }}
@@ -282,7 +304,7 @@ const PerformanceRegister = () => {
               size="large"
               theme="primary"
               onClick={() => {
-                handleSubmitAll();
+                handleSubmit(onSubmit)();
               }}
             >
               공연 정보 등록
