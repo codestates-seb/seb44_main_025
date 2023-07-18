@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
+import { DeviceQuery } from '../../utils/Media';
+import { sizeChange } from '../../utils/MediaSize';
 
 interface StyleDivProps {
   height: 140 | 60;
@@ -32,6 +34,11 @@ export const Styled_HomePageButton = {
     }
     &:focus {
       border: 1px solid var(--header-border-color);
+    }
+
+    @media screen and (min-width: 820px) {
+      width: calc(170px * ${sizeChange.tablet});
+      height: calc(${props => props.height}px * ${sizeChange.tablet});
     }
   `,
 };

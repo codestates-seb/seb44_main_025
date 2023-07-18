@@ -24,26 +24,25 @@ import java.util.Map;
 public class ReservationController {
     private final ReservationService reservationService;
     private final MemberService memberService;
-
     public ReservationController(ReservationService reservationService,
                                  MemberService memberService) {
         this.reservationService = reservationService;
         this.memberService = memberService;
     }
-
     // 예약 생성
-
-    @PostMapping
-    public ReservationDto.ReservationResponseDto createReservation(@RequestBody ReservationDto.ReservationRequestDto reservationRequestDto,
+    @PostMapping("/reservation/{performanceid}")
+    public ReservationDto.ReservationResponseDto createReservation(@PathVariable("performanceid") Long performanceId,
+                                                                   @RequestBody ReservationDto.ReservationRequestDto reservationRequestDto,
                                                                    Authentication authentication) throws AccessDeniedException {
         Map<String, Object> principal = (Map) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
 
         ReservationDto.ReservationResponseDto responseDto = reservationService.createReservation(reservationRequestDto, memberId);
-
+        return responseDto;
+    }
     // 특정 예약 조회
-    @GetMapping("/{reservationId}")
-    public ResponseEntity<?> getReservation(@PathVariable("reservationId") Long reservationId) {
+    @GetMapping("/reservation/{memberid}/{reservationid}")
+    public ResponseEntity<?> getReservation (@PathVariable("reservationId") Long reservationId){
         // 예약 조회 요청을 ReservationService에 전달
         ReservationDto.ReservationResponseDto responseDto = reservationService.getReservation(reservationId); //예약의 고유 식별자
         if (responseDto == null) {
@@ -54,10 +53,9 @@ public class ReservationController {
         }
         return ResponseEntity.ok(responseDto);
     }
-
     // 예약 삭제
-    @DeleteMapping("/{reservationId}")
-    public ResponseEntity<String> deleteReservation(@PathVariable("reservationId") Long reservationId) {
+    @DeleteMapping("/reservation/{memberid}/{reservationid}")
+    public ResponseEntity<String> deleteReservation (@PathVariable("reservationId") Long reservationId){
         try {
             reservationService.deleteReservation(reservationId);
             // 예약 삭제 성공 -> 200 OK 응답 코드와 메시지 반환
@@ -71,3 +69,4 @@ public class ReservationController {
         }
     }
 }
+
