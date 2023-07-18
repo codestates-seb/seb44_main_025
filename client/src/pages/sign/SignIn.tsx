@@ -8,6 +8,7 @@ import { emailRegExp } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../utils/Cookie';
 import { H1Title } from '../../utils/SlideUp';
+import GoogleLoginButton from '../../components/oauth/OAuth';
 
 interface IForm {
   email: string;
@@ -128,11 +129,14 @@ const SignInPage = () => {
             </div>
             <ButtonPrimary160px>로그인하기</ButtonPrimary160px>
           </Styled_Sign.Form>
+          <Styled_Sign.SocialSignIn>
+            <GoogleLoginButton />
+          </Styled_Sign.SocialSignIn>
           <PageMovement
             infoText="아직 계정이 없으신가요?"
             pagelink="/signup"
             linkedText="회원가입"
-            marginTop={160}
+            marginTop={20}
           />
         </Styled_Sign.Container>
       </Styled_Sign.Main>
