@@ -91,6 +91,9 @@ export const Styled_Sign = {
       color: var(--font-primary--color);
     }
   `,
+  SocialSignIn: styled.div`
+    margin-top: 120px;
+  `,
   ButtonSpan: styled.span`
     cursor: pointer;
     color: var(--font-primary--color);
