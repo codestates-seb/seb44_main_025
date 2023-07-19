@@ -37,14 +37,14 @@ public class ReservationController {
         Map<String, Object> principal = (Map) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
 
-        ReservationDto.ReservationResponseDto responseDto = reservationService.createReservation(reservationRequestDto, memberId);
+        ReservationDto.ReservationResponseDto responseDto = reservationService.createReservation(reservationRequestDto, authentication);
         return responseDto;
     }
     // 특정 예약 조회
     @GetMapping("/reservation/{memberid}/{reservationid}")
-    public ResponseEntity<?> getReservation (@PathVariable("reservationId") Long reservationId){
+    public ResponseEntity<?> getReservation (@PathVariable("reservationId") Long reservationId, Authentication authentication){
         // 예약 조회 요청을 ReservationService에 전달
-        ReservationDto.ReservationResponseDto responseDto = reservationService.getReservation(reservationId); //예약의 고유 식별자
+        ReservationDto.ReservationResponseDto responseDto = reservationService.getReservation(reservationId, authentication); //예약의 고유 식별자
         if (responseDto == null) {
             // 예약이 없을 경우 예외 처리 또는 예외 반환 등을 수행
             return ResponseEntity

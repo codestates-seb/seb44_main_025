@@ -24,6 +24,7 @@ public class Reservation {
     private Long reservationId;
     private Long performanceId;
     private Long PaymentId;
+    private Long memberId;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -54,8 +55,10 @@ public class Reservation {
             return status;
         }
     }
-    public Reservation(Member member)
-    {this.member = member;}
+    public Reservation(Member member) {
+        this.member = member;
+        this.memberId = member.getMemberId();
+    }
 
 //public enum PaymentStatus {
 //    PENDING("Pending"),

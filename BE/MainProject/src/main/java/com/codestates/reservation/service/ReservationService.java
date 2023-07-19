@@ -12,11 +12,13 @@ import com.codestates.reservation.dto.ReservationDto;
 import com.codestates.reservation.entity.Reservation;
 import com.codestates.reservation.mapper.ReservationMapper;
 import com.codestates.reservation.repository.ReservationRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -39,12 +41,15 @@ public class ReservationService {
 //url
     // 예약 생성
     @Transactional
-    public ReservationDto.ReservationResponseDto createReservation(ReservationDto.ReservationRequestDto reservationRequestDto, long memberId) throws AccessDeniedException {
+    public ReservationDto.ReservationResponseDto createReservation(ReservationDto.ReservationRequestDto reservationRequestDto, Authentication authentication) throws AccessDeniedException {
         // 예약 정보를 생성하고 저장
         // 해당 DTO를 Reservation 엔티티로 변환하여 예약 정보를 생성하고 저장
+        Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
+        long memberId = ((Number) principal.get("memberId")).longValue();
+
         Member member = memberService.findVerifiedMember(memberId);
 
-        Reservation reservation = reservationMapper.reservationRequestDtoToReservation(reservationRequestDto,memberId);
+        Reservation reservation = reservationMapper.reservationRequestDtoToReservation(reservationRequestDto, authentication);
         reservation.setMember(member);
         reservation.setReservationStatus(Reservation.ReservationStatus.WAITING);
 
@@ -79,7 +84,7 @@ public class ReservationService {
     }
 
     // 예약 조회 및 상세 정보 반환
-    public ReservationDto.ReservationResponseDto getReservation(Long reservationId) {
+    public ReservationDto.ReservationResponseDto getReservation(Long reservationId, Authentication authentication) {
     // 예약을 검증
         Optional<Reservation> optionalReservation = reservationRepository.findById(reservationId);
         Reservation reservation = optionalReservation.orElseThrow(() ->
