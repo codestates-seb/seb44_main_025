@@ -5,6 +5,7 @@ import { ArtistData } from '../../model/Artist';
 
 export default function ArtistHome() {
   const { artistData } = ArtistList();
+  console.log(artistData);
 
   return (
     <Styled_ArtistHome.ArtistpreviewMain>

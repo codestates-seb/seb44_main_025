@@ -1,8 +1,7 @@
 import { S } from './PerformanceList.style';
 import { ReactComponent as MapIcon } from '../../icons/icon_map_search.svg';
 import { Button } from '../../components/buttons/Buttons';
-import { TabPerformance } from '../../components/tabs/Tabs';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import ConcertPreview from '../../components/concert-preview/ConcertPreview';
 import Header from '../../components/header/Header';
 import { useGetPerformances } from '../../api/useFetch';
@@ -10,16 +9,25 @@ import { categoryObj } from '../../utils/Category';
 import Navbar from '../../components/nav/Navbar';
 import { useState } from 'react';
 import { getCookie } from '../../utils/Cookie';
+import { H1Title } from '../../utils/SlideUp';
 
-// TODO: props로 렌더링하기
 const PerformanceList = () => {
-  const [categoryId, setCategoryId] = useState<number | null>(null);
-  const [isStale, setIsStale] = useState<boolean | null>(null);
-  const handleClickCategory = (id: number) => {
-    if (categoryId !== id) setCategoryId(id);
-  };
-  const data = useGetPerformances(categoryId, isStale);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const category = searchParams.get('category');
+  const page = searchParams.get('page');
+  const size = searchParams.get('size');
+  const [isStale, setIsStale] = useState<boolean | null>(null);
+  const handleClickCategory = (id: string) => {
+    if (category === id) {
+      setSearchParams('');
+    } else {
+      setSearchParams({
+        category: id,
+      });
+    }
+  };
+  const data = useGetPerformances(category, isStale, page, size);
   const isLoggedIn = getCookie('accessToken');
   // TODO: 공연 일정 경과 여부 필터링 로직 추가하기
   return (
@@ -28,7 +36,9 @@ const PerformanceList = () => {
       <S.Container>
         <S.Main>
           <S.TitleButtonFlex>
-            <S.Heading1>공연</S.Heading1>
+            <H1Title.H1>
+              <H1Title.H1span>공연정보</H1Title.H1span>
+            </H1Title.H1>
             {/* TODO: 지도와 연계하기 */}
             <MapIcon
               onClick={() =>
@@ -76,14 +86,14 @@ const PerformanceList = () => {
           </S.CategoryContainer>
           <S.CategoryContainer>
             {Object.keys(categoryObj).map((key, idx) => {
-              return idx + 1 === categoryId ? (
+              return category && idx + 1 === +category ? (
                 <Button
                   theme="highlight"
                   size="mini"
                   key={key}
                   value={key}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    const value = +(e.target as HTMLInputElement).value;
+                    const value = (e.target as HTMLInputElement).value;
                     handleClickCategory(value);
                   }}
                 >
@@ -96,7 +106,7 @@ const PerformanceList = () => {
                   key={key}
                   value={key}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    const value = +(e.target as HTMLInputElement).value;
+                    const value = (e.target as HTMLInputElement).value;
                     handleClickCategory(value);
                   }}
                 >
