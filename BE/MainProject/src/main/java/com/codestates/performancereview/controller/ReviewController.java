@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import javax.validation.Valid;
 import java.nio.file.AccessDeniedException;
 import java.util.Collections;
@@ -57,7 +58,7 @@ public class ReviewController {
     public ResponseEntity<ReviewDto.ReviewResponse> updateReview(@PathVariable("reviewId") Long reviewId,
                                                                  @PathVariable("performanceId") Long performanceId,
                                                                  @RequestBody @Valid ReviewDto.ReviewUpdate reviewUpdate,
-                                                                 @RequestParam("image") MultipartFile imageUrl) {
+                                                                 @RequestParam("imageUrl") MultipartFile imageUrl) {
         ReviewDto.ReviewResponse responseDto = reviewService.updateReview(reviewId, reviewUpdate, imageUrl);
         return ResponseEntity.ok(responseDto);
     }
