@@ -37,6 +37,7 @@ public class ReservationService {
     }
 //url
     // 예약 생성
+    @Transactional
     public ReservationDto.ReservationResponseDto createReservation(ReservationDto.ReservationRequestDto reservationRequestDto, long memberId) throws AccessDeniedException {
         // 예약 정보를 생성하고 저장
         // 해당 DTO를 Reservation 엔티티로 변환하여 예약 정보를 생성하고 저장
@@ -83,7 +84,7 @@ public class ReservationService {
 
         return reservationMapper.reservationToReservationResponseDto(reservation);
     }
-
+    @Transactional
     // 예약 확인 로직 구현
     public ReservationDto.ReservationResponseDto checkReservation(Long reservationId) {
         // 예약 ID로 예약 정보를 조회하고 예약 상태 변경한 뒤 ReservatioResponseDto로 변환하여 반환하는 코드 작성
@@ -101,7 +102,7 @@ public class ReservationService {
         // ReservatioResponseDto로 변환
         return reservationMapper.reservationToReservationResponseDto(savedReservation);
     }
-
+    @Transactional
     // 예약 삭제 로직
     public void deleteReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
