@@ -82,7 +82,7 @@ const SignInPage = () => {
       <Header precious={true} />
       <Styled_Sign.Main>
         <Styled_Sign.Container>
-          <Styled_Sign.H1 marginBottom={145}>
+          <Styled_Sign.H1 marginBottom={80}>
             <H1Title.H1>
               <H1Title.H1span>Ez to 로그인</H1Title.H1span>
             </H1Title.H1>
@@ -121,7 +121,9 @@ const SignInPage = () => {
                 ) : null}
               </div>
             </div>
-            <ButtonPrimary160px>로그인하기</ButtonPrimary160px>
+            <ButtonPrimary160px style={{ marginTop: '20px' }}>
+              로그인하기
+            </ButtonPrimary160px>
           </Styled_Sign.Form>
           <Styled_Sign.SocialSignIn>
             <GoogleLoginButton />

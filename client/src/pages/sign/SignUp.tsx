@@ -288,7 +288,6 @@ const SignUpPage = () => {
                   errors={errors}
                   name="nickname"
                   render={({ messages }) => {
-                    console.log('messages', messages);
                     return (
                       messages &&
                       Object.entries(messages).map(([type, message]) => (
@@ -310,7 +309,9 @@ const SignUpPage = () => {
                 ) : null}
               </div>
             </div>
-            <ButtonPrimary160px>회원가입하기</ButtonPrimary160px>
+            <ButtonPrimary160px style={{ marginTop: '20px' }}>
+              회원가입하기
+            </ButtonPrimary160px>
           </Styled_Sign.Form>
           <PageMovement
             infoText="이미 계정이 있으신가요?"
