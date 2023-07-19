@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,6 +24,7 @@ public class Reservation {
     private Long reservationId;
     private Long performanceId;
     private Long PaymentId;
+    private Long memberId;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -46,18 +48,17 @@ public class Reservation {
         COMPLETED("Completed"); //완료된 상태 - 예약이 정상적으로 완료된 상태
         // 예약 확인, 결제, 좌석 선택 등등 모든 완료가 되었을때 최종 완료
         private String status;
-
         ReservationStatus(String status) {
             this.status = status;
         }
-
-
         public String getReservationStatus() {
             return status;
         }
     }
-    public Reservation(Member member)
-    {this.member = member;}
+    public Reservation(Member member) {
+        this.member = member;
+        this.memberId = member.getMemberId();
+    }
 
 //public enum PaymentStatus {
 //    PENDING("Pending"),
