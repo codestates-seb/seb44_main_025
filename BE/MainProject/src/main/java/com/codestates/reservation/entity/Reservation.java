@@ -27,15 +27,14 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime date;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int price;
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
     //@Enumerated(EnumType.STRING)
     //private PaymentStatus paymentStatus;
-
     @OneToOne(mappedBy = "reservation")
     private Payment payment;
 

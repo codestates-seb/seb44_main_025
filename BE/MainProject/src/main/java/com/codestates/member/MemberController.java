@@ -105,9 +105,15 @@ public class MemberController {
         System.out.println("dkdkdkdkdkdkdkdk"+memberId);
 
         boolean passwordCorrect = memberService.checkPassword(memberId, memberPassword.getPassword());
+        Member member=  memberService.findVerifiedMember(memberId);
 
         if(passwordCorrect==true){
-        memberService.deleteMember(memberId);}
+            if(artistService.memberHasArtist(member)==true){
+            artistService.deleteArtist(artistService.findArtistId(member));}
+
+            memberService.deleteMember(memberId);
+        }
+
         else {
             throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_CORRECT);
         }

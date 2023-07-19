@@ -30,7 +30,7 @@ public class Member {
     private String password;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member",cascade = CascadeType.ALL)
     private Artist artist;
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
