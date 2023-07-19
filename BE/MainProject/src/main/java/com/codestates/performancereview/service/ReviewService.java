@@ -12,7 +12,7 @@ import com.codestates.performancereview.entity.Review;
 import com.codestates.performancereview.mapper.ReviewMapper;
 import com.codestates.performancereview.repository.ReviewRepository;
 import lombok.Builder;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +37,14 @@ public class ReviewService {
         this.imageUploadService = imageUploadService;
         this.reviewMapper = reviewMapper;
     }
+    // 현재 사용자의 ID를 가져오는 로직을 구현
+    private Long getCurrentUserId(Authentication authentication) {
+        // 현재 인증된 사용자의 ID를 가져오는 로직
+        Map<String, Object> principal = (Map) authentication.getPrincipal();
+        long memberId = ((Number) principal.get("memberId")).longValue();
+        return memberId;
+    }
+
     public List<ReviewDto.ReviewResponse> getMyReviews(Authentication authentication) {
         // 현재 사용자의 ID를 가져와서 해당 사용자가 작성한 리뷰 정보를 조회
         Long userId = getCurrentUserId(authentication); // 사용자 ID 가져오는 로직
@@ -51,13 +59,8 @@ public class ReviewService {
         }
     }
 
-    // 현재 사용자의 ID를 가져오는 로직을 구현
-    private Long getCurrentUserId(Authentication authentication) {
-        // 현재 인증된 사용자의 ID를 가져오는 로직
-        Map<String, Object> principal = (Map) authentication.getPrincipal();
-        long memberId = ((Number) principal.get("memberId")).longValue();
-        return memberId;
-    }
+
+
     public ReviewDto.ReviewResponse createReview(ReviewDto.ReviewPost reviewPost,MultipartFile imageUrl
                                                 ,Authentication authentication) {
         Performance performance = performanceRepository.findById(reviewPost.getPerformanceId())
