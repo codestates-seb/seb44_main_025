@@ -1,8 +1,4 @@
-import {
-  PerformanceListType,
-  PerformanceType,
-  ArtistPagePerformance,
-} from '../model/Performance';
+import { PerformanceListType, PerformanceType } from '../model/Performance';
 import { ArtistList, Artist, ArtistReview } from '../model/Artist';
 import { Member, Performance, Review } from '../model/Member';
 import { useEffect, useState } from 'react';
@@ -38,8 +34,10 @@ export const useGetPerformance = (id: string | number | undefined) => {
 };
 
 export const useGetPerformances = (
-  categoryId?: number | null,
-  isStale?: boolean | null
+  categoryId?: number | string | null,
+  isStale?: boolean | null,
+  page?: number | string | null,
+  size?: number | string | null
 ) => {
   const [data, setData] = useState<PerformanceListType>();
 
@@ -51,7 +49,7 @@ export const useGetPerformances = (
       .get<PerformanceListType>(
         `${SERVER_HOST}/performance${
           categoryId ? `/category/${categoryId}` : ''
-        }?page=1&size=10&performanceStatus=${
+        }?page=${page || 1}&size=${size || 5}&performanceStatus=${
           isStale ? '공연완료' : isStale === false ? '공연중' : ''
         }`,
         {
@@ -66,12 +64,16 @@ export const useGetPerformances = (
       });
 
     return () => source.cancel('요청 취소');
-  }, [categoryId, isStale]);
+  }, [categoryId, isStale, page, size]);
 
   return data;
 };
 
-export const useGetArtists = (categoryId?: number | null) => {
+export const useGetArtists = (
+  categoryId?: string | number | null,
+  page?: number | string | null,
+  size?: number | string | null
+) => {
   const [data, setData] = useState<ArtistList>();
 
   useEffect(() => {
@@ -80,7 +82,7 @@ export const useGetArtists = (categoryId?: number | null) => {
 
     axios
       .get<ArtistList>(
-        `${SERVER_HOST}/artist?page=1&size=10&category=${
+        `${SERVER_HOST}/artist?page=${page || 1}&size=${size || 10}&category=${
           categoryId ? categoryId : '1'
         }`,
         {
@@ -97,7 +99,7 @@ export const useGetArtists = (categoryId?: number | null) => {
     return () => {
       source.cancel('요청 취소');
     };
-  }, [categoryId]);
+  }, [categoryId, page, size]);
 
   return data;
 };
@@ -146,7 +148,9 @@ export const useGetArtistPerfomance = (
           headers: { 'ngrok-skip-browser-warning': true },
         }
       )
-      .then(data => setData(data.data))
+      .then(data => {
+        setData(data.data);
+      })
       .catch(err => console.log(err));
   };
   useEffect(() => {

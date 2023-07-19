@@ -7,8 +7,9 @@ import { Editor } from '../../components/inputs/editor/Editor';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEditorStore } from '../../components/inputs/editor/EditorStore';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { postReview, testPostReview } from '../../api/fetchAPI';
+import { postReview } from '../../api/fetchAPI';
 import { useEffect } from 'react';
+import { getCookie } from '../../utils/Cookie';
 
 interface FormValues {
   title: string;
@@ -18,28 +19,18 @@ interface FormValues {
   artists: string[] | number[];
 }
 
-interface BodyType {
-  title: string;
-  artistIds: number[];
-  content: string;
-  date: string;
-  price: number;
-  place: string;
-  totalSeat: number;
-  categoryId: number;
-  imageUrl?: string;
-}
-
 const ReviewRegister = () => {
   const navigate = useNavigate();
   const { performanceId } = useParams();
   const { handleSubmit, control } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = data => {
-    const body = { ...data, content, performanceId };
-    // testPostReview(body);
-    postReview(body);
-    clearContent();
-    navigate(`/performances/${performanceId}`);
+    if (performanceId) {
+      const body = { ...data, content, performanceId: +performanceId };
+      // testPostReview(body);
+      postReview(body);
+      clearContent();
+      navigate(`/performances/${performanceId}`);
+    }
   };
   const content = useEditorStore(state => state.content);
   const clearContent = useEditorStore(state => state.clearContent);
@@ -50,8 +41,7 @@ const ReviewRegister = () => {
   useEffect(() => {
     return () => clearContent();
   }, []);
-  // TODO: 로그인 상태관리 로직 추가하기
-  const isLoggedIn = true;
+  const isLoggedIn = getCookie('accessToken');
   return (
     <>
       <Header precious={true} />
@@ -90,7 +80,6 @@ const ReviewRegister = () => {
           </S.Form>
           <S.Heading3>내용</S.Heading3>
           <Editor />
-          {/* 버그 심각하면 textarea 사용하기 <S.TextareaContainer /> */}
           <S.BottomStickyContainer>
             {/* TODO: 등록 / 수정 구분하기 - 라우팅 경로로 구분하거나 별도 props 전달 */}
             {/* TODO: 등록 후 정상적으로 응답을 수신했을 때 clearContent 호출하기 */}
@@ -105,12 +94,6 @@ const ReviewRegister = () => {
               후기 등록 / 수정
             </ButtonPrimary335px>
           </S.BottomStickyContainer>
-          {/* Note: 웹 에디터 폐기할 경우 이미지 등록 버튼 되살리기
-          <S.TitleButtonFlex>
-            <S.Heading3>이미지 추가</S.Heading3>
-            <ButtonPrimary75px>업로드</ButtonPrimary75px>
-          </S.TitleButtonFlex>
-            <S.Image /> */}
         </S.Main>
       </S.Container>
       <Navbar />

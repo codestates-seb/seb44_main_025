@@ -10,6 +10,8 @@ import { setCookie } from '../../utils/Cookie';
 import { H1Title } from '../../utils/SlideUp';
 import GoogleLoginButton from '../../components/oauth/OAuth';
 
+const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
+
 interface IForm {
   email: string;
   password: string;
@@ -27,7 +29,7 @@ const SignInPage = () => {
 
   const ajaxPostSignIn = (data: IForm) => {
     axios
-      .post('https://103f-121-187-22-182.ngrok-free.app/login', data)
+      .post(`${SERVER_HOST}/login`, data)
       .then(response => {
         // 헤더에 담긴 토큰 가져오기
         const accessToken = response.headers['authorization'];

@@ -8,9 +8,7 @@ export default function ReservationModal(
 ) {
   const body = {
     performanceId: 1,
-    memberId: 1,
-    nickName: '닉네임',
-    seatValue: 20,
+    seatValue: 5,
   };
   return (
     <S.ModalOverlay>
@@ -34,7 +32,6 @@ export default function ReservationModal(
           </ButtonHighlight>
           <ButtonWhite
             onClick={() => {
-              console.log('clicked');
               postReservation(props?.performanceId, body);
             }}
           >
