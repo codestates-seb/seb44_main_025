@@ -7,19 +7,18 @@ import {
   ButtonMiniToggleUnselect,
 } from '../../components/buttons/Buttons';
 import { Input } from '../../components/inputs/Inputs';
-import { useState, useRef } from 'react';
-import Img from '../.././images/기본이미지.jpg';
+import { useState, useRef, useEffect } from 'react';
 import LogoImg from '../.././images/우리사랑이대로.jpeg';
 // import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { patchArtist, postArtistImg } from '../../api/fetchAPI';
 import axios from 'axios';
 import { artistnameRegExp } from '../../utils/RegExp';
 import { getCookie } from '../../utils/Cookie';
 import { FontStyle } from '../../utils/Theme';
-import { ArtistInfoData } from '../../zustand/artist.stores';
 import { H1Title } from '../../theme/common/SlideUp';
+import { useGetArtist } from '../../api/useFetch';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
@@ -27,6 +26,7 @@ interface FormValues {
   artistName: string;
   snsLink: string;
   content: string;
+  imageUrl: string;
 }
 
 const categoryObj = {
@@ -39,6 +39,8 @@ const categoryObj = {
 };
 
 export default function Artistedit() {
+  const { artistId } = useParams();
+  const artistData = useGetArtist(artistId);
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const handleClickCategory = (id: number) => {
     if (categoryId === id) setCategoryId(null);
@@ -46,7 +48,7 @@ export default function Artistedit() {
   };
 
   const artistImgInputRef = useRef<HTMLInputElement>(null);
-  const [artistImagesrc, setArtistImagesrc] = useState<string>(Img);
+  const [artistImagesrc, setArtistImagesrc] = useState<string | undefined>();
   const [artistImgFile, setArtistImgFile] = useState<Blob>();
   // const [videofilesrc, setVideofilesrc] = useState<string>(Img);
   // const [videoFile, setVideoFile] = useState<Blob>();
@@ -65,14 +67,29 @@ export default function Artistedit() {
   const navigate = useNavigate();
   const userInfo = getCookie('userInfo');
 
-  /** zustand에서 상태관리하고 있는 함수의 값을 artistInfo에 넣어서 사용할 수 있음  */
-  const { artistInfo } = ArtistInfoData();
-  console.log(artistInfo);
+  const [getUrl, setGetUrl] = useState<string | undefined>();
 
-  const [getUrl, setGetUrl] = useState();
+  /** 처음 들어오는 artistData가 렌더링 동안에 undefined다보니 이후에 받아오는 값을 넣어주기 위해 useEffect를 사용했고 artistData가 변경될때마다 control name에 맞게 값을 널어줌 */
+  const { handleSubmit, control, setValue } = useForm<FormValues>();
+  useEffect(() => {
+    if (artistData?.artistName) {
+      setValue('artistName', artistData.artistName);
+    }
+    if (artistData?.snsLink) {
+      setValue('snsLink', artistData.snsLink);
+    }
+    if (artistData?.content) {
+      setValue('content', artistData.content);
+    }
+  }, [artistData, setValue]);
+
+  useEffect(() => {
+    if (artistData?.imageUrl) {
+      setValue('imageUrl', artistData?.imageUrl);
+    }
+  }, [artistData, setValue]);
 
   /** 아티스트 정보를 수정 요청하는 함수 */
-  const { handleSubmit, control } = useForm<FormValues>();
   // onSubmit: SubmitHandler<> = data를 하면 useForm에서 값을 가져와서 넣음
   const onSubmit: SubmitHandler<FormValues> = data => {
     let formData = new FormData();
@@ -147,20 +164,23 @@ export default function Artistedit() {
       }
     }
   };
-  /** 이미지를 서버에 보내는 함수 */
+  /** 이미지를 저장하는 함수 */
   const onSubmitImg = () => {
-    // FormData()는 키-값 쌍으로 데이터를 구성하며 빈객체로 만들었음
-    let formData = new FormData();
+    // 현재이미지가 없다면 받아온 이미지를 저장
+    if (!getUrl) {
+      setGetUrl(artistData?.imageUrl);
+      alert('이미지가 저장 되었습니다');
+    }
     // ImgFile을 전달 받으면 빈객체로 만든 FormData에 append메서드를 사용해 키와 값을 추가
-    if (artistImgFile) {
+    else if (artistImgFile) {
+      // FormData()는 키-값 쌍으로 데이터를 구성하며 빈객체로 만들었음
+      let formData = new FormData();
       formData.append('image-file', artistImgFile as Blob);
       // 이미지를 서버에 보내는 함수에 전달 후 서버로 돌려받은 데이터를 setGetUrl에 저장
       postArtistImg(formData).then((data: any) => {
         alert('이미지가 저장 되었습니다');
         setGetUrl(data.data);
       });
-    } else {
-      alert('이미지를 첨부해야합니다.');
     }
   };
 
@@ -174,34 +194,49 @@ export default function Artistedit() {
           </S.Title>
           <S.LogoImg src={LogoImg}></S.LogoImg>
           {/* 파일을 첨부하는 인풋 */}
-          <S.FileInput
-            type="file"
-            accept="image/*"
-            // ref의 값을 부여해서 해당 값이 이곳으로 연결됨
-            ref={artistImgInputRef}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const files = e.target.files;
-              // files가 undefined이거나 null이면 종료
-              if (files === undefined || files === null) return;
-              const file = files[0];
-              setArtistImgFile(file);
-              if (file) {
-                // filReader() = 파일을 읽음
-                const reader = new FileReader();
-                // .onload는 이벤트 핸들러로 파일을 읽은 후 실행되는 로직 파일의 결과가 없거나 null이면 종료
-                reader.onload = e => {
-                  if (!e.target?.result || e.target?.result === null) return;
-                  // as string은 타입 단언으로 값을 문자열로 강제변환
-                  setArtistImagesrc(e.target?.result as string);
-                };
-                reader.readAsDataURL(file);
-              }
-            }}
+
+          <Controller
+            control={control}
+            name="imageUrl"
+            render={({ field }) => (
+              <>
+                <S.FileInput
+                  type="file"
+                  accept="image/*"
+                  // ref의 값을 부여해서 해당 값이 이곳으로 연결됨
+                  ref={artistImgInputRef}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    const files = e.target.files;
+                    // files가 undefined이거나 null이면 종료
+                    if (files === undefined || files === null) return;
+                    const file = files[0];
+                    setArtistImgFile(file);
+                    if (file) {
+                      // filReader() = 파일을 읽음
+                      const reader = new FileReader();
+                      // .onload는 이벤트 핸들러로 파일을 읽은 후 실행되는 로직 파일의 결과가 없거나 null이면 종료
+                      reader.onload = e => {
+                        if (!e.target?.result || e.target?.result === null)
+                          return;
+                        // as string은 타입 단언으로 값을 문자열로 강제변환
+                        setArtistImagesrc(e.target?.result as string);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+                <S.ArtistImg
+                  // 현재 들어있는 이미지 값이 있고 초기값이 없다면 현재 이미지를 보여주고 이미지 등록이 되어 기본값이 생기면 기본값을 보여주기
+                  src={
+                    field.value && !artistImagesrc
+                      ? field.value
+                      : artistImagesrc
+                  }
+                  onClick={() => artistImgInputRef.current?.click()}
+                ></S.ArtistImg>
+              </>
+            )}
           />
-          <S.ArtistImg
-            src={artistImagesrc}
-            onClick={() => artistImgInputRef.current?.click()}
-          ></S.ArtistImg>
           <ImageButton>
             <ButtonPrimary75px onClick={() => onSubmitImg()}>
               이미지 저장
@@ -243,7 +278,6 @@ export default function Artistedit() {
                 <Controller
                   control={control}
                   name={'artistName'}
-                  defaultValue={artistInfo.artistname}
                   rules={{
                     required: '반드시 입력해야 합니다',
                     pattern: {
@@ -303,7 +337,7 @@ export default function Artistedit() {
               <Controller
                 control={control}
                 name={'snsLink'}
-                defaultValue={artistInfo.snslink}
+                // defaultValue={artistData?.snsLink}
                 rules={{
                   required: '반드시 입력해야 합니다',
                 }}
@@ -324,7 +358,7 @@ export default function Artistedit() {
                 <Controller
                   control={control}
                   name={'content'}
-                  defaultValue={artistInfo.content}
+                  // defaultValue={artistData?.content}
                   rules={{
                     required: '반드시 입력해야 합니다',
                   }}
