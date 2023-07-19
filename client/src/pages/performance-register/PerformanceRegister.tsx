@@ -33,7 +33,9 @@ const PerformanceRegister = () => {
   const [imgUrl, setImgUrl] = useState('');
   const [address, setAddress] = useState('');
   // 함께할 아티스트 목록
-  const [artistIds, setArtistIds] = useState<string[]>([]);
+  const [artistIds, setArtistIds] = useState<string[] | number[]>([
+    getCookie('userInfo')?.artistId,
+  ]);
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const handleClickCategory = (id: number) => {
     if (categoryId === id) setCategoryId(null);
@@ -43,7 +45,8 @@ const PerformanceRegister = () => {
   // TODO: 로그인 상태 관리 변경하기
   useEffect(() => {
     if (!getCookie('userInfo')) {
-      navigate('/performances');
+      navigate('/performances', { replace: true });
+      return;
     }
     return () => {
       clearContent();
@@ -59,6 +62,10 @@ const PerformanceRegister = () => {
       alert('공연 설명을 입력해주세요.');
       return;
     }
+    if (!categoryId) {
+      alert('카테고리 버튼을 클릭하여 카테고리를 선택해주세요.');
+      return;
+    }
     // TODO: artistIds 구현하기
     const result = {
       ...data,
@@ -70,7 +77,7 @@ const PerformanceRegister = () => {
       categoryId,
       content,
       place: address,
-      artistIds: [getCookie('userInfo').artistId, ...artistIds],
+      artistIds,
       imageUrl: imgUrl,
     };
     let formData = new FormData();
@@ -83,9 +90,11 @@ const PerformanceRegister = () => {
     );
     postPerformance(formData)
       .then(data => {
-        if (data && 'performanceId' in data) {
+        if (data.data.performanceId) {
           clearContent();
-          navigate(`performances/${data.performanceId}`);
+          navigate(`/performances/${data.data.performanceId}`, {
+            replace: true,
+          });
         }
       })
       .catch(err => alert(err));
@@ -96,6 +105,7 @@ const PerformanceRegister = () => {
       formData.append('image-file', imgFile as Blob);
       postImg(formData).then((data: any) => {
         setImgUrl(data.data);
+        alert('이미지가 저장되었습니다.');
       });
     } else {
       alert('이미지를 첨부해야합니다.');
@@ -189,6 +199,7 @@ const PerformanceRegister = () => {
                       name="price"
                       height={30}
                       width={170}
+                      min={0}
                       step={1000}
                       type="number"
                       onChange={field.onChange}
@@ -257,22 +268,9 @@ const PerformanceRegister = () => {
           />
           <S.CategoryContainer>
             {Object.keys(categoryObj).map((key, idx) => {
-              return idx + 1 === categoryId ? (
+              return (
                 <Button
-                  theme="highlight"
-                  size="mini"
-                  key={key}
-                  value={key}
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    const value = +(e.target as HTMLInputElement).value;
-                    handleClickCategory(value);
-                  }}
-                >
-                  {categoryObj[key]}
-                </Button>
-              ) : (
-                <Button
-                  theme="theme"
+                  theme={idx + 1 === categoryId ? 'highlight' : 'theme'}
                   size="mini"
                   key={key}
                   value={key}
@@ -287,7 +285,10 @@ const PerformanceRegister = () => {
             })}
           </S.CategoryContainer>
 
-          <PostcodeMap onChangeAddress={setAddress} />
+          <PostcodeMap
+            defaultAddress={undefined}
+            onChangeAddress={setAddress}
+          />
           <S.Heading3>공연설명</S.Heading3>
           <Editor />
           {/*
