@@ -73,7 +73,7 @@ const router = createBrowserRouter([
         element: <Artistregist />,
       },
       {
-        path: '/artistedit',
+        path: '/artistedit/:artistId',
         element: <Artistedit />,
       },
 

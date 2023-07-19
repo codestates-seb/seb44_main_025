@@ -16,14 +16,17 @@ import {
   useGetArtistPerfomanced,
   useGetArtistReview,
 } from '../../api/useFetch';
+import { getCookie } from '../../utils/Cookie';
 
 export default function Artistpage() {
   const { artistId } = useParams();
+
   /** 불러온 fetch함수에 params로 artistId를 전달 해서 받은 데이터 */
   const artistData = useGetArtist(artistId);
   const artistPerformanceData = useGetArtistPerfomance(artistId);
   const artistPerformancedData = useGetArtistPerfomanced(artistId);
   const artistReviewData = useGetArtistReview(artistId);
+  console.log(artistData);
 
   // console.log(artistReviewData);
 
@@ -44,7 +47,7 @@ export default function Artistpage() {
               </S.ArtistSns>
             </S.ArtistDetail>
             <S.ArtistEdit>
-              <Link to="/artistedit">
+              <Link to={`/artistedit/${getCookie('userInfo').artistId}`}>
                 <EditIcon />
               </Link>
             </S.ArtistEdit>
