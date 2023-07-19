@@ -20,6 +20,8 @@ import ArtistList from './pages/artist-list/ArtistList';
 import Home from './pages/home/Home';
 import ReviewRegister from './pages/review/ReviewRegister';
 import Artistedit from './pages/artist-register/ArtistEdit';
+import GoogleSignUp from './pages/sign/GoogleSignUp';
+import GoogleSignin from './pages/sign/GoogleSignin';
 
 /** @todo 도메인 주소 입력 */
 // axios.defaults.baseURL = '';
@@ -84,6 +86,14 @@ const router = createBrowserRouter([
       {
         path: '/performances/review/write/:performanceId',
         element: <ReviewRegister />,
+      },
+      {
+        path: '/googlelogin',
+        element: <GoogleSignin />,
+      },
+      {
+        path: '/googlesignup',
+        element: <GoogleSignUp />,
       },
     ],
   },

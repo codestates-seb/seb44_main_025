@@ -13,15 +13,9 @@ import {
 } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
 import { H1Title } from '../../utils/SlideUp';
+import { SignUp } from '../../model/Member';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
-
-interface IForm {
-  email: string;
-  password: string;
-  password_confirm: string;
-  nickname: string;
-}
 
 const SignUpPage = () => {
   /** 중복여부
@@ -53,7 +47,7 @@ const SignUpPage = () => {
     watch,
     formState: { errors },
     handleSubmit,
-  } = useForm<IForm>({
+  } = useForm<SignUp>({
     criteriaMode: 'all',
   });
 
@@ -70,7 +64,7 @@ const SignUpPage = () => {
   /** 아이디와 닉네임의 중복검사 여부를 확인 후 ajax함수를 실행시키는 함수
    * 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는다
    */
-  const onSubmit: SubmitHandler<IForm> = data => {
+  const onSubmit: SubmitHandler<SignUp> = data => {
     setSubmitClicked(true);
     if (!noEmailDuplBtnClickedSubmit && !noNicknameDuplBtnClickedSubmit) {
       if (!emailDupl && !nicknameDupl) {
@@ -91,7 +85,7 @@ const SignUpPage = () => {
   };
 
   /** 회원정보를 서버로 전송하는 ajax 함수 */
-  const usePostSignUp = (data: IForm) => {
+  const usePostSignUp = (data: SignUp) => {
     axios
       .post(`${SERVER_HOST}/member`, data, {
         headers: { 'Content-Type': 'application/json' },
