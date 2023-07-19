@@ -1,5 +1,6 @@
 package com.codestates.performancereview.controller;
 
+import com.codestates.image.ImageUploadService;
 import com.codestates.performancereview.dto.ReviewDto;
 import com.codestates.performancereview.entity.Review;
 import com.codestates.performancereview.mapper.ReviewMapper;
@@ -25,25 +26,28 @@ import java.util.Map;
 @CrossOrigin
 @Slf4j
 @RestController
-@RequestMapping("/reviews")
+@RequestMapping("/review")
 @Validated
 public class ReviewController {
     private final ReviewService reviewService;
     private final ReviewMapper reviewMapper;
+    private final ImageUploadService imageUploadService;
+
     @Autowired
-    public ReviewController(ReviewService reviewService,ReviewMapper reviewMapper) {
+    public ReviewController(ReviewService reviewService,ReviewMapper reviewMapper, ImageUploadService imageUploadService) {
         this.reviewService = reviewService;
         this.reviewMapper = reviewMapper;
+        this.imageUploadService = imageUploadService;
     }
     @PostMapping("/review/{performanceId}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ReviewDto.ReviewResponse> createReview(@RequestBody ReviewDto.ReviewPost reviewPost,
                                                                  Authentication authentication,
-                                                               @RequestParam("imageUrl") MultipartFile imageUrl) throws AccessDeniedException {
+                                                                 @RequestParam("imageUrl") MultipartFile imageUrl) throws AccessDeniedException {
         Map<String, Object> principal = (Map) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
 
-        ReviewDto.ReviewResponse responseDto = reviewService.createReview(reviewPost, imageUrl);
+        ReviewDto.ReviewResponse responseDto = reviewService.createReview(reviewPost, imageUrl, authentication);
         return ResponseEntity.ok(responseDto);
 
     }
@@ -66,8 +70,8 @@ public class ReviewController {
     }
 
     @GetMapping("/mypage/reviews")
-    public ResponseEntity<List<ReviewDto.ReviewResponse>> getMyReviews() {
-        List<ReviewDto.ReviewResponse> responseDtoList = reviewService.getMyReviews(); // 내가 작성한 리뷰 정보를 조회하는 서비스 메서드 호출
+    public ResponseEntity<List<ReviewDto.ReviewResponse>> getMyReviews(Authentication authentication) {
+        List<ReviewDto.ReviewResponse> responseDtoList = reviewService.getMyReviews(authentication); // 내가 작성한 리뷰 정보를 조회하는 서비스 메서드 호출
 
         if (responseDtoList.isEmpty()) {
             return ResponseEntity.ok(Collections.emptyList()); // 빈 배열을 응답으로
