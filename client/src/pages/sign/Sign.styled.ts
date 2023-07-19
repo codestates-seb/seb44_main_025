@@ -1,13 +1,8 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
 
-interface SignProps {
-  width?: 360 | 285;
-  marginBottom?: number;
-}
-
 export const Styled_Sign = {
-  H1: styled.h1<SignProps>`
+  H1: styled.h1<{ marginBottom?: number }>`
     margin-bottom: ${props => props.marginBottom}px;
     margin-top: 20px;
   `,
@@ -28,7 +23,7 @@ export const Styled_Sign = {
     color: var(--font-white-color);
     ${FontStyle.largeMedium}
   `,
-  Input: styled.input<SignProps>`
+  Input: styled.input<{ width?: 360 | 285 }>`
     border-radius: 100px;
     outline: none;
     width: ${props => (props.width ? `${props.width}px` : '360px')};

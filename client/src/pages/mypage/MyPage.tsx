@@ -19,7 +19,7 @@ import {
   useGetMemberPerformanced,
   useGetMemberReview,
 } from '../../api/useFetch';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 
 export default function Mypage() {
   const navigate = useNavigate();

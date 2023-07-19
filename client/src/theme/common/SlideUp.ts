@@ -1,5 +1,5 @@
 import { styled, keyframes } from 'styled-components';
-import { FontStyle } from './Theme';
+import { FontStyle } from '../../utils/Theme';
 
 /** 슬라이드 업 되는 H1 태그 애니메이션 */
 const slideUp = keyframes`

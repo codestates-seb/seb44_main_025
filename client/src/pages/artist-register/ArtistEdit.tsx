@@ -19,7 +19,7 @@ import { artistnameRegExp } from '../../utils/RegExp';
 import { getCookie } from '../../utils/Cookie';
 import { FontStyle } from '../../utils/Theme';
 import { ArtistInfoData } from '../../zustand/artist.stores';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 

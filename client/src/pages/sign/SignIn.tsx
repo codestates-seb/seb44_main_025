@@ -7,20 +7,20 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../utils/Cookie';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 import GoogleLoginButton from '../../components/oauth/OAuth';
+import { useUserInfo } from '../../zustand/userInfo.stores';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
 interface IForm {
   email: string;
   password: string;
-  password_confirm: string;
-  nickname: string;
 }
 
 const SignInPage = () => {
   const navigate = useNavigate();
+  const { userInfo2, setUserInfo } = useUserInfo();
   const {
     register,
     formState: { errors },
@@ -36,6 +36,11 @@ const SignInPage = () => {
         if (response.status === 200) {
           // token이 필요한 API 요청 시 header Authorization에 token 담아 전송
           axios.defaults.headers.common['authorization'] = `${accessToken}`;
+
+          setUserInfo({
+            memberId: response.data.memberId,
+            hasArtist: response.data.hasArtist,
+          });
 
           // 쿠키 저장
           setCookie(
@@ -84,25 +89,6 @@ const SignInPage = () => {
           </Styled_Sign.H1>
           <Styled_Sign.Form onSubmit={handleSubmit(onSubmit)}>
             <div>
-              {/* <Controller
-                control={control}
-                name={'title'}
-                defaultValue={''}
-                rules={{
-                  required: '반드시 입력해야 합니다',
-                }}
-                render={({ field }) => {
-                  return (
-                    <Input
-                      label={'공연명'}
-                      height={30}
-                      width={170}
-                      onChange={field.onChange}
-                      value={field.value}
-                    />
-                  );
-                }}
-              /> */}
               <div>
                 <label htmlFor="email">이메일</label>
                 <div>
@@ -114,9 +100,11 @@ const SignInPage = () => {
                     })}
                   />
                 </div>
-                <div>
-                  {errors.email && <p>이메일 형식에 맞게 입력해주세요</p>}
-                </div>
+                {errors?.email ? (
+                  <div>
+                    <p>이메일 형식에 맞게 입력해주세요</p>
+                  </div>
+                ) : null}
               </div>
               <div>
                 <label htmlFor="password">비밀번호</label>
@@ -126,7 +114,11 @@ const SignInPage = () => {
                     required: true,
                   })}
                 />
-                <div>{errors.password && <p>반드시 입력해야 합니다</p>}</div>
+                {errors?.password ? (
+                  <div>
+                    <p>반드시 입력해야 합니다</p>
+                  </div>
+                ) : null}
               </div>
             </div>
             <ButtonPrimary160px>로그인하기</ButtonPrimary160px>

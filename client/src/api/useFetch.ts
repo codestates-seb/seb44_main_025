@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getCookie, removeCookie, setCookie } from '../utils/Cookie';
 import { ArtistInfoData } from '../zustand/artist.stores';
+import { useUserInfo } from '../zustand/userInfo.stores';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
@@ -203,6 +204,7 @@ export const useGetArtistReview = (id: string | number | undefined) => {
 
 export const useGetMember = () => {
   const [data, setData] = useState<Member>();
+  const { setUserInfo } = useUserInfo();
 
   const getData = async () => {
     await axios
@@ -214,6 +216,13 @@ export const useGetMember = () => {
       })
       .then(data => {
         setData(data.data), removeCookie('userInfo');
+
+        setUserInfo({
+          memberId: data.data.memberId,
+          hasArtist: data.data.hasArtist,
+          artistId: data.data.artistId,
+        });
+
         setCookie(
           'userInfo',
           JSON.stringify({
