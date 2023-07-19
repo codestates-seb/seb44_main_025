@@ -38,12 +38,13 @@ public class ReservationService {
     }
 //url
     // 예약 생성
+    @Transactional
     public ReservationDto.ReservationResponseDto createReservation(ReservationDto.ReservationRequestDto reservationRequestDto, long memberId) throws AccessDeniedException {
         // 예약 정보를 생성하고 저장
         // 해당 DTO를 Reservation 엔티티로 변환하여 예약 정보를 생성하고 저장
         Member member = memberService.findVerifiedMember(memberId);
 
-        Reservation reservation = reservationMapper.reservationRequestDtoToReservation(reservationRequestDto);
+        Reservation reservation = reservationMapper.reservationRequestDtoToReservation(reservationRequestDto,memberId);
         reservation.setMember(member);
         reservation.setReservationStatus(Reservation.ReservationStatus.WAITING);
 
@@ -88,6 +89,7 @@ public class ReservationService {
     }
 
     // 예약 확인 로직 구현
+    @Transactional
     public ReservationDto.ReservationResponseDto checkReservation(Long reservationId) {
         // 예약 ID로 예약 정보를 조회하고 예약 상태 변경한 뒤 ReservatioResponseDto로 변환하여 반환하는 코드 작성
         // 예약 조회
@@ -106,6 +108,7 @@ public class ReservationService {
     }
 
     // 예약 삭제 로직
+    @Transactional
     public void deleteReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND));

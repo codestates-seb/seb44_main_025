@@ -12,12 +12,14 @@ import com.codestates.performancereview.entity.Review;
 import com.codestates.performancereview.mapper.ReviewMapper;
 import com.codestates.performancereview.repository.ReviewRepository;
 import lombok.Builder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReviewService {
@@ -35,9 +37,17 @@ public class ReviewService {
         this.imageUploadService = imageUploadService;
         this.reviewMapper = reviewMapper;
     }
-    public List<ReviewDto.ReviewResponse> getMyReviews() {
+    // 현재 사용자의 ID를 가져오는 로직을 구현
+    private Long getCurrentUserId(Authentication authentication) {
+        // 현재 인증된 사용자의 ID를 가져오는 로직
+        Map<String, Object> principal = (Map) authentication.getPrincipal();
+        long memberId = ((Number) principal.get("memberId")).longValue();
+        return memberId;
+    }
+
+    public List<ReviewDto.ReviewResponse> getMyReviews(Authentication authentication) {
         // 현재 사용자의 ID를 가져와서 해당 사용자가 작성한 리뷰 정보를 조회
-        Long userId = getCurrentUserId(); // 사용자 ID 가져오는 로직
+        Long userId = getCurrentUserId(authentication); // 사용자 ID 가져오는 로직
 
         // 리뷰 정보를 가져오도록
         List<Review> reviews = reviewRepository.findByUserId(userId);
@@ -49,13 +59,10 @@ public class ReviewService {
         }
     }
 
-    // 현재 사용자의 ID를 가져오는 로직을 구현
-    private Long getCurrentUserId() {
-        // 현재 인증된 사용자의 ID를 가져오는 로직
 
-        return 123L;
-    }
-    public ReviewDto.ReviewResponse createReview(ReviewDto.ReviewPost reviewPost,MultipartFile imageUrl) {
+
+    public ReviewDto.ReviewResponse createReview(ReviewDto.ReviewPost reviewPost,MultipartFile imageUrl
+                                                ,Authentication authentication) {
         Performance performance = performanceRepository.findById(reviewPost.getPerformanceId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
         Member member = memberRepository.findById(reviewPost.getMemberId())
@@ -82,7 +89,7 @@ public class ReviewService {
         review.setDate(reviewPost.getDate());
         review.setReviewTitle(reviewPost.getReviewTitle());
 
-        Review savedReview = reviewRepository.save(review);
+        Review savedReview = reviewRepository.save(review); // 리뷰저 (예외는 없을까?)
         return reviewMapper.toResponseDto(savedReview);
     }
 
