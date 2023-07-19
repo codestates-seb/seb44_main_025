@@ -3,16 +3,21 @@ import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
 import { useEditorStore } from './EditorStore';
 import { EditorGlobalStyle } from './Editor.style';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 // 이미지 크기 조정 플러그인 관련 import
 // import {Quill} from 'react-quill'
 // import ImageResize from 'quill-image-resize';
 // Quill.register('modules/ImageResize', ImageResize);
 
-export const Editor = () => {
-  const content = useEditorStore(state => state.content);
-  const setContent = useEditorStore(state => state.changeContent);
+export const Editor = ({ defaultValue }: { defaultValue?: string }) => {
+  const { content, changeContent, clearContent } = useEditorStore();
+  useEffect(() => {
+    if (defaultValue) {
+      changeContent(defaultValue);
+    }
+    return () => clearContent();
+  }, []);
   const modules = useMemo(
     () => ({
       toolbar: [
@@ -56,7 +61,7 @@ export const Editor = () => {
         theme="snow"
         modules={modules}
         value={content}
-        onChange={setContent}
+        onChange={changeContent}
         formats={formats}
       />
     </>
