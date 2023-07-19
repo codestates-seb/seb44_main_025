@@ -20,7 +20,7 @@ interface IForm {
 
 const SignInPage = () => {
   const navigate = useNavigate();
-  const { userInfo2, setUserInfo } = useUserInfo();
+  const { setUserInfo } = useUserInfo();
   const {
     register,
     formState: { errors },

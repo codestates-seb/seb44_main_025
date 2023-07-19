@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { DeviceQuery } from '../../utils/Media';
-import { sizeChange } from '../../utils/MediaSize';
+import { screenScale } from '../../utils/MediaSize';
 
 interface ContainerProps {
   translate: string;
@@ -16,8 +16,8 @@ export const Styled_CarouselLogic = {
     justify-content: center;
     align-items: center;
     ${DeviceQuery.tablet`
-      width: calc(390px * ${sizeChange.tablet});
-      height: calc(200px * ${sizeChange.tablet});
+      width: calc(390px * ${screenScale.tablet});
+      height: calc(200px * ${screenScale.tablet});
     `}
   `,
   Container: styled.div<ContainerProps>`
@@ -27,7 +27,7 @@ export const Styled_CarouselLogic = {
     transition: ${props => props.transform};
     transform: ${props => props.translate};
     ${DeviceQuery.tablet`
-      width: calc(390px * ${sizeChange.tablet});
+      width: calc(390px * ${screenScale.tablet});
     `}
   `,
 };
