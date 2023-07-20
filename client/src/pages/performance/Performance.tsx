@@ -20,12 +20,12 @@ export const Performance = () => {
         <S.Main>
           {data ? (
             isEditing ? (
-              <PerformanceEdit performance={data} />
+              <PerformanceEdit performance={data} setIsEditing={setIsEditing} />
             ) : (
               <PerformanceInfo performance={data} setIsEditing={setIsEditing} />
             )
           ) : (
-            <ReservationModal />
+            <div>로딩중</div>
           )}
         </S.Main>
       </S.Container>

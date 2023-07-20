@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 
+// TODO: Register, Edit 스타일 하나로 통합하기
+
 export default {
   Heading1: styled.h1`
     margin-left: 15px;
@@ -42,11 +44,11 @@ export default {
   Poster: styled.img`
     width: 170px;
     height: 210px;
-    background-color: gray;
     cursor: pointer;
+    background-color: transparent;
     object-fit: scale-down;
-    &[src] {
-      background-color: transparent;
+    &[src=''] {
+      background-color: gray;
     }
   `,
   // align-items: flex-start 왼쪽 정렬, flex-end 오른쪽 정렬

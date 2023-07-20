@@ -58,11 +58,11 @@ export default {
   Poster: styled.img`
     width: 170px;
     height: 210px;
-    background-color: gray;
     cursor: pointer;
+    background-color: transparent;
     object-fit: scale-down;
-    &[src] {
-      background-color: transparent;
+    &[src=''] {
+      background-color: gray;
     }
   `,
   // align-items: flex-start 왼쪽 정렬, flex-end 오른쪽 정렬
