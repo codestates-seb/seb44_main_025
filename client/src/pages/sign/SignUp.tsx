@@ -1,6 +1,6 @@
 import { Styled_Sign } from './Sign.styled';
 import Header from '../../components/header/Header';
-import { ButtonPrimary160px } from '../../components/buttons/Buttons';
+import { ButtonPrimary160px, Button } from '../../components/buttons/Buttons';
 import { useRef, useState } from 'react';
 import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -14,6 +14,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { SignUp } from '../../model/Member';
 import { H1Title } from '../../theme/common/SlideUp';
+import GoogleButton from '../../components/buttons/GoogleButton';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
@@ -313,6 +314,7 @@ const SignUpPage = () => {
             linkedText="로그인"
             marginTop={50}
           />
+          <GoogleButton naviUrl="/googlesignup" title="회원가입" />
         </Styled_Sign.Container>
       </Styled_Sign.Main>
     </>

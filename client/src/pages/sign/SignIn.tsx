@@ -8,8 +8,8 @@ import { emailRegExp } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../utils/Cookie';
 import { H1Title } from '../../theme/common/SlideUp';
-import GoogleLoginButton from '../../components/oauth/OAuth';
 import { useUserInfo } from '../../zustand/userInfo.stores';
+import GoogleButton from '../../components/buttons/GoogleButton';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
@@ -125,15 +125,14 @@ const SignInPage = () => {
               로그인하기
             </ButtonPrimary160px>
           </Styled_Sign.Form>
-          <Styled_Sign.SocialSignIn>
-            <GoogleLoginButton />
-          </Styled_Sign.SocialSignIn>
           <PageMovement
             infoText="아직 계정이 없으신가요?"
             pagelink="/signup"
             linkedText="회원가입"
-            marginTop={20}
+            marginTop={50}
           />
+          <GoogleButton naviUrl="/googlelogin" title="로그인" />
+          <GoogleButton naviUrl="/googlesignup" title="회원가입" />
         </Styled_Sign.Container>
       </Styled_Sign.Main>
     </>

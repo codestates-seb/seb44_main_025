@@ -1,12 +1,14 @@
 import { Styled_Sign } from './Sign.styled';
 import Header from '../../components/header/Header';
-import { ButtonPrimary160px } from '../../components/buttons/Buttons';
+import { Button, ButtonPrimary160px } from '../../components/buttons/Buttons';
 import PageMovement from '../../components/sign/PageMovement';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { gmailRegExp } from '../../utils/RegExp';
 import { SignIn } from '../../model/Member';
 import { usePostSignIn } from '../../api/sign';
 import { H1Title } from '../../theme/common/SlideUp';
+import { useNavigate } from 'react-router-dom';
+import GoogleButton from '../../components/buttons/GoogleButton';
 
 const GoogleSignin = () => {
   const {
@@ -14,6 +16,7 @@ const GoogleSignin = () => {
     formState: { errors },
     handleSubmit,
   } = useForm<SignIn>();
+  const navigate = useNavigate();
 
   /** 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는 함수 */
   const onSubmit: SubmitHandler<SignIn> = data => {
@@ -25,7 +28,7 @@ const GoogleSignin = () => {
       <Header precious={true} />
       <Styled_Sign.Main>
         <Styled_Sign.Container>
-          <Styled_Sign.H1 marginBottom={145}>
+          <Styled_Sign.H1 marginBottom={80}>
             <H1Title.H1>
               <H1Title.H1span>Google로 로그인</H1Title.H1span>
             </H1Title.H1>
@@ -66,13 +69,13 @@ const GoogleSignin = () => {
             </div>
             <ButtonPrimary160px>로그인하기</ButtonPrimary160px>
           </Styled_Sign.Form>
-          <Styled_Sign.SocialSignIn></Styled_Sign.SocialSignIn>
           <PageMovement
             infoText="아직 계정이 없으신가요?"
             pagelink="/signup"
             linkedText="회원가입"
-            marginTop={20}
+            marginTop={50}
           />
+          <GoogleButton naviUrl="/googlesignup" title="회원가입" />
         </Styled_Sign.Container>
       </Styled_Sign.Main>
     </>

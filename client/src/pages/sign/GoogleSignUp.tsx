@@ -10,6 +10,7 @@ import { H1Title } from '../../theme/common/SlideUp';
 import { useGetDuplicateNickname } from '../../api/duplication';
 import { usePostSignUp } from '../../api/sign';
 import { SignUp } from '../../model/Member';
+import GoogleButton from '../../components/buttons/GoogleButton';
 
 const GoogleSignUp = () => {
   /** 중복여부
@@ -197,6 +198,7 @@ const GoogleSignUp = () => {
             linkedText="로그인"
             marginTop={50}
           />
+          <GoogleButton naviUrl="/googlelogin" title="로그인" />
         </Styled_Sign.Container>
       </Styled_Sign.Main>
     </>
