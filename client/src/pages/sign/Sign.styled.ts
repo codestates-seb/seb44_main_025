@@ -23,6 +23,7 @@ export const Styled_Sign = {
     align-items: center;
     width: 390px;
     background-color: var(--theme-background-color);
+    padding-bottom: 20px;
     ${DeviceQuery.tablet`
       min-height: calc(100vh - (60px * ${screenScale.tablet}));
       width: calc(390px * ${screenScale.tablet})
