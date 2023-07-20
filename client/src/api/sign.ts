@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { SignUp, SignIn } from '../model/Member';
 import { setCookie } from '../utils/Cookie';
+import { useNavigate } from 'react-router-dom';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
-const navigate = useNavigate();
 
 /** 회원가입 api */
 export const usePostSignUp = (
@@ -13,6 +12,7 @@ export const usePostSignUp = (
   postUrl: string,
   naviUrl: string
 ) => {
+  const navigate = useNavigate();
   const data = axios
     .post(`${SERVER_HOST}${postUrl}`, info, {
       headers: { 'Content-Type': 'application/json' },
@@ -31,6 +31,7 @@ export const usePostSignUp = (
 
 /** 로그인 api */
 export const usePostSignIn = (data: SignIn, postUrl: string) => {
+  const navigate = useNavigate();
   axios
     .post(`${SERVER_HOST}${postUrl}`, data)
     .then(response => {

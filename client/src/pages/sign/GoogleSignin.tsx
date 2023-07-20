@@ -4,10 +4,9 @@ import { ButtonPrimary160px } from '../../components/buttons/Buttons';
 import PageMovement from '../../components/sign/PageMovement';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { gmailRegExp } from '../../utils/RegExp';
-import { H1Title } from '../../theme/common/SlideUp';
-import GoogleLoginButton from '../../components/oauth/OAuth';
 import { SignIn } from '../../model/Member';
 import { usePostSignIn } from '../../api/sign';
+import { H1Title } from '../../theme/common/SlideUp';
 
 const GoogleSignin = () => {
   const {
@@ -67,9 +66,7 @@ const GoogleSignin = () => {
             </div>
             <ButtonPrimary160px>로그인하기</ButtonPrimary160px>
           </Styled_Sign.Form>
-          <Styled_Sign.SocialSignIn>
-            <GoogleLoginButton />
-          </Styled_Sign.SocialSignIn>
+          <Styled_Sign.SocialSignIn></Styled_Sign.SocialSignIn>
           <PageMovement
             infoText="아직 계정이 없으신가요?"
             pagelink="/signup"
