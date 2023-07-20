@@ -271,3 +271,19 @@ export const useGetMemberReview = (id: string | number | undefined) => {
 
   return data;
 };
+
+export const useGetReview = (id: string | number | undefined) => {
+  const [data, setData] = useState<Review>();
+
+  const getData = async () => {
+    await axios
+      .get<Review>(`${SERVER_HOST}/review/${id}`)
+      .then(data => setData(data.data))
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return data;
+};
