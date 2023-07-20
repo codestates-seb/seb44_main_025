@@ -4,7 +4,7 @@ import { ButtonPrimary160px } from '../../components/buttons/Buttons';
 import PageMovement from '../../components/sign/PageMovement';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { gmailRegExp } from '../../utils/RegExp';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 import GoogleLoginButton from '../../components/oauth/OAuth';
 import { SignIn } from '../../model/Member';
 import { usePostSignIn } from '../../api/sign';

@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import PageMovement from '../../components/sign/PageMovement';
 import { ErrorMessage } from '@hookform/error-message';
 import { gmailRegExp, nicknameRegExp } from '../../utils/RegExp';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 import { useGetDuplicateNickname } from '../../api/duplication';
 import { usePostSignUp } from '../../api/sign';
 import { SignUp } from '../../model/Member';

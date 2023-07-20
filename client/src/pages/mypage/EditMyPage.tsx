@@ -8,7 +8,7 @@ import { Input } from '../../components/inputs/Inputs';
 import { useState } from 'react';
 import Img from '../.././images/우리사랑이대로.jpeg';
 import { Link } from 'react-router-dom';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 
 export default function Editmypage() {
   const [Artist, SetArtist] = useState('');

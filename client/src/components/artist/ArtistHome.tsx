@@ -1,11 +1,10 @@
-import { ArtistList } from '../../zustand/homepage.stores';
+import { useHomePage } from '../../zustand/homepage.stores';
 import { Link } from 'react-router-dom';
 import { Styled_ArtistHome } from './ArtistHome.styled';
 import { ArtistData } from '../../model/Artist';
 
 export default function ArtistHome() {
-  const { artistData } = ArtistList();
-  console.log(artistData);
+  const { artistList } = useHomePage();
 
   return (
     <Styled_ArtistHome.ArtistpreviewMain>
@@ -17,7 +16,7 @@ export default function ArtistHome() {
       </Link>
 
       <Styled_ArtistHome.ArtistpreviewContainer>
-        {artistData.map((v: ArtistData, i) => {
+        {artistList.map((v: ArtistData, i) => {
           return (
             <Link
               to={`/artistpage/${v.artistId}`}

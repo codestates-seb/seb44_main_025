@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { DeviceQuery } from '../../utils/Media';
-import { sizeChange } from '../../utils/MediaSize';
+import { screenScale } from '../../utils/MediaSize';
 
 export const Styled_Home = {
   Main: styled.main`
@@ -20,11 +20,11 @@ export const Styled_Home = {
     background-color: var(--theme-background-color);
 
     ${DeviceQuery.tablet`
-      min-height: calc(100vh - (120px * ${sizeChange.tablet}));
-      width: calc(390px * ${sizeChange.tablet});
-      gap: calc(30px * ${sizeChange.tablet});
-      padding-top: calc(20px * ${sizeChange.tablet});
-      padding-bottom: calc(20px * ${sizeChange.tablet});
+      min-height: calc(100vh - (120px * ${screenScale.tablet}));
+      width: calc(390px * ${screenScale.tablet});
+      gap: calc(30px * ${screenScale.tablet});
+      padding-top: calc(20px * ${screenScale.tablet});
+      padding-bottom: calc(20px * ${screenScale.tablet});
     `}
   `,
   MiddlePart: styled.div`
@@ -36,8 +36,8 @@ export const Styled_Home = {
     align-items: center;
 
     ${DeviceQuery.tablet`
-       width: calc(390px * ${sizeChange.tablet});
-       height: calc(200px * ${sizeChange.tablet});
+       width: calc(390px * ${screenScale.tablet});
+       height: calc(200px * ${screenScale.tablet});
     `}
   `,
   AllBtnsDiv: styled.div`
@@ -51,7 +51,7 @@ export const Styled_Home = {
       gap: 20px;
     }
     ${DeviceQuery.tablet`
-      width: calc(359px * ${sizeChange.tablet});
+      width: calc(359px * ${screenScale.tablet});
     `}
   `,
 };

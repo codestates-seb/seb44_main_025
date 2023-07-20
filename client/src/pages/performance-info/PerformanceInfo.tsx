@@ -12,7 +12,7 @@ import { categoryObj } from '../../utils/Category';
 import Navbar from '../../components/nav/Navbar';
 import { Map } from '../../components/postcode/Postcode';
 import { getCookie } from '../../utils/Cookie';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 import { getDateTime } from '../../utils/Format';
 
 const PerformanceInfo = () => {
