@@ -32,7 +32,7 @@ public class Member {
     private List<String> roles = new ArrayList<>();
     @OneToOne(mappedBy = "member",cascade = CascadeType.ALL)
     private Artist artist;
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member")
     private List<Reservation> reservations;
     @Column(nullable = true, updatable = true, unique = true, name= "phone")
     private String  phone;

@@ -65,6 +65,9 @@ public class Performance {
         this.totalSeat = totalSeat;
         this.imageUrl = imageUrl;
     }
+    public Performance(long performanceId){
+        this.performanceId = performanceId;
+    }
 
     public Performance(long performanceId, String title, LocalDateTime date, int price, String place, int totalSeat, String imageUrl) {
         this.performanceId = performanceId;

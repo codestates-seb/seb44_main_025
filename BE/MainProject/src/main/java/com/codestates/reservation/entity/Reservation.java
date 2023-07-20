@@ -25,12 +25,12 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="performance_Id")
     private Performance performance;
     private Long PaymentId;
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
     @Column(nullable = true)
@@ -43,6 +43,7 @@ public class Reservation {
     //private PaymentStatus paymentStatus;
     @OneToOne(mappedBy = "reservation")
     private Payment payment;
+    private long seatValue;
 
     @Getter
     public enum ReservationStatus {
@@ -60,6 +61,10 @@ public class Reservation {
     }
     public Reservation(Member member) {
         this.member = member;
+    }
+    public Reservation(Performance performance, long seatValue){
+        this.performance = performance;
+        this.seatValue = seatValue;
     }
 
 //public enum PaymentStatus {

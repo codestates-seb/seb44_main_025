@@ -16,7 +16,6 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reviewId;
-
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
@@ -24,11 +23,7 @@ public class Review {
     @JoinColumn(name = "PERFORMANCE_ID")
     private Performance performance;
     @Column(nullable = false)
-    private String nickName;
-    @Column(nullable = false)
     private String content;
-    @Column(nullable = false)
-    private String imageUrl;
     @Column(nullable = false)
     private String reviewTitle;
     @Column(nullable = false)

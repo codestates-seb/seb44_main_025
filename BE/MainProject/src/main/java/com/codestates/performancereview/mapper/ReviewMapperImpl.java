@@ -27,9 +27,7 @@ public class ReviewMapperImpl  {
                 .memberId(review.getMember().getMemberId())
                 .performanceId(review.getPerformance().getPerformanceId())
                 .reviewTitle(review.getReviewTitle())
-                .nickName(review.getNickName())
                 .content(review.getContent())
-                .imageUrl(review.getImageUrl())
                 .date(review.getDate())
                 .build();
     }
@@ -37,10 +35,8 @@ public class ReviewMapperImpl  {
     public Review toEntity(ReviewDto reviewDto) { // ReviewDto 객체에서 Review 엔티티로의 변환
         Review review = new Review();
         review.setReviewId(reviewDto.getReviewId());
-        review.setNickName(reviewDto.getNickName());
         review.setReviewTitle(reviewDto.getReviewTitle());
         review.setContent(reviewDto.getContent());
-        review.setImageUrl(reviewDto.getImageUrl());
         review.setDate(reviewDto.getDate());
 
         // Member와 Performance 엔티티는 ID만 설정하여 연결
