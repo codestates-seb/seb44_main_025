@@ -29,9 +29,11 @@ export const ButtonThemeStyle = {
     background-color: var(--theme-background-color);
     border: 1.5px solid var(--button-primary-border-color);
     color: var(--font-white-color);
-    &:active {
+    transition: 0.2s;
+    &:is(:active, :hover) {
       border: 1.5px solid var(--button-white-border-color);
       color: var(--button-white-border-color);
+      transition: 0.2s;
     }
   `,
   highlightBorder: css`
