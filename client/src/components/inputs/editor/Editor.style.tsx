@@ -28,7 +28,7 @@ export const EditorGlobalStyle = createGlobalStyle`
 
 export const ViewerGlobalStyle = createGlobalStyle`
   pre {
-    min-width: 360px;
+    width: clamp(310px, 20vw, 360px);
     max-width: 360px;
     color: white;
     font-family: inherit;
@@ -37,9 +37,10 @@ export const ViewerGlobalStyle = createGlobalStyle`
     justify-content: flex-start;
     align-items: flex-start;
     margin-bottom: 8px;
+  & p {
+    width: clamp(310px, 80%, 360px);
   }
-
-  pre img {
+  & img {
     max-width: 360px;
   }
 `;

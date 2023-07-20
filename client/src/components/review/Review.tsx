@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { EditorViewer } from '../inputs/editor/EditorViewer';
 
 interface Reviewlist {
   nickname: string;
@@ -14,7 +15,8 @@ export default function Review(props: Reviewlist) {
     <S.ReviewWrapper>
       <S.ReviewDetail>
         <S.ReviewTitle>{props.reviewTitle}</S.ReviewTitle>
-        <S.Reviewcontent>{props.content}</S.Reviewcontent>
+        <EditorViewer content={props.content.replace(/<img[\s\S]*?>/g, '')} />
+        {/* <S.Reviewcontent>{props.content}</S.Reviewcontent>*/}
         <S.ReviewBottom>
           <S.UserNickname>{props.nickname}-</S.UserNickname>
           <S.ReviewCreated>{props.createdAt}</S.ReviewCreated>
@@ -41,6 +43,13 @@ const S = {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    & pre {
+      max-width: 310px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+    }
   `,
   ReviewTitle: styled.header`
     font-size: var(--heading6-font-size);

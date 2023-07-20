@@ -29,11 +29,16 @@ const PerformanceInfo = ({
     if (performanceId) {
       const isConfirmed = confirm('공연을 삭제하시겠습니까?');
       if (isConfirmed) {
-        deletePerformance(performanceId);
+        deletePerformance(performanceId).then(data => {
+          if (data) {
+            navigate('/performances');
+          }
+        });
       }
     }
   };
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (new Date(performance?.date as string) < new Date()) {
       setIsStale(true);
     } else {
