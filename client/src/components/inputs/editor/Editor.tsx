@@ -3,7 +3,7 @@ import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
 import { useEditorStore } from './EditorStore';
 import { EditorGlobalStyle } from './Editor.style';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { postArtistImg as postImg } from '../../../api/fetchAPI';
 
 // 이미지 크기 조정 플러그인 관련 import
@@ -14,10 +14,9 @@ import { postArtistImg as postImg } from '../../../api/fetchAPI';
 export const Editor = ({ defaultValue }: { defaultValue?: string }) => {
   const { content, changeContent, clearContent } = useEditorStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [imgFile, setImgFile] = useState<Blob>();
-  const onSubmitImg = (file?: Blob) => {
+  const onSubmitImg = (file: Blob) => {
     let formData = new FormData();
-    formData.append('image-file', file || (imgFile as Blob));
+    formData.append('image-file', file);
     postImg(formData).then((data: any) => {
       changeContent(content + `<img src=${data.data}>`);
     });
