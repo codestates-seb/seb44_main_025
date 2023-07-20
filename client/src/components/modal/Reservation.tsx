@@ -12,7 +12,7 @@ export default function ReservationModal({
   closeModal: () => void;
 }) {
   const body = {
-    performanceId: 1,
+    performanceId: performance.performanceId,
     seatValue: 1,
   };
   return (
