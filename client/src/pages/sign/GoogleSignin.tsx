@@ -1,6 +1,6 @@
 import { Styled_Sign } from './Sign.styled';
 import Header from '../../components/header/Header';
-import { Button, ButtonPrimary160px } from '../../components/buttons/Buttons';
+import { ButtonPrimary160px } from '../../components/buttons/Buttons';
 import PageMovement from '../../components/sign/PageMovement';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { gmailRegExp } from '../../utils/RegExp';
@@ -20,7 +20,7 @@ const GoogleSignin = () => {
 
   /** 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는 함수 */
   const onSubmit: SubmitHandler<SignIn> = data => {
-    usePostSignIn(data, '/login');
+    usePostSignIn(data, '/login').then(() => navigate('/'));
   };
 
   return (

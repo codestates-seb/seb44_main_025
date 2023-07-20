@@ -9,10 +9,8 @@ const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 export const usePostSignUp = (
   info: SignUp,
   successMessage: string,
-  postUrl: string,
-  naviUrl: string
+  postUrl: string
 ) => {
-  const navigate = useNavigate();
   const data = axios
     .post(`${SERVER_HOST}${postUrl}`, info, {
       headers: { 'Content-Type': 'application/json' },
@@ -20,7 +18,7 @@ export const usePostSignUp = (
     .then(response => {
       if (response.status === 200) {
         alert(successMessage);
-        navigate(naviUrl);
+        return response.data;
       }
     })
     .catch(error => {
@@ -30,10 +28,9 @@ export const usePostSignUp = (
 };
 
 /** 로그인 api */
-export const usePostSignIn = (data: SignIn, postUrl: string) => {
-  const navigate = useNavigate();
-  axios
-    .post(`${SERVER_HOST}${postUrl}`, data)
+export const usePostSignIn = (info: SignIn, postUrl: string) => {
+  const data = axios
+    .post(`${SERVER_HOST}${postUrl}`, info)
     .then(response => {
       // 헤더에 담긴 토큰 가져오기
       const accessToken = response.headers['authorization'];
@@ -63,10 +60,10 @@ export const usePostSignIn = (data: SignIn, postUrl: string) => {
 
         // 메인페이지로 이동
         alert('[로그인 성공] 메인 페이지로 이동합니다');
-        navigate('/');
       }
     })
     .catch(() => {
       alert('이메일과 비밀번호를 확인해 주세요');
     });
+  return data;
 };

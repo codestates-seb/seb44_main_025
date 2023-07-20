@@ -11,6 +11,7 @@ import { useGetDuplicateNickname } from '../../api/duplication';
 import { usePostSignUp } from '../../api/sign';
 import { SignUp } from '../../model/Member';
 import GoogleButton from '../../components/buttons/GoogleButton';
+import { useNavigate } from 'react-router-dom';
 
 const GoogleSignUp = () => {
   /** 중복여부
@@ -29,8 +30,8 @@ const GoogleSignUp = () => {
    */
   let [noNicknameDuplBtnClickedSubmit, setNoNicknameDuplBtnClickedSubmit] =
     useState(true);
-
   let [submitClicked, setSubmitClicked] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -54,9 +55,8 @@ const GoogleSignUp = () => {
         usePostSignUp(
           data,
           '[회원가입 성공] 홈으로 이동합니다',
-          '/member',
-          '/'
-        );
+          '/member'
+        ).then(() => navigate('/'));
       } else {
         if (nicknameDupl) {
           if (nicknameDuplBtnCnt > 0) {
@@ -168,7 +168,6 @@ const GoogleSignUp = () => {
                   errors={errors}
                   name="nickname"
                   render={({ messages }) => {
-                    console.log('messages', messages);
                     return (
                       messages &&
                       Object.entries(messages).map(([type, message]) => (
