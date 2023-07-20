@@ -17,9 +17,10 @@ import SignUpPage from './pages/sign/SignUp';
 import SignInPage from './pages/sign/SignIn';
 import ArtistList from './pages/artist-list/ArtistList';
 import Home from './pages/home/Home';
-import ReviewRegister from './pages/review/ReviewRegister';
+import ReviewRegister from './pages/review-register/ReviewRegister';
 import Artistedit from './pages/artist-register/ArtistEdit';
 import { Performance } from './pages/performance/Performance';
+import ReviewInfo from './pages/review-info/ReviewInfo';
 
 /** @todo 도메인 주소 입력 */
 // axios.defaults.baseURL = '';
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
       {
         path: '/performances/:performanceId/review',
         element: <ReviewRegister />,
+      },
+      {
+        path: '/review/:reviewId',
+        element: <ReviewInfo />,
       },
     ],
   },
