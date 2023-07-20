@@ -109,7 +109,7 @@ public class Performance {
 
     @Getter
     public enum PERFORMANCE_STATUS {
-        PERFORMANCE_COMPLETED("공연중"),
+        PERFORMANCE_COMPLETED("공연진행중"),
         PERFORMANCE_NOT_COMPLETED("공연완료");
 
         private String status;
