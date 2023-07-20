@@ -8,6 +8,7 @@ export interface Member {
 }
 
 export interface Performance {
+  // map(arg0: () => import('react/jsx-runtime').JSX.Element): unknown;
   performanceId: number;
   title: string;
   category: string;
@@ -15,6 +16,7 @@ export interface Performance {
   price: number;
   artistName: string;
   imageUrl: string;
+  place?: string;
 }
 
 export interface Review {

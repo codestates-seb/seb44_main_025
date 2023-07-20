@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-import Img from '../.././images/우리사랑이대로.jpeg';
 import { useNavigate } from 'react-router-dom';
 import { ButtonWithArrow } from '../buttons/Buttons';
 
@@ -13,7 +12,7 @@ export default function ArtistPreview(props: ArtistPreviewPropTypes) {
   const navigate = useNavigate();
   return (
     <S.PreviewWrapper>
-      <S.UserImg src={props.imageUrl || Img} />
+      <S.UserImg src={props.imageUrl} />
       <S.PreviewDetail>
         <S.UserNickname>{props.artistName || '닉네임'}</S.UserNickname>
         <S.Previewcontent>{props.snsLink || 'snslink'}</S.Previewcontent>

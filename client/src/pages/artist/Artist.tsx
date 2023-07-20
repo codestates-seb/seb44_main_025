@@ -7,7 +7,6 @@ import Concertpreview from '../../components/concert-preview/ConcertPreview';
 import ArtistreviewContainer from '../../components/artist/artistreviewcontainer';
 import Review from '../../components/review/Review';
 import Footer from '../../components/footer/Footer';
-import Img from '../.././images/우리사랑이대로.jpeg';
 import { Link, useParams } from 'react-router-dom';
 import Navbar from '../../components/nav/Navbar';
 import {
@@ -20,8 +19,6 @@ import { getCookie } from '../../utils/Cookie';
 
 export default function Artistpage() {
   const { artistId } = useParams();
-  console.log(typeof getCookie('userInfo').artistId);
-  console.log(typeof artistId);
 
   /** 불러온 fetch함수에 params로 artistId를 전달 해서 받은 데이터 */
   const artistData = useGetArtist(artistId);
@@ -40,8 +37,8 @@ export default function Artistpage() {
           <S.Title>아티스트페이지</S.Title>
           {/* 로그인한 userId에 맞는 artistId를 보여주는거 */}
           <S.ProfileWarppar key={artistData?.artistId}>
-            <S.LogoImg src={Img} />
-            <S.ArtistImg src={artistData?.imageUrl || Img} />
+            <S.LogoImg src={''} />
+            <S.ArtistImg src={artistData?.imageUrl} />
             <S.ArtistDetail>
               <S.ArtistName>{artistData?.artistName}</S.ArtistName>
               <S.ArtistSns href={artistData?.snsLink} target="_blank">

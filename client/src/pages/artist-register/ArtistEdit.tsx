@@ -8,7 +8,6 @@ import {
 } from '../../components/buttons/Buttons';
 import { Input } from '../../components/inputs/Inputs';
 import { useState, useRef, useEffect } from 'react';
-import LogoImg from '../.././images/우리사랑이대로.jpeg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { patchArtist, postArtistImg } from '../../api/fetchAPI';
@@ -198,7 +197,7 @@ export default function Artistedit() {
           <S.Title>
             <H1Title.H1span>아티스트 수정하기</H1Title.H1span>
           </S.Title>
-          <S.LogoImg src={LogoImg}></S.LogoImg>
+          <S.LogoImg src={''}></S.LogoImg>
           <Controller
             control={control}
             name="imageUrl"
