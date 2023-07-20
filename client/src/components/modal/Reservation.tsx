@@ -3,6 +3,7 @@ import { ButtonHighlight, ButtonWhite } from '../buttons/Buttons';
 import { postReservation } from '../../api/fetchAPI';
 import { PerformanceType } from '../../model/Performance';
 import { getDateTime } from '../../utils/Format';
+import React from 'react';
 
 export default function ReservationModal({
   performance,
@@ -16,8 +17,12 @@ export default function ReservationModal({
     seatValue: 1,
   };
   return (
-    <S.ModalOverlay>
-      <S.TicketModal>
+    <S.ModalOverlay onClick={closeModal}>
+      <S.TicketModal
+        onClick={(e: any) => {
+          e.stopPropagation();
+        }}
+      >
         <S.TicketImg src={performance.imageUrl} />
         <S.TicketDetail>
           <S.TicketTitle>{performance.title}</S.TicketTitle>
@@ -32,7 +37,7 @@ export default function ReservationModal({
           <S.TicketMessage>예약하시겠습니까?</S.TicketMessage>
         </S.TicketDetail>
         <S.TicketButtons>
-          <ButtonHighlight onClick={() => closeModal()}>취소</ButtonHighlight>
+          <ButtonHighlight onClick={closeModal}>취소</ButtonHighlight>
           <ButtonWhite
             onClick={() => {
               postReservation(body);
