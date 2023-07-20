@@ -9,7 +9,7 @@ export const passwordRegExp =
   /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
 
 /** @nickname :한글, 영문 가능, 띄어쓰기 불가*/
-export const nicknameRegExp = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣]*$/;
+export const nicknameRegExp = /^[a-zA-Z0-9ㄱ-힣][a-zA-Z0-9ㄱ-힣]*$/;
 
 /** @artistname :1 ~ 16자 한글, 영문, 숫자 가능, 띄어쓰기 불가*/
 export const artistnameRegExp =

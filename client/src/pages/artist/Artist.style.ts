@@ -54,6 +54,7 @@ export default {
   ArtistDetail: styled.div`
     display: flex;
     flex-direction: column;
+    width: fit-content;
     margin: 20px 15px 0px 15px;
   `,
   ArtistName: styled.p`

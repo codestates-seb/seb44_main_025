@@ -3,30 +3,55 @@ import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
 import { useEditorStore } from './EditorStore';
 import { EditorGlobalStyle } from './Editor.style';
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { postArtistImg as postImg } from '../../../api/fetchAPI';
 
 // 이미지 크기 조정 플러그인 관련 import
 // import {Quill} from 'react-quill'
 // import ImageResize from 'quill-image-resize';
 // Quill.register('modules/ImageResize', ImageResize);
 
-export const Editor = () => {
-  const content = useEditorStore(state => state.content);
-  const setContent = useEditorStore(state => state.changeContent);
+export const Editor = ({ defaultValue }: { defaultValue?: string }) => {
+  const { content, changeContent, clearContent } = useEditorStore();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const onSubmitImg = (file: Blob) => {
+    let formData = new FormData();
+    formData.append('image-file', file);
+    postImg(formData).then((data: any) => {
+      changeContent(content + `<img src=${data.data}>`);
+    });
+  };
+
+  const imageHandler = useCallback(() => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  }, []);
+  useEffect(() => {
+    if (defaultValue) {
+      changeContent(defaultValue);
+    }
+    return () => clearContent();
+  }, []);
   const modules = useMemo(
     () => ({
-      toolbar: [
-        [{ header: [1, 2, false] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-        [
-          { list: 'ordered' },
-          { list: 'bullet' },
-          { indent: '-1' },
-          { indent: '+1' },
+      toolbar: {
+        container: [
+          [{ header: [1, 2, false] }],
+          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+          [
+            { list: 'ordered' },
+            { list: 'bullet' },
+            { indent: '-1' },
+            { indent: '+1' },
+          ],
+          ['link', 'image', 'video'],
+          ['clean'],
         ],
-        ['link', 'image', 'video'],
-        ['clean'],
-      ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
       // ImageResize: {},
     }),
     []
@@ -52,11 +77,24 @@ export const Editor = () => {
   return (
     <>
       <EditorGlobalStyle />
+      <input
+        style={{ display: 'none' }}
+        ref={fileInputRef}
+        type="file"
+        name="image"
+        accept="image/*"
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          const files = e.target.files;
+          if (files === undefined || files === null) return;
+          const file = files[0];
+          onSubmitImg(file);
+        }}
+      />
       <ReactQuill
         theme="snow"
         modules={modules}
         value={content}
-        onChange={setContent}
+        onChange={changeContent}
         formats={formats}
       />
     </>

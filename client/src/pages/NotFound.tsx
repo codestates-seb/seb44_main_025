@@ -1,8 +1,10 @@
 import { styled } from 'styled-components';
+import Header from '../components/header/Header';
 
 export default function Notfoundpage() {
   return (
     <>
+      <Header precious={true} />
       <S.Main>
         <S.Section>
           <S.Title>페이지를 찾을 수 없습니다.</S.Title>

@@ -7,7 +7,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import axios from 'axios';
 import Notfoundpage from './pages/NotFound';
 import PerformanceList from './pages/performance-list/PerformanceList';
-import PerformanceInfo from './pages/performance-info/PerformanceInfo';
 import PerformanceRegister from './pages/performance-register/PerformanceRegister';
 import Artistpage from './pages/artist/Artist';
 import Mypage from './pages/mypage/MyPage';
@@ -18,10 +17,12 @@ import SignUpPage from './pages/sign/SignUp';
 import SignInPage from './pages/sign/SignIn';
 import ArtistList from './pages/artist-list/ArtistList';
 import Home from './pages/home/Home';
-import ReviewRegister from './pages/review/ReviewRegister';
+import ReviewRegister from './pages/review-register/ReviewRegister';
 import Artistedit from './pages/artist-register/ArtistEdit';
 import GoogleSignUp from './pages/sign/GoogleSignUp';
 import GoogleSignin from './pages/sign/GoogleSignin';
+import { Performance } from './pages/performance/Performance';
+import ReviewInfo from './pages/review-info/ReviewInfo';
 
 /** @todo 도메인 주소 입력 */
 // axios.defaults.baseURL = '';
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/performances/:performanceId',
-        element: <PerformanceInfo />,
+        element: <Performance />,
       },
       {
         path: '/performances/register',
@@ -67,7 +68,7 @@ const router = createBrowserRouter([
         element: <Artistpage />,
       },
       {
-        path: '/editmypage',
+        path: '/editmypage/:memberId',
         element: <Editmypage />,
       },
       {
@@ -84,7 +85,7 @@ const router = createBrowserRouter([
         element: <Cancel />,
       },
       {
-        path: '/performances/review/write/:performanceId',
+        path: '/performances/:performanceId/review',
         element: <ReviewRegister />,
       },
       {
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
       {
         path: '/googlesignup',
         element: <GoogleSignUp />,
+      },
+      {
+        path: '/review/:reviewId',
+        element: <ReviewInfo />,
       },
     ],
   },

@@ -80,4 +80,9 @@ export default {
     margin-top: 40px;
     margin-bottom: 20px;
   `,
+  DuplicateMeg: styled.p`
+    margin-left: 15px;
+    ${FontStyle.nav};
+    color: var(--font-highlight-color);
+  `,
 };
