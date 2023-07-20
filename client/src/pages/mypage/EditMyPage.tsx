@@ -7,7 +7,7 @@ import {
 import { Input } from '../../components/inputs/Inputs';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { nicknameRegExp, passwordRegExp } from '../../utils/RegExp';
 import axios from 'axios';

@@ -9,7 +9,7 @@ import { categoryObj } from '../../utils/Category';
 import Navbar from '../../components/nav/Navbar';
 import { useState } from 'react';
 import { getCookie } from '../../utils/Cookie';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 
 const PerformanceList = () => {
   const navigate = useNavigate();

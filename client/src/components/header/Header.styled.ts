@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { DeviceQuery } from '../../utils/Media';
-import { sizeChange } from '../../utils/MediaSize';
+import { screenScale } from '../../utils/MediaSize';
 
 export const Styled_Header = {
   Header: styled.header`
@@ -20,8 +20,8 @@ export const Styled_Header = {
     justify-content: space-between;
     align-items: center;
     ${DeviceQuery.tablet`
-      width: calc(390px * ${sizeChange.tablet}); 
-      height: calc(60px * ${sizeChange.tablet}); 
+      width: calc(390px * ${screenScale.tablet}); 
+      height: calc(60px * ${screenScale.tablet}); 
     `}
   `,
   LogoDiv: styled.div`

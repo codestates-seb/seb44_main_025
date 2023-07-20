@@ -1,15 +1,15 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
 import { DeviceQuery } from '../../utils/Media';
-import { sizeChange } from '../../utils/MediaSize';
+import { screenScale } from '../../utils/MediaSize';
 
 export const Styled_ArtistHome = {
   ArtistpreviewMain: styled.div`
     width: 390px;
     height: 160px;
     ${DeviceQuery.tablet`
-      width: calc(390px * ${sizeChange.tablet}); 
-      height: calc(160px * ${sizeChange.tablet}); 
+      width: calc(390px * ${screenScale.tablet}); 
+      height: calc(160px * ${screenScale.tablet}); 
     `}
   `,
   Subtitle: styled.header`
@@ -26,7 +26,7 @@ export const Styled_ArtistHome = {
     color: var(--button-primary-background-color);
     margin-right: 15px;
     ${DeviceQuery.tablet`
-      margin-bottom: calc(10px * ${sizeChange.tablet}); 
+      margin-bottom: calc(10px * ${screenScale.tablet}); 
     `}
   `,
   ArtistpreviewContainer: styled.div`
@@ -36,8 +36,8 @@ export const Styled_ArtistHome = {
     justify-content: space-between;
     margin-left: 15px;
     ${DeviceQuery.tablet`
-      width: calc(360px * ${sizeChange.tablet}); 
-      height: calc(115px * ${sizeChange.tablet}); 
+      width: calc(360px * ${screenScale.tablet}); 
+      height: calc(115px * ${screenScale.tablet}); 
     `}
   `,
   ArtistpreviewWrapper: styled.div`
@@ -45,8 +45,8 @@ export const Styled_ArtistHome = {
     height: 115px;
     transition: all 0.1s linear;
     ${DeviceQuery.tablet`
-      width: calc(75px * ${sizeChange.tablet}); 
-      height: calc(115px * ${sizeChange.tablet}); 
+      width: calc(75px * ${screenScale.tablet}); 
+      height: calc(115px * ${screenScale.tablet}); 
     `}
   `,
   ArtistImg: styled.img`
@@ -58,8 +58,8 @@ export const Styled_ArtistHome = {
       border-radius: 50%;
     }
     ${DeviceQuery.tablet`
-      width: calc(75px * ${sizeChange.tablet}); 
-      height: calc(75px * ${sizeChange.tablet}); 
+      width: calc(75px * ${screenScale.tablet}); 
+      height: calc(75px * ${screenScale.tablet}); 
     `}
   `,
   ArtistDetail: styled.div`
@@ -67,7 +67,7 @@ export const Styled_ArtistHome = {
     margin-top: 5px;
     text-align: center;
     ${DeviceQuery.tablet`
-      height: calc(30px * ${sizeChange.tablet}); 
+      height: calc(30px * ${screenScale.tablet}); 
     `}
   `,
   Artistcontent: styled.p`
