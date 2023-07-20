@@ -56,7 +56,11 @@ const GoogleSignUp = () => {
           data,
           '[회원가입 성공] 홈으로 이동합니다',
           '/member'
-        ).then(() => navigate('/'));
+        ).then(data => {
+          if (data !== 'error') {
+            navigate('/');
+          }
+        });
       } else {
         if (nicknameDupl) {
           if (nicknameDuplBtnCnt > 0) {

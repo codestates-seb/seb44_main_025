@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { SignUp, SignIn } from '../model/Member';
 import { setCookie } from '../utils/Cookie';
-import { useNavigate } from 'react-router-dom';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
@@ -11,7 +10,7 @@ export const usePostSignUp = (
   successMessage: string,
   postUrl: string
 ) => {
-  const data = axios
+  return axios
     .post(`${SERVER_HOST}${postUrl}`, info, {
       headers: { 'Content-Type': 'application/json' },
     })
@@ -23,13 +22,13 @@ export const usePostSignUp = (
     })
     .catch(error => {
       alert(`error: ${error}`);
+      return 'error';
     });
-  return data;
 };
 
 /** 로그인 api */
 export const usePostSignIn = (info: SignIn, postUrl: string) => {
-  const data = axios
+  return axios
     .post(`${SERVER_HOST}${postUrl}`, info)
     .then(response => {
       // 헤더에 담긴 토큰 가져오기
@@ -60,10 +59,11 @@ export const usePostSignIn = (info: SignIn, postUrl: string) => {
 
         // 메인페이지로 이동
         alert('[로그인 성공] 메인 페이지로 이동합니다');
+        return response.data;
       }
     })
     .catch(() => {
       alert('이메일과 비밀번호를 확인해 주세요');
+      return 'error';
     });
-  return data;
 };

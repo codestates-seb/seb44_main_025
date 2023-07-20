@@ -20,7 +20,11 @@ const GoogleSignin = () => {
 
   /** 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는 함수 */
   const onSubmit: SubmitHandler<SignIn> = data => {
-    usePostSignIn(data, '/login').then(() => navigate('/'));
+    usePostSignIn(data, '/login').then(data => {
+      if (data !== 'error') {
+        navigate('/');
+      }
+    });
   };
 
   return (
