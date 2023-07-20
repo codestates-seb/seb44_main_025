@@ -6,7 +6,6 @@ import Header from '../../components/header/Header';
 import Navbar from '../../components/nav/Navbar';
 import { useState } from 'react';
 import PerformanceEdit from './performance-edit/PerformanceEdit';
-import ReservationModal from '../../components/modal/Reservation';
 
 export const Performance = () => {
   const [isEditing, setIsEditing] = useState(false);
