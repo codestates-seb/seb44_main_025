@@ -2,37 +2,40 @@ import { styled } from 'styled-components';
 import { ButtonHighlight, ButtonWhite } from '../buttons/Buttons';
 import { postReservation } from '../../api/fetchAPI';
 import { PerformanceType } from '../../model/Performance';
+import { getDateTime } from '../../utils/Format';
 
-export default function ReservationModal(
-  props: PerformanceType & { closeModal: () => void }
-) {
+export default function ReservationModal({
+  performance,
+  closeModal,
+}: {
+  performance: PerformanceType;
+  closeModal: () => void;
+}) {
   const body = {
     performanceId: 1,
-    seatValue: 5,
+    seatValue: 1,
   };
   return (
     <S.ModalOverlay>
       <S.TicketModal>
-        <S.TicketImg src={props.imageUrl} />
+        <S.TicketImg src={performance.imageUrl} />
         <S.TicketDetail>
-          <S.TicketTitle>{props.title}</S.TicketTitle>
+          <S.TicketTitle>{performance.title}</S.TicketTitle>
           {/* TODO: 아티스트명 받아오기 */}
           <S.Ticketcontent>아티스트명</S.Ticketcontent>
-          <S.Ticketcontent>{props.place}</S.Ticketcontent>
+          <S.Ticketcontent>{performance.place}</S.Ticketcontent>
           {/* TODO: 날짜, 숫자 형식 함수 만들기 */}
+          <S.Ticketcontent>{getDateTime(performance.date)}</S.Ticketcontent>
           <S.Ticketcontent>
-            {new Date(props.date).toLocaleString()}
+            ₩{performance.price?.toLocaleString()}
           </S.Ticketcontent>
-          <S.Ticketcontent>₩{props.price.toLocaleString()}</S.Ticketcontent>
           <S.TicketMessage>예약하시겠습니까?</S.TicketMessage>
         </S.TicketDetail>
         <S.TicketButtons>
-          <ButtonHighlight onClick={() => props.closeModal()}>
-            취소
-          </ButtonHighlight>
+          <ButtonHighlight onClick={() => closeModal()}>취소</ButtonHighlight>
           <ButtonWhite
             onClick={() => {
-              postReservation(props?.performanceId, body);
+              postReservation(body);
             }}
           >
             예약
