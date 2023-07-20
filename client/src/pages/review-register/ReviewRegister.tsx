@@ -30,8 +30,8 @@ const ReviewRegister = () => {
       const body = { ...data, content, performanceId: +performanceId };
       postReview(performanceId, body)
         .then(() => {
+          navigate(`/performances/${performanceId}`);
           return;
-          // navigate(`/performances/${performanceId}`);
         })
         .catch(err => console.error(err));
     }
