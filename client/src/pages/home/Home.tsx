@@ -47,7 +47,6 @@ const Home = () => {
       <Header />
       <Styled_Home.Main>
         <Styled_Home.Container>
-          <Slogan />
           <CarouselLogic />
           <Styled_Home.MiddlePart>
             <Input height={30} placeholder="검색..." suffix={true} />
@@ -103,6 +102,7 @@ const Home = () => {
               </div>
             </Styled_Home.AllBtnsDiv>
           </Styled_Home.MiddlePart>
+          <Slogan />
           <Artistmain />
         </Styled_Home.Container>
       </Styled_Home.Main>
