@@ -2,7 +2,7 @@ import Header from '../../components/header/Header';
 import { ButtonHighlightBorder } from '../../components/buttons/Buttons';
 import { Input } from '../../components/inputs/Inputs';
 import { Styled_Cancel } from './Cancel.styled';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 import { useState } from 'react';
 import axios from 'axios';
 import { removeCookie, getCookie } from '../../utils/Cookie';

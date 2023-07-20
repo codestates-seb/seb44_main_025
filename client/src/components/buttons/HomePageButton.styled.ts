@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
 import { DeviceQuery } from '../../utils/Media';
-import { sizeChange } from '../../utils/MediaSize';
+import { screenScale } from '../../utils/MediaSize';
 
 interface StyleDivProps {
   height: 140 | 60;
@@ -37,8 +37,8 @@ export const Styled_HomePageButton = {
     }
 
     @media screen and (min-width: 820px) {
-      width: calc(170px * ${sizeChange.tablet});
-      height: calc(${props => props.height}px * ${sizeChange.tablet});
+      width: calc(170px * ${screenScale.tablet});
+      height: calc(${props => props.height}px * ${screenScale.tablet});
     }
   `,
 };

@@ -17,7 +17,7 @@ import axios from 'axios';
 import { artistnameRegExp } from '../../utils/RegExp';
 import { getCookie } from '../../utils/Cookie';
 import { FontStyle } from '../../utils/Theme';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 import { useGetArtist } from '../../api/useFetch';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
