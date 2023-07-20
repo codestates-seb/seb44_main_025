@@ -10,15 +10,12 @@ interface Reviewlist {
   memberId?: number;
 }
 
-const ImageRegExp = new RegExp(/<img[\s\S]*?>/);
 export default function Review(props: Reviewlist) {
-  console.log(props.content.match(ImageRegExp));
-  console.log(props.content.replace(ImageRegExp, ''));
   return (
     <S.ReviewWrapper>
       <S.ReviewDetail>
         <S.ReviewTitle>{props.reviewTitle}</S.ReviewTitle>
-        <EditorViewer content={props.content.replace(ImageRegExp, '')} />
+        <EditorViewer content={props.content.replace(/<img[\s\S]*?>/g, '')} />
         {/* <S.Reviewcontent>{props.content}</S.Reviewcontent>*/}
         <S.ReviewBottom>
           <S.UserNickname>{props.nickname}-</S.UserNickname>
