@@ -4,18 +4,18 @@ import { Button } from '../../../components/buttons/Buttons';
 import { Input } from '../../../components/inputs/Inputs';
 import { Editor } from '../../../components/inputs/editor/Editor';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useEditorStore } from '../../../components/inputs/editor/EditorStore';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import {
   patchPerformance,
   postArtistImg as postImg,
 } from '../../../api/fetchAPI';
-import { categoryObj } from '../../../utils/Category';
+import { categoryObj, categoryIdObj } from '../../../utils/Category';
 import { getCookie } from '../../../utils/Cookie';
 import { PostcodeMap } from '../../../components/postcode/Postcode';
 import { getTimezoneAdjustedISOString } from '../../../utils/Format';
-import { H1Title } from '../../../utils/SlideUp';
+import { H1Title } from '../../../theme/common/SlideUp';
 import { PerformanceType } from '../../../model/Performance';
 
 interface FormValues {
@@ -27,7 +27,13 @@ interface FormValues {
 
 const NOW = getTimezoneAdjustedISOString().slice(0, 16);
 
-const PerformanceEdit = ({ performance }: { performance: PerformanceType }) => {
+const PerformanceEdit = ({
+  setIsEditing,
+  performance,
+}: {
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  performance: PerformanceType;
+}) => {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imagesrc, setImagesrc] = useState<string>(performance.imageUrl);
@@ -40,13 +46,14 @@ const PerformanceEdit = ({ performance }: { performance: PerformanceType }) => {
       performance.performanceId
     ],
   ]);
-  const [categoryId, setCategoryId] = useState<number | null>(1);
+  const [categoryId, setCategoryId] = useState<number | null>(
+    categoryIdObj[performance.category] || null
+  );
   const handleClickCategory = (id: number) => {
     if (categoryId === id) setCategoryId(null);
     else setCategoryId(id);
   };
   const { content, clearContent } = useEditorStore();
-  // TODO: 로그인 상태 관리 변경하기
   useEffect(() => {
     if (!getCookie('userInfo')) {
       navigate('/performances', { replace: true });
@@ -96,9 +103,9 @@ const PerformanceEdit = ({ performance }: { performance: PerformanceType }) => {
       .then(data => {
         if (data.data.performanceId) {
           clearContent();
-          navigate(`/performances/${data.data.performanceId}`, {
-            replace: true,
-          });
+          setIsEditing(false);
+          // TODO: 요청 함수 리팩토링 뒤에 다른 방법 사용하기
+          location.reload();
         }
       })
       .catch(err => alert(err));
@@ -153,10 +160,8 @@ const PerformanceEdit = ({ performance }: { performance: PerformanceType }) => {
           }}
         />
         <S.Poster
-          src={
-            imagesrc ||
-            'https://cdn.pixabay.com/photo/2016/11/29/06/17/audience-1867754_640.jpg'
-          }
+          // TODO: 공연 이미지 등록 이전에 보여줄 170 * 210 비율에 맞는 이미지 제공하기
+          src={imagesrc || ''}
           alt="공연 이미지"
           onClick={() => fileInputRef.current?.click()}
         ></S.Poster>
@@ -308,7 +313,7 @@ const PerformanceEdit = ({ performance }: { performance: PerformanceType }) => {
             handleSubmit(onSubmit)();
           }}
         >
-          공연 정보 등록
+          공연 정보 수정
         </Button>
       </S.BottomStickyContainer>
     </>
