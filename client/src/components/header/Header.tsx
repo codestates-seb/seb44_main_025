@@ -8,7 +8,6 @@ import TicketModal from '../modal/Ticket';
 import { isStyledComponent } from 'styled-components';
 import { useState } from 'react';
 import { ReactComponent as MainIcon } from '../../icons/EZ to play_5.svg';
-// import { ReactComponent as MainIcon } from '../../icons/EZ to play_6.svg';
 
 interface OwnProps {
   precious?: boolean;
@@ -50,7 +49,6 @@ const Header = ({ precious }: OwnProps) => {
                 <MainIcon height={60} />
               </Styled_Header.LogoDiv>
 
-              {/* <span style={{ color: 'white' }}>로고들어갈자리</span> */}
               <Styled_Header.Div>
                 <Styled_Header.SearchS>
                   <SearchIcon />

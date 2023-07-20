@@ -1,6 +1,5 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
-// import { ReactComponent as FooterIcon } from '../../icons/EZ to play_foter.svg';
 import { ReactComponent as FooterIcon } from '../../icons/EZ to play_8.svg';
 
 export default function Footer() {
