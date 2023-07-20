@@ -71,7 +71,7 @@ const GoogleSignUp = () => {
     }
   };
 
-  /** 중복검사 */
+  /** 닉네임 중복검사 */
   const handleDuplicateCheck = async (nickname: string | null) => {
     if (typeof nickname === 'string') {
       useGetDuplicateNickname(nickname)

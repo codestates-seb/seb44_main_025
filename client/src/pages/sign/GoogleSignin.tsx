@@ -9,6 +9,7 @@ import { usePostSignIn } from '../../api/sign';
 import { H1Title } from '../../theme/common/SlideUp';
 import { useNavigate } from 'react-router-dom';
 import GoogleButton from '../../components/buttons/GoogleButton';
+import { useUserInfo } from '../../zustand/userInfo.stores';
 
 const GoogleSignin = () => {
   const {
@@ -17,12 +18,19 @@ const GoogleSignin = () => {
     handleSubmit,
   } = useForm<SignIn>();
   const navigate = useNavigate();
+  const { setUserInfo } = useUserInfo();
 
   /** 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는 함수 */
   const onSubmit: SubmitHandler<SignIn> = data => {
     usePostSignIn(data, '/login').then(data => {
       if (data !== 'error') {
         navigate('/');
+      } else {
+        // zustand 저장
+        setUserInfo({
+          memberId: data.memberId,
+          hasArtist: data.hasArtist,
+        });
       }
     });
   };
