@@ -29,9 +29,11 @@ export const ButtonThemeStyle = {
     background-color: var(--theme-background-color);
     border: 1.5px solid var(--button-primary-border-color);
     color: var(--font-white-color);
-    &:active {
+    transition: 0.2s;
+    &:is(:active, :hover) {
       border: 1.5px solid var(--button-white-border-color);
       color: var(--button-white-border-color);
+      transition: 0.2s;
     }
   `,
   highlightBorder: css`
@@ -81,7 +83,8 @@ export const ButtonThemeStyle = {
     color: var(--font-white-color);
     border: none;
     &:is(:active, :hover) {
-      background-color: rgba(130, 80, 202, 0.8);
+      text-shadow: 0 0 0.5px white;
+      background-color: #6e48ab;
       transition: 0.2s;
     }
   `,

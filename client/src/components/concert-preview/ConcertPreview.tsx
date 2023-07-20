@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-import Img from '../.././images/우리사랑이대로.jpeg';
 import { useNavigate } from 'react-router-dom';
 
 interface ConcertPreviewPropTypes {
@@ -26,7 +25,7 @@ export default function Concertpreview(props: ConcertPreviewPropTypes) {
         navigate(`/performances/${props.performanceId}`);
       }}
     >
-      <S.ConcertImg src={props.posterImg || Img} />
+      <S.ConcertImg src={props.posterImg} />
       <S.ConcertDetail>
         <S.ConcertTitle>{props.title || '타이틀'}</S.ConcertTitle>
         <S.Concertcontent>{props.artistName || '아티스트명'}</S.Concertcontent>

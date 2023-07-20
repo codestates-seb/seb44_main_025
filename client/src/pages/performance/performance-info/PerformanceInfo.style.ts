@@ -6,7 +6,11 @@ export const ButtonHeadingContainer = styled.div`
   display: flex;
   justify-content: space-between;
   & button {
-    margin-top: -8px;
+    margin-top: 0px;
+    &:first-of-type {
+      margin-left: auto;
+      margin-right: 8px;
+    }
   }
 `;
 export const Heading1 = styled.h1`

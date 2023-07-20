@@ -3,10 +3,11 @@ import TicketIcon from '../../icons/TicketIcon';
 import { useNavigate } from 'react-router-dom';
 import PreviousIcon from '../../icons/PreviousIcon';
 import { Styled_Header } from './Header.styled';
-import NoTicketModal from '../modal/NoTicket';
+// import NoTicketModal from '../modal/NoTicket';
 import TicketModal from '../modal/Ticket';
 import { isStyledComponent } from 'styled-components';
 import { useState } from 'react';
+import { ReactComponent as MainIcon } from '../../icons/EZ to play_5.svg';
 
 interface OwnProps {
   precious?: boolean;
@@ -44,7 +45,10 @@ const Header = ({ precious }: OwnProps) => {
             </Styled_Header.PreviousS>
           ) : (
             <>
-              <span style={{ color: 'white' }}>로고들어갈자리</span>
+              <Styled_Header.LogoDiv>
+                <MainIcon height={60} />
+              </Styled_Header.LogoDiv>
+
               <Styled_Header.Div>
                 <Styled_Header.SearchS>
                   <SearchIcon />
@@ -58,7 +62,7 @@ const Header = ({ precious }: OwnProps) => {
         </Styled_Header.Nav>
       </Styled_Header.Header>
       {/* 멤버가 예약한 공연이 있으면 */}
-      {isOpen && <NoTicketModal onClick={handleModalClick} />}
+      {isOpen && <TicketModal onClick={handleModalClick} />}
     </>
   );
 };

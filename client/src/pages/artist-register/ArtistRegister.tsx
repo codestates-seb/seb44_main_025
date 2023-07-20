@@ -6,10 +6,10 @@ import {
   ButtonMiniToggleSelect,
   ButtonMiniToggleUnselect,
 } from '../../components/buttons/Buttons';
+import LogoImg from '../.././images/슬로건 흑색버전 아티스트등록.png';
 import { Input } from '../../components/inputs/Inputs';
 import { useState, useRef } from 'react';
 import Img from '../../images/기본이미지.jpg';
-import LogoImg from '../../images/우리사랑이대로.jpeg';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { postArtist, postArtistImg } from '../../api/fetchAPI';
@@ -159,6 +159,7 @@ export default function Artistregist() {
           <S.Title>
             <H1Title.H1span>아티스트 등록하기</H1Title.H1span>
           </S.Title>
+          {/* <MainIcon /> */}
           <S.LogoImg src={LogoImg}></S.LogoImg>
           <S.FileInput
             type="file"
