@@ -7,7 +7,7 @@ import Navbar from '../../components/nav/Navbar';
 import { useGetArtists } from '../../api/useFetch';
 import { getCookie } from '../../utils/Cookie';
 import { categoryObj } from '../../utils/Category';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 
 const ArtistList = () => {
   const navigate = useNavigate();

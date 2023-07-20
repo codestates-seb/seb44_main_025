@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
 import { DeviceQuery } from '../../utils/Media';
-import { sizeChange } from '../../utils/MediaSize';
+import { screenScale } from '../../utils/MediaSize';
 
 export const Styled_Navbar = {
   Div: styled.div`
@@ -13,7 +13,7 @@ export const Styled_Navbar = {
     bottom: 0;
 
     ${DeviceQuery.tablet`
-      height: calc(60px * ${sizeChange.tablet}); 
+      height: calc(60px * ${screenScale.tablet}); 
     `}
   `,
   Container: styled.div`
@@ -21,8 +21,8 @@ export const Styled_Navbar = {
     height: 60px;
     background-color: var(--theme-background-color);
     ${DeviceQuery.tablet`
-      width: calc(390px * ${sizeChange.tablet}); 
-      height: calc(60px * ${sizeChange.tablet}); 
+      width: calc(390px * ${screenScale.tablet}); 
+      height: calc(60px * ${screenScale.tablet}); 
     `}
   `,
   Nav: styled.nav`
@@ -35,8 +35,8 @@ export const Styled_Navbar = {
     justify-content: space-between;
     align-items: center;
     ${DeviceQuery.tablet`
-      width: calc(390px * ${sizeChange.tablet}); 
-      height: calc(60px * ${sizeChange.tablet}); 
+      width: calc(390px * ${screenScale.tablet}); 
+      height: calc(60px * ${screenScale.tablet}); 
     `}
   `,
   TextSpan: styled.span`
@@ -50,7 +50,7 @@ export const Styled_Navbar = {
     width: 90px;
     cursor: pointer;
     ${DeviceQuery.tablet`
-      width: calc(90px * ${sizeChange.tablet}); 
+      width: calc(90px * ${screenScale.tablet}); 
     `}
   `,
   // 호버시 하단 가로선 애니메이션

@@ -12,7 +12,7 @@ import {
   nicknameRegExp,
 } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
@@ -40,10 +40,12 @@ const SignUpPage = () => {
    * @ture :중복확인 X
    * @false :중복확인 O
    */
-  let [noEmailDuplBtnClickedSubmit, setNoEmailDuplBtnClickedSubmit] =
+  let [isSubmitClickedWithoutEmailCheck, setIsSubmitClickedWithoutEmailCheck] =
     useState(true);
-  let [noNicknameDuplBtnClickedSubmit, setNoNicknameDuplBtnClickedSubmit] =
-    useState(true);
+  let [
+    isSubmitClickedWithoutNicknameCheck,
+    setIsSubmitClickedWithoutNicknameCheck,
+  ] = useState(true);
 
   let [submitClicked, setSubmitClicked] = useState(false);
   const navigate = useNavigate();
@@ -72,18 +74,21 @@ const SignUpPage = () => {
    */
   const onSubmit: SubmitHandler<IForm> = data => {
     setSubmitClicked(true);
-    if (!noEmailDuplBtnClickedSubmit && !noNicknameDuplBtnClickedSubmit) {
+    if (
+      !isSubmitClickedWithoutEmailCheck &&
+      !isSubmitClickedWithoutNicknameCheck
+    ) {
       if (!emailDupl && !nicknameDupl) {
         usePostSignUp(data);
       } else {
         if (emailDupl) {
           if (emailDuplBtnCnt > 0) {
-            setNoEmailDuplBtnClickedSubmit(true);
+            setIsSubmitClickedWithoutEmailCheck(true);
           }
         }
         if (nicknameDupl) {
           if (nicknameDuplBtnCnt > 0) {
-            setNoNicknameDuplBtnClickedSubmit(true);
+            setIsSubmitClickedWithoutNicknameCheck(true);
           }
         }
       }
@@ -117,13 +122,13 @@ const SignUpPage = () => {
           if (response.data === false) {
             setEmailDupl(false);
             setEmailDuplBtnCnt(emailDuplBtnCnt + 1);
-            setNoEmailDuplBtnClickedSubmit(false);
+            setIsSubmitClickedWithoutEmailCheck(false);
           }
           // 이미 사용중인 이메일일 경우
           else if (response.data === true) {
             setEmailDupl(true);
             setEmailDuplBtnCnt(0);
-            setNoEmailDuplBtnClickedSubmit(false);
+            setIsSubmitClickedWithoutEmailCheck(false);
           }
         }
       })
@@ -144,13 +149,13 @@ const SignUpPage = () => {
           if (response.data === false) {
             setNicknameDupl(false);
             setNicknameDuplBtnCnt(nicknameDuplBtnCnt + 1);
-            setNoNicknameDuplBtnClickedSubmit(false);
+            setIsSubmitClickedWithoutNicknameCheck(false);
           }
           // 이미 사용중인 이메일일 경우
           else if (response.data === true) {
             setNicknameDupl(true);
             setNicknameDuplBtnCnt(0);
-            setNoNicknameDuplBtnClickedSubmit(false);
+            setIsSubmitClickedWithoutNicknameCheck(false);
           }
         }
       })
@@ -194,7 +199,7 @@ const SignUpPage = () => {
                     {...register('email', {
                       required: true,
                       pattern: emailRegExp,
-                      onChange: () => setNoEmailDuplBtnClickedSubmit(true),
+                      onChange: () => setIsSubmitClickedWithoutEmailCheck(true),
                     })}
                   />
                   <Styled_Sign.ButtonSpan
@@ -208,7 +213,7 @@ const SignUpPage = () => {
                 <div>
                   {errors.email && <p>이메일 형식에 맞게 입력해주세요</p>}
                 </div>
-                {noEmailDuplBtnClickedSubmit ? (
+                {isSubmitClickedWithoutEmailCheck ? (
                   submitClicked === true ? (
                     <p>중복확인을 해주세요</p>
                   ) : null
@@ -267,7 +272,8 @@ const SignUpPage = () => {
                         value: 12,
                         message: '닉네임은 2자 이상 12자 이하여야 합니다',
                       },
-                      onChange: () => setNoNicknameDuplBtnClickedSubmit(true),
+                      onChange: () =>
+                        setIsSubmitClickedWithoutNicknameCheck(true),
                     })}
                   />
                   <Styled_Sign.ButtonSpan
@@ -282,7 +288,6 @@ const SignUpPage = () => {
                   errors={errors}
                   name="nickname"
                   render={({ messages }) => {
-                    console.log('messages', messages);
                     return (
                       messages &&
                       Object.entries(messages).map(([type, message]) => (
@@ -291,7 +296,7 @@ const SignUpPage = () => {
                     );
                   }}
                 />
-                {noNicknameDuplBtnClickedSubmit ? (
+                {isSubmitClickedWithoutNicknameCheck ? (
                   submitClicked === true ? (
                     <p>중복확인을 해주세요</p>
                   ) : null
@@ -304,7 +309,9 @@ const SignUpPage = () => {
                 ) : null}
               </div>
             </div>
-            <ButtonPrimary160px>회원가입하기</ButtonPrimary160px>
+            <ButtonPrimary160px style={{ marginTop: '20px' }}>
+              회원가입하기
+            </ButtonPrimary160px>
           </Styled_Sign.Form>
           <PageMovement
             infoText="이미 계정이 있으신가요?"
