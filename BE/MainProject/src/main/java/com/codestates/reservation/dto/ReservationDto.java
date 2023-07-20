@@ -20,10 +20,10 @@ public class ReservationDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ReservationResponseDto { // 예약 조회 결과
-        private Long reservationId;
-        private Long performanceId;
+        private long reservationId;
+        private long performanceId;
         private String nickName;
-        private Long paymentId;
+        private long paymentId;
         private LocalDateTime date;
         private Reservation.ReservationStatus reservationStatus;
         private int price;
@@ -34,7 +34,7 @@ public class ReservationDto {
         @NoArgsConstructor
         public static class ReservationRequestDto { // 예약을 생성할 때 사용자로부터 입력받아야하는 정보를 담고 있는 DTO
             // 사용자가 선택한 예약 정보를 담아서 (사용자가 선택한 예약 정보에 대한 필드를 이 클래스에 담아 백엔드로 보내줌)
-            private Long performanceId;
+            private long performanceId;
             private int seatValue;
         //@Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{4}$", message = "올바른 전화번호 형식으로 작성해주세요")
         //private String phone; // 예약자의 전화번호 -> 멤버에서 관리하기로
