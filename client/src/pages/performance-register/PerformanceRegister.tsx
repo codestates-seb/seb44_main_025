@@ -23,9 +23,8 @@ interface FormValues {
   totalSeat: number;
 }
 
-const NOW = getTimezoneAdjustedISOString().slice(0, 16);
-
 const PerformanceRegister = () => {
+  const NOW = getTimezoneAdjustedISOString().slice(0, 16);
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imagesrc, setImagesrc] = useState<string>('');
@@ -33,21 +32,22 @@ const PerformanceRegister = () => {
   const [imgUrl, setImgUrl] = useState('');
   const [address, setAddress] = useState('');
   // 함께할 아티스트 목록
-  const [artistIds, setArtistIds] = useState<string[]>([]);
+  const [artistIds, setArtistIds] = useState<string[] | number[]>([
+    getCookie('userInfo')?.artistId,
+  ]);
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const handleClickCategory = (id: number) => {
     if (categoryId === id) setCategoryId(null);
     else setCategoryId(id);
   };
-  const { content, clearContent } = useEditorStore();
+  const { content } = useEditorStore();
   // TODO: 로그인 상태 관리 변경하기
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (!getCookie('userInfo')) {
-      navigate('/performances');
+      navigate('/performances', { replace: true });
+      return;
     }
-    return () => {
-      clearContent();
-    };
   }, []);
   const { handleSubmit, control } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = data => {
@@ -57,6 +57,10 @@ const PerformanceRegister = () => {
     }
     if (!content.replace(/<p><br><\/p>/g, '')) {
       alert('공연 설명을 입력해주세요.');
+      return;
+    }
+    if (!categoryId) {
+      alert('카테고리 버튼을 클릭하여 카테고리를 선택해주세요.');
       return;
     }
     // TODO: artistIds 구현하기
@@ -70,22 +74,17 @@ const PerformanceRegister = () => {
       categoryId,
       content,
       place: address,
-      artistIds: [getCookie('userInfo').artistId, ...artistIds],
+      artistIds,
       imageUrl: imgUrl,
     };
-    let formData = new FormData();
-    formData.append(
-      'performanceDto',
-      new Blob([JSON.stringify(result)], {
-        type: 'application/json',
-      }),
-      'performanceDto'
-    );
-    postPerformance(formData)
+
+    postPerformance(result)
       .then(data => {
-        if (data && 'performanceId' in data) {
-          clearContent();
-          navigate(`performances/${data.performanceId}`);
+        if (data?.data?.performanceId) {
+          alert('등록되었습니다.');
+          navigate(`/performances/${data.data.performanceId}`, {
+            replace: true,
+          });
         }
       })
       .catch(err => alert(err));
@@ -96,6 +95,7 @@ const PerformanceRegister = () => {
       formData.append('image-file', imgFile as Blob);
       postImg(formData).then((data: any) => {
         setImgUrl(data.data);
+        alert('이미지가 저장되었습니다.');
       });
     } else {
       alert('이미지를 첨부해야합니다.');
@@ -142,10 +142,8 @@ const PerformanceRegister = () => {
               }}
             />
             <S.Poster
-              src={
-                imagesrc ||
-                'https://cdn.pixabay.com/photo/2016/11/29/06/17/audience-1867754_640.jpg'
-              }
+              // TODO: 공연 이미지 등록 이전에 보여줄 170 * 210 비율에 맞는 이미지 제공하기
+              src={imagesrc || ''}
               alt="공연 이미지"
               onClick={() => fileInputRef.current?.click()}
             ></S.Poster>
@@ -189,6 +187,7 @@ const PerformanceRegister = () => {
                       name="price"
                       height={30}
                       width={170}
+                      min={0}
                       step={1000}
                       type="number"
                       onChange={field.onChange}
@@ -257,22 +256,9 @@ const PerformanceRegister = () => {
           />
           <S.CategoryContainer>
             {Object.keys(categoryObj).map((key, idx) => {
-              return idx + 1 === categoryId ? (
+              return (
                 <Button
-                  theme="highlight"
-                  size="mini"
-                  key={key}
-                  value={key}
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    const value = +(e.target as HTMLInputElement).value;
-                    handleClickCategory(value);
-                  }}
-                >
-                  {categoryObj[key]}
-                </Button>
-              ) : (
-                <Button
-                  theme="theme"
+                  theme={idx + 1 === categoryId ? 'highlight' : 'theme'}
                   size="mini"
                   key={key}
                   value={key}
@@ -287,7 +273,10 @@ const PerformanceRegister = () => {
             })}
           </S.CategoryContainer>
 
-          <PostcodeMap onChangeAddress={setAddress} />
+          <PostcodeMap
+            defaultAddress={undefined}
+            onChangeAddress={setAddress}
+          />
           <S.Heading3>공연설명</S.Heading3>
           <Editor />
           {/*

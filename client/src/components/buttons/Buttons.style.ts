@@ -29,9 +29,12 @@ export const ButtonThemeStyle = {
     background-color: var(--theme-background-color);
     border: 1.5px solid var(--button-primary-border-color);
     color: var(--font-white-color);
-    &:active {
+    transition: 0.2s;
+    &:is(:active, :hover) {
       border: 1.5px solid var(--button-white-border-color);
       color: var(--button-white-border-color);
+      transition: 0.2s;
+      transform: scale(1.1);
     }
   `,
   highlightBorder: css`
@@ -51,12 +54,13 @@ export const ButtonThemeStyle = {
   highlight: css`
     background-color: var(--button-highlight-background-color);
     color: var(--button-white-border-color);
-    border: none;
+    border: 1.5px solid transparent;
     transition: 0.2s;
     &:hover {
       background-color: rgba(229, 43, 103, 0.8);
       color: rgba(255, 255, 255, 0.9)
       transition: 0.2s;
+      transform: scale(1.1);
     }
     &:active {
       opacity: 0.8;
@@ -81,7 +85,8 @@ export const ButtonThemeStyle = {
     color: var(--font-white-color);
     border: none;
     &:is(:active, :hover) {
-      background-color: rgba(130, 80, 202, 0.8);
+      text-shadow: 0 0 0.5px white;
+      background-color: #6e48ab;
       transition: 0.2s;
     }
   `,

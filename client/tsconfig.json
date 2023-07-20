@@ -15,6 +15,7 @@
     "strictNullChecks": true,
     "allowJs": true
   },
-  "include": ["src", "src/custom.d.ts"],
+  "typeRoots": ["./node_modules/@types", "./@types"],
+  "include": ["src", "@types/custom.d.ts"],
   "exclude": ["node_modules", "build"]
 }

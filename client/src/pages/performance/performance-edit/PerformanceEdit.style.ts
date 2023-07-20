@@ -1,8 +1,9 @@
 import { styled } from 'styled-components';
 
+// TODO: Register, Edit 스타일 하나로 통합하기
+
 export default {
   Heading1: styled.h1`
-    margin-top: 20px;
     margin-left: 15px;
     margin-right: auto;
     color: white;
@@ -20,22 +21,6 @@ export default {
     font-weight: var(--heading3-font-weight);
     line-height: var(--heading3-line-height);
   `,
-  Container: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #1e1e1e;
-  `,
-  Main: styled.main`
-    width: 390px;
-    min-height: calc(100vh - 50px);
-    background-color: var(--theme-background-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding-bottom: 70px;
-  `,
   CategoryContainer: styled.div`
     margin-top: 20px;
     display: flex;
@@ -47,24 +32,11 @@ export default {
   `,
   SummaryContainer: styled.div`
     margin-top: 12px;
+    margin-bottom: 8px;
     width: 360px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-  `,
-  Summary: styled.div`
-    width: 170px;
-    height: 210px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
-    & p {
-      color: white;
-      font-size: var(--p-small-medium-font-size);
-      font-weight: var(--p-small-medium-font-weight);
-      line-height: var(--p-small-medium-line-height);
-    }
   `,
   FileInput: styled.input`
     display: none;
@@ -72,19 +44,21 @@ export default {
   Poster: styled.img`
     width: 170px;
     height: 210px;
-    background-color: gray;
     cursor: pointer;
+    background-color: transparent;
     object-fit: scale-down;
-    &[src] {
-      background-color: transparent;
+    &[src=''] {
+      background-color: gray;
     }
   `,
   // align-items: flex-start 왼쪽 정렬, flex-end 오른쪽 정렬
   Form: styled.form`
-    width: 360px;
+    padding-bottom: 8px;
+    width: 170px;
+    height: 210px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
     & label {
       color: white;
@@ -110,6 +84,7 @@ export default {
     padding: 1px;
   `,
   TitleButtonFlex: styled.div`
+    margin-top: 20px;
     width: 360px;
     display: flex;
     justify-content: space-between;
