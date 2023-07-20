@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,7 +23,6 @@ public class Reservation {
     private Long reservationId;
     private Long performanceId;
     private Long PaymentId;
-    private Long memberId;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -56,7 +54,6 @@ public class Reservation {
     }
     public Reservation(Member member) {
         this.member = member;
-        this.memberId = member.getMemberId();
     }
 
 //public enum PaymentStatus {

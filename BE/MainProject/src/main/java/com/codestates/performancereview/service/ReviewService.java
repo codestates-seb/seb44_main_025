@@ -5,13 +5,13 @@ import com.codestates.global.exception.ExceptionCode;
 import com.codestates.image.ImageUploadService;
 import com.codestates.member.Member;
 import com.codestates.member.MemberRepository;
+import com.codestates.member.MemberService;
 import com.codestates.performance.entity.Performance;
 import com.codestates.performance.repository.PerformanceRepository;
 import com.codestates.performancereview.dto.ReviewDto;
 import com.codestates.performancereview.entity.Review;
-import com.codestates.performancereview.mapper.ReviewMapper;
+import com.codestates.performancereview.mapper.ReviewMapperImpl;
 import com.codestates.performancereview.repository.ReviewRepository;
-import lombok.Builder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,20 +25,23 @@ import java.util.Map;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final PerformanceRepository performanceRepository;
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final ImageUploadService imageUploadService;
-    private final ReviewMapper reviewMapper;
+    private final MemberRepository memberRepository;
+
+    private final ReviewMapperImpl reviewMapperImpl;
     public ReviewService(ReviewRepository reviewRepository, PerformanceRepository performanceRepository,
-                         MemberRepository memberRepository, ImageUploadService imageUploadService,
-                         ReviewMapper reviewMapper) {
+                         MemberService memberService, ImageUploadService imageUploadService,
+                         ReviewMapperImpl reviewMapperImpl, MemberRepository memberRepository) {
         this.reviewRepository = reviewRepository;
         this.performanceRepository = performanceRepository;
-        this.memberRepository = memberRepository;
+        this.memberService = memberService;
         this.imageUploadService = imageUploadService;
-        this.reviewMapper = reviewMapper;
+        this.reviewMapperImpl = reviewMapperImpl;
+        this.memberRepository = memberRepository;
     }
     // 현재 사용자의 ID를 가져오는 로직을 구현
-    private Long getCurrentUserId(Authentication authentication) {
+    private long getCurrentUserId(Authentication authentication) {
         // 현재 인증된 사용자의 ID를 가져오는 로직
         Map<String, Object> principal = (Map) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
@@ -47,15 +50,16 @@ public class ReviewService {
 
     public List<ReviewDto.ReviewResponse> getMyReviews(Authentication authentication) {
         // 현재 사용자의 ID를 가져와서 해당 사용자가 작성한 리뷰 정보를 조회
-        Long userId = getCurrentUserId(authentication); // 사용자 ID 가져오는 로직
+        long memberId = getCurrentUserId(authentication); // 사용자 ID 가져오는 로직
+        Member member = memberService.findVerifiedMember(memberId);
 
         // 리뷰 정보를 가져오도록
-        List<Review> reviews = reviewRepository.findByUserId(userId);
+        List<Review> reviews = reviewRepository.findByMember(member);
 
         if (reviews.isEmpty()) {
             return Collections.emptyList(); // 빈 리스트, 반환
         } else {
-            return reviewMapper.toResponseDtoList(reviews);
+            return reviewMapperImpl.toResponseDtoList(reviews);
         }
     }
 
@@ -90,7 +94,7 @@ public class ReviewService {
         review.setReviewTitle(reviewPost.getReviewTitle());
 
         Review savedReview = reviewRepository.save(review); // 리뷰저 (예외는 없을까?)
-        return reviewMapper.toResponseDto(savedReview);
+        return reviewMapperImpl.toResponseDto(savedReview);
     }
 
     public ReviewDto.ReviewResponse updateReview(Long reviewId, ReviewDto.ReviewUpdate reviewUpdate,MultipartFile imageUrl) {
@@ -111,7 +115,7 @@ public class ReviewService {
         review.setContent(reviewUpdate.getContent());
 
         Review updatedReview = reviewRepository.save(review);
-        return reviewMapper.toResponseDto(updatedReview);
+        return reviewMapperImpl.toResponseDto(updatedReview);
     }
 
     public void deleteReview(Long reviewId) {

@@ -1,10 +1,8 @@
 package com.codestates.reservation.controller;
 
 import com.codestates.global.exception.BusinessLogicException;
-import com.codestates.member.Member;
 import com.codestates.member.MemberService;
 import com.codestates.reservation.dto.ReservationDto;
-import com.codestates.reservation.entity.Reservation;
 import com.codestates.reservation.service.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,19 +28,19 @@ public class ReservationController {
         this.memberService = memberService;
     }
     // 예약 생성
-    @PostMapping("/reservation/{performanceid}")
-    public ReservationDto.ReservationResponseDto createReservation(@PathVariable("performanceid") Long performanceId,
-                                                                   @RequestBody ReservationDto.ReservationRequestDto reservationRequestDto,
+    @PostMapping
+    public ReservationDto.ReservationResponseDto createReservation(@RequestBody ReservationDto.ReservationRequestDto reservationRequestDto,
                                                                    Authentication authentication) throws AccessDeniedException {
         Map<String, Object> principal = (Map) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
+
 
         ReservationDto.ReservationResponseDto responseDto = reservationService.createReservation(reservationRequestDto, authentication);
         return responseDto;
     }
     // 특정 예약 조회
-    @GetMapping("/reservation/{memberid}/{reservationid}")
-    public ResponseEntity<?> getReservation (@PathVariable("reservationId") Long reservationId, Authentication authentication){
+    @GetMapping("/{reservationId}")
+    public ResponseEntity<?> getReservation (@PathVariable("reservationId") long reservationId, Authentication authentication){
         // 예약 조회 요청을 ReservationService에 전달
         ReservationDto.ReservationResponseDto responseDto = reservationService.getReservation(reservationId, authentication); //예약의 고유 식별자
         if (responseDto == null) {
@@ -53,11 +51,14 @@ public class ReservationController {
         }
         return ResponseEntity.ok(responseDto);
     }
+    //자신의 예약 목록 출력
+
     // 예약 삭제
-    @DeleteMapping("/reservation/{memberid}/{reservationid}")
-    public ResponseEntity<String> deleteReservation (@PathVariable("reservationId") Long reservationId){
+    @DeleteMapping("/{reservationId}")
+    public ResponseEntity<String> deleteReservation (@PathVariable("reservationId") long reservationId,
+                                                     Authentication authentication){
         try {
-            reservationService.deleteReservation(reservationId);
+            reservationService.deleteReservation(reservationId, authentication);
             // 예약 삭제 성공 -> 200 OK 응답 코드와 메시지 반환
             return ResponseEntity.ok("해당 예약을 삭제하는 것에 성공하였습니다.");
         } catch (BusinessLogicException e) {

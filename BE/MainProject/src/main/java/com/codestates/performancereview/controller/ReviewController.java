@@ -2,12 +2,8 @@ package com.codestates.performancereview.controller;
 
 import com.codestates.image.ImageUploadService;
 import com.codestates.performancereview.dto.ReviewDto;
-import com.codestates.performancereview.entity.Review;
-import com.codestates.performancereview.mapper.ReviewMapper;
+import com.codestates.performancereview.mapper.ReviewMapperImpl;
 import com.codestates.performancereview.service.ReviewService;
-import com.codestates.reservation.dto.ReservationDto;
-import com.codestates.reservation.service.ReservationService;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 
 import javax.validation.Valid;
 import java.nio.file.AccessDeniedException;
@@ -31,13 +26,13 @@ import java.util.Map;
 @Validated
 public class ReviewController {
     private final ReviewService reviewService;
-    private final ReviewMapper reviewMapper;
+    private final ReviewMapperImpl reviewMapperImpl;
     private final ImageUploadService imageUploadService;
 
     @Autowired
-    public ReviewController(ReviewService reviewService,ReviewMapper reviewMapper, ImageUploadService imageUploadService) {
+    public ReviewController(ReviewService reviewService,ReviewMapperImpl reviewMapperImpl, ImageUploadService imageUploadService) {
         this.reviewService = reviewService;
-        this.reviewMapper = reviewMapper;
+        this.reviewMapperImpl = reviewMapperImpl;
         this.imageUploadService = imageUploadService;
     }
     @PostMapping("/review/{performanceId}")
