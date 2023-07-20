@@ -17,7 +17,7 @@ type InputType = {
   errorMessage?: string;
   successMessage?: string;
   buttonText?: string;
-  onClick?: () => void;
+  onClick?: (value: any) => void;
 } & InputContainerType &
   React.InputHTMLAttributes<HTMLInputElement>;
 export const Input: React.FC<InputType> = ({

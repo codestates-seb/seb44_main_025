@@ -7,7 +7,6 @@ import Concertpreview from '../../components/concert-preview/ConcertPreview';
 import ArtistreviewContainer from '../../components/artist/artistreviewcontainer';
 import Review from '../../components/review/Review';
 import Footer from '../../components/footer/Footer';
-import Img from '../.././images/우리사랑이대로.jpeg';
 import { Link, useParams } from 'react-router-dom';
 import Navbar from '../../components/nav/Navbar';
 import {
@@ -38,19 +37,28 @@ export default function Artistpage() {
           <S.Title>아티스트페이지</S.Title>
           {/* 로그인한 userId에 맞는 artistId를 보여주는거 */}
           <S.ProfileWarppar key={artistData?.artistId}>
-            <S.LogoImg src={Img} />
-            <S.ArtistImg src={artistData?.imageUrl || Img} />
+            <S.LogoImg src={''} />
+            <S.ArtistImg src={artistData?.imageUrl} />
             <S.ArtistDetail>
               <S.ArtistName>{artistData?.artistName}</S.ArtistName>
               <S.ArtistSns href={artistData?.snsLink} target="_blank">
                 SNS링크
               </S.ArtistSns>
             </S.ArtistDetail>
-            <S.ArtistEdit>
-              <Link to={`/artistedit/${getCookie('userInfo').artistId}`}>
-                <EditIcon />
-              </Link>
-            </S.ArtistEdit>
+            {artistId && getCookie('userInfo').artistId === +artistId ? (
+              <S.ArtistEdit>
+                <Link to={`/artistedit/${getCookie('userInfo').artistId}`}>
+                  <EditIcon />
+                </Link>
+              </S.ArtistEdit>
+            ) : (
+              <S.ArtistEdit style={{ display: 'none' }}>
+                <Link to={`/artistedit/${getCookie('userInfo').artistId}`}>
+                  <EditIcon />
+                </Link>
+              </S.ArtistEdit>
+            )}
+
             <S.ArtistIntrodution>
               {/* <S.SubTitle>소개</S.SubTitle> */}
               <S.ArtistIntrodutionContainer>

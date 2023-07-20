@@ -24,6 +24,10 @@ export const Styled_Header = {
       height: calc(60px * ${screenScale.tablet}); 
     `}
   `,
+  LogoDiv: styled.div`
+    display: flex;
+    align-items: center;
+  `,
   Div: styled.div`
     display: flex;
     justify-content: space-between;

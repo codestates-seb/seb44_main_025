@@ -66,7 +66,7 @@ const router = createBrowserRouter([
         element: <Artistpage />,
       },
       {
-        path: '/editmypage',
+        path: '/editmypage/:memberId',
         element: <Editmypage />,
       },
       {
