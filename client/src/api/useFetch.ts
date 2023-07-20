@@ -48,7 +48,7 @@ export const useGetPerformances = (
         `${SERVER_HOST}/performance${
           categoryId ? `/category/${categoryId}` : ''
         }?page=${page || 1}&size=${size || 5}&performanceStatus=${
-          isStale ? '공연완료' : isStale === false ? '공연중' : ''
+          isStale ? '공연완료' : isStale === false ? '공연진행중' : ''
         }`,
         {
           cancelToken: source.token,
@@ -127,7 +127,7 @@ export const useGetArtistPerfomance = (id: string | number | undefined) => {
       .get<PerformanceListType>(
         `${SERVER_HOST}/performance${
           id ? `/artist/${id}` : ''
-        }?page=1&size=5&performanceStatus=공연중`
+        }?page=1&size=5&performanceStatus=공연진행중`
       )
       .then(data => {
         setData(data.data);
@@ -222,7 +222,7 @@ export const useGetMemberPerformance = (id: string | number | undefined) => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
       .get<Performance[]>(
-        `${SERVER_HOST}/member/${id}/page=1&size=5&performanceStatus=공연중`
+        `${SERVER_HOST}/member/${id}/page=1&size=5&performanceStatus=공연진행중`
       )
       .then(data => setData(data.data))
       .catch(err => console.log(err));
@@ -258,7 +258,11 @@ export const useGetMemberReview = (id: string | number | undefined) => {
   const getData = async () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
-      .get<Review[]>(`${SERVER_HOST}/review/${id}`)
+      .get<Review[]>(`${SERVER_HOST}/review/mypage/reviews`, {
+        headers: {
+          Authorization: getCookie('accessToken'),
+        },
+      })
       .then(data => setData(data.data))
       .catch(err => console.log(err));
   };

@@ -10,9 +10,10 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { postReview } from '../../api/fetchAPI';
 import { getDateTime } from '../../utils/Format';
 import { useGetPerformance } from '../../api/useFetch';
+import { H1Title } from '../../theme/common/SlideUp';
 
 interface FormValues {
-  title: string;
+  reviewTitle: string;
   date: string;
   price: string;
   totalSeat: string;
@@ -29,8 +30,11 @@ const ReviewRegister = () => {
     if (performanceId) {
       const body = { ...data, content, performanceId: +performanceId };
       postReview(performanceId, body)
-        .then(() => {
-          navigate(`/performances/${performanceId}`);
+        .then(data => {
+          if (data) {
+            navigate(`/performances/${performanceId}`);
+            alert('후기가 등록되었습니다.');
+          }
           return;
         })
         .catch(err => console.error(err));
@@ -46,7 +50,9 @@ const ReviewRegister = () => {
       <Header precious={true} />
       <S.Container>
         <S.Main>
-          <S.Heading1>후기등록</S.Heading1>
+          <H1Title.H1>
+            <H1Title.H1span>공연등록</H1Title.H1span>
+          </H1Title.H1>
           {/* <S.Poster src={performance?.imageUrl} /> */}
           <S.Summary>
             <p>공연명</p>
@@ -62,7 +68,7 @@ const ReviewRegister = () => {
           <S.Form onSubmit={handleSubmit(onSubmit)}>
             <Controller
               control={control}
-              name={'title'}
+              name={'reviewTitle'}
               defaultValue={''}
               rules={{
                 required: '반드시 입력해야 합니다',

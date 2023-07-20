@@ -23,9 +23,8 @@ interface FormValues {
   totalSeat: number;
 }
 
-const NOW = getTimezoneAdjustedISOString().slice(0, 16);
-
 const PerformanceRegister = () => {
+  const NOW = getTimezoneAdjustedISOString().slice(0, 16);
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imagesrc, setImagesrc] = useState<string>('');
@@ -41,16 +40,14 @@ const PerformanceRegister = () => {
     if (categoryId === id) setCategoryId(null);
     else setCategoryId(id);
   };
-  const { content, clearContent } = useEditorStore();
+  const { content } = useEditorStore();
   // TODO: 로그인 상태 관리 변경하기
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (!getCookie('userInfo')) {
       navigate('/performances', { replace: true });
       return;
     }
-    return () => {
-      clearContent();
-    };
   }, []);
   const { handleSubmit, control } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = data => {
@@ -80,18 +77,11 @@ const PerformanceRegister = () => {
       artistIds,
       imageUrl: imgUrl,
     };
-    let formData = new FormData();
-    formData.append(
-      'performanceDto',
-      new Blob([JSON.stringify(result)], {
-        type: 'application/json',
-      }),
-      'performanceDto'
-    );
-    postPerformance(formData)
+
+    postPerformance(result)
       .then(data => {
         if (data?.data?.performanceId) {
-          clearContent();
+          alert('등록되었습니다.');
           navigate(`/performances/${data.data.performanceId}`, {
             replace: true,
           });
