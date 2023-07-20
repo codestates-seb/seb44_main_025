@@ -19,7 +19,7 @@ export const useUserInfo = create(
       setUserInfo: state => set({ userInfo2: state }),
     }),
     {
-      name: 'food-storage',
+      name: 'userInfo',
       storage: createJSONStorage(() => sessionStorage),
     }
   )
