@@ -55,6 +55,7 @@ export default function Editmypage() {
     axios
       .patch(
         `${SERVER_HOST}/member`,
+        // data,
         Object.assign(data, { email: 'r@naver.com' }),
         {
           headers: {

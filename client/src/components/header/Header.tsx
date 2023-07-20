@@ -3,7 +3,7 @@ import TicketIcon from '../../icons/TicketIcon';
 import { useNavigate } from 'react-router-dom';
 import PreviousIcon from '../../icons/PreviousIcon';
 import { Styled_Header } from './Header.styled';
-import NoTicketModal from '../modal/NoTicket';
+// import NoTicketModal from '../modal/NoTicket';
 import TicketModal from '../modal/Ticket';
 import { isStyledComponent } from 'styled-components';
 import { useState } from 'react';
@@ -62,7 +62,7 @@ const Header = ({ precious }: OwnProps) => {
         </Styled_Header.Nav>
       </Styled_Header.Header>
       {/* 멤버가 예약한 공연이 있으면 */}
-      {isOpen && <NoTicketModal onClick={handleModalClick} />}
+      {isOpen && <TicketModal onClick={handleModalClick} />}
     </>
   );
 };
