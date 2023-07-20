@@ -7,15 +7,16 @@ import Slogan from '../../components/slogan/Slogan';
 import Artistmain from '../../components/artist/ArtistHome';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { CarouselList, ArtistList } from '../../zustand/homepage.stores';
+import { useHomePage } from '../../zustand/homepage.stores';
 import axios from 'axios';
 import Navbar from '../../components/nav/Navbar';
 import { getCookie } from '../../utils/Cookie';
 import { useGetMember } from '../../api/useFetch';
 
+const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
+
 const Home = () => {
-  const { setCarouselData } = CarouselList();
-  const { setArtistData } = ArtistList();
+  const { setCarouselList, setArtistList } = useHomePage();
   const userInfo = getCookie('userInfo');
   const accessToken = getCookie('accessToken');
   useGetMember();
@@ -24,7 +25,7 @@ const Home = () => {
     const getCarouselData = async () => {
       try {
         const response = await axios.get('/dummy/main_perfomancelist.json');
-        setCarouselData(response.data.data);
+        setCarouselList(response.data.data);
       } catch (error) {
         console.error(error);
       }
@@ -33,7 +34,7 @@ const Home = () => {
     const getArtistsData = async () => {
       try {
         const response = await axios.get('/dummy/main_artistlist.json');
-        setArtistData(response.data.data);
+        setArtistList(response.data.data);
       } catch (error) {
         console.error(error);
       }
@@ -54,7 +55,7 @@ const Home = () => {
               <Link to="/performances" style={{ textDecorationLine: 'none' }}>
                 <MainPageButton
                   Height={140}
-                  ImageUrl="./images/피아노.webp"
+                  ImageUrl={`${PUBLIC_URL}/피아노.webp`}
                   Text="진행중인 공연"
                 />
               </Link>
@@ -62,7 +63,7 @@ const Home = () => {
                 <Link to="/" style={{ textDecorationLine: 'none' }}>
                   <MainPageButton
                     Height={60}
-                    ImageUrl="./images/pexels-nothing-ahead-9494909.jpg"
+                    ImageUrl={`${PUBLIC_URL}/pexels-nothing-ahead-9494909.jpg`}
                     Text="지도 검색"
                   />
                 </Link>
@@ -71,7 +72,7 @@ const Home = () => {
                     <Link to="/login" style={{ textDecorationLine: 'none' }}>
                       <MainPageButton
                         Height={60}
-                        ImageUrl="./images/pexels-ricardo-rojas-3608804.jpg"
+                        ImageUrl={`${PUBLIC_URL}/pexels-ricardo-rojas-3608804.jpg`}
                         Text="아티스트 등록"
                       />
                     </Link>

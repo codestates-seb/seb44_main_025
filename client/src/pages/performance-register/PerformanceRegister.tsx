@@ -14,7 +14,7 @@ import { categoryObj } from '../../utils/Category';
 import { getCookie } from '../../utils/Cookie';
 import { PostcodeMap } from '../../components/postcode/Postcode';
 import { getTimezoneAdjustedISOString } from '../../utils/Format';
-import { H1Title } from '../../utils/SlideUp';
+import { H1Title } from '../../theme/common/SlideUp';
 
 interface FormValues {
   title: string;

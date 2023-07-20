@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
 import { DeviceQuery } from '../../utils/Media';
-import { sizeChange } from '../../utils/MediaSize';
+import { screenScale } from '../../utils/MediaSize';
 
 export const Styled_CarouselSlide = {
   ImgDiv: styled.div`
@@ -13,8 +13,8 @@ export const Styled_CarouselSlide = {
     z-index: -1;
     position: relative;
     ${DeviceQuery.tablet`
-      width: calc(390px * ${sizeChange.tablet});
-      height: calc(180px * ${sizeChange.tablet});
+      width: calc(390px * ${screenScale.tablet});
+      height: calc(180px * ${screenScale.tablet});
     `}
   `,
   Div: styled.div`
@@ -29,8 +29,8 @@ export const Styled_CarouselSlide = {
     align-items: center;
     position: absolute;
     ${DeviceQuery.tablet`
-      width: calc(330px * ${sizeChange.tablet});
-      height: calc(180px * ${sizeChange.tablet});
+      width: calc(330px * ${screenScale.tablet});
+      height: calc(180px * ${screenScale.tablet});
     `}
   `,
   ConcertImg: styled.img`
@@ -38,8 +38,8 @@ export const Styled_CarouselSlide = {
     height: 150px;
     object-fit: cover;
     ${DeviceQuery.tablet`
-      width: calc(130px * ${sizeChange.tablet});
-      height: calc(150px * ${sizeChange.tablet});
+      width: calc(130px * ${screenScale.tablet});
+      height: calc(150px * ${screenScale.tablet});
     `}
   `,
   ConcertDetail: styled.div`
@@ -50,7 +50,7 @@ export const Styled_CarouselSlide = {
     justify-content: space-evenly;
     align-items: flex-end;
     ${DeviceQuery.tablet`
-      height: calc(150px * ${sizeChange.tablet});
+      height: calc(150px * ${screenScale.tablet});
     `}
   `,
   ConcertTitle: styled.header`

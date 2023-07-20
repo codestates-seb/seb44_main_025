@@ -19,7 +19,7 @@ public class ReviewMapperImpl implements ReviewMapper {
         this.performanceRepository = performanceRepository;
     }
     @Override
-    public ReviewDto toDto(Review review) {
+    public ReviewDto toDto(Review review) { // Review 엔티티를 ReviewDto로 변환
         return ReviewDto.builder()
                 .reviewId(review.getReviewId())
                 .memberId(review.getMember().getMemberId())
@@ -56,7 +56,7 @@ public class ReviewMapperImpl implements ReviewMapper {
         return review;
     }
     @Override
-    public ReviewDto.ReviewResponse toResponseDto(Review review) {
+    public ReviewDto.ReviewResponse toResponseDto(Review review) { // Review 엔티티를 ReviewDto.Response로 변환
         return ReviewDto.ReviewResponse.builder()
                 .reviewId(review.getReviewId())
                 .memberId(review.getMember().getMemberId())
@@ -71,7 +71,7 @@ public class ReviewMapperImpl implements ReviewMapper {
     }
 
     @Override
-    public List<ReviewDto.ReviewResponse> toResponseDtoList(List<Review> reviews) {
+    public List<ReviewDto.ReviewResponse> toResponseDtoList(List<Review> reviews) { // Review 엔티티 리스트를 ReviewDto.Response 리스트로 변환
         return reviews.stream()
                 .map(this::toResponseDto)
                 .collect(Collectors.toList());
