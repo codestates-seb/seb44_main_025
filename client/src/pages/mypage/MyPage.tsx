@@ -55,7 +55,7 @@ export default function Mypage() {
           <S.SubTitleWrappar>
             <S.SubTitle>나의 정보</S.SubTitle>
             <S.UserEditButtonWrappar>
-              <Link to="/editmypage">
+              <Link to={`/editmypage/${getCookie('userInfo').memberId}`}>
                 <EditIcon />
               </Link>
             </S.UserEditButtonWrappar>

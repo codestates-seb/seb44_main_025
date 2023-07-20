@@ -6,7 +6,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #1e1e1e;
   `,
   Section: styled.section`
     width: 390px;

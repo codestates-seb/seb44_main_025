@@ -1,11 +1,14 @@
 import { styled } from 'styled-components';
-import Img from '../../images/우리사랑이대로.jpeg';
 import { FontStyle } from '../../utils/Theme';
+// import { ReactComponent as FooterIcon } from '../../icons/EZ to play_foter.svg';
+import { ReactComponent as FooterIcon } from '../../icons/EZ to play_8.svg';
 
 export default function Footer() {
   return (
     <S.FooterContainer>
-      <S.FooterLogo src={Img} />
+      <S.LogoDiv>
+        <FooterIcon height={100} />
+      </S.LogoDiv>
       <S.FooterContentDiv>
         <S.FooterContent>허진우, 이도현, 최연동</S.FooterContent>
         <S.FooterContent>이현수, 선혜민, 조혜란</S.FooterContent>
@@ -43,6 +46,13 @@ const S = {
     height: 100px;
     display: flex;
     align-items: center;
+  `,
+  LogoDiv: styled.div`
+    display: flex;
+    align-items: center;
+    & svg {
+      margin-left: -45px;
+    }
   `,
   FooterContentDiv: styled.div``,
   FooterContent: styled.p`

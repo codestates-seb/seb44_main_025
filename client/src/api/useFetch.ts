@@ -124,10 +124,7 @@ export const useGetArtist = (id: string | number | undefined) => {
   return data;
 };
 
-export const useGetArtistPerfomance = (
-  id: string | number | undefined
-  // categoryId?: number
-) => {
+export const useGetArtistPerfomance = (id: string | number | undefined) => {
   const [data, setData] = useState<PerformanceListType>();
 
   const getData = async () => {
