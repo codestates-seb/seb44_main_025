@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { categoryObj } from '../../../utils/Category';
 import { Map } from '../../../components/postcode/Postcode';
 import { getCookie } from '../../../utils/Cookie';
-import { H1Title } from '../../../utils/SlideUp';
+import { H1Title } from '../../../theme/common/SlideUp';
 import { getDateTime } from '../../../utils/Format';
 import { PerformanceType } from '../../../model/Performance';
 import { deletePerformance } from '../../../api/fetchAPI';
@@ -27,8 +27,10 @@ const PerformanceInfo = ({
   const [isStale, setIsStale] = useState(false);
   const handleClickDelete = () => {
     if (performanceId) {
-      deletePerformance(performanceId);
-      return;
+      const isConfirmed = confirm('공연을 삭제하시겠습니까?');
+      if (isConfirmed) {
+        deletePerformance(performanceId);
+      }
     }
   };
   useEffect(() => {
@@ -52,9 +54,9 @@ const PerformanceInfo = ({
         {/* TODO: PerformanceArtist Id 정확한 값 가져오기*/}
         {!isStale &&
           currentArtistId ===
-            performance?.performanceArtist?.performanceArtistList[
-              performance?.performanceId
-            ] && (
+            Object.values(
+              performance?.performanceArtist?.performanceArtistList
+            )[0] && (
             <>
               <Button
                 size="small"
@@ -65,7 +67,7 @@ const PerformanceInfo = ({
               </Button>
               <Button
                 size="small"
-                theme="primary"
+                theme="highlightBorder"
                 onClick={() => handleClickDelete()}
               >
                 정보 삭제
@@ -141,7 +143,7 @@ const PerformanceInfo = ({
                 return;
               }
               if (isStale) {
-                navigate(`/performances/review/write/${performanceId}`);
+                navigate(`/performances/${performanceId}/review`);
               } else {
                 setIsModalOpen(true);
               }
@@ -153,7 +155,7 @@ const PerformanceInfo = ({
       )}
       {isModalOpen && performance && (
         <ReservationModal
-          {...performance}
+          performance={performance}
           closeModal={() => {
             setIsModalOpen(false);
           }}
