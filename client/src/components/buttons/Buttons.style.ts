@@ -83,7 +83,8 @@ export const ButtonThemeStyle = {
     color: var(--font-white-color);
     border: none;
     &:is(:active, :hover) {
-      background-color: rgba(130, 80, 202, 0.8);
+      text-shadow: 0 0 0.5px white;
+      background-color: #6e48ab;
       transition: 0.2s;
     }
   `,
