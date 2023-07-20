@@ -78,8 +78,8 @@ export const S = {
     transition: 0.3s;
     & h3:nth-of-type(2n + 1) {
       &:hover {
-        transform: scale(1.05);
-        padding: 0px 4px;
+        text-shadow: 1px 1px 2px var(--button-primary-border-color),
+          0 0 0.5em var(--button-primary-border-color), 0 0 0.2em white;
         transition: 0.3s;
       }
     }
