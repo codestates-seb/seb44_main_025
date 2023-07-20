@@ -20,6 +20,8 @@ import { getCookie } from '../../utils/Cookie';
 
 export default function Artistpage() {
   const { artistId } = useParams();
+  console.log(typeof getCookie('userInfo').artistId);
+  console.log(typeof artistId);
 
   /** 불러온 fetch함수에 params로 artistId를 전달 해서 받은 데이터 */
   const artistData = useGetArtist(artistId);
@@ -46,11 +48,20 @@ export default function Artistpage() {
                 SNS링크
               </S.ArtistSns>
             </S.ArtistDetail>
-            <S.ArtistEdit>
-              <Link to={`/artistedit/${getCookie('userInfo').artistId}`}>
-                <EditIcon />
-              </Link>
-            </S.ArtistEdit>
+            {artistId && getCookie('userInfo').artistId === +artistId ? (
+              <S.ArtistEdit>
+                <Link to={`/artistedit/${getCookie('userInfo').artistId}`}>
+                  <EditIcon />
+                </Link>
+              </S.ArtistEdit>
+            ) : (
+              <S.ArtistEdit style={{ display: 'none' }}>
+                <Link to={`/artistedit/${getCookie('userInfo').artistId}`}>
+                  <EditIcon />
+                </Link>
+              </S.ArtistEdit>
+            )}
+
             <S.ArtistIntrodution>
               {/* <S.SubTitle>소개</S.SubTitle> */}
               <S.ArtistIntrodutionContainer>

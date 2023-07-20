@@ -9,7 +9,6 @@ import {
 import { Input } from '../../components/inputs/Inputs';
 import { useState, useRef, useEffect } from 'react';
 import LogoImg from '../.././images/우리사랑이대로.jpeg';
-// import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { patchArtist, postArtistImg } from '../../api/fetchAPI';
@@ -39,14 +38,45 @@ const categoryObj = {
 };
 
 export default function Artistedit() {
+  const navigate = useNavigate();
+  const userInfo = getCookie('userInfo');
   const { artistId } = useParams();
   const artistData = useGetArtist(artistId);
+
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const handleClickCategory = (id: number) => {
     if (categoryId === id) setCategoryId(null);
     else setCategoryId(id);
   };
 
+  const [getUrl, setGetUrl] = useState<string | undefined>();
+  /** 처음 들어오는 artistData가 렌더링 동안에 undefined다보니 이후에 받아오는 값을 넣어주기 위해 useEffect를 사용했고 artistData가 변경될때마다 control name에 맞게 값을 널어줌 */
+  const { handleSubmit, control, setValue } = useForm<FormValues>();
+  useEffect(() => {
+    if (artistData?.artistName) {
+      setValue('artistName', artistData.artistName);
+    }
+    if (artistData?.snsLink) {
+      setValue('snsLink', artistData.snsLink);
+    }
+    if (artistData?.content) {
+      setValue('content', artistData.content);
+    }
+    if (artistData?.imageUrl) {
+      setValue('imageUrl', artistData?.imageUrl);
+    }
+  }, [artistData, setValue]);
+
+  /** 아티스트 정보가 없을때 */
+  useEffect(() => {
+    if (!artistData) {
+      alert('권한 접근이 없습니다.');
+      navigate('/');
+      return;
+    }
+  }, []);
+
+  /** 이미지의 상태 관리 */
   const artistImgInputRef = useRef<HTMLInputElement>(null);
   const [artistImagesrc, setArtistImagesrc] = useState<string | undefined>();
   const [artistImgFile, setArtistImgFile] = useState<Blob>();
@@ -63,31 +93,6 @@ export default function Artistedit() {
   let [noArtistNameDuplBtnClickedSubmit, setNoArtistNameDuplBtnClickedSubmit] =
     useState(true);
   let [submitClicked, setSubmitClicked] = useState(false);
-
-  const navigate = useNavigate();
-  const userInfo = getCookie('userInfo');
-
-  const [getUrl, setGetUrl] = useState<string | undefined>();
-
-  /** 처음 들어오는 artistData가 렌더링 동안에 undefined다보니 이후에 받아오는 값을 넣어주기 위해 useEffect를 사용했고 artistData가 변경될때마다 control name에 맞게 값을 널어줌 */
-  const { handleSubmit, control, setValue } = useForm<FormValues>();
-  useEffect(() => {
-    if (artistData?.artistName) {
-      setValue('artistName', artistData.artistName);
-    }
-    if (artistData?.snsLink) {
-      setValue('snsLink', artistData.snsLink);
-    }
-    if (artistData?.content) {
-      setValue('content', artistData.content);
-    }
-  }, [artistData, setValue]);
-
-  useEffect(() => {
-    if (artistData?.imageUrl) {
-      setValue('imageUrl', artistData?.imageUrl);
-    }
-  }, [artistData, setValue]);
 
   /** 아티스트 정보를 수정 요청하는 함수 */
   // onSubmit: SubmitHandler<> = data를 하면 useForm에서 값을 가져와서 넣음
@@ -120,6 +125,10 @@ export default function Artistedit() {
     navigate(`/artist/${userInfo.artistId}`);
   };
 
+  const handleSubmitAll = () => {
+    handleSubmit(onSubmit)();
+  };
+
   /** 닉네임 중복검사하는 ajax 함수 */
   const useGetDuplicateArtistname = (artistNameData: string | null) => {
     axios
@@ -145,10 +154,6 @@ export default function Artistedit() {
       });
   };
 
-  const handleSubmitAll = () => {
-    handleSubmit(onSubmit)();
-  };
-
   /** 닉네임 중복검사하는 ajax 함수 */
   const handleDuplicat = () => {
     setSubmitClicked(true);
@@ -164,6 +169,7 @@ export default function Artistedit() {
       }
     }
   };
+
   /** 이미지를 저장하는 함수 */
   const onSubmitImg = () => {
     // 현재이미지가 없다면 받아온 이미지를 저장
@@ -193,13 +199,12 @@ export default function Artistedit() {
             <H1Title.H1span>아티스트 수정하기</H1Title.H1span>
           </S.Title>
           <S.LogoImg src={LogoImg}></S.LogoImg>
-          {/* 파일을 첨부하는 인풋 */}
-
           <Controller
             control={control}
             name="imageUrl"
             render={({ field }) => (
               <>
+                {/* 파일을 첨부하는 인풋 */}
                 <S.FileInput
                   type="file"
                   accept="image/*"
@@ -337,7 +342,6 @@ export default function Artistedit() {
               <Controller
                 control={control}
                 name={'snsLink'}
-                // defaultValue={artistData?.snsLink}
                 rules={{
                   required: '반드시 입력해야 합니다',
                 }}
@@ -358,7 +362,6 @@ export default function Artistedit() {
                 <Controller
                   control={control}
                   name={'content'}
-                  // defaultValue={artistData?.content}
                   rules={{
                     required: '반드시 입력해야 합니다',
                   }}

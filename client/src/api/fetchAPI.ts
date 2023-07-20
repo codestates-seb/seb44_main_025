@@ -8,6 +8,7 @@ const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 interface BodyType {
   [x: string]: any;
 }
+
 export const testPostPerformance = async (body: BodyType) => {
   const data = await axios
     .post(`${TEST_HOST}/performances`, JSON.stringify(body), {

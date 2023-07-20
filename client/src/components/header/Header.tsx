@@ -7,6 +7,7 @@ import NoTicketModal from '../modal/NoTicket';
 import TicketModal from '../modal/Ticket';
 import { isStyledComponent } from 'styled-components';
 import { useState } from 'react';
+import { ReactComponent as MainIcon } from '../../icons/EZ to play_5.svg';
 
 interface OwnProps {
   precious?: boolean;
@@ -44,7 +45,10 @@ const Header = ({ precious }: OwnProps) => {
             </Styled_Header.PreviousS>
           ) : (
             <>
-              <span style={{ color: 'white' }}>로고들어갈자리</span>
+              <Styled_Header.LogoDiv>
+                <MainIcon height={60} />
+              </Styled_Header.LogoDiv>
+
               <Styled_Header.Div>
                 <Styled_Header.SearchS>
                   <SearchIcon />
