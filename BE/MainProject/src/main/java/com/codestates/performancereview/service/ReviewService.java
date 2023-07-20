@@ -69,8 +69,19 @@ public class ReviewService {
                                                 ,Authentication authentication) {
         Performance performance = performanceRepository.findById(reviewPost.getPerformanceId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
-        Member member = memberRepository.findById(reviewPost.getMemberId())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        // 로그인 한 멤버와 요청받은 리뷰의 멤버가 동일(일치) 하는지 검증
+        Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
+        long memberId = ((Number) principal.get("memberId")).longValue();
+
+        Member member = memberService.findVerifiedMember(memberId);
+
+        if (reviewPost.getMemberId() != memberId) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);
+        }
+        // 리뷰 제목이 빠져있을 때 예외 처리
+        if (reviewPost.getTitle() == null || reviewPost.getTitle().isEmpty()) {
+            throw new BusinessLogicException(ExceptionCode.REVIEW_TITLE_EMPTY);
+        }
 
         // 이미지 업로드 처리 (이미지 관련해서는 합치고 다시 수정할 계획)
         String uploadedImageUrl = null;
@@ -97,7 +108,8 @@ public class ReviewService {
         return reviewMapperImpl.toResponseDto(savedReview);
     }
 
-    public ReviewDto.ReviewResponse updateReview(Long reviewId, ReviewDto.ReviewUpdate reviewUpdate,MultipartFile imageUrl) {
+    public ReviewDto.ReviewResponse updateReview(long reviewId, ReviewDto.ReviewUpdate reviewUpdate,
+                                                 MultipartFile imageUrl, Authentication authentication) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.REVIEW_NOT_FOUND));
 
@@ -118,9 +130,16 @@ public class ReviewService {
         return reviewMapperImpl.toResponseDto(updatedReview);
     }
 
-    public void deleteReview(Long reviewId) {
+    public void deleteReview(long reviewId,  Authentication authentication) {
+        Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
+        long memberId = ((Number) principal.get("memberId")).longValue();
+
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.REVIEW_NOT_FOUND));
+        reviewRepository.delete(review);
+
+        if(review.getMember().getMemberId()!=memberId){
+            new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);}
         reviewRepository.delete(review);
     }
 }

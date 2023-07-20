@@ -35,7 +35,7 @@ public class ReviewController {
         this.reviewMapperImpl = reviewMapperImpl;
         this.imageUploadService = imageUploadService;
     }
-    @PostMapping("/review/{performanceId}")
+    @PostMapping("/{performanceId}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ReviewDto.ReviewResponse> createReview(@RequestBody ReviewDto.ReviewPost reviewPost,
                                                                  Authentication authentication,
@@ -48,20 +48,20 @@ public class ReviewController {
 
     }
 
-    @PatchMapping("/review/{performanceId}/{reviewId}")
+    @PatchMapping("/{performanceId}/{reviewId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ReviewDto.ReviewResponse> updateReview(@PathVariable("reviewId") Long reviewId,
-                                                                 @PathVariable("performanceId") Long performanceId,
+    public ResponseEntity<ReviewDto.ReviewResponse> updateReview(@PathVariable("reviewId") long reviewId,
+                                                                 @PathVariable("performanceId") long performanceId,
                                                                  @RequestBody @Valid ReviewDto.ReviewUpdate reviewUpdate,
                                                                  @RequestParam("imageUrl") MultipartFile imageUrl) {
-        ReviewDto.ReviewResponse responseDto = reviewService.updateReview(reviewId, reviewUpdate, imageUrl);
+        ReviewDto.ReviewResponse responseDto = reviewService.updateReview(reviewId, performanceId,reviewUpdate, imageUrl);
         return ResponseEntity.ok(responseDto);
     }
 
-    @DeleteMapping("/review/{reviewId}")
+    @DeleteMapping("/{reviewId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> deleteReview(@PathVariable("reviewId") Long reviewId) {
-        reviewService.deleteReview(reviewId);
+    public ResponseEntity<Void> deleteReview(@PathVariable("reviewId") long reviewId ,Authentication authentication) {
+        reviewService.deleteReview(reviewId, authentication);
         return ResponseEntity.noContent().build();
     }
 

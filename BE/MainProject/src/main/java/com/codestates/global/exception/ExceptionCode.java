@@ -10,6 +10,7 @@ public enum ExceptionCode {
     CANNOT_CHANGE_PERFORMANCE(403, "Performance can not change"),
     CANNOT_CHANGE_MEMBER(403, "Member can not change"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
+    REVIEW_TITLE_EMPTY(400, "리뷰 제목이 비어있습니다"),
     IMAGE_UPLOAD_FAILED(415,"이미지 업로드에 실패하였습니다."),
     REVIEW_NOT_FOUND(404,"해당 리뷰를 찾을 수 없습니다."),
     SEATS_SOLD_OUT(400, "좌석이 모두 매진되었습니다"),
