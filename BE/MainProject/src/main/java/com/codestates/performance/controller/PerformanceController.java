@@ -35,12 +35,10 @@ import java.util.List;
 public class PerformanceController {
     private final PerformanceMapper mapper;
     private final PerformanceService performanceService;
-    
 
     /* 공연 생성 */
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity postPerformance(@RequestPart PerformanceDto.Post performanceDto) throws IOException {
-
+    @PostMapping
+    public ResponseEntity postPerformance(@RequestBody @Valid PerformanceDto.Post performanceDto) {
         Performance performance = mapper.performancePostDtoToPerformance(performanceDto);
         Performance response = performanceService.createPerformance(performance, performanceDto);
 
@@ -48,21 +46,19 @@ public class PerformanceController {
     }
 
     /* 공연 수정 */
-    @PatchMapping(value = "/{performance-id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PatchMapping(value = "/{performance-id}")
     public ResponseEntity patchPerformance(@PathVariable("performance-id") @Positive long performanceId,
-                                           @RequestPart @Valid PerformanceDto.Patch performanceDto) throws IOException {
-
+                                           @RequestBody @Valid PerformanceDto.Patch performanceDto) {
         performanceDto.setPerformanceId(performanceId);
 
         Performance performance = mapper.performancePatchDtoToPerformance(performanceDto);
         Performance response = performanceService.updatePerformance(performance, performanceDto);
-        PerformanceDto.Response responseDto = mapper.performanceToPerformanceResponseDto(response);
 
         return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(response)), HttpStatus.OK);
     }
 
     /* 공연 조회 */
-    @GetMapping("{performance-id}")
+    @GetMapping("/{performance-id}")
     public ResponseEntity getPerformance(@PathVariable("performance-id") @Positive long performanceId) {
         Performance performance = performanceService.findPerformance(performanceId);
         return new ResponseEntity(new SingleResponseDto<>(mapper.performanceToPerformanceResponseDto(performance)), HttpStatus.OK);
