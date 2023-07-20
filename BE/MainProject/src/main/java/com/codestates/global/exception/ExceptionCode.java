@@ -24,7 +24,8 @@ public enum ExceptionCode {
     PERFORMANCE_COMMENT_NOT_FOUND(404, "존재하지 않는 공연 코멘트입니다."),
     PASSWORD_NOT_CORRECT(404,"패스워드가 일치하지 않습니다"),
     MEMBER_HAS_ARTIST(500, "이미 아티스트가 등록된 회원입니다"),
-    MEMBER_NOT_CORRECT(404,"예약을 등록한 회원이 아닙니다");
+    MEMBER_NOT_CORRECT(404,"예약을 등록한 회원이 아닙니다"),
+    PERFORMANCE_NOT_COMPLETED(500, "공연이 끝나지 않았음");
 
 
 

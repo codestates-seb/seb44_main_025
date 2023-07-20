@@ -26,8 +26,6 @@ public class Review {
     @Column(nullable = false)
     private String nickName;
     @Column(nullable = false)
-    private String title;
-    @Column(nullable = false)
     private String content;
     @Column(nullable = false)
     private String imageUrl;

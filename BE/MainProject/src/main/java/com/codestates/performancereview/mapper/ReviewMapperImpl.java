@@ -26,7 +26,6 @@ public class ReviewMapperImpl  {
                 .reviewId(review.getReviewId())
                 .memberId(review.getMember().getMemberId())
                 .performanceId(review.getPerformance().getPerformanceId())
-                .title(review.getTitle())
                 .reviewTitle(review.getReviewTitle())
                 .nickName(review.getNickName())
                 .content(review.getContent())
@@ -39,7 +38,6 @@ public class ReviewMapperImpl  {
         Review review = new Review();
         review.setReviewId(reviewDto.getReviewId());
         review.setNickName(reviewDto.getNickName());
-        review.setTitle(reviewDto.getTitle());
         review.setReviewTitle(reviewDto.getReviewTitle());
         review.setContent(reviewDto.getContent());
         review.setImageUrl(reviewDto.getImageUrl());
@@ -61,13 +59,10 @@ public class ReviewMapperImpl  {
     public ReviewDto.ReviewResponse toResponseDto(Review review) { // Review 엔티티를 ReviewDto.Response로 변환
         return ReviewDto.ReviewResponse.builder()
                 .reviewId(review.getReviewId())
-                .memberId(review.getMember().getMemberId())
                 .performanceId(review.getPerformance().getPerformanceId())
-                .nickName(review.getNickName())
-                .title(review.getTitle())
+                .nickname(review.getMember().getNickname())
                 .reviewTitle(review.getReviewTitle())
                 .content(review.getContent())
-                .imageUrl(review.getImageUrl())
                 .date(review.getDate())
                 .build();
     }

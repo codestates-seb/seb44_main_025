@@ -12,11 +12,14 @@ import com.codestates.performancereview.dto.ReviewDto;
 import com.codestates.performancereview.entity.Review;
 import com.codestates.performancereview.mapper.ReviewMapperImpl;
 import com.codestates.performancereview.repository.ReviewRepository;
+import com.codestates.reservation.entity.Reservation;
+import com.codestates.reservation.service.ReservationService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -28,17 +31,20 @@ public class ReviewService {
     private final MemberService memberService;
     private final ImageUploadService imageUploadService;
     private final MemberRepository memberRepository;
+    private final ReservationService reservationService;
 
     private final ReviewMapperImpl reviewMapperImpl;
     public ReviewService(ReviewRepository reviewRepository, PerformanceRepository performanceRepository,
                          MemberService memberService, ImageUploadService imageUploadService,
-                         ReviewMapperImpl reviewMapperImpl, MemberRepository memberRepository) {
+                         ReviewMapperImpl reviewMapperImpl, MemberRepository memberRepository,
+                         ReservationService reservationService ) {
         this.reviewRepository = reviewRepository;
         this.performanceRepository = performanceRepository;
         this.memberService = memberService;
         this.imageUploadService = imageUploadService;
         this.reviewMapperImpl = reviewMapperImpl;
         this.memberRepository = memberRepository;
+        this.reservationService = reservationService;
     }
     // 현재 사용자의 ID를 가져오는 로직을 구현
     private long getCurrentUserId(Authentication authentication) {
@@ -65,65 +71,48 @@ public class ReviewService {
 
 
 
-    public ReviewDto.ReviewResponse createReview(ReviewDto.ReviewPost reviewPost,MultipartFile imageUrl
-                                                ,Authentication authentication) {
-        Performance performance = performanceRepository.findById(reviewPost.getPerformanceId())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
-        // 로그인 한 멤버와 요청받은 리뷰의 멤버가 동일(일치) 하는지 검증
+    public ReviewDto.ReviewResponse createReview(ReviewDto.ReviewPost reviewPost, Authentication authentication) {
+
+
         Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
 
         Member member = memberService.findVerifiedMember(memberId);
+        Performance performance = performanceRepository.findById(reviewPost.getPerformanceId())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
 
-        if (reviewPost.getMemberId() != memberId) {
-            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);
-        }
-        // 리뷰 제목이 빠져있을 때 예외 처리
-        if (reviewPost.getTitle() == null || reviewPost.getTitle().isEmpty()) {
-            throw new BusinessLogicException(ExceptionCode.REVIEW_TITLE_EMPTY);
-        }
+        //사용자가 후기를 등록하려는 공연에 대한 예약이 존재하는지 검색. 있으면 예약정보 가져오기.
+        Reservation reservation = reservationService.findReservationByMember(member, performance);
 
-        // 이미지 업로드 처리 (이미지 관련해서는 합치고 다시 수정할 계획)
-        String uploadedImageUrl = null;
-        if (imageUrl != null) {
-            try {
-                uploadedImageUrl = imageUploadService.imageUpload(imageUrl);
-            } catch (IOException e) {
-                // 이미지 업로드 실패 예외 처리
-                throw new BusinessLogicException(ExceptionCode.IMAGE_UPLOAD_FAILED);
-            }
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime performanceDate = performance.getDate();
+        if (currentTime.isBefore(performanceDate)) {
+            throw new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_COMPLETED);
         }
 
-        Review review = new Review();
-        review.setPerformance(performance);
-        review.setMember(member);
-        review.setTitle(reviewPost.getTitle());
-        review.setNickName(reviewPost.getNickName());
-        review.setContent(reviewPost.getContent());
-        review.setImageUrl(uploadedImageUrl);
-        review.setDate(reviewPost.getDate());
-        review.setReviewTitle(reviewPost.getReviewTitle());
+            Review review = new Review();
+            review.setPerformance(performance);
+            review.setMember(member);
+            review.setContent(reviewPost.getContent());
+            review.setDate(LocalDateTime.now());
+            review.setReviewTitle(reviewPost.getReviewTitle());
 
-        Review savedReview = reviewRepository.save(review); // 리뷰저 (예외는 없을까?)
-        return reviewMapperImpl.toResponseDto(savedReview);
+            Review savedReview = reviewRepository.save(review);
+            return reviewMapperImpl.toResponseDto(savedReview);
+
     }
 
-    public ReviewDto.ReviewResponse updateReview(long reviewId, ReviewDto.ReviewUpdate reviewUpdate,
-                                                 MultipartFile imageUrl, Authentication authentication) {
+    public ReviewDto.ReviewResponse updateReview(long reviewId, ReviewDto.ReviewUpdate reviewUpdate, Authentication authentication) {
+        Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
+        long memberId = ((Number) principal.get("memberId")).longValue();
+        Member member = memberService.findVerifiedMember(memberId);
+        Performance performance = performanceRepository.findById(reviewUpdate.getPerformanceId())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
+
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.REVIEW_NOT_FOUND));
 
-        // 이미지 업로드 처리
-        String uploadedImageUrl = null;
-        if (imageUrl != null) {
-            try {
-                uploadedImageUrl = imageUploadService.imageUpload(imageUrl);
-            } catch (IOException e) {
-                throw new BusinessLogicException(ExceptionCode.IMAGE_UPLOAD_FAILED);
-            }
-        }
-
-        review.setTitle(reviewUpdate.getTitle());
+        review.setReviewTitle(reviewUpdate.getReviewTitle());
         review.setContent(reviewUpdate.getContent());
 
         Review updatedReview = reviewRepository.save(review);
@@ -136,10 +125,10 @@ public class ReviewService {
 
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.REVIEW_NOT_FOUND));
-        reviewRepository.delete(review);
 
         if(review.getMember().getMemberId()!=memberId){
             new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);}
+
         reviewRepository.delete(review);
     }
 }

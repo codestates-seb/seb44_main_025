@@ -1,8 +1,10 @@
 package com.codestates.reservation.entity;
 
 
+import com.codestates.category.Category;
 import com.codestates.member.Member;
 import com.codestates.payment.entity.Payment;
+import com.codestates.performance.entity.Performance;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +13,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,7 +24,10 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
-    private Long performanceId;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="performance_Id")
+    private Performance performance;
     private Long PaymentId;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

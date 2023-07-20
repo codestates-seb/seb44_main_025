@@ -27,23 +27,18 @@ import java.util.Map;
 public class ReviewController {
     private final ReviewService reviewService;
     private final ReviewMapperImpl reviewMapperImpl;
-    private final ImageUploadService imageUploadService;
 
     @Autowired
-    public ReviewController(ReviewService reviewService,ReviewMapperImpl reviewMapperImpl, ImageUploadService imageUploadService) {
+    public ReviewController(ReviewService reviewService,ReviewMapperImpl reviewMapperImpl) {
         this.reviewService = reviewService;
         this.reviewMapperImpl = reviewMapperImpl;
-        this.imageUploadService = imageUploadService;
     }
     @PostMapping("/{performanceId}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ReviewDto.ReviewResponse> createReview(@RequestBody ReviewDto.ReviewPost reviewPost,
-                                                                 Authentication authentication,
-                                                                 @RequestParam("imageUrl") MultipartFile imageUrl) throws AccessDeniedException {
-        Map<String, Object> principal = (Map) authentication.getPrincipal();
-        long memberId = ((Number) principal.get("memberId")).longValue();
+                                                                 Authentication authentication) throws AccessDeniedException {
 
-        ReviewDto.ReviewResponse responseDto = reviewService.createReview(reviewPost, imageUrl, authentication);
+        ReviewDto.ReviewResponse responseDto = reviewService.createReview(reviewPost, authentication);
         return ResponseEntity.ok(responseDto);
 
     }
@@ -51,10 +46,9 @@ public class ReviewController {
     @PatchMapping("/{performanceId}/{reviewId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ReviewDto.ReviewResponse> updateReview(@PathVariable("reviewId") long reviewId,
-                                                                 @PathVariable("performanceId") long performanceId,
                                                                  @RequestBody @Valid ReviewDto.ReviewUpdate reviewUpdate,
-                                                                 @RequestParam("imageUrl") MultipartFile imageUrl) {
-        ReviewDto.ReviewResponse responseDto = reviewService.updateReview(reviewId, performanceId,reviewUpdate, imageUrl);
+                                                                 Authentication authentication) {
+        ReviewDto.ReviewResponse responseDto = reviewService.updateReview(reviewId, reviewUpdate, authentication);
         return ResponseEntity.ok(responseDto);
     }
 

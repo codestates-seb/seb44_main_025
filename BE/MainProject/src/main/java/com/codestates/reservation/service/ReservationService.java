@@ -125,4 +125,14 @@ public class ReservationService {
             new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);}
         reservationRepository.delete(reservation);
     }
+    //
+    public Reservation findReservationByMember(Member member, Performance performance){
+
+        Optional<Reservation> reservation = reservationRepository.findByMemberAndPerformance(member, performance);
+        Reservation findReservation= reservation
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND));
+        return findReservation;
+
+    }
+
 }
