@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { getCookie } from '../utils/Cookie';
 
-const TEST_HOST = process.env.REACT_APP_TEST_HOST;
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
 // TODO: 임시로 BodyType 사용중인 항목들 타입 정의하기
@@ -9,21 +8,10 @@ interface BodyType {
   [x: string]: any;
 }
 
-export const testPostPerformance = async (body: BodyType) => {
-  const data = await axios
-    .post(`${TEST_HOST}/performances`, JSON.stringify(body), {
-      headers: { 'Content-Type': 'application/json' },
-    })
-    .then(data => {
-      return data;
-    })
-    .catch(err => console.error(err));
-
-  return data;
-};
-
+// Performance - POST, PATCH, DELETE
 export const postPerformance = async (body: FormData) => {
-  const data = await axios
+  // Promise 상태로 돌려주기
+  return axios
     .post(`${SERVER_HOST}/performance`, body, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -31,26 +19,73 @@ export const postPerformance = async (body: FormData) => {
     })
     .then(data => data.data)
     .catch(err => console.error(err));
+};
+
+export const patchPerformance = async (
+  performanceId: string | number,
+  body: FormData
+) => {
+  return await axios
+    .patch(`${SERVER_HOST}/performance/${performanceId}`, body, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then(data => data.data)
+    .catch(err => console.error(err));
+};
+
+export const deletePerformance = async (performanceId: string | number) => {
+  return await axios
+    .delete(`${SERVER_HOST}/performance/${performanceId}`, {
+      headers: { Authorization: getCookie('accessToken') },
+    })
+    .then(data => data.data)
+    .catch(err => console.error(err));
+};
+
+// Reservation - GET, POST, DELETE
+export const getReservation = async (
+  memberId: string | number,
+  reservationId: string | number
+) => {
+  const data = await axios
+    .get(`${SERVER_HOST}/reservation/${memberId}/${reservationId}`, {
+      headers: {
+        Authorization: getCookie('accessToken'),
+      },
+    })
+    .then(data => data)
+    .catch(err => console.error(err));
 
   return data;
 };
 
-// /${performanceId}
-
-export const postReservation = async (
-  performanceId: number,
-  body: BodyType
-) => {
+export const postReservation = async (body: BodyType) => {
   const data = await axios
-    .post(`${SERVER_HOST}/reservation/${performanceId}`, JSON.stringify(body), {
+    .post(`${SERVER_HOST}/reservation`, JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json',
         Authorization: getCookie('accessToken'),
       },
     })
-    .then(data => {
-      return data;
+    .then(data => data)
+    .catch(err => console.error(err));
+
+  return data;
+};
+
+export const deleteReservation = async (
+  memberId: string | number,
+  reservationId: string | number
+) => {
+  const data = await axios
+    .delete(`${SERVER_HOST}/reservation/${memberId}/${reservationId}`, {
+      headers: {
+        Authorization: getCookie('accessToken'),
+      },
     })
+    .then(data => data)
     .catch(err => console.error(err));
 
   return data;
@@ -108,29 +143,47 @@ export const postArtistImg = async (body: BodyType) => {
   return data;
 };
 
-export const testPostReview = async (body: BodyType) => {
-  const data = await axios
-    .post(`${TEST_HOST}/reviews`, JSON.stringify(body), {
-      headers: { 'Content-Type': 'application/json' },
-    })
-    .then(data => {
-      return data;
-    })
-    .catch(err => console.error(err));
-
-  return data;
-};
-export const postReview = async (body: BodyType) => {
-  const data = await axios
-    .post(`${SERVER_HOST}/review`, JSON.stringify(body), {
+// Review - POST, PATCH, DELETE
+// TODO: 공통 - 함수 호출 후 then 체이닝으로 navigate하기
+// POST, PATCH - /review/:performanceId 혹은 모달 닫기 후 새로고침
+// DELETE - history -1 혹은 모달 닫기 후 새로고침
+export const postReview = async (
+  performanceId: string | number,
+  body: BodyType
+) => {
+  return axios
+    .post(`${SERVER_HOST}/review/${performanceId}`, JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json',
+        Authorization: getCookie('accessToken'),
       },
     })
-    .then(data => {
-      return data;
-    })
+    .then(data => data)
     .catch(err => console.error(err));
+};
 
-  return data;
+export const patchReview = async (
+  performanceId: string | number,
+  body: BodyType
+) => {
+  return axios
+    .patch(`${SERVER_HOST}/review/${performanceId}`, JSON.stringify(body), {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: getCookie('accessToken'),
+      },
+    })
+    .then(data => data)
+    .catch(err => console.error(err));
+};
+
+export const deleteReview = async (reviewId: string | number) => {
+  return axios
+    .delete(`${SERVER_HOST}/review/${reviewId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: getCookie('accessToken'),
+      },
+    })
+    .then(data => data);
 };

@@ -64,10 +64,8 @@ export const S = {
     line-height: var(--heading3-line-height);
     color: white;
     cursor: pointer;
-
+    transition: 0.3s;
     &:not(:first-child, :last-child):nth-child(2n) {
-      margin-left: 5px;
-      margin-right: 5px;
       padding-bottom: 5px;
       cursor: auto;
     }
@@ -76,5 +74,14 @@ export const S = {
     height: 24px;
     display: flex;
     align-items: center;
+    gap: 4px;
+    transition: 0.3s;
+    & h3:nth-of-type(2n + 1) {
+      &:hover {
+        transform: scale(1.05);
+        padding: 0px 4px;
+        transition: 0.3s;
+      }
+    }
   `,
 };

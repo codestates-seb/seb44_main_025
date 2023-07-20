@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 
 export default {
   Heading1: styled.h1`
+    margin-top: 20px;
     margin-left: 15px;
     margin-right: auto;
     color: white;
@@ -27,7 +28,7 @@ export default {
   `,
   Main: styled.main`
     width: 390px;
-    min-height: calc(100vh - 110px);
+    min-height: calc(100vh - 50px);
     background-color: var(--theme-background-color);
     display: flex;
     flex-direction: column;
@@ -44,35 +45,43 @@ export default {
       margin-left: 13px;
     }
   `,
-  SummaryContainer: styled.div`
-    margin-top: 12px;
-    margin-bottom: 8px;
+  Summary: styled.div`
+    margin-top: 20px;
     width: 360px;
+    gap: 8px;
     display: flex;
     align-items: center;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    align-items: center;
+    & p {
+      color: white;
+      font-size: var(--p-small-medium-font-size);
+      font-weight: var(--p-small-medium-font-weight);
+      line-height: var(--p-small-medium-line-height);
+    }
   `,
   FileInput: styled.input`
     display: none;
   `,
   Poster: styled.img`
+    margin-top: 8px;
     width: 170px;
     height: 210px;
+    background-color: gray;
     cursor: pointer;
-    background-color: transparent;
     object-fit: scale-down;
-    &[src=''] {
-      background-color: gray;
+    &[src] {
+      background-color: transparent;
     }
   `,
   // align-items: flex-start 왼쪽 정렬, flex-end 오른쪽 정렬
   Form: styled.form`
-    padding-bottom: 8px;
-    width: 170px;
-    height: 210px;
+    width: 360px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     & label {
       color: white;
@@ -98,7 +107,6 @@ export default {
     padding: 1px;
   `,
   TitleButtonFlex: styled.div`
-    margin-top: 20px;
     width: 360px;
     display: flex;
     justify-content: space-between;
