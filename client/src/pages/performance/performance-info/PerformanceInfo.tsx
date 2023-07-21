@@ -2,7 +2,7 @@ import * as S from './PerformanceInfo.style';
 import { Button } from '../../../components/buttons/Buttons';
 // import ArtistContainer from '../../components/artist/artistcontainer';
 import Review from '../../../components/review/Review';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { EditorReadOnly } from '../../../components/inputs/editor/Editor';
 import ReservationModal from '../../../components/modal/Reservation';
 import React, { useEffect, useState } from 'react';
@@ -12,7 +12,8 @@ import { getCookie } from '../../../utils/Cookie';
 import { H1Title } from '../../../theme/common/SlideUp';
 import { getDateTime } from '../../../utils/Format';
 import { PerformanceType } from '../../../model/Performance';
-import { deletePerformance } from '../../../api/fetchAPI';
+// import { deletePerformance } from '../../../api/fetchAPI';
+import ReviewRegister from '../../../components/modal/review-register/ReviewRegister';
 
 const PerformanceInfo = ({
   setIsEditing,
@@ -21,22 +22,24 @@ const PerformanceInfo = ({
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   performance: PerformanceType;
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTicketModalOpen, setIsTicketModalOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   // const performance = useGetPerformance(performanceId);
-  const { performanceId } = useParams();
+  // const { performanceId } = useParams();
   const [isStale, setIsStale] = useState(true);
-  const handleClickDelete = () => {
-    if (performanceId) {
-      const isConfirmed = confirm('공연을 삭제하시겠습니까?');
-      if (isConfirmed) {
-        deletePerformance(performanceId).then(data => {
-          if (data) {
-            navigate('/performances');
-          }
-        });
-      }
-    }
-  };
+  // Note: 삭제 기능 비활성화
+  // const handleClickDelete = () => {
+  //   if (performanceId) {
+  //     const isConfirmed = confirm('공연을 삭제하시겠습니까?');
+  //     if (isConfirmed) {
+  //       deletePerformance(performanceId).then(data => {
+  //         if (data) {
+  //           navigate('/performances');
+  //         }
+  //       });
+  //     }
+  //   }
+  // };
   useEffect(() => {
     window.scrollTo(0, 0);
     if (new Date(performance?.date as string) < new Date()) {
@@ -70,13 +73,14 @@ const PerformanceInfo = ({
               >
                 정보 수정
               </Button>
+              {/* Note: 버그로 인한 공연 삭제 기능 비활성화 
               <Button
                 size="small"
                 theme="highlightBorder"
                 onClick={() => handleClickDelete()}
               >
                 정보 삭제
-              </Button>
+            </Button> */}
             </>
           )}
       </S.ButtonHeadingContainer>
@@ -136,8 +140,7 @@ const PerformanceInfo = ({
           </S.ReviewContainer>
         </>
       )}
-      {/* TODO: 현재 좌석수 > 0 ? 예약 버튼 활성화 : 예약 버튼 비활성화 */}
-      {!isModalOpen && (
+      {!isTicketModalOpen && (
         <S.BottomStickyContainer>
           <Button
             theme="primary"
@@ -148,10 +151,10 @@ const PerformanceInfo = ({
                 navigate('/login');
                 return;
               }
-              if (isStale) {
-                navigate(`/performances/${performanceId}/review`);
+              if (!isStale) {
+                setIsReviewModalOpen(true);
               } else {
-                setIsModalOpen(true);
+                setIsTicketModalOpen(true);
               }
             }}
           >
@@ -163,11 +166,20 @@ const PerformanceInfo = ({
           </Button>
         </S.BottomStickyContainer>
       )}
-      {isModalOpen && performance && (
+      {isTicketModalOpen && performance && (
         <ReservationModal
           performance={performance}
           closeModal={() => {
-            setIsModalOpen(false);
+            setIsTicketModalOpen(false);
+            setIsTicketModalOpen(false);
+          }}
+        />
+      )}
+      {isReviewModalOpen && performance && (
+        <ReviewRegister
+          performance={performance}
+          closeModal={() => {
+            setIsReviewModalOpen(false);
           }}
         />
       )}

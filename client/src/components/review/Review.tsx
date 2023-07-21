@@ -1,6 +1,8 @@
 import { styled } from 'styled-components';
 import { EditorViewer } from '../inputs/editor/EditorViewer';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import ReviewInfo from '../modal/review-info/ReviewInfo';
 
 interface Reviewlist {
   nickname: string;
@@ -12,25 +14,29 @@ interface Reviewlist {
   performanceId?: number;
 }
 
-export default function Review(props: Reviewlist) {
+export default function Review(props: any) {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <S.ReviewWrapper
-      onClick={() => {
-        navigate(`/performances/${props.performanceId}`);
-      }}
-    >
-      <S.ReviewDetail>
-        <S.ReviewTitle>{props.reviewTitle}</S.ReviewTitle>
-        <EditorViewer content={props.content.replace(/<img[\s\S]*?>/g, '')} />
-        {/* <S.Reviewcontent>{props.content}</S.Reviewcontent>*/}
-        <S.ReviewBottom>
-          <S.UserNickname>{props.nickname}-</S.UserNickname>
-          <S.ReviewCreated>{props.createdAt}</S.ReviewCreated>
-        </S.ReviewBottom>
-      </S.ReviewDetail>
-    </S.ReviewWrapper>
+    <>
+      <S.ReviewWrapper
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}
+      >
+        <S.ReviewDetail>
+          <S.ReviewTitle>{props.reviewTitle}</S.ReviewTitle>
+          <EditorViewer content={props.content.replace(/<img[\s\S]*?>/g, '')} />
+          {/* <S.Reviewcontent>{props.content}</S.Reviewcontent>*/}
+          <S.ReviewBottom>
+            <S.UserNickname>{props.nickname}-</S.UserNickname>
+            <S.ReviewCreated>{props.createdAt}</S.ReviewCreated>
+          </S.ReviewBottom>
+        </S.ReviewDetail>
+      </S.ReviewWrapper>
+      {isOpen && <ReviewInfo review={props} onClick={() => setIsOpen(false)} />}
+    </>
   );
 }
 
@@ -45,6 +51,12 @@ const S = {
     align-items: center;
     margin-left: 15px;
     margin-bottom: 10px;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12),
+        0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
+        0 16px 16px rgba(0, 0, 0, 0.12);
+    }
   `,
   ReviewDetail: styled.div`
     margin-left: 25px;
