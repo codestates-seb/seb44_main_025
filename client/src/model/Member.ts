@@ -26,6 +26,7 @@ export interface Review {
   content: string;
   createdAt: string;
   memberId?: number;
+  reviewId: number;
 }
 
 export interface SignUp {
