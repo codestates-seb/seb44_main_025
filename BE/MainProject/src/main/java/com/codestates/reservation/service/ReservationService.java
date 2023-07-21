@@ -16,9 +16,12 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.nio.file.AccessDeniedException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -93,6 +96,23 @@ public class ReservationService {
         }
         return reservationMapper.reservationToReservationResponseDto(reservation);
     }
+    //회원의 모든 예약정보 불러오기
+    public List<ReservationDto.ReservationResponseDto> getMyReservations(long memberId){
+        Member member = memberService.findMember(memberId);
+        List<Reservation> reservations = reservationRepository.findByMember(member);
+        List<Reservation> findReservations = new ArrayList<>();
+
+        for(int i =0;i<reservations.size();i++){
+            if(LocalDateTime.now().isBefore(reservations.get(i).getPerformance().getDate())){
+                findReservations.add(reservations.get(i));
+            }
+        }
+        List<ReservationDto.ReservationResponseDto> response =
+                reservations.stream()
+                        .map(reservation-> reservationMapper.reservationToReservationResponseDto(reservation))
+                        .collect(Collectors.toList());
+        return response;
+    }
 
     // 예약 확인 로직 구현
     @Transactional
@@ -126,7 +146,7 @@ public class ReservationService {
             new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);}
         reservationRepository.delete(reservation);
     }
-    //
+    //예약이 존재하는지 검증
     public List<Reservation> findReservationByMember(Member member, Performance performance){
 
         List<Reservation> findReservation = reservationRepository.findByMemberAndPerformance(member, performance);

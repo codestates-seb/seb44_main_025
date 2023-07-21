@@ -1,8 +1,10 @@
 package com.codestates.reservation.controller;
 
+import com.codestates.artist.dto.ArtistResponseDto;
 import com.codestates.global.exception.BusinessLogicException;
 import com.codestates.member.MemberService;
 import com.codestates.reservation.dto.ReservationDto;
+import com.codestates.reservation.entity.Reservation;
 import com.codestates.reservation.service.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @Slf4j
@@ -52,6 +56,15 @@ public class ReservationController {
         return ResponseEntity.ok(responseDto);
     }
     //자신의 예약 목록 출력
+    @GetMapping("/mypage")
+    public ResponseEntity getMyReservations(Authentication authentication){
+        Map<String, Object> principal = (Map) authentication.getPrincipal();
+        long memberId = ((Number) principal.get("memberId")).longValue();
+
+        List<ReservationDto.ReservationResponseDto> reservations = reservationService.getMyReservations(memberId);
+
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
 
     // 예약 삭제
     @DeleteMapping("/{reservationId}")
