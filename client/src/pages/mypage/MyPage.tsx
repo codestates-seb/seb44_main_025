@@ -11,7 +11,7 @@ import ArtistreviewContainer from '../../components/artist/artistreviewcontainer
 import Review from '../../components/review/Review';
 import Footer from '../../components/footer/Footer';
 import Navbar from '../../components/nav/Navbar';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { removeCookie, getCookie } from '../../utils/Cookie';
 import {
   useGetMember,
@@ -20,7 +20,6 @@ import {
   useGetMemberReview,
 } from '../../api/useFetch';
 import { H1Title } from '../../theme/common/SlideUp';
-import { useEffect } from 'react';
 
 export default function Mypage() {
   const navigate = useNavigate();
@@ -38,14 +37,6 @@ export default function Mypage() {
     alert('[로그아웃 성공] 로그아웃 되었습니다');
     navigate('/');
   };
-
-  // useEffect(() => {
-  //   if (!getCookie('userInfo').memberId) {
-  //     alert('권한 접근이 없습니다.');
-  //     navigate('/');
-  //     return;
-  //   }
-  // }, []);
 
   return (
     <>
