@@ -216,12 +216,12 @@ export const useGetMember = () => {
 };
 
 export const useGetMemberPerformance = (id: string | number | undefined) => {
-  const [data, setData] = useState<Performance[]>();
+  const [data, setData] = useState<PerformanceType[]>();
 
   const getData = async () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
-      .get<Performance[]>(
+      .get<PerformanceType[]>(
         `${SERVER_HOST}/member/${id}/page=1&size=5&performanceStatus=공연진행중`
       )
       .then(data => setData(data.data))
@@ -234,12 +234,12 @@ export const useGetMemberPerformance = (id: string | number | undefined) => {
 };
 
 export const useGetMemberPerformanced = (id: string | number | undefined) => {
-  const [data, setData] = useState<Performance[]>();
+  const [data, setData] = useState<PerformanceType[]>();
 
   const getData = async () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
-      .get<Performance[]>(
+      .get<PerformanceType[]>(
         `${SERVER_HOST}/member/${id}/page=1&size=5&performanceStatus=공연완료`
       )
       .then(data => setData(data.data))
