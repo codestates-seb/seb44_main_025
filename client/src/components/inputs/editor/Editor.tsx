@@ -18,7 +18,11 @@ export const Editor = ({ defaultValue }: { defaultValue?: string }) => {
     let formData = new FormData();
     formData.append('image-file', file);
     postImg(formData).then((data: any) => {
-      changeContent(content + `<img src=${data.data}>`);
+      if (data) {
+        changeContent(content + `<img src=${data.data}>`);
+      } else {
+        alert('이미지를 불러오는 데에 실패하였습니다.');
+      }
     });
   };
 

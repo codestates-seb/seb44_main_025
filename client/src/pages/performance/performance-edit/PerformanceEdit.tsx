@@ -101,7 +101,11 @@ const PerformanceEdit = ({
     let formData = new FormData();
     formData.append('image-file', file);
     postImg(formData).then((data: any) => {
-      setImgUrl(data.data);
+      if (data) {
+        setImgUrl(data.data);
+      } else {
+        alert('이미지 등록에 실패하였습니다.');
+      }
     });
   };
   return (
