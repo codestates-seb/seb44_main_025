@@ -105,11 +105,14 @@ public class PerformanceServiceImpl implements PerformanceService{
 
     @Override
     public Page<Performance> findPerformances(PageRequest pageRequest, PERFORMANCE_STATUS performanceStatus) {
-        // before: 진행중인 공연, after: 완료된 공연
+        /*
+            before: 진행중인 공연, after: 완료된 공연
+            아직 완료되지 않은 공연 = 공연이 현재 날짜보다 뒤
+         */
         if(performanceStatus.isCompleted() == 't') {
-            return performanceRepository.findAllByTimeIsAfter(pageRequest);
-        } else if(performanceStatus.isCompleted() == 'f') {
             return performanceRepository.findAllByTimeIsBefore(pageRequest);
+        } else if(performanceStatus.isCompleted() == 'f') {
+            return performanceRepository.findAllByTimeIsAfter(pageRequest);
         }
         return performanceRepository.findAll(pageRequest);
     }
@@ -119,9 +122,9 @@ public class PerformanceServiceImpl implements PerformanceService{
         Category category = categoryService.findVerifiedCategory(categoryId);
 
         if(performanceStatus.isCompleted() == 't') {
-            return performanceRepository.findAllByCategoryAndTimeIsAfter(category, pageable);
-        } else if(performanceStatus.isCompleted() == 'f') {
             return performanceRepository.findAllByCategoryAndTimeIsBefore(category, pageable);
+        } else if(performanceStatus.isCompleted() == 'f') {
+            return performanceRepository.findAllByCategoryAndTimeIsAfter(category, pageable);
         }
         return performanceRepository.findAllByCategory(category, pageable);
     }
@@ -129,9 +132,9 @@ public class PerformanceServiceImpl implements PerformanceService{
     @Override
     public Page<Performance> findPerformancesByArtist(Pageable pageable, long artistId, PERFORMANCE_STATUS performanceStatus) {
         if(performanceStatus.isCompleted() == 't') {
-            return performanceRepository.findAllByArtistIdTimeIsAfter(artistId, pageable);
-        } else if(performanceStatus.isCompleted() == 'f') {
             return performanceRepository.findAllByArtistIdTimeIsBefore(artistId, pageable);
+        } else if(performanceStatus.isCompleted() == 'f') {
+            return performanceRepository.findAllByArtistIdTimeIsAfter(artistId, pageable);
         }
         return performanceRepository.findAllByArtistId(artistId, pageable);
     }
