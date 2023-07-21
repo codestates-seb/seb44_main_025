@@ -9,6 +9,7 @@ import com.codestates.global.exception.BusinessLogicException;
 import com.codestates.global.exception.ExceptionCode;
 import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
+import com.codestates.performance.entity.Performance.PERFORMANCE_STATUS;
 import com.codestates.performance.entity.PerformanceArtist;
 import com.codestates.performance.repository.PerformanceRepository;
 import lombok.RequiredArgsConstructor;
@@ -103,32 +104,33 @@ public class PerformanceServiceImpl implements PerformanceService{
     }
 
     @Override
-    public Page<Performance> findPerformances(PageRequest pageRequest, String isCompleted) {
-        if(isCompleted.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_COMPLETED.getStatus())) {
+    public Page<Performance> findPerformances(PageRequest pageRequest, PERFORMANCE_STATUS performanceStatus) {
+        // before: 진행중인 공연, after: 완료된 공연
+        if(performanceStatus.isCompleted() == 't') {
             return performanceRepository.findAllByTimeIsAfter(pageRequest);
-        } else if(isCompleted.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_NOT_COMPLETED.getStatus())) {
+        } else if(performanceStatus.isCompleted() == 'f') {
             return performanceRepository.findAllByTimeIsBefore(pageRequest);
         }
         return performanceRepository.findAll(pageRequest);
     }
 
     @Override
-    public Page<Performance> findPerformancesByCategory(Pageable pageable, long categoryId, String performanceStatus) {
+    public Page<Performance> findPerformancesByCategory(Pageable pageable, long categoryId, PERFORMANCE_STATUS performanceStatus) {
         Category category = categoryService.findVerifiedCategory(categoryId);
 
-        if(performanceStatus.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_COMPLETED.getStatus())) {
+        if(performanceStatus.isCompleted() == 't') {
             return performanceRepository.findAllByCategoryAndTimeIsAfter(category, pageable);
-        } else if(performanceStatus.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_NOT_COMPLETED.getStatus())) {
+        } else if(performanceStatus.isCompleted() == 'f') {
             return performanceRepository.findAllByCategoryAndTimeIsBefore(category, pageable);
         }
         return performanceRepository.findAllByCategory(category, pageable);
     }
 
     @Override
-    public Page<Performance> findPerformancesByArtist(Pageable pageable, long artistId, String performanceStatus) {
-        if(performanceStatus.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_COMPLETED.getStatus())) {
+    public Page<Performance> findPerformancesByArtist(Pageable pageable, long artistId, PERFORMANCE_STATUS performanceStatus) {
+        if(performanceStatus.isCompleted() == 't') {
             return performanceRepository.findAllByArtistIdTimeIsAfter(artistId, pageable);
-        } else if(performanceStatus.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_NOT_COMPLETED.getStatus())) {
+        } else if(performanceStatus.isCompleted() == 'f') {
             return performanceRepository.findAllByArtistIdTimeIsBefore(artistId, pageable);
         }
         return performanceRepository.findAllByArtistId(artistId, pageable);

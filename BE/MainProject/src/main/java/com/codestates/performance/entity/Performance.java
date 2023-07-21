@@ -104,18 +104,32 @@ public class Performance {
         }
     }
 
+    /* 진행중인 공연과 완료된 공연을 검색하기 위한 enum */
     @Getter
     public enum PERFORMANCE_STATUS {
-        PERFORMANCE_COMPLETED("공연완료"),
-        PERFORMANCE_NOT_COMPLETED("공연진행중");
+        PERFORMANCE_COMPLETED("공연진행중"),
+        PERFORMANCE_NOT_COMPLETED("공연완료");
 
         private String status;
+
         PERFORMANCE_STATUS(String status) {
             this.status = status;
         }
 
+        public static PERFORMANCE_STATUS of(String performanceStatus) {
+            for(PERFORMANCE_STATUS el : PERFORMANCE_STATUS.values()) {
+                if(el.status.equals(performanceStatus)) return el;
+            }
+            return null;
+        }
+
         public String getStatus() {
             return status;
+        }
+        public char isCompleted() {
+            if(this.status == PERFORMANCE_COMPLETED.getStatus()) return 't';
+            else if(this.status == PERFORMANCE_NOT_COMPLETED.getStatus()) return 'f';
+            return 'x';
         }
     }
 }
