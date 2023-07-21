@@ -32,7 +32,7 @@ public class ReservationService {
     private final PerformanceServiceImpl performanceServiceImpl;
     private final MemberService memberService;
 
-    public ReservationService(ReservationRepository reservationRepository, ReservationMapper reservationMapper,PerformanceRepository performanceRepository,
+    public ReservationService(ReservationRepository reservationRepository, ReservationMapper reservationMapper, PerformanceRepository performanceRepository,
                               PerformanceServiceImpl performanceServiceImpl, MemberService memberService) {
         this.reservationRepository = reservationRepository;
         this.reservationMapper = reservationMapper;
@@ -40,7 +40,8 @@ public class ReservationService {
         this.performanceServiceImpl = performanceServiceImpl;
         this.memberService = memberService;
     }
-//url
+
+    //url
     // 예약 생성
     @Transactional
     public ReservationDto.ReservationResponseDto createReservation(ReservationDto.ReservationRequestDto reservationRequestDto, Authentication authentication) throws AccessDeniedException {
@@ -70,8 +71,7 @@ public class ReservationService {
         }
         if (seatValue > totalSeats) {
             throw new BusinessLogicException(ExceptionCode.SEAT_RESERVATION_EXCEEDED, totalSeats);
-        }
-        else{
+        } else {
             performanceServiceImpl.updatePerformanceSeats(performance, seatValue);
         }
         // 예약 정보 저장
@@ -92,7 +92,7 @@ public class ReservationService {
         Reservation reservation = optionalReservation.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND));
 
-        if(reservation.getMember().getMemberId()!=memberId){
+        if (reservation.getMember().getMemberId() != memberId) {
             new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);
         }
         return reservationMapper.reservationToReservationResponseDto(reservation);
@@ -145,6 +145,7 @@ public class ReservationService {
         // ReservatioResponseDto로 변환
         return reservationMapper.reservationToReservationResponseDto(savedReservation);
     }
+
     // 예약 삭제 로직
     @Transactional
     public void deleteReservation(long reservationId, Authentication authentication) {
@@ -155,18 +156,19 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND));
 
-        if(reservation.getMember().getMemberId()!=memberId){
-            new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);}
+        if (reservation.getMember().getMemberId() != memberId) {
+            new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);
+        }
         reservationRepository.delete(reservation);
     }
     //예약이 존재하는지 검증
-    public List<Reservation> findReservationByMember(Member member, Performance performance){
 
-        List<Reservation> findReservation = reservationRepository.findByMemberAndPerformance(member, performance);
-        if(findReservation.size()<1)
-               new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND);
-        return findReservation;
 
+    //
+        public Optional<Reservation> findReservationByMember(Member member, Performance performance) {
+            Optional<Reservation> findReservation = reservationRepository.findByMemberAndPerformance(member, performance);
+            if (findReservation.isEmpty())
+                throw new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND);
+            return findReservation;
     }
-
 }
