@@ -59,7 +59,7 @@ public class ReviewController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/mypage/reviews")
+    @GetMapping("/mypage")
     public ResponseEntity<List<ReviewDto.ReviewResponse>> getMyReviews(Authentication authentication) {
         List<ReviewDto.ReviewResponse> responseDtoList = reviewService.getMyReviews(authentication); // 내가 작성한 리뷰 정보를 조회하는 서비스 메서드 호출
 
@@ -69,4 +69,6 @@ public class ReviewController {
             return ResponseEntity.ok(responseDtoList); // 리뷰 목록을 응답으로
         }
     }
+
+
 }

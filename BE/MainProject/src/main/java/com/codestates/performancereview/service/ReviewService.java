@@ -81,8 +81,8 @@ public class ReviewService {
         Performance performance = performanceRepository.findById(reviewPost.getPerformanceId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
 
-        //사용자가 후기를 등록하려는 공연에 대한 예약이 존재하는지 검색. 있으면 예약정보 가져오기.
-        Reservation reservation = reservationService.findReservationByMember(member, performance);
+        //사용자가 후기를 등록하려는 공연에 대한 예약이 존재하는지 검색. 없으면 예외발생
+        reservationService.findReservationByMember(member, performance);
 
         LocalDateTime currentTime = LocalDateTime.now();
         LocalDateTime performanceDate = performance.getDate();

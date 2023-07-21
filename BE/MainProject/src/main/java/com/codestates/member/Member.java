@@ -22,7 +22,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private long memberId;
-    @Column(length = 50, nullable = false, updatable = true, unique = true, name = "email")
+    @Column(length = 50, nullable = false, updatable = false, unique = true, name = "email")
     private String email;
     @Column(length = 50, nullable = false, updatable = true, unique = true, name = "nickname")
     private String nickname;
@@ -34,8 +34,9 @@ public class Member {
     private Artist artist;
     @OneToMany(mappedBy = "member")
     private List<Reservation> reservations;
-    @Column(nullable = true, updatable = true, unique = true, name= "phone")
-    private String  phone;
+
+    //@Column(nullable = true, updatable = true, unique = true, name= "phone")
+    //private String  phone;
 
 
     public Member(String email, String nickname, String password){
@@ -43,12 +44,7 @@ public class Member {
         this.nickname = nickname;
         this.password = password;
     }
-    public Member(String email, String nickname, String password, String phone){
-        this.email = email;
-        this.nickname = nickname;
-        this.password = password;
-        this.phone = phone;
-    }
+
     public Member(String email){
         this.email = email;
     }
