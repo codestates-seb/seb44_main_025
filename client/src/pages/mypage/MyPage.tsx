@@ -92,24 +92,31 @@ export default function Mypage() {
           {reservationData ? (
             reservationData.map(reservationData => {
               return (
-                <Concertpreview
-                  performanceId={reservationData.performanceId}
+                <div
                   key={reservationData.performanceId}
-                  posterImg={reservationData.imageUrl}
-                  title={reservationData.title}
-                  artistName={reservationData.artistName}
-                  category={reservationData.category}
-                  price={reservationData.price}
-                  date={reservationData.date}
-                />
+                  onClick={e => e.stopPropagation}
+                >
+                  <Concertpreview
+                    performanceId={reservationData.performanceId}
+                    posterImg={reservationData.imageUrl}
+                    title={reservationData.title}
+                    artistName={reservationData.artistName}
+                    category={reservationData.category}
+                    price={reservationData.price}
+                    date={reservationData.date}
+                  />
+                </div>
               );
             })
           ) : (
             <S.EmptyContainer>
               <S.EmptyWrapper>
-                <S.EmptyTitle>현재 예약중인 공연이 없습니다.</S.EmptyTitle>
+                <S.EmptyTitle>예약중인 공연이 없습니다.</S.EmptyTitle>
                 <ConcertEmptyButton>
-                  <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                  <ButtonWithArrowDark
+                    onClick={() => navigate('/performances')}
+                    text="공연예약"
+                  ></ButtonWithArrowDark>
                 </ConcertEmptyButton>
               </S.EmptyWrapper>
             </S.EmptyContainer>
@@ -130,9 +137,12 @@ export default function Mypage() {
             ) : (
               <S.EmptyContainer>
                 <S.EmptyWrapper>
-                  <S.EmptyTitle>아직 관람한 공연이 없습니다.</S.EmptyTitle>
+                  <S.EmptyTitle>관람한 공연이 없습니다.</S.EmptyTitle>
                   <ConcertEmptyButton>
-                    <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                    <ButtonWithArrowDark
+                      onClick={() => navigate('/performances')}
+                      text="공연예약"
+                    ></ButtonWithArrowDark>
                   </ConcertEmptyButton>
                 </S.EmptyWrapper>
               </S.EmptyContainer>
@@ -158,7 +168,10 @@ export default function Mypage() {
                 <S.EmptyWrapper>
                   <S.EmptyTitle>아직 관람한 공연이 없습니다.</S.EmptyTitle>
                   <ConcertEmptyButton>
-                    <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                    <ButtonWithArrowDark
+                      onClick={() => navigate('/performances')}
+                      text="공연예약"
+                    ></ButtonWithArrowDark>
                   </ConcertEmptyButton>
                 </S.EmptyWrapper>
               </S.EmptyContainer>

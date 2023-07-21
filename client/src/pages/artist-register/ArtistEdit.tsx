@@ -1,4 +1,5 @@
 import S from './ArtistRegister.style';
+import LogoImg from '../.././images/이투플아티스트슬로건.png';
 import { styled } from 'styled-components';
 import Header from '../../components/header/Header';
 import {
@@ -68,9 +69,9 @@ export default function Artistedit() {
 
   /** 아티스트 정보가 없을때 */
   useEffect(() => {
-    if (!artistData) {
-      alert('권한 접근이 없습니다.');
+    if (artistId && getCookie('userInfo').artistId !== +artistId) {
       navigate('/');
+      alert('권한 접근이 없습니다.');
       return;
     }
   }, []);
@@ -197,7 +198,7 @@ export default function Artistedit() {
           <S.Title>
             <H1Title.H1span>아티스트 수정하기</H1Title.H1span>
           </S.Title>
-          <S.LogoImg src={''}></S.LogoImg>
+          <S.LogoImg src={LogoImg}></S.LogoImg>
           <Controller
             control={control}
             name="imageUrl"

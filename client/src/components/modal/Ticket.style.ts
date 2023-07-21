@@ -12,7 +12,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
+    z-index: 99;
   `,
   TicketModal: styled.div`
     width: 300px;

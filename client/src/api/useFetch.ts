@@ -220,9 +220,12 @@ export const useGetMemberPerformance = () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
       .get<Performance[]>(
-        `${SERVER_HOST}/member/${
-          getCookie('userInfo').memberId
-        }/page=1&size=5&performanceStatus=공연진행중`
+        `${SERVER_HOST}/reservation/mypage?performanceStatus=공연진행중`,
+        {
+          headers: {
+            Authorization: getCookie('accessToken'),
+          },
+        }
       )
       .then(data => setData(data.data))
       .catch(err => console.log(err));
@@ -232,7 +235,7 @@ export const useGetMemberPerformance = () => {
   }, []);
   return data;
 };
-
+// 주소 수정해야함
 export const useGetMemberPerformanced = () => {
   const [data, setData] = useState<Performance[]>();
 
@@ -240,9 +243,12 @@ export const useGetMemberPerformanced = () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
       .get<Performance[]>(
-        `${SERVER_HOST}/member/${
-          getCookie('userInfo').memberId
-        }/page=1&size=5&performanceStatus=공연완료`
+        `${SERVER_HOST}/reservation/mypage?performanceStatus=공연완료`,
+        {
+          headers: {
+            Authorization: getCookie('accessToken'),
+          },
+        }
       )
       .then(data => setData(data.data))
       .catch(err => console.log(err));

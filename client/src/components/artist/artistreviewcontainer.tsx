@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 interface ArtistPreviewPropTypes {
   performanceId?: number;
@@ -7,8 +8,14 @@ interface ArtistPreviewPropTypes {
 }
 
 export default function ArtistreviewContainer(props: ArtistPreviewPropTypes) {
+  const navigate = useNavigate();
+
   return (
-    <S.ArtistpreviewMain>
+    <S.ArtistpreviewMain
+      onClick={() => {
+        navigate(`/performances/${props.performanceId}`);
+      }}
+    >
       <S.ArtistpreviewContainer>
         <S.ArtistpreviewWrapper>
           <S.ArtistImg src={props.imageUrl} />

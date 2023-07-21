@@ -1,12 +1,12 @@
 import S from './ArtistRegister.style';
 import { styled } from 'styled-components';
+import LogoImg from '../.././images/이투플아티스트슬로건.png';
 import Header from '../../components/header/Header';
 import {
   ButtonPrimary75px,
   ButtonMiniToggleSelect,
   ButtonMiniToggleUnselect,
 } from '../../components/buttons/Buttons';
-// import LogoImg from '../.././images/슬로건 흑색버전 아티스트등록.png';
 import { Input } from '../../components/inputs/Inputs';
 import { useState, useRef } from 'react';
 import Img from '../../images/기본이미지.jpg';
@@ -160,8 +160,7 @@ export default function Artistregist() {
           <S.Title>
             <H1Title.H1span>아티스트 등록하기</H1Title.H1span>
           </S.Title>
-          {/* <MainIcon /> */}
-          <S.LogoImg src={''}></S.LogoImg>
+          <S.LogoImg src={LogoImg}></S.LogoImg>
           <S.FileInput
             type="file"
             accept="image/*"
