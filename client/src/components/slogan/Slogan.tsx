@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Styled_Slogan } from './Slogan.styled';
-import { useNavigate } from 'react-router-dom';
 import { useUserInfo } from '../../zustand/userInfo.stores';
 
 const Slogan = () => {
@@ -14,7 +13,7 @@ const Slogan = () => {
       ? tabletSizeHeight
       : mobileSizeHeight
   ); // 첫 로딩시 슬로건 크기 초기값 세팅
-  const { userInfo2 } = useUserInfo();
+  const { userInfo_zustand } = useUserInfo();
 
   /** 슬로건 4초마다 동작 */
   useEffect(() => {
@@ -58,23 +57,27 @@ const Slogan = () => {
 
         <a
           href={
-            userInfo2?.hasArtist === true
+            userInfo_zustand?.hasArtist === true
               ? '/performances/register'
-              : userInfo2?.hasArtist === false
+              : userInfo_zustand?.hasArtist === false
               ? '/artistregist'
               : '/login'
           }
         >
           <Styled_Slogan.Img src="./images/dd28119305b114d0.png" />
         </a>
-        <a href={userInfo2?.hasArtist === false ? '/artistregist' : '/login'}>
+        <a
+          href={
+            userInfo_zustand?.hasArtist === false ? '/artistregist' : '/login'
+          }
+        >
           <Styled_Slogan.Img src="./images/7955f4c5e4d540fb.png" />
         </a>
         <a
           href={
-            userInfo2?.hasArtist === true
+            userInfo_zustand?.hasArtist === true
               ? '/performances/register'
-              : userInfo2?.hasArtist === false
+              : userInfo_zustand?.hasArtist === false
               ? '/artistregist'
               : '/login'
           }
