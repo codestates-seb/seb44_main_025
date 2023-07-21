@@ -74,15 +74,13 @@ public class ReviewService {
             return reviewMapperImpl.toResponseDtoList(reviews);
         }
     }
-
-
     public List<ReviewDto.ReviewResponse> getArtistAllReviews(long artistId) {
         // 현재 아티스트의 ID를 가져와서 해당 아티스트의 공연에 작성된 리뷰 정보를 조회
-        // 아티스트가 공연한 모든 공연을 조회
+        // 해당 아티스트가 공연완료된 공연들을 조회해서 담아옴
         List<Performance> performances = performanceRepository.findPastPerformancesByArtistId(artistId);
-
+        // 공연 완료된 공연들의 모든 리뷰들을 담도록
         List<Review> allReviews = new ArrayList<>();
-        // 아티스트의 리뷰를 가져오도록
+        // 아티스트의 공연완료 된 모든 리뷰를 가져오도록 (모든 사용자들이 볼 수 있도록)
         for (Performance performance : performances) {
             List<Review> reviews = reviewRepository.findByPerformance(performance);
             allReviews.addAll(reviews);
@@ -93,11 +91,8 @@ public class ReviewService {
         } else {
             return reviewMapperImpl.toResponseDtoList(allReviews);
         }
-        // 아티스트의 ID를 가져옴
-        // 해당 아티스트가 공연했던 모든 공연을 조회
-        // 각 공연에 대한 리뷰들을 모두 가져와야 함
-        // 모든 사용자들이 볼 수 있도록
     }
+
     public ReviewDto.ReviewResponse createReview(ReviewDto.ReviewPost reviewPost, Authentication authentication) {
 
 
