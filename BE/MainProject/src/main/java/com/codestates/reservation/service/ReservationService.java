@@ -163,12 +163,10 @@ public class ReservationService {
     }
     //예약이 존재하는지 검증
 
-
-    //
-        public Optional<Reservation> findReservationByMember(Member member, Performance performance) {
-            Optional<Reservation> findReservation = reservationRepository.findByMemberAndPerformance(member, performance);
-            if (findReservation.isEmpty())
-                throw new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND);
-            return findReservation;
+    public Optional<Reservation> findReservationByMember(Member member, Performance performance) {
+        Optional<Reservation> findReservation = reservationRepository.findByMemberAndPerformance(member, performance);
+        if (findReservation.isEmpty())
+            throw new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND);
+        return findReservation;
     }
 }
