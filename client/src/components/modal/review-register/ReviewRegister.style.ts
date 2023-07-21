@@ -1,6 +1,58 @@
 import { styled } from 'styled-components';
 
 export default {
+  ModalOverlay: styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+  `,
+  Modal: styled.div`
+    padding-top: 20px;
+    gap: 8px;
+    width: 300px;
+    height: 500px;
+    background-color: var(--body-background-color);
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding-left: 7.5px;
+    color: white;
+    border-radius: 15px;
+    filter: drop-shadow(0 0 3px var(--button-primary-border-color));
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    overflow-x: hidden;
+    & > svg {
+      cursor: pointer;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      stroke: white;
+      transform: rotate(180deg);
+    }
+    & .quill {
+      max-width: 285px;
+      & * {
+        color: black;
+      }
+      & .ql-editor {
+        padding: 10px;
+      }
+    }
+  `,
   Heading1: styled.h1`
     margin-top: 20px;
     margin-left: 15px;
@@ -28,49 +80,21 @@ export default {
   `,
   Main: styled.main`
     width: 390px;
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 50px);
     background-color: var(--theme-background-color);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     padding-bottom: 70px;
-    color: white;
-  `,
-  CategoryContainer: styled.div`
-    margin-top: 20px;
-    display: flex;
-    min-width: 360px;
-    justify-content: flex-start;
-    & > button:not(:first-child) {
-      margin-left: 13px;
+    & h1 {
+      margin-right: auto;
+      margin-left: 15px;
+      margin-top: 20px;
     }
-  `,
-  SummaryContainer: styled.div`
-    margin-top: 12px;
-    width: 360px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  `,
-  Summary: styled.div`
-    width: 170px;
-    height: 210px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
-    & p {
-      color: white;
-      font-size: var(--p-small-medium-font-size);
-      font-weight: var(--p-small-medium-font-weight);
-      line-height: var(--p-small-medium-line-height);
-    }
-  `,
-  FileInput: styled.input`
-    display: none;
   `,
   Poster: styled.img`
+    margin-top: 8px;
     width: 170px;
     height: 210px;
     background-color: gray;
@@ -100,46 +124,10 @@ export default {
       line-height: var(--p-small-medium-line-height);
     }
   `,
-  TextareaContainer: styled.textarea`
-    width: 360px;
-    min-height: 150px;
-    font-size: var(--p-small-medium-font-size);
-    font-weight: var(--p-small-medium-font-weight);
-    line-height: var(--p-small-medium-line-height);
-    outline: none;
-    resize: vertical;
-    padding: 1px;
-  `,
-  TitleButtonFlex: styled.div`
-    width: 360px;
+  ButtonContainer: styled.div`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    & > h3 {
-      margin-left: 0;
-    }
-  `,
-  Map: styled.div`
-    width: 360px;
-    height: 200px;
-    background-color: gray;
-  `,
-  Image: styled.div`
-    width: 360px;
-    height: 210px;
-    background-color: gray;
-    margin-bottom: 20px;
-  `,
-  BottomStickyContainer: styled.div`
-    width: 390px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: auto;
-    bottom: 70px;
-    & button {
-      z-index: 1;
-    }
+    justify-content: flex-end;
+    margin-right: 7.5px;
+    margin-top: 20px;
   `,
 };
