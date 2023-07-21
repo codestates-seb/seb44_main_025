@@ -15,11 +15,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -28,6 +30,7 @@ public class PerformanceServiceImpl implements PerformanceService{
     private final CategoryService categoryService;
     private final ArtistService artistService;
 
+    @Transactional
     @Override
     public Performance createPerformance(Performance performance, PerformanceDto.Post performanceDto) {
         performance.addCategory(categoryService.findVerifiedCategory(performanceDto.getCategoryId()));
@@ -50,6 +53,7 @@ public class PerformanceServiceImpl implements PerformanceService{
         return performanceRepository.save(performance);
     }
 
+    @Transactional
     @Override
     public Performance updatePerformance(Performance performance, PerformanceDto.Patch performanceDto) {
         Performance findPerformance = findVerifyPerformance(performance.getPerformanceId());
@@ -83,6 +87,13 @@ public class PerformanceServiceImpl implements PerformanceService{
                 .ifPresent(data -> findPerformance.addPerformanceArtists(performanceArtists));
 
         return performanceRepository.save(findPerformance);
+    }
+
+    @Transactional
+    @Override
+    public void deletePerformance(long performanceId) {
+        Performance findPerformance = findVerifyPerformance(performanceId);
+        performanceRepository.delete(findPerformance);
     }
 
     @Override
@@ -123,24 +134,17 @@ public class PerformanceServiceImpl implements PerformanceService{
         return performanceRepository.findAllByArtistId(artistId, pageable);
     }
 
-    @Override
-    public void deletePerformance(long performanceId) {
-        Performance findPerformance = findVerifyPerformance(performanceId);
-        performanceRepository.delete(findPerformance);
-    }
-
     private Performance findVerifyPerformance(long performanceId) {
         Optional<Performance> findPerformance = performanceRepository.findById(performanceId);
         return findPerformance.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
     }
 
+    @Transactional
     @Override
     public Performance updatePerformanceSeats(Performance performance, int SeatValue){
-
-        int remainingSeats = performance.getTotalSeat()-SeatValue;
+        int remainingSeats = performance.getTotalSeat() - SeatValue;
         performance.setTotalSeat(remainingSeats);
         return performanceRepository.save(performance);
     }
-
 }
