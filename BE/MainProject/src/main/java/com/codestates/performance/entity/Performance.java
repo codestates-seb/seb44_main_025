@@ -107,6 +107,7 @@ public class Performance {
     /* 진행중인 공연과 완료된 공연을 검색하기 위한 enum */
     @Getter
     public enum PERFORMANCE_STATUS {
+        PERFORMANCE_DEFAULT("default"),
         PERFORMANCE_COMPLETED("공연완료"),
         PERFORMANCE_NOT_COMPLETED("공연진행중");
 
@@ -120,7 +121,7 @@ public class Performance {
             for(PERFORMANCE_STATUS el : PERFORMANCE_STATUS.values()) {
                 if(el.status.equals(performanceStatus)) return el;
             }
-            return null;
+            return PERFORMANCE_DEFAULT;
         }
 
         public String getStatus() {
