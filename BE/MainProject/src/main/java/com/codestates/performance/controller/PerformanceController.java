@@ -70,7 +70,7 @@ public class PerformanceController {
                                          @RequestParam("size") @Positive int size,
                                          @RequestParam(value="performanceStatus", required = false) String performanceStatus) {
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("performanceId").descending());
-        Page<Performance> pagePerformance = performanceService.findPerformances(pageRequest, performanceStatus);
+        Page<Performance> pagePerformance = performanceService.findPerformances(pageRequest, PERFORMANCE_STATUS.of(performanceStatus));
         List<Performance> findPerformance = pagePerformance.toList();
 
         return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);
@@ -83,7 +83,7 @@ public class PerformanceController {
                                          @RequestParam("size") @Positive int size,
                                          @RequestParam(value="performanceStatus", required = false) String performanceStatus) {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("performanceId").descending());
-        Page<Performance> pagePerformance = performanceService.findPerformancesByCategory(pageable, categoryId, performanceStatus);
+        Page<Performance> pagePerformance = performanceService.findPerformancesByCategory(pageable, categoryId, PERFORMANCE_STATUS.of(performanceStatus));
         List<Performance> findPerformance = pagePerformance.toList();
 
         return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);
@@ -96,7 +96,7 @@ public class PerformanceController {
                                                    @RequestParam("size") @Positive int size,
                                                    @RequestParam(value="performanceStatus", required = false) String performanceStatus) {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("performanceId").descending());
-        Page<Performance> pagePerformance = performanceService.findPerformancesByArtist(pageable, artistId, performanceStatus);
+        Page<Performance> pagePerformance = performanceService.findPerformancesByArtist(pageable, artistId, PERFORMANCE_STATUS.of(performanceStatus));
         List<Performance> findPerformance = pagePerformance.toList();
 
         return new ResponseEntity(new MultiResponseDto<>(pagePerformance, mapper.performancesToPerformanceResponseDtos(findPerformance)), HttpStatus.OK);

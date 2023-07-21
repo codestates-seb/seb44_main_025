@@ -54,13 +54,11 @@ public class MemberService {
     }
 
     public Member updateMember(MemberPatchDto memberPatchDto) {
-        verifyEmail(memberPatchDto.getEmail());
 
         Member member = em.find(Member.class, memberPatchDto.getMemberId());
         member.setNickname(memberPatchDto.getNickname());
-        member.setEmail(memberPatchDto.getEmail());
-        member.setPassword(memberPatchDto.getPassword());
-        member.setPhone(memberPatchDto.getPhone());
+        member.setPassword(passwordEncoder.encode(memberPatchDto.getPassword()));
+        //member.setPhone(memberPatchDto.getPhone());
 
         return memberRepository.save(member);
     }

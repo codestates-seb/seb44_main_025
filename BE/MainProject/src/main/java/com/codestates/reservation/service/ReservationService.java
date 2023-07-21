@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.nio.file.AccessDeniedException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -126,11 +127,11 @@ public class ReservationService {
         reservationRepository.delete(reservation);
     }
     //
-    public Reservation findReservationByMember(Member member, Performance performance){
+    public List<Reservation> findReservationByMember(Member member, Performance performance){
 
-        Optional<Reservation> reservation = reservationRepository.findByMemberAndPerformance(member, performance);
-        Reservation findReservation= reservation
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND));
+        List<Reservation> findReservation = reservationRepository.findByMemberAndPerformance(member, performance);
+        if(findReservation.size()<1)
+               new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND);
         return findReservation;
 
     }
