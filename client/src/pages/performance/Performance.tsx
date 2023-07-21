@@ -17,15 +17,12 @@ export const Performance = () => {
       <Header precious={true} />
       <S.Container>
         <S.Main>
-          {data ? (
-            isEditing ? (
+          {data &&
+            (isEditing ? (
               <PerformanceEdit performance={data} setIsEditing={setIsEditing} />
             ) : (
               <PerformanceInfo performance={data} setIsEditing={setIsEditing} />
-            )
-          ) : (
-            <div>로딩중</div>
-          )}
+            ))}
         </S.Main>
       </S.Container>
       <Navbar />

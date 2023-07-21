@@ -24,7 +24,7 @@ const PerformanceInfo = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   // const performance = useGetPerformance(performanceId);
   const { performanceId } = useParams();
-  const [isStale, setIsStale] = useState(false);
+  const [isStale, setIsStale] = useState(true);
   const handleClickDelete = () => {
     if (performanceId) {
       const isConfirmed = confirm('공연을 삭제하시겠습니까?');
@@ -88,7 +88,7 @@ const PerformanceInfo = ({
           <p>날짜</p>
           <p>{performance?.date && getDateTime(performance?.date as string)}</p>
           <p>금액</p>
-          <p>{performance?.price}원</p>
+          <p>₩{performance?.price.toLocaleString()}</p>
           <p>남은 좌석 수</p>
           <p>{performance?.leftSeat || performance?.totalSeat}석</p>
         </S.Summary>
@@ -142,6 +142,7 @@ const PerformanceInfo = ({
           <Button
             theme="primary"
             size="large"
+            disabled={!performance.totalSeat}
             onClick={() => {
               if (!isLoggedIn) {
                 navigate('/login');
@@ -154,7 +155,11 @@ const PerformanceInfo = ({
               }
             }}
           >
-            {isStale ? '후기 작성' : '예약하기'}
+            {isStale
+              ? '후기 작성'
+              : performance.totalSeat
+              ? '예약하기'
+              : '매진'}
           </Button>
         </S.BottomStickyContainer>
       )}

@@ -116,18 +116,10 @@ const PerformanceList = () => {
             })}
           </S.CategoryContainer>
           <S.PerformanceContainer>
-            {data?.data?.map(v => (
+            {data?.data?.map(performance => (
               <ConcertPreview
-                key={v.performanceId}
-                {...v}
-                date={v.date}
-                performanceId={v.performanceId}
-                posterImg={v.imageUrl}
-                artistName={v.performanceArtist.performanceArtistList[
-                  v.performanceId
-                ]?.toString()}
-                category={v.category}
-                categoryId={1}
+                key={performance.performanceId}
+                {...performance}
               />
             ))}
           </S.PerformanceContainer>
