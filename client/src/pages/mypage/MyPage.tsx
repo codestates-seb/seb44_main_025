@@ -20,14 +20,15 @@ import {
   useGetMemberReview,
 } from '../../api/useFetch';
 import { H1Title } from '../../theme/common/SlideUp';
+import { useEffect } from 'react';
 
 export default function Mypage() {
   const navigate = useNavigate();
-  const { memberId } = useParams();
+  // const { memberId } = useParams();
   const memberData = useGetMember();
-  const reservationData = useGetMemberPerformance(memberId);
-  const pastReservationData = useGetMemberPerformanced(memberId);
-  const reviewData = useGetMemberReview(memberId);
+  const reservationData = useGetMemberPerformance();
+  const pastReservationData = useGetMemberPerformanced();
+  const reviewData = useGetMemberReview();
 
   /** 로그아웃 및 main으로 페이지 이동 */
   const logoutHandler = () => {
@@ -37,6 +38,14 @@ export default function Mypage() {
     alert('[로그아웃 성공] 로그아웃 되었습니다');
     navigate('/');
   };
+
+  useEffect(() => {
+    if (!memberData) {
+      alert('권한 접근이 없습니다.');
+      navigate('/');
+      return;
+    }
+  }, []);
 
   return (
     <>

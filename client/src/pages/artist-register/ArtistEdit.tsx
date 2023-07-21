@@ -10,7 +10,7 @@ import { Input } from '../../components/inputs/Inputs';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { patchArtist, postArtistImg } from '../../api/fetchAPI';
+import { usePatchArtist, usePostArtistImg } from '../../api/fetchAPI';
 import axios from 'axios';
 import { artistnameRegExp } from '../../utils/RegExp';
 import { getCookie } from '../../utils/Cookie';
@@ -120,7 +120,7 @@ export default function Artistedit() {
       'artistpostDto'
     );
     // artistId를 값으로 보내줘야해서 쿠키에 저장되어 있는 artistId를 빼서 사용
-    patchArtist(getCookie('userInfo').artistId, data);
+    usePatchArtist(getCookie('userInfo').artistId, data);
     navigate(`/artist/${userInfo.artistId}`);
   };
 
@@ -182,7 +182,7 @@ export default function Artistedit() {
       let formData = new FormData();
       formData.append('image-file', artistImgFile as Blob);
       // 이미지를 서버에 보내는 함수에 전달 후 서버로 돌려받은 데이터를 setGetUrl에 저장
-      postArtistImg(formData).then((data: any) => {
+      usePostArtistImg(formData).then((data: any) => {
         alert('이미지가 저장 되었습니다');
         setGetUrl(data.data);
       });

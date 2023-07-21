@@ -9,7 +9,7 @@ import { useEditorStore } from '../../../components/inputs/editor/EditorStore';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import {
   patchPerformance,
-  postArtistImg as postImg,
+  usePostArtistImg as postImg,
 } from '../../../api/fetchAPI';
 import { categoryObj, categoryIdObj } from '../../../utils/Category';
 import { getCookie } from '../../../utils/Cookie';
@@ -25,8 +25,6 @@ interface FormValues {
   totalSeat: number;
 }
 
-const NOW = getTimezoneAdjustedISOString().slice(0, 16);
-
 const PerformanceEdit = ({
   setIsEditing,
   performance,
@@ -34,6 +32,7 @@ const PerformanceEdit = ({
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   performance: PerformanceType;
 }) => {
+  const NOW = getTimezoneAdjustedISOString().slice(0, 16);
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imagesrc, setImagesrc] = useState<string>(performance.imageUrl);
@@ -91,20 +90,12 @@ const PerformanceEdit = ({
       artistIds: [...artistIds],
       imageUrl: imgUrl,
     };
-    let formData = new FormData();
-    formData.append(
-      'performanceDto',
-      new Blob([JSON.stringify(result)], {
-        type: 'application/json',
-      }),
-      'performanceDto'
-    );
-    patchPerformance(performance.performanceId, formData)
+    patchPerformance(performance.performanceId, result)
       .then(data => {
         if (data.data.performanceId) {
-          clearContent();
           setIsEditing(false);
           // TODO: 요청 함수 리팩토링 뒤에 다른 방법 사용하기
+          alert('공연 정보가 수정되었습니다.');
           location.reload();
         }
       })

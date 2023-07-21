@@ -34,6 +34,7 @@ export const ButtonThemeStyle = {
       border: 1.5px solid var(--button-white-border-color);
       color: var(--button-white-border-color);
       transition: 0.2s;
+      transform: scale(1.1);
     }
   `,
   highlightBorder: css`
@@ -53,12 +54,13 @@ export const ButtonThemeStyle = {
   highlight: css`
     background-color: var(--button-highlight-background-color);
     color: var(--button-white-border-color);
-    border: none;
+    border: 1.5px solid transparent;
     transition: 0.2s;
     &:hover {
       background-color: rgba(229, 43, 103, 0.8);
       color: rgba(255, 255, 255, 0.9)
       transition: 0.2s;
+      transform: scale(1.1);
     }
     &:active {
       opacity: 0.8;

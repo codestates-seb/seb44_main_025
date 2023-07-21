@@ -6,12 +6,13 @@ import {
   ButtonMiniToggleSelect,
   ButtonMiniToggleUnselect,
 } from '../../components/buttons/Buttons';
+// import LogoImg from '../.././images/슬로건 흑색버전 아티스트등록.png';
 import { Input } from '../../components/inputs/Inputs';
 import { useState, useRef } from 'react';
 import Img from '../../images/기본이미지.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { postArtist, postArtistImg } from '../../api/fetchAPI';
+import { usePostArtist, usePostArtistImg } from '../../api/fetchAPI';
 import axios from 'axios';
 import { artistnameRegExp } from '../../utils/RegExp';
 import { getCookie } from '../../utils/Cookie';
@@ -88,7 +89,7 @@ export default function Artistregist() {
       'artistpostDto'
     );
     // 값을 fetch함수에 전달
-    postArtist(data);
+    usePostArtist(data);
     navigate(`/mypage/${userInfo.memberId}`);
   };
 
@@ -141,7 +142,7 @@ export default function Artistregist() {
     let formData = new FormData();
     if (artistImgFile) {
       formData.append('image-file', artistImgFile as Blob);
-      postArtistImg(formData).then((data: any) => {
+      usePostArtistImg(formData).then((data: any) => {
         alert('이미지가 저장 되었습니다');
         setGetUrl(data.data);
       });
@@ -159,7 +160,7 @@ export default function Artistregist() {
             <H1Title.H1span>아티스트 등록하기</H1Title.H1span>
           </S.Title>
           {/* <MainIcon /> */}
-          {/* <S.LogoImg src={LogoImg}></S.LogoImg> */}
+          {/* <S.LogoImg src={''}></S.LogoImg> */}
           <S.FileInput
             type="file"
             accept="image/*"

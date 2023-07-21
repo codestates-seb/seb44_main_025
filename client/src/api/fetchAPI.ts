@@ -9,12 +9,12 @@ interface BodyType {
 }
 
 // Performance - POST, PATCH, DELETE
-export const postPerformance = async (body: FormData) => {
+export const postPerformance = async (body: BodyType) => {
   // Promise 상태로 돌려주기
   return axios
     .post(`${SERVER_HOST}/performance`, body, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
       },
     })
     .then(data => data.data)
@@ -23,14 +23,18 @@ export const postPerformance = async (body: FormData) => {
 
 export const patchPerformance = async (
   performanceId: string | number,
-  body: FormData
+  body: BodyType
 ) => {
   return await axios
-    .patch(`${SERVER_HOST}/performance/${performanceId}`, body, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
+    .patch(
+      `${SERVER_HOST}/performance/${performanceId}`,
+      JSON.stringify(body),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
     .then(data => data.data)
     .catch(err => console.error(err));
 };
@@ -40,7 +44,14 @@ export const deletePerformance = async (performanceId: string | number) => {
     .delete(`${SERVER_HOST}/performance/${performanceId}`, {
       headers: { Authorization: getCookie('accessToken') },
     })
-    .then(data => data.data)
+    .then(response => {
+      if (response.status === 204) {
+        alert('공연이 삭제되었습니다.');
+        return true;
+      } else {
+        return false;
+      }
+    })
     .catch(err => console.error(err));
 };
 
@@ -91,7 +102,7 @@ export const deleteReservation = async (
   return data;
 };
 
-export const postArtist = async (body: BodyType) => {
+export const usePostArtist = async (body: BodyType) => {
   const data = await axios
     .post(`${SERVER_HOST}/artist`, JSON.stringify(body), {
       headers: {
@@ -108,7 +119,7 @@ export const postArtist = async (body: BodyType) => {
 };
 
 /** 아티스트 정보를 수정하는 함수, artistId에 맞게 요청할 수 있도록 id와 수정값을 입력 받음 */
-export const patchArtist = async (
+export const usePatchArtist = async (
   id: string | number | undefined,
   body: BodyType
 ) => {
@@ -127,7 +138,7 @@ export const patchArtist = async (
   return data;
 };
 
-export const postArtistImg = async (body: BodyType) => {
+export const usePostArtistImg = async (body: BodyType) => {
   const data = await axios
     .post(`${SERVER_HOST}/image`, body, {
       headers: {

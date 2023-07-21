@@ -35,6 +35,11 @@ export default {
     justify-content: flex-start;
     align-items: center;
     padding-bottom: 70px;
+    & h1 {
+      margin-right: auto;
+      margin-left: 15px;
+      margin-top: 20px;
+    }
   `,
   CategoryContainer: styled.div`
     margin-top: 20px;
