@@ -1,17 +1,11 @@
 package com.codestates.reservation.mapper;
 
-import com.codestates.member.Member;
-import com.codestates.payment.entity.Payment;
 import com.codestates.performance.entity.Performance;
 import com.codestates.reservation.dto.ReservationDto;
 import com.codestates.reservation.entity.Reservation;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Component
 @Getter

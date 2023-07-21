@@ -58,10 +58,20 @@ public class ReviewController {
         reviewService.deleteReview(reviewId, authentication);
         return ResponseEntity.noContent().build();
     }
-    //내가 작성한 모든 리뷰 불러오기
+
     @GetMapping("/mypage")
     public ResponseEntity<List<ReviewDto.ReviewResponse>> getMyReviews(Authentication authentication) {
         List<ReviewDto.ReviewResponse> responseDtoList = reviewService.getMyReviews(authentication); // 내가 작성한 리뷰 정보를 조회하는 서비스 메서드 호출
+
+        if (responseDtoList.isEmpty()) {
+            return ResponseEntity.ok(Collections.emptyList()); // 빈 배열을 응답으로
+        } else{
+            return ResponseEntity.ok(responseDtoList); // 리뷰 목록을 응답으로
+        }
+    }
+    @GetMapping("/artistPage/{artistId}")
+    public ResponseEntity<List<ReviewDto.ReviewResponse>> getArtistReviews(long artistId) {
+        List<ReviewDto.ReviewResponse> responseDtoList = reviewService.getArtistAllReviews(artistId); // 내가 작성한 리뷰 정보를 조회하는 서비스 메서드 호출
 
         if (responseDtoList.isEmpty()) {
             return ResponseEntity.ok(Collections.emptyList()); // 빈 배열을 응답으로
