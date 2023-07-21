@@ -8,15 +8,15 @@ interface UserInfo {
 }
 
 type Store = {
-  userInfo2?: UserInfo;
+  userInfo_zustand?: UserInfo;
   setUserInfo: (state: UserInfo) => void;
 };
 
 export const useUserInfo = create(
   persist<Store>(
     set => ({
-      userInfo2: undefined,
-      setUserInfo: state => set({ userInfo2: state }),
+      userInfo_zustand: undefined,
+      setUserInfo: state => set({ userInfo_zustand: state }),
     }),
     {
       name: 'userInfo',

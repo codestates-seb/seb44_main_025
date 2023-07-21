@@ -16,6 +16,14 @@ export const DeviceSize: DeviceProps = {
   desktop: 1024,
 };
 
+/** 사용예시
+ * import { DeviceQuery } from '../../utils/Media';
+ * import { screenScale } from '../../utils/MediaSize';
+ *  ${DeviceQuery.tablet`
+      min-height: calc(100vh - (60px * ${screenScale.tablet}));
+      width: calc(390px * ${screenScale.tablet})
+    `}
+ */
 export const DeviceQuery = Object.keys(DeviceSize).reduce((acc, label) => {
   acc[label] = (literals: TemplateStringsArray, ...placeholders: any[]) =>
     css`

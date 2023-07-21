@@ -2,7 +2,6 @@ import { Styled_Sign } from './Sign.styled';
 import Header from '../../components/header/Header';
 import { ButtonPrimary160px } from '../../components/buttons/Buttons';
 import { useRef, useState } from 'react';
-import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import PageMovement from '../../components/sign/PageMovement';
 import { ErrorMessage } from '@hookform/error-message';
@@ -12,16 +11,14 @@ import {
   nicknameRegExp,
 } from '../../utils/RegExp';
 import { useNavigate } from 'react-router-dom';
+import { SignUp } from '../../model/Member';
 import { H1Title } from '../../theme/common/SlideUp';
-
-const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
-
-interface IForm {
-  email: string;
-  password: string;
-  password_confirm: string;
-  nickname: string;
-}
+import GoogleButton from '../../components/buttons/GoogleButton';
+import {
+  useGetDuplicateEmail,
+  useGetDuplicateNickname,
+} from '../../api/duplication';
+import { usePostSignUp } from '../../api/sign';
 
 const SignUpPage = () => {
   /** 중복여부
@@ -55,7 +52,7 @@ const SignUpPage = () => {
     watch,
     formState: { errors },
     handleSubmit,
-  } = useForm<IForm>({
+  } = useForm<SignUp>({
     criteriaMode: 'all',
   });
 
@@ -69,17 +66,26 @@ const SignUpPage = () => {
   const input_nickname = useRef<string | null>(null);
   input_nickname.current = watch('nickname');
 
-  /** 아이디와 닉네임의 중복검사 여부를 확인 후 ajax함수를 실행시키는 함수
+  /** submit 클릭시 아이디와 닉네임의 중복검사 여부를 확인하는 함수
    * 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는다
    */
-  const onSubmit: SubmitHandler<IForm> = data => {
+  const onSubmit: SubmitHandler<SignUp> = data => {
     setSubmitClicked(true);
     if (
       !isSubmitClickedWithoutEmailCheck &&
       !isSubmitClickedWithoutNicknameCheck
     ) {
       if (!emailDupl && !nicknameDupl) {
-        usePostSignUp(data);
+        /** 회원정보를 서버로 전송하는 함수 */
+        usePostSignUp(
+          data,
+          '[회원가입 성공] 로그인 페이지로 이동합니다',
+          '/member'
+        ).then(data => {
+          if (data !== 'error') {
+            navigate('/');
+          }
+        });
       } else {
         if (emailDupl) {
           if (emailDuplBtnCnt > 0) {
@@ -95,27 +101,9 @@ const SignUpPage = () => {
     }
   };
 
-  /** 회원정보를 서버로 전송하는 ajax 함수 */
-  const usePostSignUp = (data: IForm) => {
-    axios
-      .post(`${SERVER_HOST}/member`, data, {
-        headers: { 'Content-Type': 'application/json' },
-      })
-      .then(response => {
-        if (response.status === 200) {
-          alert('[회원가입 성공] 로그인 페이지로 이동합니다');
-          navigate('/login');
-        }
-      })
-      .catch(error => {
-        alert(`error: ${error}`);
-      });
-  };
-
-  /** 이메일 중복검사하는 ajax 함수 */
-  const useGetDuplicateEmail = (emailData: string | null) => {
-    axios
-      .post(`${SERVER_HOST}/member/duplicate/email`, { email: emailData })
+  /** 이메일 중복검사하는 함수 */
+  const handleEmailDuplCheck = (emailData: string | null) => {
+    useGetDuplicateEmail(emailData)
       .then(response => {
         if (response.status === 200) {
           // 사용 가능한 이메일일 경우
@@ -137,12 +125,9 @@ const SignUpPage = () => {
       });
   };
 
-  /** 닉네임 중복검사하는 ajax 함수 */
-  const useGetDuplicateNickname = (nicknameData: string | null) => {
-    axios
-      .post(`${SERVER_HOST}/member/duplicate/nickname`, {
-        nickname: nicknameData,
-      })
+  /** 닉네임 중복검사하는 함수 */
+  const handleNicknameDuplCheck = (nicknameData: string | null) => {
+    useGetDuplicateNickname(nicknameData)
       .then(response => {
         if (response.status === 200) {
           // 사용 가능한 이메일일 경우
@@ -171,11 +156,11 @@ const SignUpPage = () => {
   ): void => {
     // 이메일 중복확인 클릭시
     if (typeof email === 'string' && nickname === '') {
-      useGetDuplicateEmail(email);
+      handleEmailDuplCheck(email);
     }
     // 닉네임 중복확인 클릭시
     if (email === '' && typeof nickname === 'string') {
-      useGetDuplicateNickname(nickname);
+      handleNicknameDuplCheck(nickname);
     }
   };
 
@@ -319,6 +304,7 @@ const SignUpPage = () => {
             linkedText="로그인"
             marginTop={50}
           />
+          <GoogleButton naviUrl="/googlesignup" title="회원가입" />
         </Styled_Sign.Container>
       </Styled_Sign.Main>
     </>

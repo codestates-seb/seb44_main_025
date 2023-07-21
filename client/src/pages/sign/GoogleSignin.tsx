@@ -3,29 +3,25 @@ import Header from '../../components/header/Header';
 import { ButtonPrimary160px } from '../../components/buttons/Buttons';
 import PageMovement from '../../components/sign/PageMovement';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { emailRegExp } from '../../utils/RegExp';
-import { useNavigate } from 'react-router-dom';
-import { H1Title } from '../../theme/common/SlideUp';
-import { useUserInfo } from '../../zustand/userInfo.stores';
-import GoogleButton from '../../components/buttons/GoogleButton';
+import { gmailRegExp } from '../../utils/RegExp';
+import { SignIn } from '../../model/Member';
 import { usePostSignIn } from '../../api/sign';
+import { H1Title } from '../../theme/common/SlideUp';
+import { useNavigate } from 'react-router-dom';
+import GoogleButton from '../../components/buttons/GoogleButton';
+import { useUserInfo } from '../../zustand/userInfo.stores';
 
-interface IForm {
-  email: string;
-  password: string;
-}
-
-const SignInPage = () => {
-  const navigate = useNavigate();
-  const { setUserInfo } = useUserInfo();
+const GoogleSignin = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IForm>();
+  } = useForm<SignIn>();
+  const navigate = useNavigate();
+  const { setUserInfo } = useUserInfo();
 
   /** 입력한 값들을 react-hook-form의 SubmitHandler를 통해 객체(data)로 받는 함수 */
-  const onSubmit: SubmitHandler<IForm> = data => {
+  const onSubmit: SubmitHandler<SignIn> = data => {
     usePostSignIn(data, '/login').then(data => {
       if (data !== 'error') {
         navigate('/');
@@ -46,7 +42,7 @@ const SignInPage = () => {
         <Styled_Sign.Container>
           <Styled_Sign.H1 marginBottom={80}>
             <H1Title.H1>
-              <H1Title.H1span>Ez to 로그인</H1Title.H1span>
+              <H1Title.H1span>Google로 로그인</H1Title.H1span>
             </H1Title.H1>
           </Styled_Sign.H1>
           <Styled_Sign.Form onSubmit={handleSubmit(onSubmit)}>
@@ -58,13 +54,13 @@ const SignInPage = () => {
                     width={360}
                     {...register('email', {
                       required: true,
-                      pattern: emailRegExp,
+                      pattern: gmailRegExp,
                     })}
                   />
                 </div>
-                {errors?.email ? (
+                {errors.email ? (
                   <div>
-                    <p>이메일 형식에 맞게 입력해주세요</p>
+                    <p>@gmail.com으로 끝나야 합니다</p>
                   </div>
                 ) : null}
               </div>
@@ -76,16 +72,14 @@ const SignInPage = () => {
                     required: true,
                   })}
                 />
-                {errors?.password ? (
+                {errors.password ? (
                   <div>
                     <p>반드시 입력해야 합니다</p>
                   </div>
                 ) : null}
               </div>
             </div>
-            <ButtonPrimary160px style={{ marginTop: '20px' }}>
-              로그인하기
-            </ButtonPrimary160px>
+            <ButtonPrimary160px>로그인하기</ButtonPrimary160px>
           </Styled_Sign.Form>
           <PageMovement
             infoText="아직 계정이 없으신가요?"
@@ -93,7 +87,6 @@ const SignInPage = () => {
             linkedText="회원가입"
             marginTop={50}
           />
-          <GoogleButton naviUrl="/googlelogin" title="로그인" />
           <GoogleButton naviUrl="/googlesignup" title="회원가입" />
         </Styled_Sign.Container>
       </Styled_Sign.Main>
@@ -101,4 +94,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default GoogleSignin;

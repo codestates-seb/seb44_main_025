@@ -19,6 +19,8 @@ import ArtistList from './pages/artist-list/ArtistList';
 import Home from './pages/home/Home';
 import ReviewRegister from './pages/review-register/ReviewRegister';
 import Artistedit from './pages/artist-register/ArtistEdit';
+import GoogleSignUp from './pages/sign/GoogleSignUp';
+import GoogleSignin from './pages/sign/GoogleSignin';
 import { Performance } from './pages/performance/Performance';
 import ReviewInfo from './pages/review-info/ReviewInfo';
 
@@ -85,6 +87,14 @@ const router = createBrowserRouter([
       {
         path: '/performances/:performanceId/review',
         element: <ReviewRegister />,
+      },
+      {
+        path: '/googlelogin',
+        element: <GoogleSignin />,
+      },
+      {
+        path: '/googlesignup',
+        element: <GoogleSignUp />,
       },
       {
         path: '/review/:reviewId',

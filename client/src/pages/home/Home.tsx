@@ -11,7 +11,6 @@ import { useHomePage } from '../../zustand/homepage.stores';
 import axios from 'axios';
 import Navbar from '../../components/nav/Navbar';
 import { getCookie } from '../../utils/Cookie';
-import { useGetMember } from '../../api/useFetch';
 
 const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
 
@@ -19,7 +18,6 @@ const Home = () => {
   const { setCarouselList, setArtistList } = useHomePage();
   const userInfo = getCookie('userInfo');
   const accessToken = getCookie('accessToken');
-  useGetMember();
 
   useEffect(() => {
     const getCarouselData = async () => {
@@ -47,7 +45,6 @@ const Home = () => {
       <Header />
       <Styled_Home.Main>
         <Styled_Home.Container>
-          <Slogan />
           <CarouselLogic />
           <Styled_Home.MiddlePart>
             <Input height={30} placeholder="검색..." suffix={true} />
@@ -103,6 +100,7 @@ const Home = () => {
               </div>
             </Styled_Home.AllBtnsDiv>
           </Styled_Home.MiddlePart>
+          <Slogan />
           <Artistmain />
         </Styled_Home.Container>
       </Styled_Home.Main>
