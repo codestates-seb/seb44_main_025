@@ -3,6 +3,7 @@ package com.codestates.reservation.controller;
 import com.codestates.artist.dto.ArtistResponseDto;
 import com.codestates.global.exception.BusinessLogicException;
 import com.codestates.member.MemberService;
+import com.codestates.performance.entity.Performance;
 import com.codestates.reservation.dto.ReservationDto;
 import com.codestates.reservation.entity.Reservation;
 import com.codestates.reservation.service.ReservationService;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.nio.file.AccessDeniedException;
 import java.util.List;
@@ -54,16 +56,17 @@ public class ReservationController {
         }
         return ResponseEntity.ok(responseDto);
     }
-    //자신의 예약 목록 출력
+    //자신의 예약 목록 출력(공연 진행 중)
     @GetMapping("/mypage")
-    public ResponseEntity getMyReservations(Authentication authentication){
+    public ResponseEntity getMyReservations(@RequestParam(value="performanceStatus", required = false) String performanceStatus, Authentication authentication){
         Map<String, Object> principal = (Map) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
 
-        List<ReservationDto.ReservationResponseDto> reservations = reservationService.getMyReservations(memberId);
+        List<ReservationDto.ReservationResponseDto> reservations = reservationService.getMyReservations(memberId, Performance.PERFORMANCE_STATUS.of(performanceStatus));
 
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
+
 
     // 예약 삭제
     @DeleteMapping("/{reservationId}")

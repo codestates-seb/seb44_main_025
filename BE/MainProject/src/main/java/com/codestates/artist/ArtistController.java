@@ -94,6 +94,16 @@ public class ArtistController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @GetMapping
+    public ResponseEntity getArtists(){
+        List<Artist> findArtists = artistService.findArtists();
+
+        List<ArtistResponseDto> response =
+                findArtists.stream()
+                        .map(artist -> artistMapper.artistToArtistResponseDto(artist))
+                        .collect(Collectors.toList());
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
 
 
     //카테고리별 아티스트 리스트 출력

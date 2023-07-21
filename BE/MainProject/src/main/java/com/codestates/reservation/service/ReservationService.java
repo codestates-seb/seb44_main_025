@@ -97,14 +97,21 @@ public class ReservationService {
         return reservationMapper.reservationToReservationResponseDto(reservation);
     }
     //회원의 모든 예약정보 불러오기
-    public List<ReservationDto.ReservationResponseDto> getMyReservations(long memberId){
+    public List<ReservationDto.ReservationResponseDto> getMyReservations(long memberId, Performance.PERFORMANCE_STATUS status){
         Member member = memberService.findMember(memberId);
         List<Reservation> reservations = reservationRepository.findByMember(member);
         List<Reservation> findReservations = new ArrayList<>();
 
-        for(int i =0;i<reservations.size();i++){
-            if(LocalDateTime.now().isBefore(reservations.get(i).getPerformance().getDate())){
-                findReservations.add(reservations.get(i));
+        //공연이 진행중일때
+        for(int i =0;i<reservations.size();i++) {
+            if (status.isCompleted() == 'f') {
+                if (LocalDateTime.now().isBefore(reservations.get(i).getPerformance().getDate())) {
+                    findReservations.add(reservations.get(i));
+                }
+            } else if (status.isCompleted() == 't') {
+                if (LocalDateTime.now().isAfter(reservations.get(i).getPerformance().getDate())) {
+                    findReservations.add(reservations.get(i));
+                }
             }
         }
         List<ReservationDto.ReservationResponseDto> response =
