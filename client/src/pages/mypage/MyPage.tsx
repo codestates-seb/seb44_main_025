@@ -92,20 +92,16 @@ export default function Mypage() {
           {reservationData ? (
             reservationData.map(reservationData => {
               return (
-                <div
+                <Concertpreview
                   key={reservationData.performanceId}
-                  onClick={e => e.stopPropagation}
-                >
-                  <Concertpreview
-                    performanceId={reservationData.performanceId}
-                    posterImg={reservationData.imageUrl}
-                    title={reservationData.title}
-                    artistName={reservationData.artistName}
-                    category={reservationData.category}
-                    price={reservationData.price}
-                    date={reservationData.date}
-                  />
-                </div>
+                  performanceId={reservationData.performanceId}
+                  posterImg={reservationData.imageUrl}
+                  title={reservationData.title}
+                  artistName={reservationData.artistName}
+                  category={reservationData.category}
+                  price={reservationData.price}
+                  date={reservationData.date}
+                />
               );
             })
           ) : (
