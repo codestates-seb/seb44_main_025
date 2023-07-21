@@ -1,7 +1,7 @@
 import S from './Ticket.style';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useGetMemberPerformance } from '../../api/useFetch';
-import { ButtonWithArrowLight } from '../buttons/Buttons';
+import { ButtonWithArrow } from '../buttons/Buttons';
 import Img from '../.././images/예약한 공연이 없을때.jpeg';
 
 interface Props {
@@ -9,11 +9,10 @@ interface Props {
 }
 
 export default function TicketModal({ onClick }: Props) {
-  // const { memberId } = useParams();
   const reservationData = useGetMemberPerformance();
   return (
     <>
-      {reservationData ? (
+      {reservationData?.length ? (
         reservationData.map(reservationData => (
           <S.ModalOverlay key={reservationData.performanceId} onClick={onClick}>
             <S.TicketModal>
@@ -37,7 +36,11 @@ export default function TicketModal({ onClick }: Props) {
             {/* </S.NoTicketcontainer> */}
             <S.TicketDetail>
               <Link to="/performances">
-                <ButtonWithArrowLight text={'공연예약'}></ButtonWithArrowLight>
+                <ButtonWithArrow
+                  theme="white"
+                  text={'공연예약'}
+                  onClick={onClick}
+                ></ButtonWithArrow>
               </Link>
             </S.TicketDetail>
           </S.TicketModal>

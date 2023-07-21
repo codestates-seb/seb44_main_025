@@ -17,7 +17,7 @@ export default {
   TicketModal: styled.div`
     width: 300px;
     height: 500px;
-    background-color: var(--font-mid-color);
+    background-color: rgb(15, 15, 15);
     transform: translate(-50%, -50%);
     position: absolute;
     top: 50%;
