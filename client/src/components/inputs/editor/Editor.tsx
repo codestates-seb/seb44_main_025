@@ -2,7 +2,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
 import { useEditorStore } from './EditorStore';
-import { EditorGlobalStyle } from './Editor.style';
+import { EditorGlobalStyle, EditorReadonlyGlobalStyle } from './Editor.style';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { postArtistImg as postImg } from '../../../api/fetchAPI';
 
@@ -105,7 +105,7 @@ export const Editor = ({ defaultValue }: { defaultValue?: string }) => {
 export const EditorReadOnly = ({ content }: { content?: string }) => {
   return (
     <>
-      <EditorGlobalStyle />
+      <EditorReadonlyGlobalStyle />
       <ReactQuill readOnly={true} theme="bubble" value={content} />
     </>
   );
