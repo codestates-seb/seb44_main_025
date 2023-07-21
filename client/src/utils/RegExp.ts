@@ -14,3 +14,6 @@ export const nicknameRegExp = /^[a-zA-Z0-9ㄱ-힣][a-zA-Z0-9ㄱ-힣]*$/;
 /** @artistname :1 ~ 16자 한글, 영문, 숫자 가능, 띄어쓰기 불가*/
 export const artistnameRegExp =
   /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{1,16}$/;
+
+/** @gmail :구글 이메일 */
+export const gmailRegExp = /^[A-Za-z0-9]+@gmail.com$/;

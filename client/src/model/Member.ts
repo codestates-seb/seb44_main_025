@@ -27,3 +27,16 @@ export interface Review {
   createdAt: string;
   memberId?: number;
 }
+
+export interface SignUp {
+  email: string;
+  password: string;
+  password_confirm?: string;
+  nickname: string;
+}
+
+export interface SignIn {
+  email: string;
+  password: string;
+  nickname?: string;
+}
