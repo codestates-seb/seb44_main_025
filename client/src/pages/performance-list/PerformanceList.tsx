@@ -39,12 +39,12 @@ const PerformanceList = () => {
             <H1Title.H1>
               <H1Title.H1span>공연정보</H1Title.H1span>
             </H1Title.H1>
-            {/* TODO: 지도와 연계하기 */}
+            {/* TODO: 지도와 연계하기 
             <MapIcon
               onClick={() =>
                 console.log('리스트에 있는 공연들을 지도에 보여주기')
               }
-            />
+            />*/}
           </S.TitleButtonFlex>
           <S.CategoryContainer>
             <S.Tab>
