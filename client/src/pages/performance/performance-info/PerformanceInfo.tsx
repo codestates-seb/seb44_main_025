@@ -151,7 +151,7 @@ const PerformanceInfo = ({
                 navigate('/login');
                 return;
               }
-              if (!isStale) {
+              if (isStale) {
                 setIsReviewModalOpen(true);
               } else {
                 setIsTicketModalOpen(true);
