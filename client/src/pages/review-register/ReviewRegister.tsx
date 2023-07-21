@@ -20,7 +20,7 @@ interface FormValues {
   artists: string[] | number[];
 }
 
-const ReviewRegister = () => {
+const ReviewRegister = ({ defaultTitle = '' }) => {
   const { content } = useEditorStore();
   const navigate = useNavigate();
   const { performanceId } = useParams();
@@ -29,15 +29,15 @@ const ReviewRegister = () => {
   const onSubmit: SubmitHandler<FormValues> = data => {
     if (performanceId) {
       const body = { ...data, content, performanceId: +performanceId };
-      postReview(performanceId, body)
-        .then(data => {
-          if (data) {
-            navigate(`/performances/${performanceId}`);
-            alert('후기가 등록되었습니다.');
-          }
-          return;
-        })
-        .catch(err => console.error(err));
+      postReview(performanceId, body).then(data => {
+        if (data) {
+          navigate(`/performances/${performanceId}`);
+          alert('후기가 등록되었습니다.');
+        } else {
+          alert('후기 등록에 실패하였습니다.');
+        }
+        return;
+      });
     }
   };
   const handleSubmitAll = () => {
@@ -51,7 +51,7 @@ const ReviewRegister = () => {
       <S.Container>
         <S.Main>
           <H1Title.H1>
-            <H1Title.H1span>공연등록</H1Title.H1span>
+            <H1Title.H1span>후기</H1Title.H1span>
           </H1Title.H1>
           {/* <S.Poster src={performance?.imageUrl} /> */}
           <S.Summary>
@@ -69,7 +69,7 @@ const ReviewRegister = () => {
             <Controller
               control={control}
               name={'reviewTitle'}
-              defaultValue={''}
+              defaultValue={defaultTitle}
               rules={{
                 required: '반드시 입력해야 합니다',
               }}
