@@ -56,13 +56,29 @@ const Slogan = () => {
         <Styled_Slogan.Img src="./images/600bb2ac964c4a46.png" />
         <Styled_Slogan.Img src="./images/2b3fad00c203b730.png" /> */}
 
-        <a href="/performances/register">
+        <a
+          href={
+            userInfo2?.hasArtist === true
+              ? '/performances/register'
+              : userInfo2?.hasArtist === false
+              ? '/artistregist'
+              : '/login'
+          }
+        >
           <Styled_Slogan.Img src="./images/dd28119305b114d0.png" />
         </a>
-        <a href="/artistregist">
+        <a href={userInfo2?.hasArtist === false ? '/artistregist' : '/login'}>
           <Styled_Slogan.Img src="./images/7955f4c5e4d540fb.png" />
         </a>
-        <a href="/performances/register">
+        <a
+          href={
+            userInfo2?.hasArtist === true
+              ? '/performances/register'
+              : userInfo2?.hasArtist === false
+              ? '/artistregist'
+              : '/login'
+          }
+        >
           <Styled_Slogan.Img src="./images/dd28119305b114d0.png" />
         </a>
       </Styled_Slogan.ImgGroup>
