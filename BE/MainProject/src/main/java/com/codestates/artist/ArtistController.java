@@ -94,8 +94,8 @@ public class ArtistController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @GetMapping
-    public ResponseEntity getArtists(){
+    @GetMapping("/all")
+    public ResponseEntity getAllArtist(){
         List<Artist> findArtists = artistService.findArtists();
 
         List<ArtistResponseDto> response =
@@ -108,7 +108,7 @@ public class ArtistController {
 
     //카테고리별 아티스트 리스트 출력
     @GetMapping
-    public ResponseEntity getArtists(@Positive @RequestParam long category,
+    public ResponseEntity getCategoryArtists(@Positive @RequestParam long category,
                                            @Positive @RequestParam int page,
                                            @Positive @RequestParam int size){
         Category findcategory = categoryService.findVerifiedCategory(category);

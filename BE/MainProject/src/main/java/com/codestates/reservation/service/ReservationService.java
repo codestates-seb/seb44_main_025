@@ -100,24 +100,29 @@ public class ReservationService {
     public List<ReservationDto.ReservationResponseDto> getMyReservations(long memberId, Performance.PERFORMANCE_STATUS status){
         Member member = memberService.findMember(memberId);
         List<Reservation> reservations = reservationRepository.findByMember(member);
+
         List<Reservation> findReservations = new ArrayList<>();
+        System.out.println(reservations);
 
         //공연이 진행중일때
         for(int i =0;i<reservations.size();i++) {
-            if (status.isCompleted() == 'f') {
-                if (LocalDateTime.now().isBefore(reservations.get(i).getPerformance().getDate())) {
+            //공연이 진행중일때
+            if (status.isCompleted() == 'f'&&LocalDateTime.now().isAfter(reservations.get(i).getPerformance().getDate())) {
+
                     findReservations.add(reservations.get(i));
-                }
-            } else if (status.isCompleted() == 't') {
-                if (LocalDateTime.now().isAfter(reservations.get(i).getPerformance().getDate())) {
+
+            } else if (status.isCompleted() == 't'&&LocalDateTime.now().isBefore(reservations.get(i).getPerformance().getDate())) {
+
                     findReservations.add(reservations.get(i));
-                }
+
             }
         }
         List<ReservationDto.ReservationResponseDto> response =
-                reservations.stream()
+                findReservations.stream()
                         .map(reservation-> reservationMapper.reservationToReservationResponseDto(reservation))
                         .collect(Collectors.toList());
+        if(response.size()==0)
+        new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND);
         return response;
     }
 
