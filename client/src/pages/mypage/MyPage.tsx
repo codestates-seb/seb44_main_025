@@ -39,13 +39,13 @@ export default function Mypage() {
     navigate('/');
   };
 
-  useEffect(() => {
-    if (!memberData) {
-      alert('권한 접근이 없습니다.');
-      navigate('/');
-      return;
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!getCookie('userInfo').memberId) {
+  //     alert('권한 접근이 없습니다.');
+  //     navigate('/');
+  //     return;
+  //   }
+  // }, []);
 
   return (
     <>

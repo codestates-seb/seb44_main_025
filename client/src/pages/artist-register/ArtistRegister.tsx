@@ -91,6 +91,7 @@ export default function Artistregist() {
     // 값을 fetch함수에 전달
     usePostArtist(data);
     navigate(`/mypage/${userInfo.memberId}`);
+    location.reload();
   };
 
   /** 닉네임 중복검사하는 ajax 함수 */
@@ -160,7 +161,7 @@ export default function Artistregist() {
             <H1Title.H1span>아티스트 등록하기</H1Title.H1span>
           </S.Title>
           {/* <MainIcon /> */}
-          {/* <S.LogoImg src={''}></S.LogoImg> */}
+          <S.LogoImg src={''}></S.LogoImg>
           <S.FileInput
             type="file"
             accept="image/*"
@@ -195,10 +196,10 @@ export default function Artistregist() {
 
             <S.CategoryContainer>
               {Object.keys(categoryObj).map((key, idx) => {
-                return idx === categoryId ? (
+                return idx + 1 === categoryId ? (
                   <ButtonMiniToggleSelect
                     key={idx}
-                    value={idx}
+                    value={idx + 1}
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                       const value = +(e.target as HTMLInputElement).value;
                       handleClickCategory(value);
@@ -209,7 +210,7 @@ export default function Artistregist() {
                 ) : (
                   <ButtonMiniToggleUnselect
                     key={idx}
-                    value={idx}
+                    value={idx + 1}
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                       const value = +(e.target as HTMLInputElement).value;
                       handleClickCategory(value);

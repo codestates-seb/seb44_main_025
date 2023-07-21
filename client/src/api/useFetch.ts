@@ -204,7 +204,6 @@ export const useGetMember = () => {
           }),
           { path: '/' }
         );
-        location.reload();
       })
       .catch(err => console.log(err));
   };
