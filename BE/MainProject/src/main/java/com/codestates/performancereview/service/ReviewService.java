@@ -24,10 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ReviewService {
@@ -59,7 +56,7 @@ public class ReviewService {
         long memberId = ((Number) principal.get("memberId")).longValue();
         return memberId;
     }
-
+    //회원이 작성한 전체 리뷰 조회
     public List<ReviewDto.ReviewResponse> getMyReviews(Authentication authentication) {
         // 현재 사용자의 ID를 가져와서 해당 사용자가 작성한 리뷰 정보를 조회
         long memberId = getCurrentUserId(authentication); // 사용자 ID 가져오는 로직
@@ -153,5 +150,11 @@ public class ReviewService {
             new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);}
 
         reviewRepository.delete(review);
+    }
+    public Review findReview(long reviewId){
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.REVIEW_NOT_FOUND));
+
+        return review;
     }
 }

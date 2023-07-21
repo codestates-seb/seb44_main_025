@@ -2,6 +2,7 @@ package com.codestates.performancereview.controller;
 
 import com.codestates.image.ImageUploadService;
 import com.codestates.performancereview.dto.ReviewDto;
+import com.codestates.performancereview.entity.Review;
 import com.codestates.performancereview.mapper.ReviewMapperImpl;
 import com.codestates.performancereview.service.ReviewService;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +58,12 @@ public class ReviewController {
         reviewService.deleteReview(reviewId, authentication);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("{reviewId}")
+    public ResponseEntity deleteReview(@PathVariable("reviewId") long reviewId){
+        Review review = reviewService.findReview(reviewId);
+        return new ResponseEntity<>(reviewMapperImpl.toResponseDto(review), HttpStatus.OK);
+    }
+
 
     @GetMapping("/mypage")
     public ResponseEntity<List<ReviewDto.ReviewResponse>> getMyReviews(Authentication authentication) {
