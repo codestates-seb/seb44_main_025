@@ -74,6 +74,7 @@ public class ReviewService {
             return reviewMapperImpl.toResponseDtoList(reviews);
         }
     }
+    //아티스트의 전체리뷰 조회
     public List<ReviewDto.ReviewResponse> getArtistAllReviews(long artistId) {
         // 현재 아티스트의 ID를 가져와서 해당 아티스트의 공연에 작성된 리뷰 정보를 조회
         // 해당 아티스트가 공연완료된 공연들을 조회해서 담아옴

@@ -40,7 +40,6 @@ public class ReviewController {
 
         ReviewDto.ReviewResponse responseDto = reviewService.createReview(reviewPost, authentication);
         return ResponseEntity.ok(responseDto);
-
     }
 
     @PatchMapping("/{performanceId}/{reviewId}")
@@ -69,6 +68,7 @@ public class ReviewController {
             return ResponseEntity.ok(responseDtoList); // 리뷰 목록을 응답으로
         }
     }
+    //아티스트의 전체리뷰 조회
     @GetMapping("/artistPage/{artistId}")
     public ResponseEntity<List<ReviewDto.ReviewResponse>> getArtistReviews(long artistId) {
         List<ReviewDto.ReviewResponse> responseDtoList = reviewService.getArtistAllReviews(artistId); // 내가 작성한 리뷰 정보를 조회하는 서비스 메서드 호출

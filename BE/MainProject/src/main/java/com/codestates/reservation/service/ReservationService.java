@@ -60,6 +60,7 @@ public class ReservationService {
 
         reservation.setPrice(performance.getPrice()); // 공연에 등록된 가격 정보 가져오기
         reservation.setDate(performance.getDate());
+        reservation.setSeatValue(reservationRequestDto.getSeatValue());
 
         int seatValue = reservationRequestDto.getSeatValue(); // 예약한 좌석 수
         int totalSeats = performance.getTotalSeat(); // 퍼포먼스 객체의 총 남은 토탈 좌석 수

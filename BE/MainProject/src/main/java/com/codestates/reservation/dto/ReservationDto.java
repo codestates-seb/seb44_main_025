@@ -26,6 +26,7 @@ public class ReservationDto {
         private long paymentId;
         private LocalDateTime date;
         private Reservation.ReservationStatus reservationStatus;
+        private long seatValue;
         private int price;
     }
     @Getter

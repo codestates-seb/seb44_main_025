@@ -33,7 +33,6 @@ public class ArtistController {
     private final ArtistMapper artistMapper;
     private final CategoryService categoryService;
     private final MemberService memberService;
-
     private final ArtistDtoToArtist artistDtoToArtist;
 
     public ArtistController(ArtistRepository artistRepository,

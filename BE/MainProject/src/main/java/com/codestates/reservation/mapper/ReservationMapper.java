@@ -19,6 +19,7 @@ public class ReservationMapper {
                 0,
                 reservation.getDate(),
                 reservation.getReservationStatus(),
+                reservation.getSeatValue(),
                 reservation.getPrice());
     }
 
