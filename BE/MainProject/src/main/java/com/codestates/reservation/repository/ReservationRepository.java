@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     Optional<Reservation> findById(Long reservationId); //예약 정보 반환
     Reservation save(Reservation reservation);
-    List<Reservation> findByMemberAndPerformance(Member member, Performance performance);
+    Optional<Reservation> findByMemberAndPerformance(Member member, Performance performance);
     void delete(Reservation reservation);
 }
