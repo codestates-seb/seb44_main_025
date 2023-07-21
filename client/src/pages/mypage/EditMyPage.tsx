@@ -50,13 +50,21 @@ export default function Editmypage() {
     }
   }, [memberNickname, setValue]);
 
+  useEffect(() => {
+    if (memberId && getCookie('userInfo').memberId !== +memberId) {
+      alert('권한 접근이 없습니다.');
+      navigate('/');
+      return;
+    }
+  }, []);
+
   /** 회원정보를 서버로 전송하는 ajax 함수 */
   const usePatchMember = (id?: string | number | undefined, data?: any) => {
     axios
       .patch(
         `${SERVER_HOST}/member`,
-        // data,
-        Object.assign(data, { email: 'r@naver.com' }),
+        // JSON.stringify(data),
+        Object.assign(JSON.stringify(data), { email: 'r@naver.com' }),
         {
           headers: {
             'Content-Type': 'application/json',

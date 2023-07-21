@@ -101,7 +101,7 @@ export const deleteReservation = async (
   return data;
 };
 
-export const postArtist = async (body: BodyType) => {
+export const usePostArtist = async (body: BodyType) => {
   const data = await axios
     .post(`${SERVER_HOST}/artist`, JSON.stringify(body), {
       headers: {
@@ -118,7 +118,7 @@ export const postArtist = async (body: BodyType) => {
 };
 
 /** 아티스트 정보를 수정하는 함수, artistId에 맞게 요청할 수 있도록 id와 수정값을 입력 받음 */
-export const patchArtist = async (
+export const usePatchArtist = async (
   id: string | number | undefined,
   body: BodyType
 ) => {
@@ -137,7 +137,7 @@ export const patchArtist = async (
   return data;
 };
 
-export const postArtistImg = async (body: BodyType) => {
+export const usePostArtistImg = async (body: BodyType) => {
   const data = await axios
     .post(`${SERVER_HOST}/image`, body, {
       headers: {
