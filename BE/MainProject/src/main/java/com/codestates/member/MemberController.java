@@ -54,10 +54,8 @@ public class MemberController {
         Map<String, Object> principal = (Map) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
 
-        memberPatchDto.setMemberId(memberId);
-
         Member response =
-                memberService.updateMember(memberPatchDto);
+                memberService.updateMember(memberPatchDto, memberId);
 
         return new ResponseEntity<>(memberMapper.memberToMemberResponseDto(response),
                 HttpStatus.OK);
@@ -113,7 +111,6 @@ public class MemberController {
 
             memberService.deleteMember(memberId);
         }
-
         else {
             throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_CORRECT);
         }

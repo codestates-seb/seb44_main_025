@@ -44,6 +44,10 @@ public class Member {
         this.nickname = nickname;
         this.password = password;
     }
+    public  Member(String nickname, String password){
+        this.nickname = nickname;
+        this.password = password;
+    }
 
     public Member(String email){
         this.email = email;
