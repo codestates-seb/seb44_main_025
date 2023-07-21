@@ -27,17 +27,19 @@ export default {
   `,
   ProfileWarppar: styled.div``,
   LogoImg: styled.img`
-    width: 390px;
+    width: 360px;
     height: 150px;
-    padding: 0px 15px;
+    margin: 0px 15px;
+    margin-bottom: -50px;
   `,
   ArtistImg: styled.img`
     position: relative;
     z-index: 1;
     width: 100px;
     height: 100px;
-    margin-top: -60px;
-    margin-left: 15px;
+    /* margin-top: -50px; */
+    /* margin-left: 150px; */
+    margin: 0 auto;
     border: 3px solid transparent;
     display: flex;
     align-self: flex-start;
@@ -55,7 +57,7 @@ export default {
     display: flex;
     flex-direction: column;
     width: fit-content;
-    margin: 20px 15px 0px 15px;
+    margin: 0px 15px 0px 15px;
   `,
   ArtistName: styled.p`
     ${FontStyle.heading6};

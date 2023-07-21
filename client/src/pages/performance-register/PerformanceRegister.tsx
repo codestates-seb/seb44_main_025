@@ -9,7 +9,10 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useEditorStore } from '../../components/inputs/editor/EditorStore';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { postPerformance, postArtistImg as postImg } from '../../api/fetchAPI';
+import {
+  postPerformance,
+  usePostArtistImg as postImg,
+} from '../../api/fetchAPI';
 import { categoryObj } from '../../utils/Category';
 import { getCookie } from '../../utils/Cookie';
 import { PostcodeMap } from '../../components/postcode/Postcode';

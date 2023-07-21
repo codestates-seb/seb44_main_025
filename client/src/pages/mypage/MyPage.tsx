@@ -11,7 +11,7 @@ import ArtistreviewContainer from '../../components/artist/artistreviewcontainer
 import Review from '../../components/review/Review';
 import Footer from '../../components/footer/Footer';
 import Navbar from '../../components/nav/Navbar';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { removeCookie, getCookie } from '../../utils/Cookie';
 import {
   useGetMember,
@@ -23,11 +23,11 @@ import { H1Title } from '../../theme/common/SlideUp';
 
 export default function Mypage() {
   const navigate = useNavigate();
-  const { memberId } = useParams();
+  // const { memberId } = useParams();
   const memberData = useGetMember();
-  const reservationData = useGetMemberPerformance(memberId);
-  const pastReservationData = useGetMemberPerformanced(memberId);
-  const reviewData = useGetMemberReview(memberId);
+  const reservationData = useGetMemberPerformance();
+  const pastReservationData = useGetMemberPerformanced();
+  const reviewData = useGetMemberReview();
 
   /** 로그아웃 및 main으로 페이지 이동 */
   const logoutHandler = () => {
@@ -93,8 +93,8 @@ export default function Mypage() {
             reservationData.map(reservationData => {
               return (
                 <Concertpreview
-                  performanceId={reservationData.performanceId}
                   key={reservationData.performanceId}
+                  performanceId={reservationData.performanceId}
                   posterImg={reservationData.imageUrl}
                   title={reservationData.title}
                   artistName={reservationData.artistName}
@@ -107,9 +107,12 @@ export default function Mypage() {
           ) : (
             <S.EmptyContainer>
               <S.EmptyWrapper>
-                <S.EmptyTitle>현재 예약중인 공연이 없습니다.</S.EmptyTitle>
+                <S.EmptyTitle>예약중인 공연이 없습니다.</S.EmptyTitle>
                 <ConcertEmptyButton>
-                  <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                  <ButtonWithArrowDark
+                    onClick={() => navigate('/performances')}
+                    text="공연예약"
+                  ></ButtonWithArrowDark>
                 </ConcertEmptyButton>
               </S.EmptyWrapper>
             </S.EmptyContainer>
@@ -130,9 +133,12 @@ export default function Mypage() {
             ) : (
               <S.EmptyContainer>
                 <S.EmptyWrapper>
-                  <S.EmptyTitle>아직 관람한 공연이 없습니다.</S.EmptyTitle>
+                  <S.EmptyTitle>관람한 공연이 없습니다.</S.EmptyTitle>
                   <ConcertEmptyButton>
-                    <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                    <ButtonWithArrowDark
+                      onClick={() => navigate('/performances')}
+                      text="공연예약"
+                    ></ButtonWithArrowDark>
                   </ConcertEmptyButton>
                 </S.EmptyWrapper>
               </S.EmptyContainer>
@@ -158,7 +164,10 @@ export default function Mypage() {
                 <S.EmptyWrapper>
                   <S.EmptyTitle>아직 관람한 공연이 없습니다.</S.EmptyTitle>
                   <ConcertEmptyButton>
-                    <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                    <ButtonWithArrowDark
+                      onClick={() => navigate('/performances')}
+                      text="공연예약"
+                    ></ButtonWithArrowDark>
                   </ConcertEmptyButton>
                 </S.EmptyWrapper>
               </S.EmptyContainer>

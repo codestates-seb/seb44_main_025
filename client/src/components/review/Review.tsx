@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import { EditorViewer } from '../inputs/editor/EditorViewer';
+import { useNavigate } from 'react-router-dom';
 
 interface Reviewlist {
   nickname: string;
@@ -8,11 +9,18 @@ interface Reviewlist {
   content: string;
   createdAt: string;
   memberId?: number;
+  performanceId?: number;
 }
 
 export default function Review(props: Reviewlist) {
+  const navigate = useNavigate();
+
   return (
-    <S.ReviewWrapper>
+    <S.ReviewWrapper
+      onClick={() => {
+        navigate(`/performances/${props.performanceId}`);
+      }}
+    >
       <S.ReviewDetail>
         <S.ReviewTitle>{props.reviewTitle}</S.ReviewTitle>
         <EditorViewer content={props.content.replace(/<img[\s\S]*?>/g, '')} />

@@ -51,10 +51,6 @@ const Slogan = () => {
         translate={`translateY(${movement}px)`}
         transform={`transform ${time}s`}
       >
-        {/* <Styled_Slogan.Img src="./images/2b3fad00c203b730.png" />
-        <Styled_Slogan.Img src="./images/600bb2ac964c4a46.png" />
-        <Styled_Slogan.Img src="./images/2b3fad00c203b730.png" /> */}
-
         <a
           href={
             userInfo_zustand?.hasArtist === true

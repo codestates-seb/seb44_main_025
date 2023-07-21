@@ -9,8 +9,8 @@ interface Props {
 }
 
 export default function TicketModal({ onClick }: Props) {
-  const { memberId } = useParams();
-  const reservationData = useGetMemberPerformance(memberId);
+  // const { memberId } = useParams();
+  const reservationData = useGetMemberPerformance();
   return (
     <>
       {reservationData ? (

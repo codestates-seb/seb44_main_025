@@ -166,7 +166,7 @@ export const useGetArtistReview = (id: string | number | undefined) => {
 
   const getData = async () => {
     await axios
-      .get<ArtistReview[]>(`${SERVER_HOST}/review/${id}`)
+      .get<ArtistReview[]>(`${SERVER_HOST}/review/artistPage/${id}`)
       .then(data => setData(data.data))
       .catch(err => console.log(err));
   };
@@ -190,13 +190,11 @@ export const useGetMember = () => {
       })
       .then(data => {
         setData(data.data), removeCookie('userInfo');
-
         setUserInfo({
           memberId: data.data.memberId,
           hasArtist: data.data.hasArtist,
           artistId: data.data.artistId,
         });
-
         setCookie(
           'userInfo',
           JSON.stringify({
@@ -215,14 +213,19 @@ export const useGetMember = () => {
   return data;
 };
 
-export const useGetMemberPerformance = (id: string | number | undefined) => {
+export const useGetMemberPerformance = () => {
   const [data, setData] = useState<Performance[]>();
 
   const getData = async () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
       .get<Performance[]>(
-        `${SERVER_HOST}/member/${id}/page=1&size=5&performanceStatus=공연진행중`
+        `${SERVER_HOST}/reservation/mypage?performanceStatus=공연진행중`,
+        {
+          headers: {
+            Authorization: getCookie('accessToken'),
+          },
+        }
       )
       .then(data => setData(data.data))
       .catch(err => console.log(err));
@@ -232,15 +235,20 @@ export const useGetMemberPerformance = (id: string | number | undefined) => {
   }, []);
   return data;
 };
-
-export const useGetMemberPerformanced = (id: string | number | undefined) => {
+// 주소 수정해야함
+export const useGetMemberPerformanced = () => {
   const [data, setData] = useState<Performance[]>();
 
   const getData = async () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
       .get<Performance[]>(
-        `${SERVER_HOST}/member/${id}/page=1&size=5&performanceStatus=공연완료`
+        `${SERVER_HOST}/reservation/mypage?performanceStatus=공연완료`,
+        {
+          headers: {
+            Authorization: getCookie('accessToken'),
+          },
+        }
       )
       .then(data => setData(data.data))
       .catch(err => console.log(err));
@@ -252,13 +260,13 @@ export const useGetMemberPerformanced = (id: string | number | undefined) => {
   return data;
 };
 
-export const useGetMemberReview = (id: string | number | undefined) => {
+export const useGetMemberReview = () => {
   const [data, setData] = useState<Review[]>();
 
   const getData = async () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
-      .get<Review[]>(`${SERVER_HOST}/review/mypage/reviews`, {
+      .get<Review[]>(`${SERVER_HOST}/review/mypage`, {
         headers: {
           Authorization: getCookie('accessToken'),
         },

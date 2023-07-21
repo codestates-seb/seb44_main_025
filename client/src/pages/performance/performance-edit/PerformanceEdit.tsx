@@ -9,7 +9,7 @@ import { useEditorStore } from '../../../components/inputs/editor/EditorStore';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import {
   patchPerformance,
-  postArtistImg as postImg,
+  usePostArtistImg as postImg,
 } from '../../../api/fetchAPI';
 import { categoryObj, categoryIdObj } from '../../../utils/Category';
 import { getCookie } from '../../../utils/Cookie';
