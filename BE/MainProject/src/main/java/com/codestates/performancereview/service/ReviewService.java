@@ -1,5 +1,7 @@
 package com.codestates.performancereview.service;
 
+import com.codestates.artist.Artist;
+import com.codestates.artist.ArtistService;
 import com.codestates.global.exception.BusinessLogicException;
 import com.codestates.global.exception.ExceptionCode;
 import com.codestates.image.ImageUploadService;
@@ -14,12 +16,15 @@ import com.codestates.performancereview.mapper.ReviewMapperImpl;
 import com.codestates.performancereview.repository.ReviewRepository;
 import com.codestates.reservation.entity.Reservation;
 import com.codestates.reservation.service.ReservationService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -32,12 +37,12 @@ public class ReviewService {
     private final ImageUploadService imageUploadService;
     private final MemberRepository memberRepository;
     private final ReservationService reservationService;
-
+    private final ArtistService artistService;
     private final ReviewMapperImpl reviewMapperImpl;
     public ReviewService(ReviewRepository reviewRepository, PerformanceRepository performanceRepository,
                          MemberService memberService, ImageUploadService imageUploadService,
                          ReviewMapperImpl reviewMapperImpl, MemberRepository memberRepository,
-                         ReservationService reservationService ) {
+                         ReservationService reservationService, ArtistService artistService ) {
         this.reviewRepository = reviewRepository;
         this.performanceRepository = performanceRepository;
         this.memberService = memberService;
@@ -45,6 +50,7 @@ public class ReviewService {
         this.reviewMapperImpl = reviewMapperImpl;
         this.memberRepository = memberRepository;
         this.reservationService = reservationService;
+        this.artistService = artistService;
     }
     // 현재 사용자의 ID를 가져오는 로직을 구현
     private long getCurrentUserId(Authentication authentication) {
@@ -68,8 +74,24 @@ public class ReviewService {
             return reviewMapperImpl.toResponseDtoList(reviews);
         }
     }
+    public List<ReviewDto.ReviewResponse> getArtistAllReviews(long artistId) {
+        // 현재 아티스트의 ID를 가져와서 해당 아티스트의 공연에 작성된 리뷰 정보를 조회
+        // 해당 아티스트가 공연완료된 공연들을 조회해서 담아옴
+        List<Performance> performances = performanceRepository.findPastPerformancesByArtistId(artistId);
+        // 공연 완료된 공연들의 모든 리뷰들을 담도록
+        List<Review> allReviews = new ArrayList<>();
+        // 아티스트의 공연완료 된 모든 리뷰를 가져오도록 (모든 사용자들이 볼 수 있도록)
+        for (Performance performance : performances) {
+            List<Review> reviews = reviewRepository.findByPerformance(performance);
+            allReviews.addAll(reviews);
+        }
 
-
+        if (allReviews.isEmpty()) {
+            return Collections.emptyList(); // 빈 리스트
+        } else {
+            return reviewMapperImpl.toResponseDtoList(allReviews);
+        }
+    }
 
     public ReviewDto.ReviewResponse createReview(ReviewDto.ReviewPost reviewPost, Authentication authentication) {
 

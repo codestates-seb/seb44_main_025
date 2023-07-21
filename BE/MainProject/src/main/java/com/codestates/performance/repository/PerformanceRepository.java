@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PerformanceRepository extends JpaRepository<Performance, Long> {
@@ -44,4 +45,8 @@ public interface PerformanceRepository extends JpaRepository<Performance, Long> 
 
     @Query("SELECT p FROM Performance p JOIN p.performanceArtists pa JOIN pa.artist a WHERE a.artistId = :artistId AND p.date > now()")
     Page<Performance> findAllByArtistIdTimeIsAfter(@Param("artistId") long artistId, Pageable pageable);
+
+    @Query("SELECT p FROM Performance p JOIN p.performanceArtists pa JOIN pa.artist a " +
+            "WHERE a.artistId = :artistId AND p.date <= CURRENT_TIMESTAMP")
+    List<Performance> findPastPerformancesByArtistId(@Param("artistId") long artistId);
 }
