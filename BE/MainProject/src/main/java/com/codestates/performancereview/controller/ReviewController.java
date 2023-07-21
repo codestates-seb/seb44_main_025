@@ -40,7 +40,6 @@ public class ReviewController {
 
         ReviewDto.ReviewResponse responseDto = reviewService.createReview(reviewPost, authentication);
         return ResponseEntity.ok(responseDto);
-
     }
 
     @PatchMapping("/{performanceId}/{reviewId}")

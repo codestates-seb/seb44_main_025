@@ -85,7 +85,6 @@ public class ReviewService {
             List<Review> reviews = reviewRepository.findByPerformance(performance);
             allReviews.addAll(reviews);
         }
-
         if (allReviews.isEmpty()) {
             return Collections.emptyList(); // 빈 리스트
         } else {
@@ -94,8 +93,6 @@ public class ReviewService {
     }
 
     public ReviewDto.ReviewResponse createReview(ReviewDto.ReviewPost reviewPost, Authentication authentication) {
-
-
         Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
 
