@@ -38,7 +38,6 @@ public class ReservationController {
         Map<String, Object> principal = (Map) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
 
-
         ReservationDto.ReservationResponseDto responseDto = reservationService.createReservation(reservationRequestDto, authentication);
         return responseDto;
     }
