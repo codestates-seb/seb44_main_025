@@ -39,7 +39,7 @@ public class ReviewMapperImpl  {
         review.setContent(reviewDto.getContent());
         review.setDate(reviewDto.getDate());
 
-        // Member와 Performance 엔티티는 ID만 설정하여 연결
+        // Member와 Performance 엔티티는 ID만 설정하여 연결하게함
         Member member = new Member();
         member.setMemberId(reviewDto.getMemberId());
         review.setMember(member);
