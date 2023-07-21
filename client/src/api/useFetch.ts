@@ -79,9 +79,11 @@ export const useGetArtists = (
 
     axios
       .get<ArtistList>(
-        `${SERVER_HOST}/artist?page=${page || 1}&size=${size || 10}&category=${
-          categoryId ? categoryId : '1'
-        }`,
+        categoryId
+          ? `${SERVER_HOST}/artist?page=${page || 1}&size=${
+              size || 10
+            }&category=${categoryId}`
+          : `${SERVER_HOST}/artist/all`,
         {
           cancelToken: source.token,
         }
@@ -214,12 +216,12 @@ export const useGetMember = () => {
 };
 
 export const useGetMemberPerformance = () => {
-  const [data, setData] = useState<Performance[]>();
+  const [data, setData] = useState<PerformanceType[]>();
 
   const getData = async () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
-      .get<Performance[]>(
+      .get<PerformanceType[]>(
         `${SERVER_HOST}/reservation/mypage?performanceStatus=공연진행중`,
         {
           headers: {
@@ -237,12 +239,12 @@ export const useGetMemberPerformance = () => {
 };
 // 주소 수정해야함
 export const useGetMemberPerformanced = () => {
-  const [data, setData] = useState<Performance[]>();
+  const [data, setData] = useState<PerformanceType[]>();
 
   const getData = async () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
-      .get<Performance[]>(
+      .get<PerformanceType[]>(
         `${SERVER_HOST}/reservation/mypage?performanceStatus=공연완료`,
         {
           headers: {
