@@ -60,7 +60,7 @@ export default {
     height: 210px;
     cursor: pointer;
     background-color: transparent;
-    object-fit: scale-down;
+    object-fit: cover;
     &[src=''] {
       background-color: gray;
     }

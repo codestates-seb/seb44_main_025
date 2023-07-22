@@ -30,8 +30,6 @@ const PerformanceRegister = () => {
   const NOW = getTimezoneAdjustedISOString().slice(0, 16);
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [imagesrc, setImagesrc] = useState<string>('');
-  const [imgFile, setImgFile] = useState<Blob>();
   const [imgUrl, setImgUrl] = useState('');
   const [address, setAddress] = useState('');
   // 함께할 아티스트 목록
@@ -92,17 +90,16 @@ const PerformanceRegister = () => {
       })
       .catch(err => alert(err));
   };
-  const onSubmitImg = () => {
+  const onSubmitImg = (file: Blob) => {
     let formData = new FormData();
-    if (imgFile) {
-      formData.append('image-file', imgFile as Blob);
-      postImg(formData).then((data: any) => {
+    formData.append('image-file', file);
+    postImg(formData).then((data: any) => {
+      if (data) {
         setImgUrl(data.data);
-        alert('이미지가 저장되었습니다.');
-      });
-    } else {
-      alert('이미지를 첨부해야합니다.');
-    }
+      } else {
+        alert('이미지 등록에 실패하였습니다.');
+      }
+    });
   };
   return (
     <>
@@ -113,14 +110,6 @@ const PerformanceRegister = () => {
             <H1Title.H1>
               <H1Title.H1span>공연등록</H1Title.H1span>
             </H1Title.H1>
-            <Button
-              theme="primary"
-              size="small"
-              width={80}
-              onClick={() => onSubmitImg()}
-            >
-              이미지 저장
-            </Button>
           </S.TitleButtonFlex>
           <S.SummaryContainer>
             <S.FileInput
@@ -132,21 +121,12 @@ const PerformanceRegister = () => {
                 const files = e.target.files;
                 if (files === undefined || files === null) return;
                 const file = files[0];
-                setImgFile(file);
-                if (file) {
-                  const reader = new FileReader();
-
-                  reader.onload = e => {
-                    if (!e.target?.result || e.target?.result === null) return;
-                    setImagesrc(e.target?.result as string);
-                  };
-                  reader.readAsDataURL(file);
-                }
+                if (file) onSubmitImg(file);
               }}
             />
             <S.Poster
               // TODO: 공연 이미지 등록 이전에 보여줄 170 * 210 비율에 맞는 이미지 제공하기
-              src={imagesrc || ''}
+              src={imgUrl || ''}
               alt="공연 이미지"
               onClick={() => fileInputRef.current?.click()}
             ></S.Poster>

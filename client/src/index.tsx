@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import axios from 'axios';
 import Notfoundpage from './pages/NotFound';
 import PerformanceList from './pages/performance-list/PerformanceList';
 import PerformanceRegister from './pages/performance-register/PerformanceRegister';
@@ -17,12 +16,10 @@ import SignUpPage from './pages/sign/SignUp';
 import SignInPage from './pages/sign/SignIn';
 import ArtistList from './pages/artist-list/ArtistList';
 import Home from './pages/home/Home';
-import ReviewRegister from './pages/review-register/ReviewRegister';
 import Artistedit from './pages/artist-register/ArtistEdit';
 import GoogleSignUp from './pages/sign/GoogleSignUp';
 import GoogleSignin from './pages/sign/GoogleSignin';
 import { Performance } from './pages/performance/Performance';
-import ReviewInfo from './pages/review-info/ReviewInfo';
 
 /** @todo 도메인 주소 입력 */
 // axios.defaults.baseURL = '';
@@ -85,20 +82,12 @@ const router = createBrowserRouter([
         element: <Cancel />,
       },
       {
-        path: '/performances/:performanceId/review',
-        element: <ReviewRegister />,
-      },
-      {
         path: '/googlelogin',
         element: <GoogleSignin />,
       },
       {
         path: '/googlesignup',
         element: <GoogleSignUp />,
-      },
-      {
-        path: '/review/:reviewId',
-        element: <ReviewInfo />,
       },
     ],
   },

@@ -105,6 +105,9 @@ export const InputContainer = styled.div<InputContainerType>`
     margin-left: 8px;
     margin-right: 8px;
     width: 100%;
+    &[type='number'] {
+      caret-color: transparent;
+    }
   }
 
   & > :first-child {

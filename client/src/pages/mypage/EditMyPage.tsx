@@ -60,11 +60,12 @@ export default function Editmypage() {
 
   /** 회원정보를 서버로 전송하는 ajax 함수 */
   const usePatchMember = (id?: string | number | undefined, data?: any) => {
+    delete data.password_confirm;
     axios
       .patch(
         `${SERVER_HOST}/member`,
         // JSON.stringify(data),
-        Object.assign(JSON.stringify(data), { email: 'r@naver.com' }),
+        data,
         {
           headers: {
             'Content-Type': 'application/json',

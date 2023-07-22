@@ -2,7 +2,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
 import { useEditorStore } from './EditorStore';
-import { EditorGlobalStyle } from './Editor.style';
+import { EditorGlobalStyle, EditorReadonlyGlobalStyle } from './Editor.style';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { usePostArtistImg as postImg } from '../../../api/fetchAPI';
 
@@ -18,7 +18,11 @@ export const Editor = ({ defaultValue }: { defaultValue?: string }) => {
     let formData = new FormData();
     formData.append('image-file', file);
     postImg(formData).then((data: any) => {
-      changeContent(content + `<img src=${data.data}>`);
+      if (data) {
+        changeContent(content + `<img src=${data.data}>`);
+      } else {
+        alert('이미지를 불러오는 데에 실패하였습니다.');
+      }
     });
   };
 
@@ -105,7 +109,7 @@ export const Editor = ({ defaultValue }: { defaultValue?: string }) => {
 export const EditorReadOnly = ({ content }: { content?: string }) => {
   return (
     <>
-      <EditorGlobalStyle />
+      <EditorReadonlyGlobalStyle />
       <ReactQuill readOnly={true} theme="bubble" value={content} />
     </>
   );

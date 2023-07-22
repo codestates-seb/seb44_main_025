@@ -32,6 +32,7 @@ export const patchPerformance = async (
       {
         headers: {
           'Content-Type': 'application/json',
+          Authorization: getCookie('accessToken'),
         },
       }
     )
@@ -73,7 +74,7 @@ export const getReservation = async (
 };
 
 export const postReservation = async (body: BodyType) => {
-  const data = await axios
+  return axios
     .post(`${SERVER_HOST}/reservation`, JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json',
@@ -82,8 +83,6 @@ export const postReservation = async (body: BodyType) => {
     })
     .then(data => data)
     .catch(err => console.error(err));
-
-  return data;
 };
 
 export const deleteReservation = async (
