@@ -133,10 +133,11 @@ public class Performance {
         public String getStatus() {
             return status;
         }
-        public char isCompleted() {
-            if(this.status == PERFORMANCE_COMPLETED.getStatus()) return 't';
-            else if(this.status == PERFORMANCE_NOT_COMPLETED.getStatus()) return 'f';
-            return 'x';
+        public boolean isCompleted() {
+            return this.status == PERFORMANCE_COMPLETED.getStatus();
+        }
+        public boolean isNull() {
+            return this.status != PERFORMANCE_COMPLETED.getStatus() && this.status != PERFORMANCE_NOT_COMPLETED.getStatus();
         }
     }
 }
