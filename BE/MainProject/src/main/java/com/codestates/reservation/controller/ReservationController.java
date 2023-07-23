@@ -44,7 +44,7 @@ public class ReservationController {
         return responseDto;
     }
     // 특정 예약 조회
-    @GetMapping("/{reservationId}")
+    @GetMapping("/{reservationId}") // 예약의 정보의 반환타입이 바뀔 수 있음 그래서 <?> 와일드카드 적 (유연한 코드)
     public ResponseEntity<?> getReservation (@PathVariable("reservationId") long reservationId, Authentication authentication){
         // 예약 조회 요청을 ReservationService에 전달
         ReservationDto.ReservationResponseDto responseDto = reservationService.getReservation(reservationId, authentication); //예약의 고유 식별자
