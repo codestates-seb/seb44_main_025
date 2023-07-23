@@ -144,7 +144,7 @@ public class ReviewService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.REVIEW_NOT_FOUND));
 
         if(review.getMember().getMemberId()!=memberId){
-            new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);}
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);}
 
         reviewRepository.delete(review);
     }

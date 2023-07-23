@@ -157,7 +157,7 @@ public class ReservationService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND));
 
         if (reservation.getMember().getMemberId() != memberId) {
-            new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);
         }
         reservationRepository.delete(reservation);
     }
