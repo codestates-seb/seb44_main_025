@@ -3,6 +3,7 @@ package com.codestates.performance.entity;
 import com.codestates.category.Category;
 import com.codestates.content.entity.Content;
 import com.codestates.performancecomment.entity.PerformanceComment;
+import com.codestates.reservation.entity.Reservation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -41,7 +42,7 @@ public class Performance {
     @Column(nullable = false)
     private int totalSeat;
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="CATEGORY_ID")
     private Category category;
     @Column(nullable = false)
@@ -53,6 +54,8 @@ public class Performance {
     @JsonIgnore
     @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
     private List<PerformanceComment> performanceComments = new ArrayList<>();
+    @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 
     public Performance(String title, LocalDateTime date, int price, String place, int totalSeat, String imageUrl) {
         this.title = title;
@@ -61,6 +64,9 @@ public class Performance {
         this.place = place;
         this.totalSeat = totalSeat;
         this.imageUrl = imageUrl;
+    }
+    public Performance(long performanceId){
+        this.performanceId = performanceId;
     }
 
     public Performance(long performanceId, String title, LocalDateTime date, int price, String place, int totalSeat, String imageUrl) {

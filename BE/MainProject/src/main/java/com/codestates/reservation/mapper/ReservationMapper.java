@@ -1,14 +1,31 @@
 package com.codestates.reservation.mapper;
 
+import com.codestates.performance.entity.Performance;
 import com.codestates.reservation.dto.ReservationDto;
 import com.codestates.reservation.entity.Reservation;
-import org.mapstruct.Mapper;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-//@Component
-public interface ReservationMapper {
-    Reservation reservationRequestDtoToReservation(ReservationDto.ReservationRequestDto reservationRequestDto);
-    // ReservationDto의 필드 값을 Reservation 엔티티의 필드에 설정하여 매핑
-    ReservationDto.ReservationResponseDto reservationToReservationResponseDto(Reservation reservation);
-    // Reservation의 필드 값을 ReservationDto의 필드에 설정하여 매핑
+@Component
+@Getter
+@Setter
+public class ReservationMapper {
+    public ReservationDto.ReservationResponseDto reservationToReservationResponseDto(Reservation reservation){
+        return new ReservationDto.ReservationResponseDto(
+                reservation.getReservationId(),
+                reservation.getPerformance().getPerformanceId(),
+                reservation.getMember().getNickname(),
+                0,
+                reservation.getDate(),
+                reservation.getReservationStatus(),
+                reservation.getSeatValue(),
+                reservation.getPrice());
+    }
+
+    public Reservation reservationRequestDtoToReservation(ReservationDto.ReservationRequestDto requestDto){
+        return  new Reservation(
+                new Performance(requestDto.getPerformanceId()),
+                requestDto.getSeatValue());
+    }
 }

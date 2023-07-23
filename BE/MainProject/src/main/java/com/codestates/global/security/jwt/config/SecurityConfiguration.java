@@ -93,7 +93,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://ez-to-play.s3-website.ap-northeast-2.amazonaws.com")); // "*" 대신 출처 목록을 지정합니다.
+        configuration.setAllowedOrigins(Arrays.asList("https://ez-to-play.netlify.app","https://eztoplay.netlify.app","https://dev--eztoplay.netlify.app","http://localhost:3000")); // "*" 대신 출처 목록을 지정합니다.
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.addExposedHeader("Authorization");

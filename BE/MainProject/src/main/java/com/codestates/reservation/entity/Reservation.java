@@ -1,8 +1,10 @@
 package com.codestates.reservation.entity;
 
 
+import com.codestates.category.Category;
 import com.codestates.member.Member;
 import com.codestates.payment.entity.Payment;
+import com.codestates.performance.entity.Performance;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +13,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,23 +24,26 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
-    private Long performanceId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="performance_Id")
+    private Performance performance;
     private Long PaymentId;
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime date;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int price;
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
     //@Enumerated(EnumType.STRING)
     //private PaymentStatus paymentStatus;
-
     @OneToOne(mappedBy = "reservation")
     private Payment payment;
+    private long seatValue;
 
     @Getter
     public enum ReservationStatus {
@@ -46,18 +52,20 @@ public class Reservation {
         COMPLETED("Completed"); //완료된 상태 - 예약이 정상적으로 완료된 상태
         // 예약 확인, 결제, 좌석 선택 등등 모든 완료가 되었을때 최종 완료
         private String status;
-
         ReservationStatus(String status) {
             this.status = status;
         }
-
-
         public String getReservationStatus() {
             return status;
         }
     }
-    public Reservation(Member member)
-    {this.member = member;}
+    public Reservation(Member member) {
+        this.member = member;
+    }
+    public Reservation(Performance performance, long seatValue){
+        this.performance = performance;
+        this.seatValue = seatValue;
+    }
 
 //public enum PaymentStatus {
 //    PENDING("Pending"),
