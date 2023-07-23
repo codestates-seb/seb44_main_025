@@ -18,7 +18,7 @@ export const ButtonSizeStyle = {
     ${FontStyle.smallMedium}
   `,
   large: css`
-    width: 335px;
+    width: 360px;
     height: 50px;
     ${FontStyle.largeMedium}
   `,
