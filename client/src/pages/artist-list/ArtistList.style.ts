@@ -1,4 +1,6 @@
 import { styled } from 'styled-components';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 export const Heading1 = styled.h1`
   margin-right: auto;
@@ -22,6 +24,10 @@ export const Main = styled.main`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  ${DeviceQuery.tablet`
+  width: calc(390px * ${screenScale.tablet});
+  min-height: calc(100vh - 180px);
+`}
 `;
 export const TitleButtonFlex = styled.div`
   width: 360px;
@@ -36,6 +42,9 @@ export const TitleButtonFlex = styled.div`
     stroke: white;
     cursor: pointer;
   }
+  ${DeviceQuery.tablet`
+  width: calc(360px * ${screenScale.tablet});
+`}
 `;
 export const CategoryContainer = styled.div`
   margin-top: 20px;
@@ -49,8 +58,10 @@ export const CategoryContainer = styled.div`
   & > button {
     min-width: 40px;
     padding: 0px 5px;
-    width: fit-content;
   }
+  ${DeviceQuery.tablet`
+  min-width: calc(360px * ${screenScale.tablet});
+`}
 `;
 export const ButtonContainer = styled.div`
   min-width: 360px;
@@ -58,10 +69,16 @@ export const ButtonContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-top: 20px;
+  ${DeviceQuery.tablet`
+  min-width: calc(360px * ${screenScale.tablet});
+`}
 `;
 export const ArtistContainer = styled.div`
   width: 360px;
   & div {
     margin: 8px 0px;
   }
+  ${DeviceQuery.tablet`
+  width: calc(360px * ${screenScale.tablet});
+`}
 `;

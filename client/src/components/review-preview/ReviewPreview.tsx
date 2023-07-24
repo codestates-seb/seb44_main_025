@@ -2,22 +2,13 @@ import { styled } from 'styled-components';
 import { EditorViewer } from '../inputs/editor/EditorViewer';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import ReviewInfo from '../modal/review-info/ReviewInfo';
 import { getDateTime } from '../../utils/Format';
+import { Review } from '../../model/Member';
+import ReviewModal from '../modal/review/ReviewModal';
 import { DeviceQuery } from '../../utils/Media';
 import { screenScale } from '../../utils/MediaSize';
 
-interface Reviewlist {
-  nickname: string;
-  reviewTitle: string;
-  artistId?: number;
-  content: string;
-  createdAt: string;
-  memberId?: number;
-  performanceId?: number;
-}
-
-export default function Review(props: any) {
+export default function ReviewPreview(props: Review) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -41,7 +32,11 @@ export default function Review(props: any) {
         </S.ReviewDetail>
       </S.ReviewWrapper>
       {isOpen && (
-        <ReviewInfo review={props} closeModal={() => setIsOpen(false)} />
+        <ReviewModal
+          review={props}
+          closeModal={() => setIsOpen(false)}
+          fromMyPage={true}
+        />
       )}
     </>
   );

@@ -87,33 +87,31 @@ export const ButtonWithArrow: React.FC<ButtonWithArrowProps> = ({
 export const ButtonsPreview = () => {
   return (
     <>
-      {/* 기존의 ButtonMini */}
-      <Button size={'mini'} theme={'theme'}>
+      <Button size="mini" theme="theme">
         미니
       </Button>
-      {/* 버튼 Primary 75px, 160px, 335px */}
-      <Button size={'small'} theme={'primary'}>
+      <Button size="small" theme="primary">
         버튼
       </Button>
-      <Button size={'medium'} theme={'primary'}>
+      <Button size="medium" theme="primary">
         버튼
       </Button>
-      <Button size={'large'} theme={'primary'}>
+      <Button size="large" theme="primary">
         공연 정보 등록/수정
       </Button>
-      <ButtonWithArrow text={'공연예약'} theme="white" />
-      <Button theme="highlightBorder" size="small">
+      <Button size="small" theme="highlightBorder">
         회원탈퇴
       </Button>
-      <Button theme={'highlight'} size={'small'} height={34}>
+      <Button size="small" theme="highlight" height={34}>
         취소
       </Button>
-      <Button theme="white" size="small">
+      <Button size="small" theme="white">
         결제
       </Button>
     </>
   );
 };
+// <ButtonWithArrow text={'공연예약'} theme="white" />
 
 export const ButtonMiniToggleSelect = styled.button`
   cursor: pointer;

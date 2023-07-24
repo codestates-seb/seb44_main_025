@@ -164,11 +164,11 @@ export const useGetArtistPerfomanced = (id: string | number | undefined) => {
 };
 
 export const useGetArtistReview = (id: string | number | undefined) => {
-  const [data, setData] = useState<ArtistReview[]>();
+  const [data, setData] = useState<Review[]>();
 
   const getData = async () => {
     await axios
-      .get<ArtistReview[]>(`${SERVER_HOST}/review/artistPage/${id}`)
+      .get<Review[]>(`${SERVER_HOST}/review/artistPage/${id}`)
       .then(data => setData(data.data))
       .catch(err => console.log(err));
   };

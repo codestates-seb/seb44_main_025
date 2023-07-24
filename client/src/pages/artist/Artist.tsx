@@ -6,7 +6,7 @@ import { ButtonWithArrowDark } from '../../components/buttons/Buttons';
 import EditIcon from '../../icons/EditIcon';
 import Concertpreview from '../../components/concert-preview/ConcertPreview';
 import ArtistreviewContainer from '../../components/artist/artistreviewcontainer';
-import Review from '../../components/review/Review';
+import Review from '../../components/review-preview/ReviewPreview';
 import Footer from '../../components/footer/Footer';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/nav/Navbar';
@@ -17,17 +17,10 @@ import {
   useGetArtistReview,
 } from '../../api/useFetch';
 import { getCookie } from '../../utils/Cookie';
-import { useEffect } from 'react';
 
 export default function Artistpage() {
   const navigate = useNavigate();
   const { artistId } = useParams();
-  useEffect(() => {
-    if (!getCookie('accessToken')) {
-      alert('잘못된 접근입니다.');
-      navigate('/', { replace: true });
-    }
-  }, []);
 
   /** 불러온 fetch함수에 params로 artistId를 전달 해서 받은 데이터 */
   const artistData = useGetArtist(artistId);
@@ -130,16 +123,11 @@ export default function Artistpage() {
 
           <S.MyreviewContainer>
             <S.SubTitle>아티스트 후기</S.SubTitle>
-            {artistReviewData ? (
+            {artistReviewData?.length ? (
               artistReviewData.map(artistReviewData => {
                 return (
                   <S.ReviewWrapper key={artistReviewData?.artistId}>
-                    <Review
-                      nickname={artistReviewData?.nickName}
-                      createdAt={artistReviewData?.createdAt}
-                      reviewTitle={artistReviewData?.reviewTitle}
-                      content={artistReviewData?.content}
-                    />
+                    <Review {...artistReviewData} />
                   </S.ReviewWrapper>
                 );
               })

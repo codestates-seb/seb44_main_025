@@ -85,12 +85,9 @@ export const postReservation = async (body: BodyType) => {
     .catch(err => console.error(err));
 };
 
-export const deleteReservation = async (
-  memberId: string | number,
-  reservationId: string | number
-) => {
+export const deleteReservation = async (reservationId: string | number) => {
   const data = await axios
-    .delete(`${SERVER_HOST}/reservation/${memberId}/${reservationId}`, {
+    .delete(`${SERVER_HOST}/reservation/${reservationId}`, {
       headers: {
         Authorization: getCookie('accessToken'),
       },
@@ -162,7 +159,7 @@ export const postReview = async (
   body: BodyType
 ) => {
   return axios
-    .post(`${SERVER_HOST}/review/${performanceId}`, JSON.stringify(body), {
+    .post(`${SERVER_HOST}/review`, JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json',
         Authorization: getCookie('accessToken'),

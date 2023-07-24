@@ -5,7 +5,7 @@ import { ButtonWithArrow, Button } from '../../components/buttons/Buttons';
 import EditIcon from '../../icons/EditIcon';
 import ReservationPreview from '../../components/reservation-preview/ReservationPreview';
 // import ArtistreviewContainer from '../../components/artist/artistreviewcontainer';
-import Review from '../../components/review/Review';
+import Review from '../../components/review-preview/ReviewPreview';
 import Footer from '../../components/footer/Footer';
 import Navbar from '../../components/nav/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
