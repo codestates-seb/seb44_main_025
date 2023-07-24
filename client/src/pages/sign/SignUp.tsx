@@ -83,7 +83,7 @@ const SignUpPage = () => {
           '/member'
         ).then(data => {
           if (data !== 'error') {
-            navigate('/');
+            navigate('/login');
           }
         });
       } else {
