@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { FontStyle } from '../../../utils/Theme';
 
 export default {
   ModalOverlay: styled.div`
@@ -23,7 +24,7 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    padding-left: 7.5px;
+    padding-left: 15px;
     color: white;
     border-radius: 15px;
     filter: drop-shadow(0 0 3px var(--button-primary-border-color));
@@ -46,30 +47,31 @@ export default {
     & .quill {
       max-width: 285px;
       & * {
-        color: black;
+        color: white;
       }
       & .ql-editor {
-        padding: 10px;
+        padding-top: 5px;
       }
     }
   `,
   Heading1: styled.h1`
     margin-top: 20px;
-    margin-left: 15px;
     margin-right: auto;
     color: white;
-    font-size: var(--heading1-font-size);
-    font-weight: var(--heading1-font-weight);
-    line-height: var(--heading1-line-height);
+    ${FontStyle.heading1};
   `,
   Heading3: styled.h3`
     margin-top: 20px;
     margin-bottom: 8px;
     margin-right: auto;
-    margin-left: 15px;
     color: white;
-    font-size: var(--heading3-font-size);
-    font-weight: var(--heading3-font-weight);
-    line-height: var(--heading3-line-height);
+    ${FontStyle.heading3};
+  `,
+  Date: styled.p`
+    ${FontStyle.smallMedium};
+    margin-top: -8px;
+    &:before {
+      content: '';
+    }
   `,
 };
