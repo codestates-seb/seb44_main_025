@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import S from './Artist.style';
+import LogoImg from '../.././images/이투플아티스트슬로건.png';
 import Header from '../../components/header/Header';
 import { ButtonWithArrowDark } from '../../components/buttons/Buttons';
 import EditIcon from '../../icons/EditIcon';
@@ -7,7 +8,7 @@ import Concertpreview from '../../components/concert-preview/ConcertPreview';
 import ArtistreviewContainer from '../../components/artist/artistreviewcontainer';
 import Review from '../../components/review/Review';
 import Footer from '../../components/footer/Footer';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/nav/Navbar';
 import {
   useGetArtist,
@@ -16,18 +17,23 @@ import {
   useGetArtistReview,
 } from '../../api/useFetch';
 import { getCookie } from '../../utils/Cookie';
+import { useEffect } from 'react';
 
 export default function Artistpage() {
+  const navigate = useNavigate();
   const { artistId } = useParams();
+  useEffect(() => {
+    if (!getCookie('accessToken')) {
+      alert('잘못된 접근입니다.');
+      navigate('/', { replace: true });
+    }
+  }, []);
 
   /** 불러온 fetch함수에 params로 artistId를 전달 해서 받은 데이터 */
   const artistData = useGetArtist(artistId);
   const artistPerformanceData = useGetArtistPerfomance(artistId);
   const artistPerformancedData = useGetArtistPerfomanced(artistId);
   const artistReviewData = useGetArtistReview(artistId);
-  console.log(artistData);
-
-  // console.log(artistReviewData);
 
   return (
     <>
@@ -37,7 +43,7 @@ export default function Artistpage() {
           <S.Title>아티스트페이지</S.Title>
           {/* 로그인한 userId에 맞는 artistId를 보여주는거 */}
           <S.ProfileWarppar key={artistData?.artistId}>
-            <S.LogoImg src={''} />
+            <S.LogoImg src={LogoImg} />
             <S.ArtistImg src={artistData?.imageUrl} />
             <S.ArtistDetail>
               <S.ArtistName>{artistData?.artistName}</S.ArtistName>
@@ -45,7 +51,7 @@ export default function Artistpage() {
                 SNS링크
               </S.ArtistSns>
             </S.ArtistDetail>
-            {artistId && getCookie('userInfo').artistId === +artistId ? (
+            {artistId && getCookie('userInfo')?.artistId === +artistId ? (
               <S.ArtistEdit>
                 <Link to={`/artistedit/${getCookie('userInfo').artistId}`}>
                   <EditIcon />
@@ -53,7 +59,7 @@ export default function Artistpage() {
               </S.ArtistEdit>
             ) : (
               <S.ArtistEdit style={{ display: 'none' }}>
-                <Link to={`/artistedit/${getCookie('userInfo').artistId}`}>
+                <Link to={`/artistedit/${getCookie('userInfo')?.artistId}`}>
                   <EditIcon />
                 </Link>
               </S.ArtistEdit>
@@ -73,23 +79,20 @@ export default function Artistpage() {
             artistPerformanceData?.data.map(artistPerformanceData => {
               return (
                 <Concertpreview
-                  performanceId={artistPerformanceData?.performanceId}
-                  key={artistPerformanceData?.performanceId}
-                  posterImg={artistPerformanceData?.imageUrl}
-                  title={artistPerformanceData?.title}
-                  artistName={artistPerformanceData.artistName}
-                  category={artistPerformanceData?.category}
-                  price={artistPerformanceData?.price}
-                  date={artistPerformanceData?.date}
+                  key={artistPerformanceData.performanceId}
+                  {...artistPerformanceData}
                 />
               );
             })
           ) : (
             <S.EmptyContainer>
               <S.EmptyWrapper>
-                <S.EmptyTitle>현재 예약중인 공연이 없습니다.</S.EmptyTitle>
+                <S.EmptyTitle>준비중인 공연이 없습니다.</S.EmptyTitle>
                 <ConcertEmptyButton>
-                  <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                  <ButtonWithArrowDark
+                    onClick={() => navigate('/performances/register')}
+                    text="공연등록"
+                  ></ButtonWithArrowDark>
                 </ConcertEmptyButton>
               </S.EmptyWrapper>
             </S.EmptyContainer>
@@ -104,6 +107,7 @@ export default function Artistpage() {
                 return (
                   <ArtistreviewContainer
                     key={artistPerformancedData?.performanceId}
+                    performanceId={artistPerformancedData?.performanceId}
                     imageUrl={artistPerformancedData?.imageUrl}
                     content="후기보기"
                   />
@@ -112,9 +116,12 @@ export default function Artistpage() {
             ) : (
               <S.EmptyContainer>
                 <S.EmptyWrapper>
-                  <S.EmptyTitle>아직 관람한 공연이 없습니다.</S.EmptyTitle>
+                  <S.EmptyTitle>완료한 공연이 없습니다.</S.EmptyTitle>
                   <ConcertEmptyButton>
-                    <ButtonWithArrowDark text="공연등록"></ButtonWithArrowDark>
+                    <ButtonWithArrowDark
+                      onClick={() => navigate('/performances/register')}
+                      text="공연등록"
+                    ></ButtonWithArrowDark>
                   </ConcertEmptyButton>
                 </S.EmptyWrapper>
               </S.EmptyContainer>
@@ -141,7 +148,10 @@ export default function Artistpage() {
                 <S.EmptyWrapper>
                   <S.EmptyTitle>완료한 공연이 없습니다.</S.EmptyTitle>
                   <ConcertEmptyButton>
-                    <ButtonWithArrowDark text="공연등록"></ButtonWithArrowDark>
+                    <ButtonWithArrowDark
+                      onClick={() => navigate('/performances/register')}
+                      text="공연등록"
+                    ></ButtonWithArrowDark>
                   </ConcertEmptyButton>
                 </S.EmptyWrapper>
               </S.EmptyContainer>

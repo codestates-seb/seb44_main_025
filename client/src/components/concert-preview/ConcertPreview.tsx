@@ -1,36 +1,30 @@
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { PerformanceType } from '../../model/Performance';
+import { useGetArtist } from '../../api/useFetch';
 
-interface ConcertPreviewPropTypes {
-  posterImg?: string;
-  title?: string;
-  artistName?: string;
-  category?: string;
-  price?: number;
-  date?: string;
-  categoryId?: number;
-  artistId?: number;
-  place?: string;
-  totalSeat?: number;
-  imageUrl?: string;
-  performanceId: string | number;
-}
-
-export default function Concertpreview(props: ConcertPreviewPropTypes) {
+export default function Concertpreview(performance: PerformanceType) {
   const navigate = useNavigate();
-  const date = new Date(props.date as string);
+  const date = new Date(performance.date as string);
+  const artist = useGetArtist(
+    Object.values(performance.performanceArtist.performanceArtistList)[0]
+  );
   return (
     <S.ConcertpreviewWrapper
       onClick={() => {
-        navigate(`/performances/${props.performanceId}`);
+        navigate(`/performances/${performance.performanceId}`);
       }}
     >
-      <S.ConcertImg src={props.posterImg} />
+      <S.ConcertImg src={performance.imageUrl} />
       <S.ConcertDetail>
-        <S.ConcertTitle>{props.title || '타이틀'}</S.ConcertTitle>
-        <S.Concertcontent>{props.artistName || '아티스트명'}</S.Concertcontent>
-        <S.Concertcontent>{props.category || '기타'}</S.Concertcontent>
-        <S.Concertcontent>{props.price || '가격'}원</S.Concertcontent>
+        <S.ConcertTitle>{performance.title || '타이틀'}</S.ConcertTitle>
+        <S.Concertcontent>
+          {artist?.artistName || '탈퇴한 아티스트'}
+        </S.Concertcontent>
+        <S.Concertcontent>{performance.category || '기타'}</S.Concertcontent>
+        <S.Concertcontent>
+          ₩{performance.price.toLocaleString() || '가격'}
+        </S.Concertcontent>
         <S.Concertcontent>{date.toLocaleDateString()}</S.Concertcontent>
         {/* <S.Concertcontent>{date.toLocaleTimeString()}</S.Concertcontent> */}
         {/* <ButtonWithArrowDark text={'예약취소'}></ButtonWithArrowDark> */}
@@ -51,6 +45,12 @@ const S = {
     align-items: center;
     margin-bottom: 10px;
     margin-left: 15px;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12),
+        0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
+        0 16px 16px rgba(0, 0, 0, 0.12);
+    }
   `,
   ConcertImg: styled.img`
     width: 200px;
@@ -76,11 +76,16 @@ const S = {
     align-items: flex-end;
     margin-right: 15px;
   `,
-  ConcertTitle: styled.header`
+  ConcertTitle: styled.h6`
     font-size: var(--heading6-font-size);
     line-height: var(--heading6-line-height);
     font-weight: var(--heading6-font-weight);
     color: var(--font-white-color);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-align: right;
   `,
   Concertcontent: styled.p`
     font-size: var(--p-small-regular-font-size);

@@ -1,17 +1,14 @@
 import S from './MyPage.style';
 import { styled } from 'styled-components';
 import Header from '../../components/header/Header';
-import {
-  ButtonPrimary75px,
-  ButtonWithArrowDark,
-} from '../../components/buttons/Buttons';
+import { ButtonWithArrow, Button } from '../../components/buttons/Buttons';
 import EditIcon from '../../icons/EditIcon';
-import Concertpreview from '../../components/concert-preview/ConcertPreview';
+import ReservationPreview from '../../components/reservation-preview/ReservationPreview';
 import ArtistreviewContainer from '../../components/artist/artistreviewcontainer';
 import Review from '../../components/review/Review';
 import Footer from '../../components/footer/Footer';
 import Navbar from '../../components/nav/Navbar';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { removeCookie, getCookie } from '../../utils/Cookie';
 import {
   useGetMember,
@@ -20,14 +17,21 @@ import {
   useGetMemberReview,
 } from '../../api/useFetch';
 import { H1Title } from '../../theme/common/SlideUp';
+import { useEffect } from 'react';
 
 export default function Mypage() {
+  useEffect(() => {
+    if (!getCookie('accessToken')) {
+      alert('잘못된 접근입니다.');
+      navigate('/', { replace: true });
+    }
+  }, []);
   const navigate = useNavigate();
-  const { memberId } = useParams();
+  // const { memberId } = useParams();
   const memberData = useGetMember();
-  const reservationData = useGetMemberPerformance(memberId);
-  const pastReservationData = useGetMemberPerformanced(memberId);
-  const reviewData = useGetMemberReview(memberId);
+  const reservationData = useGetMemberPerformance();
+  const pastReservationData = useGetMemberPerformanced();
+  const reviewData = useGetMemberReview();
 
   /** 로그아웃 및 main으로 페이지 이동 */
   const logoutHandler = () => {
@@ -48,14 +52,14 @@ export default function Mypage() {
           </S.Title>
 
           <S.ButtonWarppar>
-            <ButtonPrimary75px onClick={logoutHandler}>
+            <Button theme="primary" size="small" onClick={logoutHandler}>
               로그아웃
-            </ButtonPrimary75px>
+            </Button>
           </S.ButtonWarppar>
           <S.SubTitleWrappar>
             <S.SubTitle>나의 정보</S.SubTitle>
             <S.UserEditButtonWrappar>
-              <Link to={`/editmypage/${getCookie('userInfo').memberId}`}>
+              <Link to={`/editmypage/${getCookie('userInfo')?.memberId}`}>
                 <EditIcon />
               </Link>
             </S.UserEditButtonWrappar>
@@ -71,53 +75,53 @@ export default function Mypage() {
           {memberData?.hasArtist === true ? (
             <S.ButtonWarppar>
               <Link
-                to={`/artist/${getCookie('userInfo').artistId}`}
+                to={`/artist/${getCookie('userInfo')?.artistId}`}
                 style={{ textDecoration: 'none' }}
               >
-                <ButtonWithArrowDark
+                <ButtonWithArrow
+                  theme="theme"
+                  style={{ width: '140px' }}
                   text={'아티스트 페이지'}
-                ></ButtonWithArrowDark>
+                ></ButtonWithArrow>
               </Link>
             </S.ButtonWarppar>
           ) : (
             <S.ButtonWarppar>
               <Link to="/artistregist" style={{ textDecoration: 'none' }}>
-                <ButtonWithArrowDark
+                <ButtonWithArrow
+                  theme="theme"
                   text={'아티스트 등록'}
-                ></ButtonWithArrowDark>
+                ></ButtonWithArrow>
               </Link>
             </S.ButtonWarppar>
           )}
-          <S.SubTitle>예약 중인 공연</S.SubTitle>
-          {reservationData ? (
+          <S.SubTitle>예약한 공연</S.SubTitle>
+          {reservationData?.length ? (
             reservationData.map(reservationData => {
               return (
-                <Concertpreview
-                  performanceId={reservationData.performanceId}
+                <ReservationPreview
                   key={reservationData.performanceId}
-                  posterImg={reservationData.imageUrl}
-                  title={reservationData.title}
-                  artistName={reservationData.artistName}
-                  category={reservationData.category}
-                  price={reservationData.price}
-                  date={reservationData.date}
+                  {...reservationData}
                 />
               );
             })
           ) : (
             <S.EmptyContainer>
               <S.EmptyWrapper>
-                <S.EmptyTitle>현재 예약중인 공연이 없습니다.</S.EmptyTitle>
+                <S.EmptyTitle>예약중인 공연이 없습니다.</S.EmptyTitle>
                 <ConcertEmptyButton>
-                  <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                  <ButtonWithArrow
+                    theme="theme"
+                    onClick={() => navigate('/performances')}
+                    text="공연예약"
+                  ></ButtonWithArrow>
                 </ConcertEmptyButton>
               </S.EmptyWrapper>
             </S.EmptyContainer>
           )}
-
           <S.SubTitle>내가 관람한 공연</S.SubTitle>
           <S.ArtistreviewContainerWrappar>
-            {pastReservationData ? (
+            {pastReservationData?.length ? (
               pastReservationData.map(pastReservationData => {
                 return (
                   <ArtistreviewContainer
@@ -130,9 +134,13 @@ export default function Mypage() {
             ) : (
               <S.EmptyContainer>
                 <S.EmptyWrapper>
-                  <S.EmptyTitle>아직 관람한 공연이 없습니다.</S.EmptyTitle>
+                  <S.EmptyTitle>관람한 공연이 없습니다.</S.EmptyTitle>
                   <ConcertEmptyButton>
-                    <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                    <ButtonWithArrow
+                      theme="theme"
+                      onClick={() => navigate('/performances')}
+                      text="공연예약"
+                    ></ButtonWithArrow>
                   </ConcertEmptyButton>
                 </S.EmptyWrapper>
               </S.EmptyContainer>
@@ -140,11 +148,12 @@ export default function Mypage() {
           </S.ArtistreviewContainerWrappar>
           <S.MyreviewContainer>
             <S.SubTitle>내가 작성한 후기</S.SubTitle>
-            {reviewData ? (
+            {reviewData?.length ? (
               reviewData.map(reviewData => {
                 return (
                   <S.ReviewWrapper key={reviewData?.memberId}>
                     <Review
+                      reviewId={reviewData?.reviewId}
                       nickname={reviewData?.nickName}
                       createdAt={reviewData?.createdAt}
                       reviewTitle={reviewData?.reviewTitle}
@@ -158,7 +167,11 @@ export default function Mypage() {
                 <S.EmptyWrapper>
                   <S.EmptyTitle>아직 관람한 공연이 없습니다.</S.EmptyTitle>
                   <ConcertEmptyButton>
-                    <ButtonWithArrowDark text="공연예약"></ButtonWithArrowDark>
+                    <ButtonWithArrow
+                      theme="theme"
+                      onClick={() => navigate('/performances')}
+                      text="공연예약"
+                    ></ButtonWithArrow>
                   </ConcertEmptyButton>
                 </S.EmptyWrapper>
               </S.EmptyContainer>

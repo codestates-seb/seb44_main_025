@@ -26,7 +26,8 @@ export default {
   `,
   LogoImg: styled.img`
     position: relative;
-    width: 390px;
+    margin: 0 15px;
+    width: 360px;
     height: 150px;
     background-image: linear-gradient(#fff, #fff);
     object-fit: fill;
@@ -41,7 +42,7 @@ export default {
     position: relative;
     width: 100px;
     height: 100px;
-    margin-top: -40px;
+    margin-top: -50px;
     margin-left: 145px;
     border: 3px solid transparent;
     display: flex;

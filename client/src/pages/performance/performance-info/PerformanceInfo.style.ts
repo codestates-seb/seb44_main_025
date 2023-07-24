@@ -36,17 +36,6 @@ export const Container = styled.div`
   align-items: center;
   background-color: #1e1e1e;
 `;
-export const Main = styled.main`
-  width: 390px;
-  min-height: calc(100vh - 60px);
-  background-color: var(--theme-background-color);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-bottom: 70px;
-  color: white;
-`;
 export const CategoryContainer = styled.div`
   margin-top: 20px;
   display: flex;
@@ -64,6 +53,7 @@ export const Poster = styled.img`
   width: 170px;
   height: 210px;
   background-color: transparent;
+  object-fit: cover;
   &[src=''] {
     background-color: gray;
   }

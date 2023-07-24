@@ -1,47 +1,43 @@
 import { styled } from 'styled-components';
-import { EditorViewer } from '../inputs/editor/EditorViewer';
-import { useNavigate } from 'react-router-dom';
+import ReservationTicket from '../modal/ReservationTicket';
 import { useState } from 'react';
-import ReviewInfo from '../modal/review-info/ReviewInfo';
+import { PerformanceType } from '../../model/Performance';
 
-interface Reviewlist {
-  nickname: string;
-  reviewTitle: string;
-  artistId?: number;
-  content: string;
-  createdAt: string;
-  memberId?: number;
-  performanceId?: number;
-}
+// interface Reservationlist {
+//   nickname: string;
+//   reviewTitle: string;
+//   artistId?: number;
+//   content: string;
+//   createdAt: string;
+//   memberId?: number;
+// }
 
-export default function Review(props: any) {
-  const navigate = useNavigate();
+export default function ReservationPreview(reservation: PerformanceType) {
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <>
-      <S.ReviewWrapper
-        onClick={() => {
-          setIsOpen(!isOpen);
-        }}
-      >
-        <S.ReviewDetail>
-          <S.ReviewTitle>{props.reviewTitle}</S.ReviewTitle>
-          <EditorViewer content={props.content.replace(/<img[\s\S]*?>/g, '')} />
-          {/* <S.Reviewcontent>{props.content}</S.Reviewcontent>*/}
-          <S.ReviewBottom>
-            <S.UserNickname>{props.nickname}-</S.UserNickname>
-            <S.ReviewCreated>{props.createdAt}</S.ReviewCreated>
-          </S.ReviewBottom>
-        </S.ReviewDetail>
-      </S.ReviewWrapper>
-      {isOpen && <ReviewInfo review={props} onClick={() => setIsOpen(false)} />}
+      <S.ReservationWrapper onClick={() => setIsOpen(true)}>
+        <S.ReservationImage src={reservation.imageUrl} />
+        <S.ReservationDetail>
+          <S.ReservationTitle>{reservation.title}</S.ReservationTitle>
+          <S.ReservationBottom>
+            <S.Content>{reservation.place}-</S.Content>
+            <S.ReservationCreated>{reservation.date}</S.ReservationCreated>
+          </S.ReservationBottom>
+        </S.ReservationDetail>
+      </S.ReservationWrapper>
+      {isOpen && (
+        <ReservationTicket
+          reservation={reservation}
+          onClick={() => setIsOpen(false)}
+        />
+      )}
     </>
   );
 }
 
 const S = {
-  ReviewWrapper: styled.div`
+  ReservationWrapper: styled.div`
     width: 360px;
     height: 90px;
     background-color: var(--font-mid-color);
@@ -51,14 +47,15 @@ const S = {
     align-items: center;
     margin-left: 15px;
     margin-bottom: 10px;
-    cursor: pointer;
-    &:hover {
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12),
-        0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
-        0 16px 16px rgba(0, 0, 0, 0.12);
-    }
   `,
-  ReviewDetail: styled.div`
+  ReservationImage: styled.img`
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    margin-left: 15px;
+    border-radius: 100px;
+  `,
+  ReservationDetail: styled.div`
     margin-left: 25px;
     display: flex;
     flex-direction: column;
@@ -71,7 +68,7 @@ const S = {
       overflow: hidden;
     }
   `,
-  ReviewTitle: styled.header`
+  ReservationTitle: styled.header`
     font-size: var(--heading6-font-size);
     font-weight: var(--heading6-font-weight);
     line-height: var(--heading6-line-height);
@@ -79,7 +76,7 @@ const S = {
     /* color: var(--font-light-white-color); */
     /* color: var(--font-white-color); */
   `,
-  Reviewcontent: styled.p`
+  Reservationcontent: styled.p`
     width: 310px;
     font-size: var(--p-small-regular-font-size);
     font-weight: var(--p-small-regular-font-weight);
@@ -89,18 +86,18 @@ const S = {
     overflow: hidden; //넘치는 텍스트 숨기기
     text-overflow: ellipsis; //말줄임 기호(...)넣기
   `,
-  ReviewBottom: styled.div`
+  ReservationBottom: styled.div`
     display: flex;
     justify-content: flex-end;
   `,
-  UserNickname: styled.p`
+  Content: styled.p`
     font-size: var(--p-small-regular-font-size);
     font-weight: var(--p-small-regular-font-weight);
     line-height: var(--p-small-regular-line-height);
     color: var(--font-light-white-color);
     /* color: var(--font-white-color); */
   `,
-  ReviewCreated: styled.p`
+  ReservationCreated: styled.p`
     font-size: var(--p-small-regular-font-size);
     font-weight: var(--p-small-regular-font-weight);
     line-height: var(--p-small-regular-line-height);

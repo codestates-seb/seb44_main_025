@@ -8,12 +8,12 @@ export const Container = styled.div`
 `;
 export const Main = styled.main`
   width: 390px;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 120px);
   background-color: var(--theme-background-color);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding-bottom: 70px;
   color: white;
+  padding-bottom: 70px;
 `;

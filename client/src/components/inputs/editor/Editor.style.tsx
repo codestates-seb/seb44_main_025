@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
+// TODO: 두 EditorGlobalStyle 통합하기
 export const EditorGlobalStyle = createGlobalStyle`
   .quill {
     background-color: white;
@@ -23,7 +24,34 @@ export const EditorGlobalStyle = createGlobalStyle`
   iframe {
     width: 100%;
   }
+`;
 
+export const EditorReadonlyGlobalStyle = createGlobalStyle`
+  .quill {
+    background-color: transparent;
+    border: none;
+    width: 360px;
+    .ql-tooltip {
+      position: relative;
+      left: 0 !important;
+      top: 0 !important;
+      margin-right: auto;
+      margin-bottom: auto;
+      transform: translate(50px, -150px);
+      z-index:0;
+    }
+  & * {
+    font-family: 'Inter', Roboto, Arial, sans-serif;
+    color: white;
+    padding: 0px;
+  }
+  }
+  .ql-editor {
+    color: black;
+  }
+  iframe {
+    width: 100%;
+  }
 `;
 
 export const ViewerGlobalStyle = createGlobalStyle`
