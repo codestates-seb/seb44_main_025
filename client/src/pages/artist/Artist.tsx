@@ -6,7 +6,7 @@ import { ButtonWithArrowDark } from '../../components/buttons/Buttons';
 import EditIcon from '../../icons/EditIcon';
 import Concertpreview from '../../components/concert-preview/ConcertPreview';
 import ArtistreviewContainer from '../../components/artist/artistreviewcontainer';
-import Review from '../../components/review/Review';
+import Review from '../../components/review-preview/ReviewPreview';
 import Footer from '../../components/footer/Footer';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/nav/Navbar';
@@ -127,12 +127,7 @@ export default function Artistpage() {
               artistReviewData.map(artistReviewData => {
                 return (
                   <S.ReviewWrapper key={artistReviewData?.artistId}>
-                    <Review
-                      nickname={artistReviewData?.nickName}
-                      createdAt={artistReviewData?.createdAt}
-                      reviewTitle={artistReviewData?.reviewTitle}
-                      content={artistReviewData?.content}
-                    />
+                    <Review {...artistReviewData} />
                   </S.ReviewWrapper>
                 );
               })

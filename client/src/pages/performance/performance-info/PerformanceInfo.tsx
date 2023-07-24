@@ -1,7 +1,7 @@
 import * as S from './PerformanceInfo.style';
 import { Button } from '../../../components/buttons/Buttons';
 // import ArtistContainer from '../../components/artist/artistcontainer';
-import Review from '../../../components/review/Review';
+import Review from '../../../components/review-preview/ReviewPreview';
 import { useNavigate, useParams } from 'react-router-dom';
 import { EditorReadOnly } from '../../../components/inputs/editor/Editor';
 import ReservationModal from '../../../components/modal/Reservation';
