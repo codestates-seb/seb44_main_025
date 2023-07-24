@@ -1,6 +1,6 @@
 import SearchIcon from '../../icons/SearchIcon';
 import TicketIcon from '../../icons/TicketIcon';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PreviousIcon from '../../icons/PreviousIcon';
 import { Styled_Header } from './Header.styled';
 // import NoTicketModal from '../modal/NoTicket';
@@ -46,7 +46,9 @@ const Header = ({ precious }: OwnProps) => {
           ) : (
             <>
               <Styled_Header.LogoDiv>
-                <MainIcon height={60} />
+                <Link to="/">
+                  <MainIcon height={60} />
+                </Link>
               </Styled_Header.LogoDiv>
 
               <Styled_Header.Div>
