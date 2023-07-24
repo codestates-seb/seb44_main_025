@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 export default {
   Main: styled.main`
@@ -11,18 +13,29 @@ export default {
     width: 390px;
     min-height: calc(100vh - 60px);
     background-color: var(--theme-background-color);
+    ${DeviceQuery.tablet`
+      width: calc(390px * ${screenScale.tablet});
+      min-height: calc(100vh - (60px * ${screenScale.tablet}));
+   `}
   `,
   Title: styled.header`
     color: var(--font-white-color);
     ${FontStyle.heading1}
     overflow: hidden;
     margin: 20px 15px 10px 15px;
+    ${DeviceQuery.tablet`
+      margin: calc(20px * ${screenScale.tablet}) calc(15px * ${screenScale.tablet}) calc(10px * ${screenScale.tablet}) calc(15px * ${screenScale.tablet});
+   `}
   `,
   ButtonWarppar: styled.div`
     display: flex;
     justify-content: flex-end;
     margin-right: 15px;
     margin-bottom: 10px;
+    ${DeviceQuery.tablet`
+      margin-right: calc(15px * ${screenScale.tablet});
+      margin-bottom: calc(10vh - (60px * ${screenScale.tablet}));
+   `}
   `,
   LogoImg: styled.img`
     position: relative;
@@ -34,6 +47,10 @@ export default {
     &[src] {
       background-color: transparent;
     }
+    ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      height: calc(150px * ${screenScale.tablet});
+   `}
   `,
   FileInput: styled.input`
     display: none;
@@ -59,6 +76,12 @@ export default {
     z-index: 1;
     cursor: pointer;
     object-fit: scale-down;
+    ${DeviceQuery.tablet`
+      width: calc(100px * ${screenScale.tablet});
+      height: calc(100px * ${screenScale.tablet});
+      margin-top: calc(-50px * ${screenScale.tablet});
+      margin-left: calc(145px * ${screenScale.tablet});
+   `}
     &[src] {
       background-color: transparent;
     }
@@ -70,11 +93,22 @@ export default {
     justify-content: center;
     & > button:not(:first-child) {
       margin-left: 15px;
+      ${DeviceQuery.tablet`
+        margin-left: calc(35px * ${screenScale.tablet});
+      `}
     }
+    ${DeviceQuery.tablet`
+      margin: calc(20px * ${screenScale.tablet}) calc(0px * ${screenScale.tablet}) calc(20px * ${screenScale.tablet}) calc(0px * ${screenScale.tablet});
+      min-width: calc(360px * ${screenScale.tablet});
+   `}
   `,
   ArtistDetail: styled.div`
     margin-top: 20px;
     margin-bottom: 20px;
+    ${DeviceQuery.tablet`
+      margin-top: calc(20px * ${screenScale.tablet});
+      margin-bottom: calc(20px * ${screenScale.tablet});
+   `}
   `,
   SubTitle: styled.header`
     font-size: var(--heading5-font-size);
@@ -82,10 +116,17 @@ export default {
     line-height: var(--heading5-line-height);
     color: var(--font-white-color);
     padding: 10px 15px 10px 15px;
+    ${DeviceQuery.tablet`
+      padding: calc(10px * ${screenScale.tablet}) calc(15px * ${screenScale.tablet}) calc(10px * ${screenScale.tablet}) calc(15px * ${screenScale.tablet});
+   `}
   `,
   InputContainer: styled.div`
     margin-left: 15px;
     margin-bottom: 5px;
+    ${DeviceQuery.tablet`
+      margin-left: calc(15px * ${screenScale.tablet});
+      margin-bottom: calc(5px * ${screenScale.tablet});
+   `}
   `,
   InputLabel: styled.div`
     font-size: var(--p-large-medium-font-size);
@@ -94,9 +135,16 @@ export default {
     color: var(--font-white-color);
     margin-bottom: 5px;
     margin-left: 20px;
+    ${DeviceQuery.tablet`
+      margin-left: calc(20px * ${screenScale.tablet});
+      margin-bottom: calc(5px * ${screenScale.tablet});
+   `}
   `,
   ArtistIntrodution: styled.div`
     margin-top: 20px;
+    ${DeviceQuery.tablet`
+      margin-top: calc(20px * ${screenScale.tablet});
+   `}
   `,
   ArtistIntrodutionTextarea: styled.textarea`
     width: 360px;
@@ -108,5 +156,10 @@ export default {
     &:focus {
       border: 1.5px solid #8520ca;
     }
+    ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      heigth: calc(100px * ${screenScale.tablet});
+      padding: calc(10px * ${screenScale.tablet});
+   `}
   `,
 };

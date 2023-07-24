@@ -1,6 +1,8 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
 import { ReactComponent as FooterIcon } from '../../icons/EZ to play_8.svg';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 export default function Footer() {
   return (
@@ -32,19 +34,29 @@ export default function Footer() {
 
 const S = {
   FooterContainer: styled.div`
-    width: 390px;
+    /* width: 390px; */
     height: 150px;
     border-top: 2px solid var(--header-border-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0px 15px 0px 15px;
+
+    ${DeviceQuery.tablet`
+      width calc(390px * ${screenScale.tablet});
+      height: calc(150px * ${screenScale.tablet});
+      padding: calc(0px * ${screenScale.tablet}) calc(15px * ${screenScale.tablet}) calc(0px * ${screenScale.tablet}) calc(15px * ${screenScale.tablet});
+   `}
   `,
   FooterLogo: styled.img`
     width: 100px;
     height: 100px;
     display: flex;
     align-items: center;
+    ${DeviceQuery.tablet`
+       width: calc(100px * ${screenScale.tablet});
+       height: calc(100px * ${screenScale.tablet});
+   `}
   `,
   LogoDiv: styled.div`
     display: flex;
@@ -60,6 +72,9 @@ const S = {
     margin-bottom: 3px;
     display: flex;
     justify-content: flex-end;
+    ${DeviceQuery.tablet`
+      margin-bottom: calc(3px * ${screenScale.tablet});
+    `}
   `,
   FooterLink: styled.a`
     ${FontStyle.smallMedium};

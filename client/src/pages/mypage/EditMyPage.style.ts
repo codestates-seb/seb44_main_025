@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 export default {
   Main: styled.main`
@@ -11,6 +13,10 @@ export default {
     width: 390px;
     min-height: calc(100vh - 50px);
     background-color: var(--theme-background-color);
+    ${DeviceQuery.tablet`
+      width: calc(390px * ${screenScale.tablet});
+      min-height: calc(100vh - (50px * ${screenScale.tablet}));
+  `}
   `,
   Title: styled.header`
     color: var(--font-white-color);
@@ -24,11 +30,21 @@ export default {
     margin-right: 15px;
     margin-bottom: 10px;
     margin-top: -40px;
+    ${DeviceQuery.tablet`
+      margin-right: calc(15px * ${screenScale.tablet});
+      margin-bottom: calc(10px * ${screenScale.tablet});
+      margin-top: calc(-40px * ${screenScale.tablet});
+   `}
   `,
   ProfileImg: styled.img`
     width: 390px;
     height: 150px;
     padding: 0px 15px;
+    ${DeviceQuery.tablet`
+      width: calc(390px * ${screenScale.tablet});
+      height: calc(150px * ${screenScale.tablet});
+      padding: calc(0px 15px * ${screenScale.tablet});
+   `}
   `,
   UserImg: styled.img`
     position: relative;
@@ -53,6 +69,10 @@ export default {
   UserDetail: styled.div`
     margin-top: 20px;
     margin-bottom: 20px;
+    ${DeviceQuery.tablet`
+      margin-top: calc(20px * ${screenScale.tablet});
+      margin-bottom: calc(20px * ${screenScale.tablet});
+   `}
   `,
   SubTitle: styled.header`
     font-size: var(--heading5-font-size);
@@ -60,10 +80,17 @@ export default {
     line-height: var(--heading5-line-height);
     color: var(--font-white-color);
     padding: 10px 15px 10px 15px;
+    ${DeviceQuery.tablet`
+      padding: calc(10px * ${screenScale.tablet}) calc(15px * ${screenScale.tablet}) calc(10px * ${screenScale.tablet}) calc(15px * ${screenScale.tablet});
+   `}
   `,
   InputContainer: styled.div`
     margin-left: 15px;
     margin-bottom: 5px;
+    ${DeviceQuery.tablet`
+      margin-left: calc(15px * ${screenScale.tablet});
+      margin-bottom: calc(5px * ${screenScale.tablet});
+   `}
   `,
   InputLabel: styled.div`
     font-size: var(--p-large-medium-font-size);
@@ -72,6 +99,10 @@ export default {
     color: var(--font-white-color);
     margin-bottom: 5px;
     margin-left: 20px;
+    ${DeviceQuery.tablet`
+      margin-left: calc(20px * ${screenScale.tablet});
+      margin-bottom: calc(5px * ${screenScale.tablet});
+   `}
   `,
   HighlightButtonWarppar: styled.div`
     display: flex;
@@ -79,10 +110,18 @@ export default {
     margin-right: 15px;
     margin-top: 40px;
     margin-bottom: 20px;
+    ${DeviceQuery.tablet`
+      margin-left: calc(15px * ${screenScale.tablet});
+      margin-bottom: calc(20px * ${screenScale.tablet});
+      margin-top: calc(40px * ${screenScale.tablet});
+   `}
   `,
   DuplicateMeg: styled.p`
     margin-left: 15px;
     ${FontStyle.nav};
     color: var(--font-highlight-color);
+    ${DeviceQuery.tablet`
+      margin-left: calc(15px * ${screenScale.tablet});
+   `}
   `,
 };

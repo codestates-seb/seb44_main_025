@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import Header from '../components/header/Header';
+import { DeviceQuery } from '../utils/Media';
+import { screenScale } from '../utils/MediaSize';
 
 export default function Notfoundpage() {
   return (
@@ -27,6 +29,9 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: center;
+    ${DeviceQuery.tablet`
+      width: calc(390px * ${screenScale.tablet});
+  `}
   `,
   Title: styled.header`
     font-size: var(--heading1-font-size);

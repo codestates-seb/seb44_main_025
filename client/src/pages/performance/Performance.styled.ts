@@ -1,4 +1,6 @@
 import { styled } from 'styled-components';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 export const Container = styled.div`
   display: flex;
@@ -16,4 +18,8 @@ export const Main = styled.main`
   align-items: center;
   color: white;
   padding-bottom: 70px;
+  ${DeviceQuery.tablet`
+      width: calc(390px * ${screenScale.tablet});
+      min-height: calc(100vh - (120px * ${screenScale.tablet}));
+  `}
 `;

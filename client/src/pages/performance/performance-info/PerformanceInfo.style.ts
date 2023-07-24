@@ -1,4 +1,6 @@
 import { styled } from 'styled-components';
+import { DeviceQuery } from '../../../utils/Media';
+import { screenScale } from '../../../utils/MediaSize';
 
 export const ButtonHeadingContainer = styled.div`
   width: 360px;
@@ -12,6 +14,10 @@ export const ButtonHeadingContainer = styled.div`
       margin-right: 8px;
     }
   }
+  ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      margin-top: calc(20px * ${screenScale.tablet});
+  `}
 `;
 export const Heading1 = styled.h1`
   margin-right: auto;
@@ -29,6 +35,11 @@ export const Heading3 = styled.h3`
   font-size: var(--heading3-font-size);
   font-weight: var(--heading3-font-weight);
   line-height: var(--heading3-line-height);
+  ${DeviceQuery.tablet`
+      margin-bottom: calc(8px * ${screenScale.tablet});
+      margin-top: calc(20px * ${screenScale.tablet});
+      margin-left: calc(15px * ${screenScale.tablet});
+  `}
 `;
 export const Container = styled.div`
   display: flex;
@@ -41,6 +52,10 @@ export const CategoryContainer = styled.div`
   display: flex;
   min-width: 360px;
   justify-content: space-between;
+  ${DeviceQuery.tablet`
+      margin-top: calc(20px * ${screenScale.tablet});
+      min-width: calc(360px * ${screenScale.tablet});
+  `}
 `;
 export const SummaryContainer = styled.div`
   margin-top: 12px;
@@ -48,6 +63,10 @@ export const SummaryContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  ${DeviceQuery.tablet`
+       width: calc(360px * ${screenScale.tablet});
+       margin-top: calc(12px * ${screenScale.tablet});
+    `}
 `;
 export const Poster = styled.img`
   width: 170px;
@@ -57,6 +76,10 @@ export const Poster = styled.img`
   &[src=''] {
     background-color: gray;
   }
+  ${DeviceQuery.tablet`
+       width: calc(170px * ${screenScale.tablet});
+       height: calc(210px * ${screenScale.tablet});
+    `}
 `;
 // align-items: flex-start 왼쪽 정렬, flex-end 오른쪽 정렬
 export const Summary = styled.div`
@@ -72,6 +95,10 @@ export const Summary = styled.div`
     font-weight: var(--p-small-medium-font-weight);
     line-height: var(--p-small-medium-line-height);
   }
+  ${DeviceQuery.tablet`
+      width: calc(170px * ${screenScale.tablet});
+      height: calc(210px * ${screenScale.tablet});
+  `}
 `;
 export const TextContainer = styled.div`
   width: 360px;
@@ -79,11 +106,18 @@ export const TextContainer = styled.div`
   font-size: var(--p-small-medium-font-size);
   font-weight: var(--p-small-medium-font-weight);
   line-height: var(--p-small-medium-line-height);
+  ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+  `}
 `;
 export const Map = styled.div`
   width: 360px;
   height: 200px;
   background-color: gray;
+  ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      height: calc(200px * ${screenScale.tablet});
+  `}
 `;
 export const ReviewContainer = styled.div`
   width: 360px;
@@ -91,6 +125,10 @@ export const ReviewContainer = styled.div`
     margin: 0px 0px 8px 0px;
   }
   margin-bottom: 12px;
+  ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      margin-bottom: calc(12px * ${screenScale.tablet});
+  `}
 `;
 export const BottomStickyContainer = styled.div`
   width: 390px;
@@ -103,4 +141,7 @@ export const BottomStickyContainer = styled.div`
   & button {
     z-index: 1;
   }
+  ${DeviceQuery.tablet`
+      width: calc(390px * ${screenScale.tablet});
+  `}
 `;
