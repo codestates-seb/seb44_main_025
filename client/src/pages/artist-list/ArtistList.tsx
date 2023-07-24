@@ -44,7 +44,7 @@ const ArtistList = () => {
             )}
           </S.TitleButtonFlex>
           <S.CategoryContainer>
-            {Object.keys(categoryObj).map((key, idx) => {
+            {Object.keys(categoryObj)?.map((key, idx) => {
               return category && idx + 1 === +category ? (
                 <Button
                   theme="highlight"
@@ -75,9 +75,13 @@ const ArtistList = () => {
             })}
           </S.CategoryContainer>
           <S.ArtistContainer>
-            {data?.data.map(artist => (
-              <ArtistPreview key={artist.artistId} {...artist} />
-            ))}
+            {Array.isArray(data)
+              ? data?.map(artist => (
+                  <ArtistPreview key={artist.artistId} {...artist} />
+                ))
+              : data?.data?.map(artist => (
+                  <ArtistPreview key={artist.artistId} {...artist} />
+                ))}
           </S.ArtistContainer>
         </S.Main>
       </S.Container>

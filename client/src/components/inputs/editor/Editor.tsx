@@ -11,7 +11,13 @@ import { usePostArtistImg as postImg } from '../../../api/fetchAPI';
 // import ImageResize from 'quill-image-resize';
 // Quill.register('modules/ImageResize', ImageResize);
 
-export const Editor = ({ defaultValue }: { defaultValue?: string }) => {
+export const Editor = ({
+  defaultValue,
+  video = true,
+}: {
+  defaultValue?: string;
+  video?: boolean;
+}) => {
   const { content, changeContent, clearContent } = useEditorStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const onSubmitImg = (file: Blob) => {
@@ -49,7 +55,7 @@ export const Editor = ({ defaultValue }: { defaultValue?: string }) => {
             { indent: '-1' },
             { indent: '+1' },
           ],
-          ['link', 'image', 'video'],
+          video ? ['link', 'image', 'video'] : ['link', 'image'],
           ['clean'],
         ],
         handlers: {
@@ -62,20 +68,35 @@ export const Editor = ({ defaultValue }: { defaultValue?: string }) => {
   );
 
   const formats = useMemo(
-    () => [
-      'header',
-      'bold',
-      'italic',
-      'underline',
-      'strike',
-      'blockquote',
-      'list',
-      'bullet',
-      'indent',
-      'link',
-      'image',
-      'video',
-    ],
+    () =>
+      video
+        ? [
+            'header',
+            'bold',
+            'italic',
+            'underline',
+            'strike',
+            'blockquote',
+            'list',
+            'bullet',
+            'indent',
+            'link',
+            'image',
+            'video',
+          ]
+        : [
+            'header',
+            'bold',
+            'italic',
+            'underline',
+            'strike',
+            'blockquote',
+            'list',
+            'bullet',
+            'indent',
+            'link',
+            'image',
+          ],
     []
   );
   return (

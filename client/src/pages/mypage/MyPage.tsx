@@ -4,7 +4,7 @@ import Header from '../../components/header/Header';
 import { ButtonWithArrow, Button } from '../../components/buttons/Buttons';
 import EditIcon from '../../icons/EditIcon';
 import ReservationPreview from '../../components/reservation-preview/ReservationPreview';
-import ArtistreviewContainer from '../../components/artist/artistreviewcontainer';
+// import ArtistreviewContainer from '../../components/artist/artistreviewcontainer';
 import Review from '../../components/review/Review';
 import Footer from '../../components/footer/Footer';
 import Navbar from '../../components/nav/Navbar';
@@ -120,45 +120,36 @@ export default function Mypage() {
             </S.EmptyContainer>
           )}
           <S.SubTitle>내가 관람한 공연</S.SubTitle>
-          <S.ArtistreviewContainerWrappar>
-            {pastReservationData?.length ? (
-              pastReservationData.map(pastReservationData => {
-                return (
-                  <ArtistreviewContainer
-                    key={pastReservationData?.performanceId}
-                    imageUrl={pastReservationData?.imageUrl}
-                    content="후기등록"
-                  />
-                );
-              })
-            ) : (
-              <S.EmptyContainer>
-                <S.EmptyWrapper>
-                  <S.EmptyTitle>관람한 공연이 없습니다.</S.EmptyTitle>
-                  <ConcertEmptyButton>
-                    <ButtonWithArrow
-                      theme="theme"
-                      onClick={() => navigate('/performances')}
-                      text="공연예약"
-                    ></ButtonWithArrow>
-                  </ConcertEmptyButton>
-                </S.EmptyWrapper>
-              </S.EmptyContainer>
-            )}
-          </S.ArtistreviewContainerWrappar>
+          {pastReservationData?.length ? (
+            pastReservationData.map(pastReservationData => {
+              return (
+                <ReservationPreview
+                  key={pastReservationData?.performanceId}
+                  {...pastReservationData}
+                />
+              );
+            })
+          ) : (
+            <S.EmptyContainer>
+              <S.EmptyWrapper>
+                <S.EmptyTitle>관람한 공연이 없습니다.</S.EmptyTitle>
+                <ConcertEmptyButton>
+                  <ButtonWithArrow
+                    theme="theme"
+                    onClick={() => navigate('/performances')}
+                    text="공연예약"
+                  ></ButtonWithArrow>
+                </ConcertEmptyButton>
+              </S.EmptyWrapper>
+            </S.EmptyContainer>
+          )}
           <S.MyreviewContainer>
             <S.SubTitle>내가 작성한 후기</S.SubTitle>
             {reviewData?.length ? (
               reviewData.map(reviewData => {
                 return (
                   <S.ReviewWrapper key={reviewData?.memberId}>
-                    <Review
-                      reviewId={reviewData?.reviewId}
-                      nickname={reviewData?.nickName}
-                      createdAt={reviewData?.createdAt}
-                      reviewTitle={reviewData?.reviewTitle}
-                      content={reviewData?.content}
-                    />
+                    <Review {...reviewData} />
                   </S.ReviewWrapper>
                 );
               })

@@ -85,6 +85,9 @@ const PerformanceEdit = ({
       place: address,
       artistIds: [...artistIds],
       imageUrl: imgUrl,
+      performanceArtistId: Object.keys(
+        performance.performanceArtist.performanceArtistList
+      )[0],
     };
     patchPerformance(performance.performanceId, result)
       .then(data => {

@@ -1,4 +1,7 @@
 import { styled } from 'styled-components';
+import { FontStyle } from '../../../utils/Theme';
+import { DeviceQuery } from '../../../utils/Media';
+import { screenScale } from '../../../utils/MediaSize';
 
 export const ButtonHeadingContainer = styled.div`
   width: 360px;
@@ -16,9 +19,7 @@ export const ButtonHeadingContainer = styled.div`
 export const Heading1 = styled.h1`
   margin-right: auto;
   color: white;
-  font-size: var(--heading1-font-size);
-  font-weight: var(--heading1-font-weight);
-  line-height: var(--heading1-line-height);
+  ${FontStyle.heading1};
 `;
 export const Heading3 = styled.h3`
   margin-top: 20px;
@@ -26,9 +27,7 @@ export const Heading3 = styled.h3`
   margin-right: auto;
   margin-left: 15px;
   color: white;
-  font-size: var(--heading3-font-size);
-  font-weight: var(--heading3-font-weight);
-  line-height: var(--heading3-line-height);
+  ${FontStyle.heading3};
 `;
 export const Container = styled.div`
   display: flex;
@@ -41,6 +40,9 @@ export const CategoryContainer = styled.div`
   display: flex;
   min-width: 360px;
   justify-content: space-between;
+  ${DeviceQuery.tablet`
+  min-witdh: calc(360 * ${screenScale.tablet});
+`}
 `;
 export const SummaryContainer = styled.div`
   margin-top: 12px;

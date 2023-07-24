@@ -16,7 +16,7 @@ export const Container = styled.div`
 `;
 export const Main = styled.main`
   width: 390px;
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 120px);
   background-color: var(--theme-background-color);
   display: flex;
   flex-direction: column;

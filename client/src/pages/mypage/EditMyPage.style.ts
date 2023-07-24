@@ -23,7 +23,7 @@ export default {
     justify-content: flex-end;
     margin-right: 15px;
     margin-bottom: 10px;
-    margin-top: -40px;
+    margin-top: 40px;
   `,
   ProfileImg: styled.img`
     width: 390px;
@@ -77,7 +77,7 @@ export default {
     display: flex;
     justify-content: flex-end;
     margin-right: 15px;
-    margin-top: 40px;
+    margin-top: -40px;
     margin-bottom: 20px;
   `,
   DuplicateMeg: styled.p`

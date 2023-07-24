@@ -1,7 +1,11 @@
 import { styled } from 'styled-components';
 import ReservationTicket from '../modal/ReservationTicket';
 import { useState } from 'react';
-import { PerformanceType } from '../../model/Performance';
+import { getDateTime } from '../../utils/Format';
+import { useGetPerformance } from '../../api/useFetch';
+import { ButtonWithArrow } from '../buttons/Buttons';
+import { useNavigate } from 'react-router-dom';
+import { ReservationType } from '../../model/Reservation';
 
 // interface Reservationlist {
 //   nickname: string;
@@ -12,23 +16,35 @@ import { PerformanceType } from '../../model/Performance';
 //   memberId?: number;
 // }
 
-export default function ReservationPreview(reservation: PerformanceType) {
+export default function ReservationPreview(data: ReservationType) {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const reservation = useGetPerformance(data.performanceId);
   return (
     <>
       <S.ReservationWrapper onClick={() => setIsOpen(true)}>
-        <S.ReservationImage src={reservation.imageUrl} />
+        <S.ReservationImage src={reservation?.imageUrl} />
         <S.ReservationDetail>
-          <S.ReservationTitle>{reservation.title}</S.ReservationTitle>
+          <S.ReservationTitle>{reservation?.title}</S.ReservationTitle>
           <S.ReservationBottom>
-            <S.Content>{reservation.place}-</S.Content>
-            <S.ReservationCreated>{reservation.date}</S.ReservationCreated>
+            <S.Content>{reservation?.place}</S.Content>
+            <S.DateButtonContainer>
+              <S.ReservationCreated>
+                {getDateTime(reservation?.date as string).slice(0, 12)}
+              </S.ReservationCreated>
+              <ButtonWithArrow
+                theme="theme"
+                text="공연정보"
+                onClick={() => navigate(`/performances/${data.performanceId}`)}
+              />
+            </S.DateButtonContainer>
           </S.ReservationBottom>
         </S.ReservationDetail>
       </S.ReservationWrapper>
-      {isOpen && (
+      {isOpen && reservation && (
         <ReservationTicket
           reservation={reservation}
+          seatValue={data.seatValue}
           onClick={() => setIsOpen(false)}
         />
       )}
@@ -47,6 +63,12 @@ const S = {
     align-items: center;
     margin-left: 15px;
     margin-bottom: 10px;
+    cursor: pointer;
+    &:hover:not(:has(button:hover)) {
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12),
+        0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
+        0 16px 16px rgba(0, 0, 0, 0.12);
+    }
   `,
   ReservationImage: styled.img`
     width: 64px;
@@ -57,18 +79,18 @@ const S = {
   `,
   ReservationDetail: styled.div`
     margin-left: 25px;
+    width: 230px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    & pre {
-      max-width: 310px;
+    & :is(h6, p) {
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
       overflow: hidden;
     }
   `,
-  ReservationTitle: styled.header`
+  ReservationTitle: styled.h6`
     font-size: var(--heading6-font-size);
     font-weight: var(--heading6-font-weight);
     line-height: var(--heading6-line-height);
@@ -88,7 +110,12 @@ const S = {
   `,
   ReservationBottom: styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
+  `,
+  DateButtonContainer: styled.div`
+    display: flex;
+    justify-content: space-between;
   `,
   Content: styled.p`
     font-size: var(--p-small-regular-font-size);

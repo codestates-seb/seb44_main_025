@@ -1,4 +1,6 @@
 import { styled, css } from 'styled-components';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 const InputStyle = {
   dark: css`
@@ -97,6 +99,9 @@ export const InputContainer = styled.div<InputContainerType>`
   outline: none;
   width: ${props => (props.width ? `${props.width}px` : '360px')};
   height: ${props => (props.height ? `${props.height}px` : '48px')};
+  ${DeviceQuery.tablet`
+    width: calc(360px * ${screenScale.tablet});
+ `}
 
   & input {
     background-color: transparent;
@@ -130,6 +135,9 @@ export const InputFlexContainer = styled.div<InputFlexContainerType>`
   align-items: center;
   max-height: ${props => (props?.height ? `${props.height}px` : '48px')};
   max-width: 360px;
+  ${DeviceQuery.tablet`
+    max-width: calc(360px * ${screenScale.tablet});
+ `}
 
   & p,
   button {
