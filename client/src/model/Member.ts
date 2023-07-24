@@ -20,7 +20,7 @@ export interface Performance {
 }
 
 export interface Review {
-  nickName: string;
+  nickname: string;
   reviewTitle: string;
   artistId?: number;
   content: string;
@@ -28,6 +28,7 @@ export interface Review {
   memberId?: number;
   reviewId: number;
   date: string;
+  performanceId: number;
 }
 
 export interface SignUp {
