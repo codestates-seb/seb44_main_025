@@ -65,7 +65,7 @@ const Home = () => {
                 />
               </Link>
               <div>
-                <Link to="/" style={{ textDecorationLine: 'none' }}>
+                <Link to="/notyet" style={{ textDecorationLine: 'none' }}>
                   <MainPageButton
                     Height={60}
                     ImageUrl={mapImage}
