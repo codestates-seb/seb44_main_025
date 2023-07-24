@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
-import { FontStyle } from '../../../utils/Theme';
-import { DeviceQuery } from '../../../utils/Media';
-import { screenScale } from '../../../utils/MediaSize';
+import { FontStyle } from '../../../../utils/Theme';
+import { DeviceQuery } from '../../../../utils/Media';
+import { screenScale } from '../../../../utils/MediaSize';
 
 export default {
   ModalOverlay: styled.div`
@@ -52,6 +52,9 @@ export default {
     }
     & .quill {
       max-width: 285px;
+      ${DeviceQuery.tablet`
+      max-width: calc(285px * ${screenScale.tablet});
+    `}
       & * {
         color: white;
       }
@@ -63,6 +66,12 @@ export default {
  `}
       }
     }
+  `,
+  ButtonContainer: styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 15px;
+    gap: 8px;
   `,
   Heading1: styled.h1`
     margin-top: 20px;
