@@ -159,7 +159,7 @@ const PerformanceInfo = ({
           >
             {isStale
               ? '후기 작성'
-              : !performance.totalSeat
+              : performance.totalSeat
               ? '예약하기'
               : '매진'}
           </Button>
