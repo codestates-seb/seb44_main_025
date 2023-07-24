@@ -22,10 +22,12 @@ export const EditorGlobalStyle = createGlobalStyle`
       width: calc(360px * ${screenScale.tablet});
       min-height: calc(200px * ${screenScale.tablet});
     `}
+    & * {
+      color: black !important;
+    }
   }
   .ql-editor {
     min-height: 145px;
-    color: black;
     ${DeviceQuery.tablet`
       min-height: calc(145px * ${screenScale.tablet});
     `}
