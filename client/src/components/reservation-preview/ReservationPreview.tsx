@@ -7,15 +7,6 @@ import { ButtonWithArrow } from '../buttons/Buttons';
 import { useNavigate } from 'react-router-dom';
 import { ReservationType } from '../../model/Reservation';
 
-// interface Reservationlist {
-//   nickname: string;
-//   reviewTitle: string;
-//   artistId?: number;
-//   content: string;
-//   createdAt: string;
-//   memberId?: number;
-// }
-
 export default function ReservationPreview(data: ReservationType) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +34,7 @@ export default function ReservationPreview(data: ReservationType) {
       </S.ReservationWrapper>
       {isOpen && reservation && (
         <ReservationTicket
+          reservationId={data.reservationId}
           reservation={reservation}
           seatValue={data.seatValue}
           onClick={() => setIsOpen(false)}
