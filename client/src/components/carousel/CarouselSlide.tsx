@@ -1,15 +1,21 @@
 import { ButtonWithArrowLight } from '../buttons/Buttons';
 import { Link } from 'react-router-dom';
 import { Styled_CarouselSlide } from './CarouselSlide.styled';
+import { useGetArtist } from '../../api/useFetch';
 
 type OwnProps = {
   posterImg: string;
   title: string;
-  performanceArtist: number;
+  performanceArtist: {
+    performanceId: number;
+    performanceArtistList: {
+      [x: string | number]: number;
+    };
+  };
   category: string;
   price: number;
   date: string;
-  categoryId: number;
+  performanceId: number;
 };
 const CarouselSlide: React.FC<OwnProps> = ({
   posterImg,
@@ -18,9 +24,13 @@ const CarouselSlide: React.FC<OwnProps> = ({
   category,
   price,
   date,
-  categoryId,
+  performanceId,
 }) => {
   const concertDate = new Date(date);
+  const artist = useGetArtist(
+    Object.values(performanceArtist.performanceArtistList)[0]
+  );
+
   return (
     <>
       <Styled_CarouselSlide.Div>
@@ -31,7 +41,7 @@ const CarouselSlide: React.FC<OwnProps> = ({
               {title}
             </Styled_CarouselSlide.ConcertTitle>
             <Styled_CarouselSlide.Concertcontent>
-              {performanceArtist}
+              {artist?.artistName}
             </Styled_CarouselSlide.Concertcontent>
             <Styled_CarouselSlide.Concertcontent>
               {category}
@@ -43,7 +53,7 @@ const CarouselSlide: React.FC<OwnProps> = ({
               {concertDate.toLocaleDateString()}
             </Styled_CarouselSlide.Concertcontent>
             <Link
-              to={`/performances/${categoryId}`}
+              to={`/performances/${performanceId}`}
               style={{ textDecorationLine: 'none' }}
             >
               <ButtonWithArrowLight text={'공연예약'}></ButtonWithArrowLight>

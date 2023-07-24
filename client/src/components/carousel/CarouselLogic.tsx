@@ -87,11 +87,11 @@ const Main = () => {
                     <CarouselSlide
                       posterImg={v.imageUrl}
                       title={v.title}
-                      performanceArtist={v.performanceArtist.performanceId}
+                      performanceArtist={v.performanceArtist}
                       category={v.category}
                       price={v.price}
                       date={v.date}
-                      categoryId={v.categoryId}
+                      performanceId={v.performanceId}
                     />
                   </div>
                 );
@@ -101,13 +101,11 @@ const Main = () => {
                 <CarouselSlide
                   posterImg={carouselList[0].imageUrl}
                   title={carouselList[0].title}
-                  performanceArtist={
-                    carouselList[0].performanceArtist.performanceId
-                  }
+                  performanceArtist={carouselList[0].performanceArtist}
                   category={carouselList[0].category}
                   price={carouselList[0].price}
                   date={carouselList[0].date}
-                  categoryId={carouselList[0].categoryId}
+                  performanceId={carouselList[0].performanceId}
                 />
               </div>
             </>

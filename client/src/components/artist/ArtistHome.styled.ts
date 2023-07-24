@@ -29,12 +29,15 @@ export const Styled_ArtistHome = {
       margin-bottom: calc(10px * ${screenScale.tablet}); 
     `}
   `,
+  Profile: styled.div`
+    display: flex;
+    justify-content: center;
+  `,
   ArtistpreviewContainer: styled.div`
     width: 360px;
     height: 115px;
     display: flex;
     justify-content: space-between;
-    margin-left: 15px;
     ${DeviceQuery.tablet`
       width: calc(360px * ${screenScale.tablet}); 
       height: calc(115px * ${screenScale.tablet}); 
