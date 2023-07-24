@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../../utils/Theme';
+import { DeviceQuery } from '../../../utils/Media';
+import { screenScale } from '../../../utils/MediaSize';
 
 export default {
   ModalOverlay: styled.div`
@@ -15,6 +17,10 @@ export default {
     z-index: 99;
   `,
   Modal: styled.div`
+    ${DeviceQuery.tablet`
+    width: calc(300px * ${screenScale.tablet});
+    height: calc(500px * ${screenScale.tablet});
+ `}
     padding-top: 20px;
     gap: 8px;
     width: 300px;
@@ -51,6 +57,10 @@ export default {
       }
       & .ql-editor {
         padding-top: 5px;
+        ${FontStyle.smallRegular};
+        ${DeviceQuery.tablet`
+        ${FontStyle.largeRegular};
+ `}
       }
     }
   `,
@@ -66,6 +76,9 @@ export default {
     margin-right: auto;
     color: white;
     ${FontStyle.heading3};
+    ${DeviceQuery.tablet`
+    ${FontStyle.heading1};
+ `}
   `,
   Date: styled.p`
     ${FontStyle.smallMedium};
@@ -73,5 +86,8 @@ export default {
     &:before {
       content: '';
     }
+    ${DeviceQuery.tablet`
+    ${FontStyle.largeMedium};
+ `}
   `,
 };
