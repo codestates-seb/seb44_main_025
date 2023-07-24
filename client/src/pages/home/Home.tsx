@@ -11,8 +11,12 @@ import { useHomePage } from '../../zustand/homepage.stores';
 import axios from 'axios';
 import Navbar from '../../components/nav/Navbar';
 import { getCookie } from '../../utils/Cookie';
+import pianoImage from '../../images/pexels-emre-akyol-16822720.jpg';
+import stageImage from '../../images/pexels-monica-silvestre-713149.jpg';
+import mapImage from '../../images/pexels-nothing-ahead-9494909.jpg';
+import drumImage from '../../images/pexels-ricardo-rojas-3608804.jpg';
 
-const PUBLIC_URL = process.env.REACT_APP_PUBLIC_URL;
+const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
 const Home = () => {
   const { setCarouselList, setArtistList } = useHomePage();
@@ -22,17 +26,21 @@ const Home = () => {
   useEffect(() => {
     const getCarouselData = async () => {
       try {
-        const response = await axios.get('/dummy/main_perfomancelist.json');
+        const response = await axios.get(
+          `${SERVER_HOST}/performance?page=1&size=5`
+        );
         setCarouselList(response.data.data);
       } catch (error) {
         console.error(error);
       }
     };
+
     getCarouselData();
     const getArtistsData = async () => {
       try {
-        const response = await axios.get('/dummy/main_artistlist.json');
-        setArtistList(response.data.data);
+        const response = await axios.get(`${SERVER_HOST}/artist/all`);
+        const copy = response.data.splice(0, 4);
+        setArtistList(copy);
       } catch (error) {
         console.error(error);
       }
@@ -52,7 +60,7 @@ const Home = () => {
               <Link to="/performances" style={{ textDecorationLine: 'none' }}>
                 <MainPageButton
                   Height={140}
-                  ImageUrl={`${PUBLIC_URL}/피아노.webp`}
+                  ImageUrl={pianoImage}
                   Text="진행중인 공연"
                 />
               </Link>
@@ -60,7 +68,7 @@ const Home = () => {
                 <Link to="/" style={{ textDecorationLine: 'none' }}>
                   <MainPageButton
                     Height={60}
-                    ImageUrl={`${PUBLIC_URL}/pexels-nothing-ahead-9494909.jpg`}
+                    ImageUrl={mapImage}
                     Text="지도 검색"
                   />
                 </Link>
@@ -69,7 +77,7 @@ const Home = () => {
                     <Link to="/login" style={{ textDecorationLine: 'none' }}>
                       <MainPageButton
                         Height={60}
-                        ImageUrl={`${PUBLIC_URL}/pexels-ricardo-rojas-3608804.jpg`}
+                        ImageUrl={drumImage}
                         Text="아티스트 등록"
                       />
                     </Link>
@@ -80,7 +88,7 @@ const Home = () => {
                     >
                       <MainPageButton
                         Height={60}
-                        ImageUrl="./images/pexels-ricardo-rojas-3608804.jpg"
+                        ImageUrl={drumImage}
                         Text="아티스트 등록"
                       />
                     </Link>
@@ -92,7 +100,7 @@ const Home = () => {
                   >
                     <MainPageButton
                       Height={60}
-                      ImageUrl="./images/pexels-monica-silvestre-713149.jpg"
+                      ImageUrl={stageImage}
                       Text="공연 등록"
                     />
                   </Link>

@@ -93,8 +93,8 @@ const SignInPage = () => {
             linkedText="회원가입"
             marginTop={50}
           />
-          <GoogleButton naviUrl="/googlelogin" title="로그인" />
-          <GoogleButton naviUrl="/googlesignup" title="회원가입" />
+          {/* <GoogleButton naviUrl="/googlelogin" title="로그인" />
+          <GoogleButton naviUrl="/googlesignup" title="회원가입" /> */}
         </Styled_Sign.Container>
       </Styled_Sign.Main>
     </>

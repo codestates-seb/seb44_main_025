@@ -1,10 +1,10 @@
 import { PageInfo } from './Common';
 
 export interface ArtistData {
-  artistId: 1;
-  artistname: string;
-  artistImg?: string;
-  snslink: string;
+  artistId: number;
+  artistName: string;
+  imageUrl?: string;
+  snsLink: string;
   content: string;
 }
 
