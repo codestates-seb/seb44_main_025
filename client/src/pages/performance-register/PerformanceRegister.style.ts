@@ -1,4 +1,6 @@
 import { styled } from 'styled-components';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 export default {
   Heading1: styled.h1`
@@ -8,6 +10,9 @@ export default {
     font-size: var(--heading1-font-size);
     font-weight: var(--heading1-font-weight);
     line-height: var(--heading1-line-height);
+    ${DeviceQuery.tablet`
+      margin-left: calc(15px * ${screenScale.tablet});
+   `}
   `,
   Heading3: styled.h3`
     margin-top: 20px;
@@ -18,6 +23,11 @@ export default {
     font-size: var(--heading3-font-size);
     font-weight: var(--heading3-font-weight);
     line-height: var(--heading3-line-height);
+    ${DeviceQuery.tablet`
+      margin-top: calc(20px * ${screenScale.tablet});
+      margin-bottom: calc(8px * ${screenScale.tablet});
+      margin-left: calc(15px * ${screenScale.tablet});
+   `}
   `,
   Container: styled.div`
     display: flex;
@@ -34,6 +44,11 @@ export default {
     justify-content: flex-start;
     align-items: center;
     padding-bottom: 70px;
+    ${DeviceQuery.tablet`
+      width: calc(390px * ${screenScale.tablet});
+      padding-bottom: calc(70px * ${screenScale.tablet});
+      min-height: calc(100vh - (110px * ${screenScale.tablet}));
+   `}
   `,
   CategoryContainer: styled.div`
     margin-top: 20px;
@@ -42,7 +57,14 @@ export default {
     justify-content: flex-start;
     & > button:not(:first-child) {
       margin-left: 13px;
+      ${DeviceQuery.tablet`
+        margin-left: calc(13px * ${screenScale.tablet});
+      `}
     }
+    ${DeviceQuery.tablet`
+      margin-top: calc(20px * ${screenScale.tablet});
+      min-width: calc(360px * ${screenScale.tablet});
+   `}
   `,
   SummaryContainer: styled.div`
     margin-top: 12px;
@@ -51,6 +73,11 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    ${DeviceQuery.tablet`
+      margin-top: calc(12px * ${screenScale.tablet});
+      margin-bottom: calc(8px * ${screenScale.tablet});
+      width: calc(360px * ${screenScale.tablet});
+   `}
   `,
   FileInput: styled.input`
     display: none;
@@ -64,6 +91,10 @@ export default {
     &[src=''] {
       background-color: gray;
     }
+    ${DeviceQuery.tablet`
+      width: calc(170px * ${screenScale.tablet});
+      height: calc(210px * ${screenScale.tablet});
+   `}
   `,
   // align-items: flex-start 왼쪽 정렬, flex-end 오른쪽 정렬
   Form: styled.form`
@@ -74,6 +105,11 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    ${DeviceQuery.tablet`
+      width: calc(170px * ${screenScale.tablet});
+      height: calc(210px * ${screenScale.tablet});
+      padding-bottom: calc(8px * ${screenScale.tablet});
+   `}
     & label {
       color: white;
       font-size: var(--p-small-medium-font-size);
@@ -96,6 +132,10 @@ export default {
     outline: none;
     resize: vertical;
     padding: 1px;
+    ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      min-height: calc(150px * ${screenScale.tablet});
+   `}
   `,
   TitleButtonFlex: styled.div`
     margin-top: 20px;
@@ -103,6 +143,10 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      margin-top: calc(20px * ${screenScale.tablet});
+   `}
     & > h3 {
       margin-left: 0;
     }
@@ -111,12 +155,21 @@ export default {
     width: 360px;
     height: 200px;
     background-color: gray;
+    ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      height: calc(200px * ${screenScale.tablet});
+   `}
   `,
   Image: styled.div`
     width: 360px;
     height: 210px;
     background-color: gray;
     margin-bottom: 20px;
+    ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      height: calc(210px * ${screenScale.tablet});
+      margin-bottom: calc(20px * ${screenScale.tablet});
+   `}
   `,
   BottomStickyContainer: styled.div`
     width: 390px;
@@ -129,5 +182,9 @@ export default {
     & button {
       z-index: 1;
     }
+    ${DeviceQuery.tablet`
+      width: calc(390px * ${screenScale.tablet});
+      bottom: calc(70px * ${screenScale.tablet});
+   `}
   `,
 };

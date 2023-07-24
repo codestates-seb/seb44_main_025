@@ -140,5 +140,6 @@ export const BottomStickyContainer = styled.div`
   }
   ${DeviceQuery.tablet`
       width: calc(390px * ${screenScale.tablet});
+      bottom: calc(70px * ${screenScale.tablet});
   `}
 `;

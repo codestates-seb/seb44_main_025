@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { Input } from '../inputs/Inputs';
 import { ReactComponent as ArrowIcon } from '../../icons/icon_right.svg';
 import { useGetArtist } from '../../api/useFetch';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 export default function ReservationModal({
   performance,
@@ -135,6 +137,12 @@ const S = {
     flex-direction: column;
     padding-top: 20px;
     gap: 12px;
+    ${DeviceQuery.tablet`
+      width: calc(300px * ${screenScale.tablet});
+      height: calc(500px * ${screenScale.tablet});
+      padding-top: calc(20px * ${screenScale.tablet});
+      gap: calc(12px * ${screenScale.tablet});
+   `}
     & svg {
       cursor: pointer;
       position: absolute;
@@ -142,12 +150,20 @@ const S = {
       left: 10px;
       stroke: white;
       transform: rotate(180deg);
+      ${DeviceQuery.tablet`
+        top: calc(10px * ${screenScale.tablet});
+        left: calc(10px * ${screenScale.tablet});
+      `}
     }
   `,
   TicketImg: styled.img`
     width: 150px;
     height: 200px;
     object-fit: cover;
+    ${DeviceQuery.tablet`
+        width: calc(150px * ${screenScale.tablet});
+        height: calc(200px * ${screenScale.tablet});
+      `}
   `,
   TicketDetail: styled.div`
     display: flex;
@@ -176,5 +192,8 @@ const S = {
     width: 250px;
     display: flex;
     justify-content: space-evenly;
+    ${DeviceQuery.tablet`
+        width: calc(250px * ${screenScale.tablet});
+      `}
   `,
 };

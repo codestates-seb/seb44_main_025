@@ -29,16 +29,12 @@ export default {
     justify-content: flex-end;
     margin-right: 15px;
     margin-bottom: 10px;
-<<<<<<< HEAD
-    margin-top: -40px;
+    margin-top: 40px;
     ${DeviceQuery.tablet`
       margin-right: calc(15px * ${screenScale.tablet});
       margin-bottom: calc(10px * ${screenScale.tablet});
-      margin-top: calc(-40px * ${screenScale.tablet});
+      margin-top: calc(40px * ${screenScale.tablet});
    `}
-=======
-    margin-top: 40px;
->>>>>>> dev
   `,
   ProfileImg: styled.img`
     width: 390px;
