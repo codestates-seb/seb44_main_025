@@ -145,10 +145,13 @@ export default function Editmypage() {
           </S.Title>
           <S.UserDetail>
             <S.SubTitle>로그인 아이디</S.SubTitle>
+            <S.HighlightButtonWarppar>
+              <Link to="/cancel">
+                <ButtonHighlightBorder>회원탈퇴</ButtonHighlightBorder>
+              </Link>
+            </S.HighlightButtonWarppar>
+
             <form onSubmit={handleSubmit(onSubmit)}>
-              <S.ButtonWarppar>
-                <ButtonPrimary75px>수정</ButtonPrimary75px>
-              </S.ButtonWarppar>
               <S.InputContainer>
                 <S.InputLabel>닉네임</S.InputLabel>
                 <Controller
@@ -242,13 +245,10 @@ export default function Editmypage() {
                   }}
                 />
               </S.InputContainer>
+              <S.ButtonWarppar>
+                <ButtonPrimary75px>수정</ButtonPrimary75px>
+              </S.ButtonWarppar>
             </form>
-
-            <S.HighlightButtonWarppar>
-              <Link to="/cancel">
-                <ButtonHighlightBorder>회원탈퇴</ButtonHighlightBorder>
-              </Link>
-            </S.HighlightButtonWarppar>
           </S.UserDetail>
         </S.Section>
       </S.Main>

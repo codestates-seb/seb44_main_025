@@ -1,6 +1,6 @@
 import { PerformanceListType, PerformanceType } from '../model/Performance';
 import { ArtistList, Artist, ArtistReview } from '../model/Artist';
-import { Member, Performance, Review } from '../model/Member';
+import { Member, Review } from '../model/Member';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getCookie, removeCookie, setCookie } from '../utils/Cookie';
