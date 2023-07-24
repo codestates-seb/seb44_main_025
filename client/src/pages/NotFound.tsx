@@ -3,13 +3,17 @@ import Header from '../components/header/Header';
 import { DeviceQuery } from '../utils/Media';
 import { screenScale } from '../utils/MediaSize';
 
-export default function Notfoundpage() {
+interface NotfoundpageProps {
+  message: string;
+}
+
+export default function Notfoundpage({ message }: NotfoundpageProps) {
   return (
     <>
       <Header precious={true} />
       <S.Main>
         <S.Section>
-          <S.Title>페이지를 찾을 수 없습니다.</S.Title>
+          <S.Title>{message}</S.Title>
         </S.Section>
       </S.Main>
     </>

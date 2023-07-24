@@ -21,15 +21,11 @@ import GoogleSignUp from './pages/sign/GoogleSignUp';
 import GoogleSignin from './pages/sign/GoogleSignin';
 import { Performance } from './pages/performance/Performance';
 
-/** @todo 도메인 주소 입력 */
-// axios.defaults.baseURL = '';
-// axios.defaults.withCredentials = true;
-
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <Notfoundpage />,
+    errorElement: <Notfoundpage message="페이지를 찾을 수 없습니다." />,
     children: [
       { index: true, element: <Home /> },
       {
@@ -80,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: '/cancel',
         element: <Cancel />,
+      },
+      {
+        path: '/notyet',
+        element: <Notfoundpage message="페이지 준비 중..." />,
       },
       // {
       //   path: '/googlelogin',
