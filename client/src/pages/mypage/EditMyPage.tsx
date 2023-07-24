@@ -51,7 +51,7 @@ export default function Editmypage() {
   }, [memberNickname, setValue]);
 
   useEffect(() => {
-    if (memberId && getCookie('userInfo').memberId !== +memberId) {
+    if (memberId && getCookie('userInfo')?.memberId !== +memberId) {
       alert('권한 접근이 없습니다.');
       navigate('/');
       return;
