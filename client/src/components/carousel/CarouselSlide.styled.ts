@@ -12,6 +12,7 @@ export const Styled_CarouselSlide = {
     filter: blur(5px);
     z-index: -1;
     position: relative;
+    opacity: 0.5;
     ${DeviceQuery.tablet`
       width: calc(390px * ${screenScale.tablet});
       height: calc(180px * ${screenScale.tablet});
@@ -54,11 +55,11 @@ export const Styled_CarouselSlide = {
     `}
   `,
   ConcertTitle: styled.header`
-    ${FontStyle.heading6}
+    ${FontStyle.heading5}
     color: var(--font-white-color);
   `,
   Concertcontent: styled.p`
-    ${FontStyle.smallRegular}
+    ${FontStyle.heading6}
     color: var(--font-light-white-color);
   `,
 };

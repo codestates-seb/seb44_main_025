@@ -15,26 +15,28 @@ export default function ArtistHome() {
         <Styled_ArtistHome.veiwAll>전체보기</Styled_ArtistHome.veiwAll>
       </Link>
 
-      <Styled_ArtistHome.ArtistpreviewContainer>
-        {artistList.map((v: ArtistData, i) => {
-          return (
-            <Link
-              to={`/artistpage/${v.artistId}`}
-              style={{ textDecorationLine: 'none' }}
-              key={i}
-            >
-              <Styled_ArtistHome.ArtistpreviewWrapper>
-                <Styled_ArtistHome.ArtistImg src={v.artistImg} />
-                <Styled_ArtistHome.ArtistDetail>
-                  <Styled_ArtistHome.Artistcontent>
-                    {v.artistname}
-                  </Styled_ArtistHome.Artistcontent>
-                </Styled_ArtistHome.ArtistDetail>
-              </Styled_ArtistHome.ArtistpreviewWrapper>
-            </Link>
-          );
-        })}
-      </Styled_ArtistHome.ArtistpreviewContainer>
+      <Styled_ArtistHome.Profile>
+        <Styled_ArtistHome.ArtistpreviewContainer>
+          {artistList.map((v: ArtistData, i) => {
+            return (
+              <Link
+                to={`/artist/${v.artistId}`}
+                style={{ textDecorationLine: 'none' }}
+                key={i}
+              >
+                <Styled_ArtistHome.ArtistpreviewWrapper>
+                  <Styled_ArtistHome.ArtistImg src={v.imageUrl} />
+                  <Styled_ArtistHome.ArtistDetail>
+                    <Styled_ArtistHome.Artistcontent>
+                      {v.artistName}
+                    </Styled_ArtistHome.Artistcontent>
+                  </Styled_ArtistHome.ArtistDetail>
+                </Styled_ArtistHome.ArtistpreviewWrapper>
+              </Link>
+            );
+          })}
+        </Styled_ArtistHome.ArtistpreviewContainer>
+      </Styled_ArtistHome.Profile>
     </Styled_ArtistHome.ArtistpreviewMain>
   );
 }
