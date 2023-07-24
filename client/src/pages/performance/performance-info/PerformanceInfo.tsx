@@ -144,7 +144,7 @@ const PerformanceInfo = ({
           <Button
             theme="primary"
             size="large"
-            disabled={!performance.totalSeat}
+            disabled={performance.totalSeat === 0 && !isStale}
             onClick={() => {
               if (!isLoggedIn) {
                 navigate('/login');
@@ -159,7 +159,7 @@ const PerformanceInfo = ({
           >
             {isStale
               ? '후기 작성'
-              : performance.totalSeat
+              : !performance.totalSeat
               ? '예약하기'
               : '매진'}
           </Button>
