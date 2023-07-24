@@ -1,26 +1,40 @@
 import { css } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 export const ButtonSizeStyle = {
   mini: css`
     width: 40px;
     height: 34px;
     ${FontStyle.smallMedium}
+    ${DeviceQuery.tablet`
+    width: calc(40px * ${screenScale.tablet});
+ `}
   `,
   small: css`
     width: 75px;
     height: 36px;
     ${FontStyle.smallMedium}
+    ${DeviceQuery.tablet`
+    width: calc(75px * ${screenScale.tablet});
+ `}
   `,
   medium: css`
     width: 160px;
     height: 48px;
     ${FontStyle.smallMedium}
+    ${DeviceQuery.tablet`
+    width: calc(160px * ${screenScale.tablet});
+ `}
   `,
   large: css`
     width: 360px;
     height: 50px;
     ${FontStyle.largeMedium}
+    ${DeviceQuery.tablet`
+    width: calc(360px * ${screenScale.tablet});
+ `}
   `,
 };
 
