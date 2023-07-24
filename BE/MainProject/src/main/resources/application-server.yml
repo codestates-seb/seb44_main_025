@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://database-2.ck5bd9dlr8hl.ap-northeast-2.rds.amazonaws.com:3306/demo?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: admin
+    password: admin1234!
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+cloud:
+  aws:
+    credentials:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
+    s3:
+      bucket: eztoplay-aws-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+jwt:
+  key: jwt025123412341234123412341234123412341234123412341234
+  access-token-expiration-minutes: 400
+  refresh-token-expiration-minutes: 420
+mail:
+  address:
+    admin: gustn5309@naver.com
+security:
+  oauth2:
+    client:
+      registration:
+        google:
+          clientId: 630258186407-njojpj9hhi0eepqad4dnk48nv8qb1fm0.apps.googleusercontent.com
+          clientSecret: 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
+          scope:
+            - email
+            - profile
