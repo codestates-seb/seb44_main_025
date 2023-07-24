@@ -3,6 +3,7 @@ package com.codestates.performancereview.entity;
 import com.codestates.member.Member;
 import com.codestates.performance.entity.Performance;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "review")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +30,9 @@ public class Review {
     private String reviewTitle;
     @Column(nullable = false)
     private LocalDateTime date;
+
+    public Review(String content, String reviewTitle){
+        this.content = content;
+        this.reviewTitle = reviewTitle;
+    }
 }

@@ -34,7 +34,7 @@ public class ReviewController {
         this.reviewService = reviewService;
         this.reviewMapperImpl = reviewMapperImpl;
     }
-    @PostMapping("/{performanceId}")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ReviewDto.ReviewResponse> createReview(@RequestBody ReviewDto.ReviewPost reviewPost,
                                                                  Authentication authentication) throws AccessDeniedException {
@@ -46,9 +46,10 @@ public class ReviewController {
     @PatchMapping("/{performanceId}/{reviewId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ReviewDto.ReviewResponse> updateReview(@PathVariable("reviewId") long reviewId,
+                                                                 @PathVariable("performanceId") long performanceId,
                                                                  @RequestBody @Valid ReviewDto.ReviewUpdate reviewUpdate,
                                                                  Authentication authentication) {
-        ReviewDto.ReviewResponse responseDto = reviewService.updateReview(reviewId, reviewUpdate, authentication);
+        ReviewDto.ReviewResponse responseDto = reviewService.updateReview(reviewId, performanceId, reviewUpdate, authentication);
         return ResponseEntity.ok(responseDto);
     }
 
@@ -78,7 +79,7 @@ public class ReviewController {
     }
     //아티스트의 전체리뷰 조회
     @GetMapping("/artistPage/{artistId}")
-    public ResponseEntity<List<ReviewDto.ReviewResponse>> getArtistReviews(long artistId) {
+    public ResponseEntity<List<ReviewDto.ReviewResponse>> getArtistReviews(@PathVariable("artistId") long artistId) {
         List<ReviewDto.ReviewResponse> responseDtoList = reviewService.getArtistAllReviews(artistId);
 
         if (responseDtoList.isEmpty()) {

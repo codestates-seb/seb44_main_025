@@ -28,6 +28,7 @@ public class ReservationDto {
         private Reservation.ReservationStatus reservationStatus;
         private long seatValue;
         private int price;
+        private String imageUrl;
     }
     @Getter
         @Setter

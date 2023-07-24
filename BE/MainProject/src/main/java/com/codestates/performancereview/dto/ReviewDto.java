@@ -19,9 +19,6 @@ public class ReviewDto {
     private Long performanceId;
     private String nickName;
     @NotBlank(message = "내용이 작성되지 않았습니다.")
-    @Size(min = 5, message = "최소 5글자 이상 입력해주세요.")
-    private String title;
-    @NotBlank(message = "내용이 작성되지 않았습니다.")
     private String content;
     private String imageUrl;
     private LocalDateTime date;
@@ -46,8 +43,7 @@ public class ReviewDto {
     @Setter
     @Builder
     public static class ReviewUpdate {
-        private long reviewId;
-        private long performanceId;
+
         @NotBlank(message = "리뷰 제목이 작성되지 않았습니다.")
         @Size(min = 5, message = "최소 5글자 이상 입력해주세요.")
         private String reviewTitle;

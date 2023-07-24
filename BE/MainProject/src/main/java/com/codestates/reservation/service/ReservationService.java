@@ -88,15 +88,20 @@ public class ReservationService {
         Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
 
+
         Optional<Reservation> optionalReservation = reservationRepository.findById(reservationId);
         Reservation reservation = optionalReservation.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.RESERVATION_NOT_FOUND));
+        Performance performance = reservation.getPerformance();
 
         if (reservation.getMember().getMemberId() != memberId) {
             new BusinessLogicException(ExceptionCode.MEMBER_NOT_CORRECT);
         }
-        return reservationMapper.reservationToReservationResponseDto(reservation);
+        ReservationDto.ReservationResponseDto result = reservationMapper.reservationToReservationResponseDto(reservation);
+        result.setImageUrl(performance.getImageUrl());
+        return result;
     }
+
     //회원의 모든 예약정보 불러오기
     public List<ReservationDto.ReservationResponseDto> getMyReservations(long memberId, Performance.PERFORMANCE_STATUS status){
         Member member = memberService.findMember(memberId);

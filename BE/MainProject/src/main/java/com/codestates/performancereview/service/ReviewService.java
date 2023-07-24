@@ -119,11 +119,12 @@ public class ReviewService {
 
     }
 
-    public ReviewDto.ReviewResponse updateReview(long reviewId, ReviewDto.ReviewUpdate reviewUpdate, Authentication authentication) {
+    public ReviewDto.ReviewResponse updateReview(long reviewId, long performanceId, ReviewDto.ReviewUpdate reviewUpdate, Authentication authentication) {
         Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
+
         Member member = memberService.findVerifiedMember(memberId);
-        Performance performance = performanceRepository.findById(reviewUpdate.getPerformanceId())
+        Performance performance = performanceRepository.findById(performanceId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
 
         Review review = reviewRepository.findById(reviewId)
@@ -131,6 +132,9 @@ public class ReviewService {
 
         review.setReviewTitle(reviewUpdate.getReviewTitle());
         review.setContent(reviewUpdate.getContent());
+        review.setMember(member);
+        review.setPerformance(performance);
+        review.setDate(performance.getDate());
 
         Review updatedReview = reviewRepository.save(review);
         return reviewMapperImpl.toResponseDto(updatedReview);
