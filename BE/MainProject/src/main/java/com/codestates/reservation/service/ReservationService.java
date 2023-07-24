@@ -107,15 +107,10 @@ public class ReservationService {
 
         //공연이 진행중일때
         for(int i =0;i<reservations.size();i++) {
-            //공연이 진행중일때
-            if (!status.isCompleted()&&LocalDateTime.now().isAfter(reservations.get(i).getPerformance().getDate())) {
-
+            if (status.isCompleted()&&LocalDateTime.now().isAfter(reservations.get(i).getPerformance().getDate())) {
                     findReservations.add(reservations.get(i));
-
-            } else if (status.isCompleted()&&LocalDateTime.now().isBefore(reservations.get(i).getPerformance().getDate())) {
-
+            } else if (!status.isCompleted()&&LocalDateTime.now().isBefore(reservations.get(i).getPerformance().getDate())) {
                     findReservations.add(reservations.get(i));
-
             }
         }
         List<ReservationDto.ReservationResponseDto> response =
