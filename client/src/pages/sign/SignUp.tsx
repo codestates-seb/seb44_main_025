@@ -304,7 +304,7 @@ const SignUpPage = () => {
             linkedText="로그인"
             marginTop={50}
           />
-          <GoogleButton naviUrl="/googlesignup" title="회원가입" />
+          {/* <GoogleButton naviUrl="/googlesignup" title="회원가입" /> */}
         </Styled_Sign.Container>
       </Styled_Sign.Main>
     </>
