@@ -30,22 +30,22 @@ const PerformanceList = () => {
   };
   const data = useGetPerformances(category, isStale, page, size);
   const isLoggedIn = getCookie('accessToken');
-  useEffect(() => {
-    let observer: IntersectionObserver;
-    observer = new IntersectionObserver(
-      () => {
-        setPage(
-          Math.min(
-            page + 1,
-            data?.pageInfo.total_pages || Number.MAX_SAFE_INTEGER
-          )
-        );
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(targetRef.current as Element);
-    return () => observer && observer.disconnect();
-  }, []);
+  // useEffect(() => {
+  //   let observer: IntersectionObserver;
+  //   observer = new IntersectionObserver(
+  //     () => {
+  //       setPage(
+  //         Math.min(
+  //           page + 1,
+  //           data?.pageInfo.total_pages || Number.MAX_SAFE_INTEGER
+  //         )
+  //       );
+  //     },
+  //     { threshold: 0.1 }
+  //   );
+  //   observer.observe(targetRef.current as Element);
+  //   return () => observer && observer.disconnect();
+  // }, []);
   return (
     <>
       <Header />
