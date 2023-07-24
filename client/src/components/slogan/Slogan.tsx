@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Styled_Slogan } from './Slogan.styled';
 import { useUserInfo } from '../../zustand/userInfo.stores';
+import performanceRegistrationImage from '../../images/dd28119305b114d0.png';
+import artistRegistrationImage from '../../images/7955f4c5e4d540fb.png';
 
 const Slogan = () => {
   let [movement, setMovement] = useState(0);
@@ -60,14 +62,14 @@ const Slogan = () => {
               : '/login'
           }
         >
-          <Styled_Slogan.Img src="./images/dd28119305b114d0.png" />
+          <Styled_Slogan.Img src={performanceRegistrationImage} />
         </a>
         <a
           href={
             userInfo_zustand?.hasArtist === false ? '/artistregist' : '/login'
           }
         >
-          <Styled_Slogan.Img src="./images/7955f4c5e4d540fb.png" />
+          <Styled_Slogan.Img src={artistRegistrationImage} />
         </a>
         <a
           href={
@@ -78,7 +80,7 @@ const Slogan = () => {
               : '/login'
           }
         >
-          <Styled_Slogan.Img src="./images/dd28119305b114d0.png" />
+          <Styled_Slogan.Img src={performanceRegistrationImage} />
         </a>
       </Styled_Slogan.ImgGroup>
     </Styled_Slogan.Container>
