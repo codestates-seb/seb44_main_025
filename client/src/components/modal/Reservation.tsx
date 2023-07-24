@@ -28,7 +28,8 @@ export default function ReservationModal({
     postReservation(body).then(data => {
       if (data) {
         alert('예약이 완료되었습니다.');
-        closeModal();
+        location.reload();
+        // closeModal();
       }
     });
   };
@@ -58,7 +59,7 @@ export default function ReservationModal({
           {/* TODO: 날짜, 숫자 형식 함수 만들기 */}
           <S.Ticketcontent>{getDateTime(performance.date)}</S.Ticketcontent>
           <S.Ticketcontent>
-            ₩{performance.price?.toLocaleString()}
+            ₩{(performance.price * +seatValue)?.toLocaleString()}
           </S.Ticketcontent>
           {isConfirmed && <S.Ticketcontent>{seatValue}석</S.Ticketcontent>}
         </S.TicketDetail>
