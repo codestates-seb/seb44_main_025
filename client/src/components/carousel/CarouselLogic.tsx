@@ -3,7 +3,6 @@ import { useHomePage } from '../../zustand/homepage.stores';
 import CarouselSlide from './CarouselSlide';
 import { Styled_CarouselLogic } from './CarouselLogic.styled';
 import { PerformanceType } from '../../model/Performance';
-import { useGetArtist } from '../../api/useFetch';
 
 const Main = () => {
   let [movementWidth, setMovementWidth] = useState(0);
@@ -83,11 +82,6 @@ const Main = () => {
             <>
               {/* 슬라이드 리스트 */}
               {carouselList.map((v: PerformanceType, i) => {
-                // const artist = useGetArtist(
-                //   Object.values(v.performanceArtist.performanceArtistList)[0]
-                // );
-                // console.log(artist);
-
                 return (
                   <div key={i}>
                     <CarouselSlide
