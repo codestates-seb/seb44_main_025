@@ -7,16 +7,17 @@ import Header from '../../components/header/Header';
 import { useGetPerformances } from '../../api/useFetch';
 import { categoryObj } from '../../utils/Category';
 import Navbar from '../../components/nav/Navbar';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { getCookie } from '../../utils/Cookie';
 import { H1Title } from '../../theme/common/SlideUp';
 
 const PerformanceList = () => {
+  const targetRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get('category');
-  const page = searchParams.get('page');
-  const size = searchParams.get('size');
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(200);
   const [isStale, setIsStale] = useState<boolean | null>(null);
   const handleClickCategory = (id: string) => {
     if (category === id) {
@@ -29,7 +30,22 @@ const PerformanceList = () => {
   };
   const data = useGetPerformances(category, isStale, page, size);
   const isLoggedIn = getCookie('accessToken');
-  // TODO: 공연 일정 경과 여부 필터링 로직 추가하기
+  useEffect(() => {
+    let observer: IntersectionObserver;
+    observer = new IntersectionObserver(
+      () => {
+        setPage(
+          Math.min(
+            page + 1,
+            data?.pageInfo.total_pages || Number.MAX_SAFE_INTEGER
+          )
+        );
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(targetRef.current as Element);
+    return () => observer && observer.disconnect();
+  }, []);
   return (
     <>
       <Header />
@@ -123,6 +139,7 @@ const PerformanceList = () => {
               />
             ))}
           </S.PerformanceContainer>
+          <div ref={targetRef} />
         </S.Main>
       </S.Container>
       <Navbar />
