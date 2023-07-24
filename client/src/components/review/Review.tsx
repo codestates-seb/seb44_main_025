@@ -3,6 +3,7 @@ import { EditorViewer } from '../inputs/editor/EditorViewer';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import ReviewInfo from '../modal/review-info/ReviewInfo';
+import { getDateTime } from '../../utils/Format';
 
 interface Reviewlist {
   nickname: string;
@@ -31,11 +32,15 @@ export default function Review(props: any) {
           {/* <S.Reviewcontent>{props.content}</S.Reviewcontent>*/}
           <S.ReviewBottom>
             <S.UserNickname>{props.nickname}-</S.UserNickname>
-            <S.ReviewCreated>{props.createdAt}</S.ReviewCreated>
+            <S.ReviewCreated>
+              {getDateTime(props.date).slice(0, 12)}
+            </S.ReviewCreated>
           </S.ReviewBottom>
         </S.ReviewDetail>
       </S.ReviewWrapper>
-      {isOpen && <ReviewInfo review={props} onClick={() => setIsOpen(false)} />}
+      {isOpen && (
+        <ReviewInfo review={props} closeModal={() => setIsOpen(false)} />
+      )}
     </>
   );
 }

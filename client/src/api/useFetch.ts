@@ -1,18 +1,19 @@
 import { PerformanceListType, PerformanceType } from '../model/Performance';
 import { ArtistList, Artist, ArtistReview } from '../model/Artist';
-import { Member, Performance, Review } from '../model/Member';
+import { Member, Review } from '../model/Member';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getCookie, removeCookie, setCookie } from '../utils/Cookie';
 import { useUserInfo } from '../zustand/userInfo.stores';
+import { ReservationType } from '../model/Reservation';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
 export const useGetPerformance = (id: string | number | undefined) => {
-  if (id === undefined) return;
   const [data, setData] = useState<PerformanceType>();
 
   const getData = async () => {
+    if (!id) return;
     await axios
       .get<{ data: PerformanceType }>(`${SERVER_HOST}/performance/${id}`)
       .then(response => response.data)
@@ -27,7 +28,6 @@ export const useGetPerformance = (id: string | number | undefined) => {
   useEffect(() => {
     getData();
   }, [id]);
-
   return data;
 };
 
@@ -216,12 +216,12 @@ export const useGetMember = () => {
 };
 
 export const useGetMemberPerformance = () => {
-  const [data, setData] = useState<PerformanceType[]>();
+  const [data, setData] = useState<ReservationType[]>();
 
   const getData = async () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
-      .get<PerformanceType[]>(
+      .get<ReservationType[]>(
         `${SERVER_HOST}/reservation/mypage?performanceStatus=공연진행중`,
         {
           headers: {
@@ -239,12 +239,12 @@ export const useGetMemberPerformance = () => {
 };
 // 주소 수정해야함
 export const useGetMemberPerformanced = () => {
-  const [data, setData] = useState<PerformanceType[]>();
+  const [data, setData] = useState<ReservationType[]>();
 
   const getData = async () => {
     await axios
       // 공연받아오는 endpoint에 맞게 수정해주기
-      .get<PerformanceType[]>(
+      .get<ReservationType[]>(
         `${SERVER_HOST}/reservation/mypage?performanceStatus=공연완료`,
         {
           headers: {

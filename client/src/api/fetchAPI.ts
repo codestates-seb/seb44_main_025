@@ -174,15 +174,20 @@ export const postReview = async (
 
 export const patchReview = async (
   performanceId: string | number,
+  reviewId: string | number,
   body: BodyType
 ) => {
   return axios
-    .patch(`${SERVER_HOST}/review/${performanceId}`, JSON.stringify(body), {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: getCookie('accessToken'),
-      },
-    })
+    .patch(
+      `${SERVER_HOST}/review/${performanceId}/${reviewId}`,
+      JSON.stringify(body),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: getCookie('accessToken'),
+        },
+      }
+    )
     .then(data => data)
     .catch(err => console.error(err));
 };

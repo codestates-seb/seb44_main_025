@@ -2,7 +2,7 @@ import * as S from './PerformanceInfo.style';
 import { Button } from '../../../components/buttons/Buttons';
 // import ArtistContainer from '../../components/artist/artistcontainer';
 import Review from '../../../components/review/Review';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { EditorReadOnly } from '../../../components/inputs/editor/Editor';
 import ReservationModal from '../../../components/modal/Reservation';
 import React, { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ import { getCookie } from '../../../utils/Cookie';
 import { H1Title } from '../../../theme/common/SlideUp';
 import { getDateTime } from '../../../utils/Format';
 import { PerformanceType } from '../../../model/Performance';
-// import { deletePerformance } from '../../../api/fetchAPI';
+import { deletePerformance } from '../../../api/fetchAPI';
 import ReviewRegister from '../../../components/modal/review-register/ReviewRegister';
 
 const PerformanceInfo = ({
@@ -25,21 +25,21 @@ const PerformanceInfo = ({
   const [isTicketModalOpen, setIsTicketModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   // const performance = useGetPerformance(performanceId);
-  // const { performanceId } = useParams();
+  const { performanceId } = useParams();
   const [isStale, setIsStale] = useState(true);
   // Note: 삭제 기능 비활성화
-  // const handleClickDelete = () => {
-  //   if (performanceId) {
-  //     const isConfirmed = confirm('공연을 삭제하시겠습니까?');
-  //     if (isConfirmed) {
-  //       deletePerformance(performanceId).then(data => {
-  //         if (data) {
-  //           navigate('/performances');
-  //         }
-  //       });
-  //     }
-  //   }
-  // };
+  const handleClickDelete = () => {
+    if (performanceId) {
+      const isConfirmed = confirm('공연을 삭제하시겠습니까?');
+      if (isConfirmed) {
+        deletePerformance(performanceId).then(data => {
+          if (data) {
+            navigate('/performances');
+          }
+        });
+      }
+    }
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
     if (new Date(performance?.date as string) < new Date()) {
@@ -73,14 +73,13 @@ const PerformanceInfo = ({
               >
                 정보 수정
               </Button>
-              {/* Note: 버그로 인한 공연 삭제 기능 비활성화 
               <Button
                 size="small"
                 theme="highlightBorder"
                 onClick={() => handleClickDelete()}
               >
                 정보 삭제
-            </Button> */}
+              </Button>
             </>
           )}
       </S.ButtonHeadingContainer>
@@ -118,9 +117,9 @@ const PerformanceInfo = ({
       <Map address={performance?.place} />
       <S.Heading3>공연설명</S.Heading3>
       <EditorReadOnly content={performance?.content.body} />
-      {/* TODO: 구현되면 그 때 보여주기
+      {/* TODO: 구현되면 그 때 보여주기(아티스트 정보 + 후기)
           <S.Heading3>아티스트 정보</S.Heading3>
-            <ArtistContainer />*/}
+            <ArtistContainer />
       {isStale && (
         <>
           <S.Heading3>후기</S.Heading3>
@@ -139,7 +138,7 @@ const PerformanceInfo = ({
             />
           </S.ReviewContainer>
         </>
-      )}
+      )}*/}
       {!isTicketModalOpen && (
         <S.BottomStickyContainer>
           <Button
