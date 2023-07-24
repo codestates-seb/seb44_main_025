@@ -6,4 +6,5 @@ export interface ReservationType {
   date: string;
   reservationStatus: 'WAITING' | '완료';
   price: number;
+  seatValue: number;
 }

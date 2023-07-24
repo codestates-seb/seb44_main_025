@@ -27,6 +27,7 @@ export interface Review {
   createdAt: string;
   memberId?: number;
   reviewId: number;
+  date: string;
 }
 
 export interface SignUp {
