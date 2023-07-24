@@ -1,4 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
+import { DeviceQuery } from '../../../utils/Media';
+import { screenScale } from '../../../utils/MediaSize';
 
 // TODO: 두 EditorGlobalStyle 통합하기
 export const EditorGlobalStyle = createGlobalStyle`
@@ -16,10 +18,17 @@ export const EditorGlobalStyle = createGlobalStyle`
       transform: translate(50px, -150px);
       z-index:0;
     }
+    ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      min-height: calc(200px * ${screenScale.tablet});
+    `}
   }
   .ql-editor {
     min-height: 145px;
     color: black;
+    ${DeviceQuery.tablet`
+      min-height: calc(145px * ${screenScale.tablet});
+    `}
   }
   iframe {
     width: 100%;
@@ -31,6 +40,9 @@ export const EditorReadonlyGlobalStyle = createGlobalStyle`
     background-color: transparent;
     border: none;
     width: 360px;
+    ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+    `}
     .ql-tooltip {
       position: relative;
       left: 0 !important;
@@ -64,11 +76,17 @@ export const ViewerGlobalStyle = createGlobalStyle`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    ${DeviceQuery.tablet`
+      max-width: calc(360px * ${screenScale.tablet});
+    `}
     margin-bottom: 8px;
   & p {
     width: clamp(310px, 80%, 360px);
   }
   & img {
     max-width: 360px;
+    ${DeviceQuery.tablet`
+      max-width: calc(360px * ${screenScale.tablet});
+    `}
   }
 `;
