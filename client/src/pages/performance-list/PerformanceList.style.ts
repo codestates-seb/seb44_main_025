@@ -1,12 +1,14 @@
 import { styled } from 'styled-components';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
+import { FontStyle } from '../../utils/Theme';
+
 export const S = {
   Heading1: styled.h1`
     margin-top: 20px;
     margin-left: 15px;
     color: white;
-    font-size: var(--heading1-font-size);
-    font-weight: var(--heading1-font-weight);
-    line-height: var(--heading1-line-height);
+    ${FontStyle.heading1};
   `,
   TitleButtonFlex: styled.div`
     margin-top: 20px;
@@ -21,6 +23,10 @@ export const S = {
       stroke: white;
       cursor: pointer;
     }
+    ${DeviceQuery.tablet`
+    width: calc(360px * ${screenScale.tablet});
+    margin-top: calc(20px * ${screenScale.tablet});
+ `}
   `,
   Container: styled.div`
     display: flex;
@@ -36,6 +42,10 @@ export const S = {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    ${DeviceQuery.tablet`
+    width: calc(390px * ${screenScale.tablet});
+    min-height: calc(100vh - calc(120px * ${screenScale.tablet}));
+ `}
   `,
   CategoryContainer: styled.div`
     margin-top: 8px;
@@ -48,6 +58,14 @@ export const S = {
       padding: 0px 5px;
       width: fit-content;
     }
+    ${DeviceQuery.tablet`
+    margin-top: calc(8px * ${screenScale.tablet});
+    min-width: calc(360px * ${screenScale.tablet});
+    & > button {
+      min-width: calc(40px * ${screenScale.tablet});
+      padding: 0px calc(5px * ${screenScale.tablet});
+    }
+ `}
   `,
   ButtonContainer: styled.div`
     margin-left: 4px;
@@ -57,11 +75,15 @@ export const S = {
     & div {
       margin: 8px 0px;
     }
+    ${DeviceQuery.tablet`
+    width: calc(360px * ${screenScale.tablet});
+    & div {
+      margin: calc(8px * ${screenScale.tablet}) 0px;
+    }
+ `}
   `,
   Heading3: styled.h3`
-    font-size: var(--heading3-font-size);
-    font-weight: var(--heading3-font-weight);
-    line-height: var(--heading3-line-height);
+    ${FontStyle.heading3};
     color: white;
     cursor: pointer;
     transition: 0.3s;
