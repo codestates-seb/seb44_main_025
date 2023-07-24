@@ -6,6 +6,8 @@ import { useGetPerformance } from '../../api/useFetch';
 import { ButtonWithArrow } from '../buttons/Buttons';
 import { useNavigate } from 'react-router-dom';
 import { ReservationType } from '../../model/Reservation';
+import { screenScale } from '../../utils/MediaSize';
+import { DeviceQuery } from '../../utils/Media';
 
 // interface Reservationlist {
 //   nickname: string;
@@ -69,6 +71,12 @@ const S = {
         0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
         0 16px 16px rgba(0, 0, 0, 0.12);
     }
+    ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      height: calc(90px * ${screenScale.tablet});
+      margin-left: calc(15px * ${screenScale.tablet});
+      margin-bottom: calc(10px * ${screenScale.tablet});
+   `}
   `,
   ReservationImage: styled.img`
     width: 64px;
@@ -76,6 +84,11 @@ const S = {
     object-fit: cover;
     margin-left: 15px;
     border-radius: 100px;
+    ${DeviceQuery.tablet`
+      width: calc(64px * ${screenScale.tablet});
+      height: calc(64px * ${screenScale.tablet});
+      margin-left: calc(15px * ${screenScale.tablet});
+   `}
   `,
   ReservationDetail: styled.div`
     margin-left: 25px;
@@ -89,6 +102,10 @@ const S = {
       -webkit-line-clamp: 1;
       overflow: hidden;
     }
+    ${DeviceQuery.tablet`
+      width: calc(230px * ${screenScale.tablet});
+      margin-left: calc(25px * ${screenScale.tablet});
+   `}
   `,
   ReservationTitle: styled.h6`
     font-size: var(--heading6-font-size);
@@ -107,6 +124,9 @@ const S = {
     white-space: nowrap; //줄바꿈 방지
     overflow: hidden; //넘치는 텍스트 숨기기
     text-overflow: ellipsis; //말줄임 기호(...)넣기
+    ${DeviceQuery.tablet`
+      width: calc(310px * ${screenScale.tablet});
+   `}
   `,
   ReservationBottom: styled.div`
     display: flex;

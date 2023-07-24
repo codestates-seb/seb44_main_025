@@ -1,4 +1,6 @@
 import { styled } from 'styled-components';
+import { DeviceQuery } from '../../../utils/Media';
+import { screenScale } from '../../../utils/MediaSize';
 
 export default {
   ModalOverlay: styled.div`
@@ -31,6 +33,13 @@ export default {
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    ${DeviceQuery.tablet`
+      padding-top: calc(20px * ${screenScale.tablet});
+      gap: calc(8px * ${screenScale.tablet});
+      width: calc(300px * ${screenScale.tablet});
+      height: calc(500px * ${screenScale.tablet});
+      padding-left: calc(7.5px * ${screenScale.tablet});
+   `}
     &::-webkit-scrollbar {
       display: none;
     }
@@ -42,6 +51,10 @@ export default {
       left: 10px;
       stroke: white;
       transform: rotate(180deg);
+      ${DeviceQuery.tablet`
+       top: calc(10px * ${screenScale.tablet});
+       left: calc(10px * ${screenScale.tablet});
+      `}
     }
     & .quill {
       max-width: 285px;
@@ -50,6 +63,9 @@ export default {
       }
       & .ql-editor {
         padding: 10px;
+        ${DeviceQuery.tablet`
+          padding: calc(10px * ${screenScale.tablet});
+        `}
       }
     }
   `,
@@ -61,6 +77,10 @@ export default {
     font-size: var(--heading1-font-size);
     font-weight: var(--heading1-font-weight);
     line-height: var(--heading1-line-height);
+    ${DeviceQuery.tablet`
+        margin-top: calc(20px * ${screenScale.tablet});
+        margin-left: calc(15px * ${screenScale.tablet});
+      `}
   `,
   Heading3: styled.h3`
     margin-top: 20px;
@@ -71,6 +91,11 @@ export default {
     font-size: var(--heading3-font-size);
     font-weight: var(--heading3-font-weight);
     line-height: var(--heading3-line-height);
+    ${DeviceQuery.tablet`
+        margin-top: calc(20px * ${screenScale.tablet});
+        margin-left: calc(15px * ${screenScale.tablet});
+        margin-bottom: calc(8px * ${screenScale.tablet});
+      `}
   `,
   Container: styled.div`
     display: flex;
@@ -87,10 +112,19 @@ export default {
     justify-content: flex-start;
     align-items: center;
     padding-bottom: 70px;
+    ${DeviceQuery.tablet`
+      width: calc(390px * ${screenScale.tablet});
+      margin-bottom: calc(70px * ${screenScale.tablet});
+      min-height: calc(100vh - (50px * ${screenScale.tablet}));
+    `}
     & h1 {
       margin-right: auto;
       margin-left: 15px;
       margin-top: 20px;
+      ${DeviceQuery.tablet`
+        margin-left: calc(15px * ${screenScale.tablet});
+        margin-top: calc(20px * ${screenScale.tablet});
+      `}
     }
   `,
   Poster: styled.img`
@@ -100,6 +134,11 @@ export default {
     background-color: gray;
     cursor: pointer;
     object-fit: scale-down;
+    ${DeviceQuery.tablet`
+      width: calc(170px * ${screenScale.tablet});
+      margin-top: calc(8px * ${screenScale.tablet});
+      height: calc(210px * ${screenScale.tablet});
+    `}
     &[src] {
       background-color: transparent;
     }
@@ -111,6 +150,9 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+    `}
     & label {
       color: white;
       font-size: var(--p-small-medium-font-size);
@@ -129,5 +171,9 @@ export default {
     justify-content: flex-end;
     margin-right: 7.5px;
     margin-top: 20px;
+    ${DeviceQuery.tablet`
+      margin-right: calc(7.5px * ${screenScale.tablet});
+      margin-top: calc(20px * ${screenScale.tablet});
+    `}
   `,
 };
