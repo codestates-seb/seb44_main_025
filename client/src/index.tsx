@@ -81,14 +81,14 @@ const router = createBrowserRouter([
         path: '/cancel',
         element: <Cancel />,
       },
-      {
-        path: '/googlelogin',
-        element: <GoogleSignin />,
-      },
-      {
-        path: '/googlesignup',
-        element: <GoogleSignUp />,
-      },
+      // {
+      //   path: '/googlelogin',
+      //   element: <GoogleSignin />,
+      // },
+      // {
+      //   path: '/googlesignup',
+      //   element: <GoogleSignUp />,
+      // },
     ],
   },
 ]);
