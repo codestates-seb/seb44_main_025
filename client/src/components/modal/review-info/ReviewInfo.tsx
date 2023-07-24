@@ -2,7 +2,7 @@ import S from './ReviewInfo.style';
 import { EditorReadOnly } from '../../inputs/editor/Editor';
 import { Review } from '../../../model/Member';
 import { Button } from '../../buttons/Buttons';
-import { patchReview } from '../../../api/fetchAPI';
+import { patchReview, deleteReview } from '../../../api/fetchAPI';
 import { getDateTime } from '../../../utils/Format';
 import { ReactComponent as ArrowIcon } from '../../../icons/icon_right.svg';
 
@@ -25,15 +25,18 @@ export default function ReviewModal({ review, closeModal }: Props) {
           }}
         />
         {/* <Button
-          theme='theme'
+          theme="theme"
           onClick={() =>
-            patchReview(1, review?.reviewId, {
+            patchReview(4, review?.reviewId, {
               reviewTitle: '제목수정ㅁㅁㅁㅁㅁ',
               content: '바뀌었나?',
             })
           }
         >
           후기 수정
+        </Button>
+        <Button theme="theme" onClick={() => deleteReview(review?.reviewId)}>
+          후기 삭제
         </Button> */}
         <S.Heading3>{review.reviewTitle}</S.Heading3>
         <S.Date>{getDateTime(review.date)}</S.Date>
