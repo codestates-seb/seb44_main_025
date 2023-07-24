@@ -99,9 +99,9 @@ export const InputContainer = styled.div<InputContainerType>`
   outline: none;
   width: ${props => (props.width ? `${props.width}px` : '360px')};
   height: ${props => (props.height ? `${props.height}px` : '48px')};
-  ${DeviceQuery.tablet`
-    width: calc(360px * ${screenScale.tablet});
- `}
+  @media screen and (min-width: 820px) {
+    width: calc(${props => `${props.width || 360}px`} * ${screenScale.tablet});
+  }
 
   & input {
     background-color: transparent;

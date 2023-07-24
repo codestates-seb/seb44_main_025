@@ -2,6 +2,8 @@ import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { PerformanceType } from '../../model/Performance';
 import { useGetArtist } from '../../api/useFetch';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 export default function Concertpreview(performance: PerformanceType) {
   const navigate = useNavigate();
@@ -51,8 +53,16 @@ const S = {
         0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
         0 16px 16px rgba(0, 0, 0, 0.12);
     }
+    ${DeviceQuery.tablet`
+    width: calc(360px * ${screenScale.tablet});
+    height: calc(180px * ${screenScale.tablet});
+ `}
   `,
   ConcertImg: styled.img`
+    ${DeviceQuery.tablet`
+    width: calc(200px * ${screenScale.tablet});
+    height: calc(150px * ${screenScale.tablet});
+ `}
     width: 200px;
     height: 150px;
     border: 3px solid transparent;
@@ -68,6 +78,11 @@ const S = {
     margin-left: 15px;
   `,
   ConcertDetail: styled.section`
+    ${DeviceQuery.tablet`
+    margin-left: calc(10px * ${screenScale.tablet});
+    margin-right: calc(15px * ${screenScale.tablet});
+    height: calc(150px * ${screenScale.tablet});
+ `}
     margin-left: 10px;
     height: 150px;
     display: flex;

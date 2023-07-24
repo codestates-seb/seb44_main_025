@@ -2,20 +2,13 @@ import { styled } from 'styled-components';
 import { EditorViewer } from '../inputs/editor/EditorViewer';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import ReviewInfo from '../modal/review-info/ReviewInfo';
 import { getDateTime } from '../../utils/Format';
+import { Review } from '../../model/Member';
+import ReviewModal from '../modal/review/ReviewModal';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
-interface Reviewlist {
-  nickname: string;
-  reviewTitle: string;
-  artistId?: number;
-  content: string;
-  createdAt: string;
-  memberId?: number;
-  performanceId?: number;
-}
-
-export default function Review(props: any) {
+export default function ReviewPreview(props: Review) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,7 +32,11 @@ export default function Review(props: any) {
         </S.ReviewDetail>
       </S.ReviewWrapper>
       {isOpen && (
-        <ReviewInfo review={props} closeModal={() => setIsOpen(false)} />
+        <ReviewModal
+          review={props}
+          closeModal={() => setIsOpen(false)}
+          fromMyPage={true}
+        />
       )}
     </>
   );
@@ -62,18 +59,30 @@ const S = {
         0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
         0 16px 16px rgba(0, 0, 0, 0.12);
     }
+    ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      height: calc(90px * ${screenScale.tablet});
+      margin-left: calc(15px * ${screenScale.tablet});
+      margin-bottom: calc(10px * ${screenScale.tablet});
+   `}
   `,
   ReviewDetail: styled.div`
     margin-left: 25px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    ${DeviceQuery.tablet`
+      margin-left: calc(25px * ${screenScale.tablet});
+   `}
     & pre {
       max-width: 310px;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
       overflow: hidden;
+      ${DeviceQuery.tablet`
+        max-width: calc(310px * ${screenScale.tablet});
+      `}
     }
   `,
   ReviewTitle: styled.header`
@@ -93,6 +102,9 @@ const S = {
     white-space: nowrap; //줄바꿈 방지
     overflow: hidden; //넘치는 텍스트 숨기기
     text-overflow: ellipsis; //말줄임 기호(...)넣기
+    ${DeviceQuery.tablet`
+      width: calc(310px * ${screenScale.tablet});
+    `}
   `,
   ReviewBottom: styled.div`
     display: flex;

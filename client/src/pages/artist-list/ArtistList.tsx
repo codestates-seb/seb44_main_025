@@ -8,13 +8,14 @@ import { useGetArtists } from '../../api/useFetch';
 import { getCookie } from '../../utils/Cookie';
 import { categoryObj } from '../../utils/Category';
 import { H1Title } from '../../theme/common/SlideUp';
+import { useState } from 'react';
 
 const ArtistList = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get('category');
-  const page = searchParams.get('page');
-  const size = searchParams.get('size');
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(200);
   const handleClickCategory = (id: string) => {
     if (category === id) {
       setSearchParams('');

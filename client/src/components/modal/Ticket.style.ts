@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import { FontStyle } from '../../utils/Theme';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 export default {
   ModalOverlay: styled.div`
@@ -22,10 +24,18 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
+    ${DeviceQuery.tablet`
+      width: calc(300px * ${screenScale.tablet});
+      height: calc(500px * ${screenScale.tablet});
+    `}
   `,
   TicketImg: styled.img`
     width: 300px;
     height: 400px;
+    ${DeviceQuery.tablet`
+      width: calc(300px * ${screenScale.tablet});
+      height: calc(400px * ${screenScale.tablet});
+    `}
   `,
   TicketDetail: styled.div`
     width: 300px;
@@ -35,6 +45,10 @@ export default {
     justify-content: center;
     align-items: center;
     background-color: var(--background-highlight-color);
+    ${DeviceQuery.tablet`
+      width: calc(300px * ${screenScale.tablet});
+      height: calc(100px * ${screenScale.tablet});
+    `}
   `,
   TicketTitle: styled.header`
     ${FontStyle.heading6}

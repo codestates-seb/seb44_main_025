@@ -12,11 +12,11 @@ interface Props {
 export default function TicketModal({ onClick }: Props) {
   const reservation = useGetMemberPerformance();
   const performance = useGetPerformance(
-    reservation?.[reservation.length - 1].performanceId
+    reservation?.[reservation.length - 1]?.performanceId
   );
   return (
     <>
-      {performance ? (
+      {performance && performance?.performanceId ? (
         <S.ModalOverlay key={performance.performanceId} onClick={onClick}>
           <S.TicketModal>
             <S.TicketImg src={performance.imageUrl} />

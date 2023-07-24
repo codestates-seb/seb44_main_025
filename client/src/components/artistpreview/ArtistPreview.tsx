@@ -2,6 +2,8 @@ import { styled } from 'styled-components';
 import Img from '../../images/기본이미지.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowIcon } from '../../icons/icon_right.svg';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 interface ArtistPreviewPropTypes {
   imageUrl: string;
@@ -41,6 +43,10 @@ export default function ArtistPreview(artist: ArtistPreviewPropTypes) {
 
 const S = {
   PreviewWrapper: styled.div`
+    ${DeviceQuery.tablet`
+    width: calc(360px * ${screenScale.tablet});
+    height: calc(96px * ${screenScale.tablet});
+ `}
     width: 360px;
     height: 96px;
     background-color: var(--font-mid-color);
@@ -83,6 +89,10 @@ const S = {
     }
   `,
   UserImg: styled.img`
+    ${DeviceQuery.tablet`
+    width: calc(64px * ${screenScale.tablet});
+    height: calc(64px * ${screenScale.tablet});
+ `}
     width: 64px;
     height: 64px;
     margin: 15px;
@@ -98,7 +108,11 @@ const S = {
     background-clip: content-box, border-box;
   `,
   PreviewDetail: styled.div`
-    width: clamp(200px, 55.55%, 415px);
+    ${DeviceQuery.tablet`
+    width: calc(200px * ${screenScale.tablet});
+    height: calc(30px * ${screenScale.tablet});
+ `}
+    width: 200px;
     height: 30px;
     display: flex;
     flex-direction: column;
