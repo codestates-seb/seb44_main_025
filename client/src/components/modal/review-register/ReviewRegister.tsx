@@ -2,12 +2,9 @@ import S from './ReviewRegister.style';
 import { Button } from '../../../components/buttons/Buttons';
 import { Input } from '../../../components/inputs/Inputs';
 import { Editor } from '../../../components/inputs/editor/Editor';
-import { useNavigate } from 'react-router-dom';
 import { useEditorStore } from '../../../components/inputs/editor/EditorStore';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { postReview } from '../../../api/fetchAPI';
-import { getDateTime } from '../../../utils/Format';
-import { H1Title } from '../../../theme/common/SlideUp';
 import { PerformanceType } from '../../../model/Performance';
 import { ReactComponent as ArrowIcon } from '../../../icons/icon_right.svg';
 
@@ -100,7 +97,7 @@ const ReviewRegister = ({
           />
         </S.Form>
         <S.Heading3>내용</S.Heading3>
-        <Editor />
+        <Editor video={false} />
         {/* TODO: 등록 / 수정 구분하기 - 라우팅 경로로 구분하거나 별도 props 전달 */}
         {/* TODO: 등록 후 정상적으로 응답을 수신했을 때 clearContent 호출하기 */}
         <S.ButtonContainer>

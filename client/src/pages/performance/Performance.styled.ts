@@ -19,7 +19,8 @@ export const Main = styled.main`
   color: white;
   padding-bottom: 70px;
   ${DeviceQuery.tablet`
-      width: calc(390px * ${screenScale.tablet});
-      min-height: calc(100vh - (120px * ${screenScale.tablet}));
-  `}
+  min-height: calc(100vh - (120px * ${screenScale.tablet}));
+  width: calc(390px * ${screenScale.tablet});
+  padding-bottom: calc(70px * ${screenScale.tablet});
+`}
 `;

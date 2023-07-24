@@ -69,7 +69,7 @@ export default function Artistedit() {
 
   /** 아티스트 정보가 없을때 */
   useEffect(() => {
-    if (artistId && getCookie('userInfo').artistId !== +artistId) {
+    if (artistId && getCookie('userInfo')?.artistId !== +artistId) {
       navigate('/');
       alert('권한 접근이 없습니다.');
       return;
@@ -121,8 +121,9 @@ export default function Artistedit() {
       'artistpostDto'
     );
     // artistId를 값으로 보내줘야해서 쿠키에 저장되어 있는 artistId를 빼서 사용
-    usePatchArtist(getCookie('userInfo').artistId, data);
+    usePatchArtist(getCookie('userInfo')?.artistId, data);
     navigate(`/artist/${userInfo.artistId}`);
+    location.reload();
   };
 
   const handleSubmitAll = () => {
@@ -251,10 +252,10 @@ export default function Artistedit() {
             <S.SubTitle>아티스트 정보</S.SubTitle>
             <S.CategoryContainer>
               {Object.keys(categoryObj).map((key, idx) => {
-                return idx === categoryId ? (
+                return idx + 1 === categoryId ? (
                   <ButtonMiniToggleSelect
-                    key={idx}
-                    value={idx}
+                    key={idx + 1}
+                    value={idx + 1}
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                       const value = +(e.target as HTMLInputElement).value;
                       handleClickCategory(value);
@@ -264,8 +265,8 @@ export default function Artistedit() {
                   </ButtonMiniToggleSelect>
                 ) : (
                   <ButtonMiniToggleUnselect
-                    key={idx}
-                    value={idx}
+                    key={idx + 1}
+                    value={idx + 1}
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                       const value = +(e.target as HTMLInputElement).value;
                       handleClickCategory(value);

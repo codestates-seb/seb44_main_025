@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { FontStyle } from '../../../utils/Theme';
 import { DeviceQuery } from '../../../utils/Media';
 import { screenScale } from '../../../utils/MediaSize';
 
@@ -22,9 +23,7 @@ export const ButtonHeadingContainer = styled.div`
 export const Heading1 = styled.h1`
   margin-right: auto;
   color: white;
-  font-size: var(--heading1-font-size);
-  font-weight: var(--heading1-font-weight);
-  line-height: var(--heading1-line-height);
+  ${FontStyle.heading1};
 `;
 export const Heading3 = styled.h3`
   margin-top: 20px;
@@ -32,14 +31,12 @@ export const Heading3 = styled.h3`
   margin-right: auto;
   margin-left: 15px;
   color: white;
-  font-size: var(--heading3-font-size);
-  font-weight: var(--heading3-font-weight);
-  line-height: var(--heading3-line-height);
   ${DeviceQuery.tablet`
       margin-bottom: calc(8px * ${screenScale.tablet});
       margin-top: calc(20px * ${screenScale.tablet});
       margin-left: calc(15px * ${screenScale.tablet});
   `}
+  ${FontStyle.heading3};
 `;
 export const Container = styled.div`
   display: flex;

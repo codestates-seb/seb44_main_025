@@ -1,32 +1,36 @@
 import S from './Ticket.style';
 import { Link } from 'react-router-dom';
-import { useGetMemberPerformance } from '../../api/useFetch';
+import { useGetPerformance, useGetMemberPerformance } from '../../api/useFetch';
 import { ButtonWithArrow } from '../buttons/Buttons';
 import Img from '../.././images/예약한 공연이 없을때.jpeg';
+import { getDateTime } from '../../utils/Format';
 
 interface Props {
   onClick: React.MouseEventHandler<HTMLElement>;
 }
 
 export default function TicketModal({ onClick }: Props) {
-  const reservationData = useGetMemberPerformance();
+  const reservation = useGetMemberPerformance();
+  const performance = useGetPerformance(
+    reservation?.[reservation.length - 1].performanceId
+  );
   return (
     <>
-      {reservationData?.length ? (
-        reservationData.map(reservationData => (
-          <S.ModalOverlay key={reservationData.performanceId} onClick={onClick}>
-            <S.TicketModal>
-              <S.TicketImg src={reservationData.imageUrl} />
-              <S.TicketDetail>
-                <S.TicketTitle>{reservationData.title}</S.TicketTitle>
-                <S.Ticketcontent>{reservationData.artistName}</S.Ticketcontent>
-                <S.Ticketcontent>{reservationData.place}</S.Ticketcontent>
-                <S.Ticketcontent>{reservationData.date}</S.Ticketcontent>
-                <S.Ticketcontent>{reservationData.price}</S.Ticketcontent>
-              </S.TicketDetail>
-            </S.TicketModal>
-          </S.ModalOverlay>
-        ))
+      {performance ? (
+        <S.ModalOverlay key={performance.performanceId} onClick={onClick}>
+          <S.TicketModal>
+            <S.TicketImg src={performance.imageUrl} />
+            <S.TicketDetail>
+              <S.TicketTitle>{performance.title}</S.TicketTitle>
+              <S.Ticketcontent>{performance.artistName}</S.Ticketcontent>
+              <S.Ticketcontent>{performance.place}</S.Ticketcontent>
+              <S.Ticketcontent>
+                {getDateTime(performance.date as string)}
+              </S.Ticketcontent>
+              <S.Ticketcontent>₩{performance.price}</S.Ticketcontent>
+            </S.TicketDetail>
+          </S.TicketModal>
+        </S.ModalOverlay>
       ) : (
         <S.ModalOverlay onClick={onClick}>
           <S.TicketModal>
