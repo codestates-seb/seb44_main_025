@@ -75,7 +75,7 @@ export default {
     background-clip: content-box, border-box;
     z-index: 1;
     cursor: pointer;
-    object-fit: scale-down;
+    object-fit: cover;
     ${DeviceQuery.tablet`
       width: calc(100px * ${screenScale.tablet});
       height: calc(100px * ${screenScale.tablet});
@@ -89,17 +89,16 @@ export default {
   CategoryContainer: styled.div`
     margin: 20px 0px 20px 0px;
     display: flex;
-    min-width: 360px;
-    justify-content: center;
+    width: 360px;
+    justify-content: space-between;
     & > button:not(:first-child) {
       margin-left: 15px;
-      ${DeviceQuery.tablet`
-        margin-left: calc(35px * ${screenScale.tablet});
-      `}
     }
+    margin-left: 15px;
     ${DeviceQuery.tablet`
       margin: calc(20px * ${screenScale.tablet}) calc(0px * ${screenScale.tablet}) calc(20px * ${screenScale.tablet}) calc(0px * ${screenScale.tablet});
-      min-width: calc(360px * ${screenScale.tablet});
+      margin-left: calc(15px * ${screenScale.tablet});
+      width: calc(360px * ${screenScale.tablet});
    `}
   `,
   ArtistDetail: styled.div`

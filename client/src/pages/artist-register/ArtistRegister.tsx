@@ -2,11 +2,7 @@ import S from './ArtistRegister.style';
 import { styled } from 'styled-components';
 import LogoImg from '../.././images/이투플아티스트슬로건.png';
 import Header from '../../components/header/Header';
-import {
-  ButtonPrimary75px,
-  ButtonMiniToggleSelect,
-  ButtonMiniToggleUnselect,
-} from '../../components/buttons/Buttons';
+import { ButtonPrimary75px, Button } from '../../components/buttons/Buttons';
 import { Input } from '../../components/inputs/Inputs';
 import { useState, useRef } from 'react';
 import Img from '../../images/기본이미지.jpg';
@@ -18,6 +14,7 @@ import { artistnameRegExp } from '../../utils/RegExp';
 import { getCookie } from '../../utils/Cookie';
 import { FontStyle } from '../../utils/Theme';
 import { H1Title } from '../../theme/common/SlideUp';
+import { categoryObj } from '../../utils/Category';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
@@ -27,15 +24,6 @@ interface FormValues {
   content: string;
 }
 
-const categoryObj = {
-  팝: 1,
-  락: 2,
-  'R&B': 3,
-  재즈: 4,
-  밴드: 5,
-  댄스: 6,
-};
-
 export default function Artistregist() {
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const handleClickCategory = (id: number) => {
@@ -44,7 +32,6 @@ export default function Artistregist() {
   };
   const artistImgInputRef = useRef<HTMLInputElement>(null);
   const [artistImagesrc, setArtistImagesrc] = useState<string>(Img);
-  const [artistImgFile, setArtistImgFile] = useState<Blob>();
   // const [videofilesrc, setVideofilesrc] = useState<string>(Img);
   // const [videoFile, setVideoFile] = useState<Blob>();
 
@@ -139,17 +126,16 @@ export default function Artistregist() {
     }
   };
 
-  const onSubmitImg = () => {
+  const onSubmitImg = (file: Blob) => {
     let formData = new FormData();
-    if (artistImgFile) {
-      formData.append('image-file', artistImgFile as Blob);
-      usePostArtistImg(formData).then((data: any) => {
-        alert('이미지가 저장 되었습니다');
+    formData.append('image-file', file);
+    usePostArtistImg(formData).then((data: any) => {
+      if (data) {
         setGetUrl(data.data);
-      });
-    } else {
-      alert('이미지를 첨부해야합니다.');
-    }
+      } else {
+        alert('이미지 등록에 실패하였습니다.');
+      }
+    });
   };
 
   return (
@@ -163,60 +149,37 @@ export default function Artistregist() {
           <S.LogoImg src={LogoImg}></S.LogoImg>
           <S.FileInput
             type="file"
+            name="image"
             accept="image/*"
             ref={artistImgInputRef}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               const files = e.target.files;
               if (files === undefined || files === null) return;
               const file = files[0];
-              console.log(file);
-              setArtistImgFile(file);
-              if (file) {
-                const reader = new FileReader();
-                reader.onload = e => {
-                  if (!e.target?.result || e.target?.result === null) return;
-                  setArtistImagesrc(e.target?.result as string);
-                };
-                reader.readAsDataURL(file);
-              }
+              if (file) onSubmitImg(file);
             }}
           />
           <S.ArtistImg
-            src={artistImagesrc}
+            src={getUrl || artistImagesrc}
             onClick={() => artistImgInputRef.current?.click()}
           ></S.ArtistImg>
-          <ImageButton>
-            <ButtonPrimary75px onClick={() => onSubmitImg()}>
-              이미지 저장
-            </ButtonPrimary75px>
-          </ImageButton>
           <S.ArtistDetail>
             <S.SubTitle>아티스트 정보</S.SubTitle>
 
             <S.CategoryContainer>
               {Object.keys(categoryObj).map((key, idx) => {
-                return idx + 1 === categoryId ? (
-                  <ButtonMiniToggleSelect
+                return (
+                  <Button
                     key={idx}
+                    theme={idx + 1 === categoryId ? 'highlight' : 'theme'}
                     value={idx + 1}
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                       const value = +(e.target as HTMLInputElement).value;
                       handleClickCategory(value);
                     }}
                   >
-                    {key}
-                  </ButtonMiniToggleSelect>
-                ) : (
-                  <ButtonMiniToggleUnselect
-                    key={idx}
-                    value={idx + 1}
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                      const value = +(e.target as HTMLInputElement).value;
-                      handleClickCategory(value);
-                    }}
-                  >
-                    {key}
-                  </ButtonMiniToggleUnselect>
+                    {categoryObj[key]}
+                  </Button>
                 );
               })}
             </S.CategoryContainer>
@@ -293,6 +256,7 @@ export default function Artistregist() {
                 render={({ field }) => {
                   return (
                     <Input
+                      type="url"
                       value={field.value}
                       height={30}
                       onChange={field.onChange}

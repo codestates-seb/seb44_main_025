@@ -59,10 +59,6 @@ export const EditorReadonlyGlobalStyle = createGlobalStyle`
     color: white;
     padding: 0px;
   }
-  }
-  .ql-editor {
-    color: black;
-  }
   iframe {
     width: 100%;
   }

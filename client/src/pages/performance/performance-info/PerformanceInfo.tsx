@@ -14,6 +14,8 @@ import { getDateTime } from '../../../utils/Format';
 import { PerformanceType } from '../../../model/Performance';
 import { deletePerformance } from '../../../api/fetchAPI';
 import ReviewRegister from '../../../components/modal/review-register/ReviewRegister';
+import { useGetMemberPerformanced } from '../../../api/useFetch';
+import { checkIsReserved } from '../../../utils/Filter';
 
 const PerformanceInfo = ({
   setIsEditing,
@@ -22,10 +24,17 @@ const PerformanceInfo = ({
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   performance: PerformanceType;
 }) => {
+  const reservation = useGetMemberPerformanced();
   const [isTicketModalOpen, setIsTicketModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   // const performance = useGetPerformance(performanceId);
   const { performanceId } = useParams();
+  const [isReserved, setIsReserved] = useState(false);
+  useEffect(() => {
+    if (reservation && performanceId) {
+      setIsReserved(checkIsReserved(reservation, +performanceId));
+    }
+  }, [reservation]);
   const [isStale, setIsStale] = useState(true);
   // Note: 삭제 기능 비활성화
   const handleClickDelete = () => {
@@ -139,32 +148,41 @@ const PerformanceInfo = ({
           </S.ReviewContainer>
         </>
       )}*/}
-      {!isTicketModalOpen && (
-        <S.BottomStickyContainer>
-          <Button
-            theme="primary"
-            size="large"
-            disabled={performance.totalSeat === 0 && !isStale}
-            onClick={() => {
-              if (!isLoggedIn) {
-                navigate('/login');
-                return;
+      {!isTicketModalOpen &&
+        currentArtistId !==
+          Object.values(
+            performance?.performanceArtist?.performanceArtistList
+          )[0] && (
+          <S.BottomStickyContainer>
+            <Button
+              theme="primary"
+              size="large"
+              disabled={
+                (performance.totalSeat === 0 && !isStale) ||
+                (isStale && !isReserved)
               }
-              if (isStale) {
-                setIsReviewModalOpen(true);
-              } else {
-                setIsTicketModalOpen(true);
-              }
-            }}
-          >
-            {isStale
-              ? '후기 작성'
-              : performance.totalSeat
-              ? '예약하기'
-              : '매진'}
-          </Button>
-        </S.BottomStickyContainer>
-      )}
+              onClick={() => {
+                if (!isLoggedIn) {
+                  navigate('/login');
+                  return;
+                }
+                if (isStale) {
+                  setIsReviewModalOpen(true);
+                } else {
+                  setIsTicketModalOpen(true);
+                }
+              }}
+            >
+              {isStale
+                ? isReserved
+                  ? '후기 작성'
+                  : '공연 종료'
+                : performance.totalSeat
+                ? '예약하기'
+                : '매진'}
+            </Button>
+          </S.BottomStickyContainer>
+        )}
       {isTicketModalOpen && performance && (
         <ReservationModal
           performance={performance}
