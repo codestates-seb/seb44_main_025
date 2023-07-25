@@ -35,9 +35,9 @@ export default function Mypage() {
 
   /** 로그아웃 및 main으로 페이지 이동 */
   const logoutHandler = () => {
-    removeCookie('accessToken');
-    removeCookie('refreshToken');
-    removeCookie('userInfo');
+    removeCookie('accessToken', { path: '/' });
+    removeCookie('refreshToken', { path: '/' });
+    removeCookie('userInfo', { path: '/' });
     alert('[로그아웃 성공] 로그아웃 되었습니다');
     navigate('/');
   };
