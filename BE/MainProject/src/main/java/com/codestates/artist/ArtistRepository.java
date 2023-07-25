@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface ArtistRepository extends JpaRepository<Artist, Long> {
     Optional<Artist> findByArtistName(String artistName);
     Optional<Artist> findByMember(Member member);
+    List<Artist> findAll();
     Page<Artist> findAllByCategoryOrderByArtistIdDesc(Category Category, Pageable pageable);
 
 }

@@ -35,6 +35,7 @@ const ReviewEdit = ({
         if (data) {
           alert('후기가 수정되었습니다.');
           setIsEditing(false);
+          location.reload();
         } else {
           alert('후기 수정에 실패하였습니다.');
         }

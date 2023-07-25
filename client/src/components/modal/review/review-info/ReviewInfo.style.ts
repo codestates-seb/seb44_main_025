@@ -59,7 +59,8 @@ export default {
         color: white;
       }
       & .ql-editor {
-        padding-top: 5px;
+        padding-top: 0px;
+        padding-left: 0px;
         ${FontStyle.smallRegular};
         ${DeviceQuery.tablet`
         ${FontStyle.largeRegular};

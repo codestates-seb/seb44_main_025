@@ -9,17 +9,20 @@ import com.codestates.global.exception.BusinessLogicException;
 import com.codestates.global.exception.ExceptionCode;
 import com.codestates.performance.dto.PerformanceDto;
 import com.codestates.performance.entity.Performance;
+import com.codestates.performance.entity.Performance.PERFORMANCE_STATUS;
 import com.codestates.performance.entity.PerformanceArtist;
 import com.codestates.performance.repository.PerformanceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -28,6 +31,7 @@ public class PerformanceServiceImpl implements PerformanceService{
     private final CategoryService categoryService;
     private final ArtistService artistService;
 
+    @Transactional
     @Override
     public Performance createPerformance(Performance performance, PerformanceDto.Post performanceDto) {
         performance.addCategory(categoryService.findVerifiedCategory(performanceDto.getCategoryId()));
@@ -50,6 +54,7 @@ public class PerformanceServiceImpl implements PerformanceService{
         return performanceRepository.save(performance);
     }
 
+    @Transactional
     @Override
     public Performance updatePerformance(Performance performance, PerformanceDto.Patch performanceDto) {
         Performance findPerformance = findVerifyPerformance(performance.getPerformanceId());
@@ -85,6 +90,13 @@ public class PerformanceServiceImpl implements PerformanceService{
         return performanceRepository.save(findPerformance);
     }
 
+    @Transactional
+    @Override
+    public void deletePerformance(long performanceId) {
+        Performance findPerformance = findVerifyPerformance(performanceId);
+        performanceRepository.delete(findPerformance);
+    }
+
     @Override
     public Performance findPerformance(long performanceId) {
         Performance findPerformance = findVerifyPerformance(performanceId);
@@ -92,41 +104,41 @@ public class PerformanceServiceImpl implements PerformanceService{
     }
 
     @Override
-    public Page<Performance> findPerformances(PageRequest pageRequest, String isCompleted) {
-        if(isCompleted.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_COMPLETED.getStatus())) {
-            return performanceRepository.findAllByTimeIsAfter(pageRequest);
-        } else if(isCompleted.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_NOT_COMPLETED.getStatus())) {
+    public Page<Performance> findPerformances(PageRequest pageRequest, PERFORMANCE_STATUS performanceStatus) {
+        /*
+            before: 진행중인 공연, after: 완료된 공연
+            아직 완료되지 않은 공연 = 공연이 현재 날짜보다 뒤
+         */
+        if(performanceStatus.isNull()) return performanceRepository.findAll(pageRequest);
+
+        if(performanceStatus.isCompleted()) {
             return performanceRepository.findAllByTimeIsBefore(pageRequest);
+        } else {
+            return performanceRepository.findAllByTimeIsAfter(pageRequest);
         }
-        return performanceRepository.findAll(pageRequest);
     }
 
     @Override
-    public Page<Performance> findPerformancesByCategory(Pageable pageable, long categoryId, String performanceStatus) {
+    public Page<Performance> findPerformancesByCategory(Pageable pageable, long categoryId, PERFORMANCE_STATUS performanceStatus) {
         Category category = categoryService.findVerifiedCategory(categoryId);
+        if(performanceStatus.isNull()) return performanceRepository.findAllByCategory(category, pageable);
 
-        if(performanceStatus.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_COMPLETED.getStatus())) {
-            return performanceRepository.findAllByCategoryAndTimeIsAfter(category, pageable);
-        } else if(performanceStatus.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_NOT_COMPLETED.getStatus())) {
+        if(performanceStatus.isCompleted()) {
             return performanceRepository.findAllByCategoryAndTimeIsBefore(category, pageable);
+        } else {
+            return performanceRepository.findAllByCategoryAndTimeIsAfter(category, pageable);
         }
-        return performanceRepository.findAllByCategory(category, pageable);
     }
 
     @Override
-    public Page<Performance> findPerformancesByArtist(Pageable pageable, long artistId, String performanceStatus) {
-        if(performanceStatus.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_COMPLETED.getStatus())) {
-            return performanceRepository.findAllByArtistIdTimeIsAfter(artistId, pageable);
-        } else if(performanceStatus.equals(Performance.PERFORMANCE_STATUS.PERFORMANCE_NOT_COMPLETED.getStatus())) {
+    public Page<Performance> findPerformancesByArtist(Pageable pageable, long artistId, PERFORMANCE_STATUS performanceStatus) {
+        if(performanceStatus.isNull()) return performanceRepository.findAllByArtistId(artistId, pageable);
+
+        if(performanceStatus.isCompleted()) {
             return performanceRepository.findAllByArtistIdTimeIsBefore(artistId, pageable);
+        } else {
+            return performanceRepository.findAllByArtistIdTimeIsAfter(artistId, pageable);
         }
-        return performanceRepository.findAllByArtistId(artistId, pageable);
-    }
-
-    @Override
-    public void deletePerformance(long performanceId) {
-        Performance findPerformance = findVerifyPerformance(performanceId);
-        performanceRepository.delete(findPerformance);
     }
 
     private Performance findVerifyPerformance(long performanceId) {
@@ -135,12 +147,11 @@ public class PerformanceServiceImpl implements PerformanceService{
                 new BusinessLogicException(ExceptionCode.PERFORMANCE_NOT_FOUND));
     }
 
+    @Transactional
     @Override
     public Performance updatePerformanceSeats(Performance performance, int SeatValue){
-
-        int remainingSeats = performance.getTotalSeat()-SeatValue;
+        int remainingSeats = performance.getTotalSeat() - SeatValue;
         performance.setTotalSeat(remainingSeats);
         return performanceRepository.save(performance);
     }
-
 }

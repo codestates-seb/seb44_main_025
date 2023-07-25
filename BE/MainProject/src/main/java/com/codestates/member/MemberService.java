@@ -21,19 +21,15 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final EntityManager em;
     private PasswordEncoder passwordEncoder;
-
-    private JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
 
     public MemberService(MemberRepository memberRepository,
                          EntityManager em,
                          PasswordEncoder passwordEncoder,
-                         CustomAuthorityUtils authorityUtils,
-                         JwtTokenizer jwtTokenizer){
+                         CustomAuthorityUtils authorityUtils){
         this.memberRepository = memberRepository;
         this.em = em;
-        this.jwtTokenizer = jwtTokenizer;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
     }
@@ -53,19 +49,16 @@ public class MemberService {
         return savedMember;
     }
 
-    public Member updateMember(MemberPatchDto memberPatchDto) {
-        verifyEmail(memberPatchDto.getEmail());
+    public Member updateMember(MemberPatchDto memberPatchDto, long memberId) {
 
-        Member member = em.find(Member.class, memberPatchDto.getMemberId());
+        Member member = em.find(Member.class, memberId);
         member.setNickname(memberPatchDto.getNickname());
-        member.setEmail(memberPatchDto.getEmail());
-        member.setPassword(memberPatchDto.getPassword());
-        member.setPhone(memberPatchDto.getPhone());
+        member.setPassword(passwordEncoder.encode(memberPatchDto.getPassword()));
+        //member.setPhone(memberPatchDto.getPhone());
 
         return memberRepository.save(member);
     }
     public Member findMember(long memberId) {
-
         return findVerifiedMember(memberId);
     }
 

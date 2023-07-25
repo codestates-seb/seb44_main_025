@@ -2,11 +2,7 @@ import S from './ArtistRegister.style';
 import LogoImg from '../.././images/이투플아티스트슬로건.png';
 import { styled } from 'styled-components';
 import Header from '../../components/header/Header';
-import {
-  ButtonPrimary75px,
-  ButtonMiniToggleSelect,
-  ButtonMiniToggleUnselect,
-} from '../../components/buttons/Buttons';
+import { ButtonPrimary75px, Button } from '../../components/buttons/Buttons';
 import { Input } from '../../components/inputs/Inputs';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -18,6 +14,7 @@ import { getCookie } from '../../utils/Cookie';
 import { FontStyle } from '../../utils/Theme';
 import { H1Title } from '../../theme/common/SlideUp';
 import { useGetArtist } from '../../api/useFetch';
+import { categoryObj } from '../../utils/Category';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
@@ -27,15 +24,6 @@ interface FormValues {
   content: string;
   imageUrl: string;
 }
-
-const categoryObj = {
-  팝: 1,
-  락: 2,
-  'R&B': 3,
-  재즈: 4,
-  밴드: 5,
-  댄스: 6,
-};
 
 export default function Artistedit() {
   const navigate = useNavigate();
@@ -64,6 +52,7 @@ export default function Artistedit() {
     }
     if (artistData?.imageUrl) {
       setValue('imageUrl', artistData?.imageUrl);
+      setGetUrl(artistData.imageUrl);
     }
   }, [artistData, setValue]);
 
@@ -171,24 +160,16 @@ export default function Artistedit() {
     }
   };
 
-  /** 이미지를 저장하는 함수 */
-  const onSubmitImg = () => {
-    // 현재이미지가 없다면 받아온 이미지를 저장
-    if (!getUrl) {
-      setGetUrl(artistData?.imageUrl);
-      alert('이미지가 저장 되었습니다');
-    }
-    // ImgFile을 전달 받으면 빈객체로 만든 FormData에 append메서드를 사용해 키와 값을 추가
-    else if (artistImgFile) {
-      // FormData()는 키-값 쌍으로 데이터를 구성하며 빈객체로 만들었음
-      let formData = new FormData();
-      formData.append('image-file', artistImgFile as Blob);
-      // 이미지를 서버에 보내는 함수에 전달 후 서버로 돌려받은 데이터를 setGetUrl에 저장
-      usePostArtistImg(formData).then((data: any) => {
-        alert('이미지가 저장 되었습니다');
+  const onSubmitImg = (file: Blob) => {
+    let formData = new FormData();
+    formData.append('image-file', file);
+    usePostArtistImg(formData).then((data: any) => {
+      if (data) {
         setGetUrl(data.data);
-      });
-    }
+      } else {
+        alert('이미지 등록에 실패하였습니다.');
+      }
+    });
   };
 
   return (
@@ -208,72 +189,40 @@ export default function Artistedit() {
                 {/* 파일을 첨부하는 인풋 */}
                 <S.FileInput
                   type="file"
+                  name="image"
                   accept="image/*"
-                  // ref의 값을 부여해서 해당 값이 이곳으로 연결됨
                   ref={artistImgInputRef}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     const files = e.target.files;
-                    // files가 undefined이거나 null이면 종료
                     if (files === undefined || files === null) return;
                     const file = files[0];
-                    setArtistImgFile(file);
-                    if (file) {
-                      // filReader() = 파일을 읽음
-                      const reader = new FileReader();
-                      // .onload는 이벤트 핸들러로 파일을 읽은 후 실행되는 로직 파일의 결과가 없거나 null이면 종료
-                      reader.onload = e => {
-                        if (!e.target?.result || e.target?.result === null)
-                          return;
-                        // as string은 타입 단언으로 값을 문자열로 강제변환
-                        setArtistImagesrc(e.target?.result as string);
-                      };
-                      reader.readAsDataURL(file);
-                    }
+                    if (file) onSubmitImg(file);
                   }}
                 />
                 <S.ArtistImg
                   // 현재 들어있는 이미지 값이 있고 초기값이 없다면 현재 이미지를 보여주고 이미지 등록이 되어 기본값이 생기면 기본값을 보여주기
-                  src={
-                    field.value && !artistImagesrc
-                      ? field.value
-                      : artistImagesrc
-                  }
+                  src={getUrl || field.value || artistImagesrc}
                   onClick={() => artistImgInputRef.current?.click()}
                 ></S.ArtistImg>
               </>
             )}
           />
-          <ImageButton>
-            <ButtonPrimary75px onClick={() => onSubmitImg()}>
-              이미지 저장
-            </ButtonPrimary75px>
-          </ImageButton>
           <S.ArtistDetail>
             <S.SubTitle>아티스트 정보</S.SubTitle>
             <S.CategoryContainer>
               {Object.keys(categoryObj).map((key, idx) => {
-                return idx + 1 === categoryId ? (
-                  <ButtonMiniToggleSelect
-                    key={idx + 1}
+                return (
+                  <Button
+                    key={idx}
+                    theme={idx + 1 === categoryId ? 'highlight' : 'theme'}
                     value={idx + 1}
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                       const value = +(e.target as HTMLInputElement).value;
                       handleClickCategory(value);
                     }}
                   >
-                    {key}
-                  </ButtonMiniToggleSelect>
-                ) : (
-                  <ButtonMiniToggleUnselect
-                    key={idx + 1}
-                    value={idx + 1}
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                      const value = +(e.target as HTMLInputElement).value;
-                      handleClickCategory(value);
-                    }}
-                  >
-                    {key}
-                  </ButtonMiniToggleUnselect>
+                    {categoryObj[key]}
+                  </Button>
                 );
               })}
             </S.CategoryContainer>
@@ -349,6 +298,7 @@ export default function Artistedit() {
                 render={({ field }) => {
                   return (
                     <Input
+                      type="url"
                       value={field.value}
                       height={30}
                       onChange={field.onChange}

@@ -33,7 +33,6 @@ public class ArtistController {
     private final ArtistMapper artistMapper;
     private final CategoryService categoryService;
     private final MemberService memberService;
-
     private final ArtistDtoToArtist artistDtoToArtist;
 
     public ArtistController(ArtistRepository artistRepository,
@@ -94,11 +93,21 @@ public class ArtistController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @GetMapping("/all")
+    public ResponseEntity getAllArtist(){
+        List<Artist> findArtists = artistService.findArtists();
+
+        List<ArtistResponseDto> response =
+                findArtists.stream()
+                        .map(artist -> artistMapper.artistToArtistResponseDto(artist))
+                        .collect(Collectors.toList());
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
 
 
     //카테고리별 아티스트 리스트 출력
     @GetMapping
-    public ResponseEntity getArtists(@Positive @RequestParam long category,
+    public ResponseEntity getCategoryArtists(@Positive @RequestParam long category,
                                            @Positive @RequestParam int page,
                                            @Positive @RequestParam int size){
         Category findcategory = categoryService.findVerifiedCategory(category);
