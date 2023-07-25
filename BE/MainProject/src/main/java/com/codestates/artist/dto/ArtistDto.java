@@ -23,7 +23,7 @@ public class ArtistDto {
     private String imageUrl;
     @NotBlank
     private String content;
-    private SnsLink snsLink;
     private long categoryId;
+    private String snsLink;
 
 }

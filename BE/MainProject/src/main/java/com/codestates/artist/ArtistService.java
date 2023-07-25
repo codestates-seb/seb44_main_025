@@ -1,6 +1,7 @@
 package com.codestates.artist;
 
 import com.codestates.artist.dto.ArtistDto;
+import com.codestates.artist.dto.ArtistResponseDto;
 import com.codestates.category.Category;
 import com.codestates.global.exception.BusinessLogicException;
 import com.codestates.global.exception.ExceptionCode;
@@ -22,14 +23,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ArtistService {
     private final ArtistRepository artistRepository;
+    private final MemberRepository memberRepository;
     private final EntityManager em;
 
 
-    public Artist createArtist(Artist artist){
+    public Artist createArtist(Artist artist, long memberId){
         verifyArtistName(artist.getArtistName());
 
-        Artist savedArtist = artistRepository.save(artist);
-        return savedArtist;
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member member = optionalMember.get();
+        boolean hasArtist = memberHasArtist(member);
+
+        if(hasArtist==false){
+            Artist savedArtist = artistRepository.save(artist);
+        return savedArtist;}
+        else throw new BusinessLogicException(ExceptionCode.MEMBER_HAS_ARTIST);
     }
 
     public Artist updateArtist(ArtistDto artistDto) {
@@ -39,6 +47,8 @@ public class ArtistService {
         artist.setArtistName(artistDto.getArtistName());
         artist.setImageUrl(artistDto.getImageUrl());
         artist.setContent(artistDto.getContent());
+        artist.setCategory(new Category(artistDto.getCategoryId()));
+        artist.setSnsLink(artistDto.getSnsLink());
 
         return artistRepository.save(artist);
     }
@@ -46,17 +56,16 @@ public class ArtistService {
 
         return findVerifiedArtist(artistId);
     }
-    public List<Artist> findCategoryArtists(Category category){
-        return artistRepository.findAllByCategory(category);}
+    public List<Artist> findArtists(){
+        List<Artist> artists = artistRepository.findAll();
 
-    public Page<Artist> findArtists(Category category, int page, int size) {
-
-        Pageable pageable = PageRequest.of(page, size, Sort.by("artistId").descending());
-
-
-        return artistRepository.findAllByCategory(category,pageable);
+        return artists;
     }
 
+    public Page<Artist> findPageArtist(Category category, int page, int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return artistRepository.findAllByCategoryOrderByArtistIdDesc(category, pageRequest);
+    }
 
     public void deleteArtist(long artistId) {
         Artist findArtist = findVerifiedArtist(artistId);
@@ -78,9 +87,29 @@ public class ArtistService {
         if (artist.isPresent())
             throw new BusinessLogicException(ExceptionCode.ARTIST_EXISTS);
     }
-    public Page<Artist> findPageArtist(Category category, int page, int size){
-        PageRequest pageRequest = PageRequest.of(page, size);
-        return artistRepository.findAllByCategoryOrderByArtistIdDesc(category, pageRequest);
+
+    public boolean memberHasArtist(Member member){
+
+        Optional<Artist> artist = artistRepository.findByMember(member);
+        boolean result = false;
+        if(artist.isPresent()){
+            result = true;}
+        return result;
+    }
+    public long findArtistId(Member member){
+
+        Optional<Artist> artist = artistRepository.findByMember(member);
+        long result = artist.get().getArtistId();
+
+        return result;
+    }
+
+    public boolean duplicateArtistName(String artistName){
+        boolean result = false;
+        Optional<Artist> artist = artistRepository.findByArtistName(artistName);
+        if (artist.isPresent()){
+            result = true;}
+        return result;
     }
 
 }

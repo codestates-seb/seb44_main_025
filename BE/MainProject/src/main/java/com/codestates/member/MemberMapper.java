@@ -16,14 +16,19 @@ public class MemberMapper {
 
     public Member memberPatchDtoToMember(MemberPatchDto memberPatchDto){
         return new Member(
-                memberPatchDto.getEmail(),
                 memberPatchDto.getNickname(),
                 memberPatchDto.getPassword());
     }
     public MemberResponseDto memberToMemberResponseDto(Member member){
+
         return new MemberResponseDto(member.getMemberId(),
                 member.getEmail(),
                 member.getNickname(),
-                member.getPassword());
+                member.getPassword(),
+                false,
+                0,
+                null
+        );
+
     }
 }

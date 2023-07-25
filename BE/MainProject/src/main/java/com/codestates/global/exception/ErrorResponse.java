@@ -23,7 +23,7 @@ public class ErrorResponse {
         this.violationErrors = violationErrors;
     }
 
-    private ErrorResponse(int status, String message) {
+    public ErrorResponse(int status, String message) {
         this.status = status;
         this.message = message;
     }
@@ -95,9 +95,4 @@ public class ErrorResponse {
                     )).collect(Collectors.toList());
         }
     }
-
-
-
-
-
 }
