@@ -39,7 +39,9 @@ const Home = () => {
     const getArtistsData = async () => {
       try {
         const response = await axios.get(`${SERVER_HOST}/artist/all`);
-        const copy = response.data.splice(0, 4);
+        const copy = response.data
+          .slice(response.data.length - 4, response.data.length)
+          .reverse();
         setArtistList(copy);
       } catch (error) {
         console.error(error);
