@@ -11,12 +11,6 @@ import javax.validation.constraints.Pattern;
 @Setter
 public class MemberPatchDto {
 
-    private long memberId;
-    @NotBlank
-    @Pattern(regexp = "^([a-zA-Z0-9@.]{8,50})$")
-    @Email
-    private String email;
-
     @NotBlank
     @Pattern(regexp = "^([a-zA-Z0-9가-힣]{2,12})$",
             message = "올바른 닉네임 형식이 아닙니다.(영한문, 숫자 2~12)")
@@ -24,6 +18,6 @@ public class MemberPatchDto {
     @NotBlank
 //    @Pattern(regexp = "^([a-zA-Z0-9!@#$%^&*]{8,12})$")
     private String password;
-    private String phone;
+
 
 }
