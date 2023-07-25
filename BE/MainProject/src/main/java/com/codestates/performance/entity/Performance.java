@@ -3,6 +3,7 @@ package com.codestates.performance.entity;
 import com.codestates.category.Category;
 import com.codestates.content.entity.Content;
 import com.codestates.performancecomment.entity.PerformanceComment;
+import com.codestates.reservation.entity.Reservation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -41,7 +42,7 @@ public class Performance {
     @Column(nullable = false)
     private int totalSeat;
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="CATEGORY_ID")
     private Category category;
     @Column(nullable = false)
@@ -53,6 +54,8 @@ public class Performance {
     @JsonIgnore
     @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
     private List<PerformanceComment> performanceComments = new ArrayList<>();
+    @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 
     public Performance(String title, LocalDateTime date, int price, String place, int totalSeat, String imageUrl) {
         this.title = title;
@@ -61,6 +64,9 @@ public class Performance {
         this.place = place;
         this.totalSeat = totalSeat;
         this.imageUrl = imageUrl;
+    }
+    public Performance(long performanceId){
+        this.performanceId = performanceId;
     }
 
     public Performance(long performanceId, String title, LocalDateTime date, int price, String place, int totalSeat, String imageUrl) {
@@ -104,18 +110,34 @@ public class Performance {
         }
     }
 
+    /* 진행중인 공연과 완료된 공연을 검색하기 위한 enum */
     @Getter
     public enum PERFORMANCE_STATUS {
-        PERFORMANCE_COMPLETED("공연중"),
-        PERFORMANCE_NOT_COMPLETED("공연완료");
+        PERFORMANCE_DEFAULT("default"),
+        PERFORMANCE_COMPLETED("공연완료"),
+        PERFORMANCE_NOT_COMPLETED("공연진행중");
 
         private String status;
+
         PERFORMANCE_STATUS(String status) {
             this.status = status;
         }
 
+        public static PERFORMANCE_STATUS of(String performanceStatus) {
+            for(PERFORMANCE_STATUS el : PERFORMANCE_STATUS.values()) {
+                if(el.status.equals(performanceStatus)) return el;
+            }
+            return PERFORMANCE_DEFAULT;
+        }
+
         public String getStatus() {
             return status;
+        }
+        public boolean isCompleted() {
+            return this.status == PERFORMANCE_COMPLETED.getStatus();
+        }
+        public boolean isNull() {
+            return this.status != PERFORMANCE_COMPLETED.getStatus() && this.status != PERFORMANCE_NOT_COMPLETED.getStatus();
         }
     }
 }

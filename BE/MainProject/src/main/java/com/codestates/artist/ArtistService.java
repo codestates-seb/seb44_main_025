@@ -1,6 +1,7 @@
 package com.codestates.artist;
 
 import com.codestates.artist.dto.ArtistDto;
+import com.codestates.artist.dto.ArtistResponseDto;
 import com.codestates.category.Category;
 import com.codestates.global.exception.BusinessLogicException;
 import com.codestates.global.exception.ExceptionCode;
@@ -54,6 +55,11 @@ public class ArtistService {
     public Artist findArtist(long artistId) {
 
         return findVerifiedArtist(artistId);
+    }
+    public List<Artist> findArtists(){
+        List<Artist> artists = artistRepository.findAll();
+
+        return artists;
     }
 
     public Page<Artist> findPageArtist(Category category, int page, int size){

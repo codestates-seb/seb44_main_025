@@ -54,10 +54,8 @@ public class MemberController {
         Map<String, Object> principal = (Map) authentication.getPrincipal();
         long memberId = ((Number) principal.get("memberId")).longValue();
 
-        memberPatchDto.setMemberId(memberId);
-
         Member response =
-                memberService.updateMember(memberPatchDto);
+                memberService.updateMember(memberPatchDto, memberId);
 
         return new ResponseEntity<>(memberMapper.memberToMemberResponseDto(response),
                 HttpStatus.OK);
@@ -105,9 +103,14 @@ public class MemberController {
         System.out.println("dkdkdkdkdkdkdkdk"+memberId);
 
         boolean passwordCorrect = memberService.checkPassword(memberId, memberPassword.getPassword());
+        Member member=  memberService.findVerifiedMember(memberId);
 
         if(passwordCorrect==true){
-        memberService.deleteMember(memberId);}
+            if(artistService.memberHasArtist(member)==true){
+            artistService.deleteArtist(artistService.findArtistId(member));}
+
+            memberService.deleteMember(memberId);
+        }
         else {
             throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_CORRECT);
         }

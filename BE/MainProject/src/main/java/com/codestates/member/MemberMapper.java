@@ -16,10 +16,8 @@ public class MemberMapper {
 
     public Member memberPatchDtoToMember(MemberPatchDto memberPatchDto){
         return new Member(
-                memberPatchDto.getEmail(),
                 memberPatchDto.getNickname(),
-                memberPatchDto.getPassword(),
-                memberPatchDto.getPhone());
+                memberPatchDto.getPassword());
     }
     public MemberResponseDto memberToMemberResponseDto(Member member){
 
