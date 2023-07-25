@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { DeviceQuery } from '../../utils/Media';
 import { screenScale } from '../../utils/MediaSize';
+import { FontStyle } from '../../utils/Theme';
 
 export default {
   Heading1: styled.h1`
@@ -81,6 +82,23 @@ export default {
   `,
   FileInput: styled.input`
     display: none;
+  `,
+  PosterDiv: styled.div`
+    width: 170px;
+    height: 210px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--font-mid-color);
+    filter: drop-shadow(0 0 3px var(--button-primary-border-color));
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.7);
+    ${FontStyle.heading3};
+    color: white;
+    ${DeviceQuery.tablet`
+    width: calc(170px * ${screenScale.tablet});
+    height: calc(210px * ${screenScale.tablet});
+ `}
   `,
   Poster: styled.img`
     width: 170px;

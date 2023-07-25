@@ -124,12 +124,18 @@ const PerformanceRegister = () => {
                 if (file) onSubmitImg(file);
               }}
             />
-            <S.Poster
-              // TODO: 공연 이미지 등록 이전에 보여줄 170 * 210 비율에 맞는 이미지 제공하기
-              src={imgUrl || ''}
-              alt="공연 이미지"
-              onClick={() => fileInputRef.current?.click()}
-            ></S.Poster>
+            {imgUrl ? (
+              <S.Poster
+                // TODO: 공연 이미지 등록 이전에 보여줄 170 * 210 비율에 맞는 이미지 제공하기
+                src={imgUrl || ''}
+                alt="공연 이미지"
+                onClick={() => fileInputRef.current?.click()}
+              ></S.Poster>
+            ) : (
+              <S.PosterDiv onClick={() => fileInputRef.current?.click()}>
+                이미지를 등록해주세요
+              </S.PosterDiv>
+            )}
             <S.Form onSubmit={handleSubmit(onSubmit)}>
               <Controller
                 control={control}
