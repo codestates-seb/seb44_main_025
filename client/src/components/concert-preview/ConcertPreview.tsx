@@ -76,6 +76,7 @@ const S = {
     background-origin: border-box;
     background-clip: content-box, border-box;
     margin-left: 15px;
+    object-fit: cover;
   `,
   ConcertDetail: styled.section`
     ${DeviceQuery.tablet`

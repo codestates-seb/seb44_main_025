@@ -93,6 +93,7 @@ const S = {
     width: calc(64px * ${screenScale.tablet});
     height: calc(64px * ${screenScale.tablet});
  `}
+    object-fit: cover;
     width: 64px;
     height: 64px;
     margin: 15px;
