@@ -44,6 +44,8 @@ const PerformanceInfo = ({
         deletePerformance(performanceId).then(data => {
           if (data) {
             navigate('/performances');
+          } else {
+            alert('공연 삭제에 실패하였습니다.');
           }
         });
       }
