@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getCookie } from '../utils/Cookie';
+import { Member } from '../model/Member';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
@@ -7,6 +8,17 @@ const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 interface BodyType {
   [x: string]: any;
 }
+
+export const getMember = async () => {
+  return await axios
+    .get<Member>(`${SERVER_HOST}/member`, {
+      headers: {
+        Authorization: getCookie('accessToken'),
+      },
+    })
+    .then(data => data.data)
+    .catch(err => console.log(err));
+};
 
 // Performance - POST, PATCH, DELETE
 export const postPerformance = async (body: BodyType) => {
