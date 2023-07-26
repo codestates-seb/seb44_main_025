@@ -52,7 +52,11 @@ const Header = ({ precious }: OwnProps) => {
               </Styled_Header.LogoDiv>
 
               <Styled_Header.Div>
-                <Styled_Header.SearchS>
+                <Styled_Header.SearchS
+                  onClick={() => {
+                    alert('앗! 준비중인 기능입니다!');
+                  }}
+                >
                   <SearchIcon />
                 </Styled_Header.SearchS>
                 <Styled_Header.TicketS onClick={handleModalOpen}>
