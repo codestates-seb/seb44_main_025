@@ -55,7 +55,7 @@ export default {
     margin-top: 20px;
     display: flex;
     min-width: 360px;
-    justify-content: flex-start;
+    justify-content: space-between;
     & > button:not(:first-child) {
       margin-left: 13px;
       ${DeviceQuery.tablet`
