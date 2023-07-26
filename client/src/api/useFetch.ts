@@ -215,6 +215,26 @@ export const useGetMember = () => {
   return data;
 };
 
+export const useGetReservations = () => {
+  const [data, setData] = useState<ReservationType[]>();
+
+  const getData = async () => {
+    await axios
+      // 공연받아오는 endpoint에 맞게 수정해주기
+      .get<ReservationType[]>(`${SERVER_HOST}/reservation/mypage`, {
+        headers: {
+          Authorization: getCookie('accessToken'),
+        },
+      })
+      .then(data => setData(data.data))
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  return data;
+};
+
 export const useGetMemberPerformance = () => {
   const [data, setData] = useState<ReservationType[]>();
 
