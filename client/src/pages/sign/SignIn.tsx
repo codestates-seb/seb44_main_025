@@ -9,6 +9,10 @@ import { H1Title } from '../../theme/common/SlideUp';
 import { useUserInfo } from '../../zustand/userInfo.stores';
 import GoogleButton from '../../components/buttons/GoogleButton';
 import { usePostSignIn } from '../../api/sign';
+// 로그인 직후 artistId 갱신
+import { getMember } from '../../api/fetchAPI';
+import { Member } from '../../model/Member';
+import { setCookie } from '../../utils/Cookie';
 
 interface IForm {
   email: string;
@@ -28,6 +32,22 @@ const SignInPage = () => {
   const onSubmit: SubmitHandler<IForm> = data => {
     usePostSignIn(data, '/login').then(data => {
       if (data !== 'error') {
+        getMember().then((data: Member) => {
+          setUserInfo({
+            memberId: data.memberId,
+            hasArtist: data.hasArtist,
+            artistId: data.artistId,
+          });
+          setCookie(
+            'userInfo',
+            JSON.stringify({
+              memberId: data.memberId,
+              hasArtist: data.hasArtist,
+              artistId: data.artistId,
+            }),
+            { path: '/' }
+          );
+        });
         navigate('/');
       } else {
         // zustand 저장
