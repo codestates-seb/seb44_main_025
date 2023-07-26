@@ -8,5 +8,5 @@ export const getButtonText = (
   if (!isStale && isReserved) return '예약 확인';
   if (!isStale && leftSeat === 0) return '매진';
   if (!isStale && !isReserved && leftSeat > 0) return '공연 예약';
-  return '조건 확인';
+  return '이 텍스트를 보게 되면 버그입니다. 제보해주세요.';
 };
