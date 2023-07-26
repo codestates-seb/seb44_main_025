@@ -69,6 +69,7 @@ export const Poster = styled.img`
   width: 170px;
   height: 210px;
   background-color: transparent;
+  border-radius: 30px;
   object-fit: cover;
   &[src=''] {
     background-color: gray;
