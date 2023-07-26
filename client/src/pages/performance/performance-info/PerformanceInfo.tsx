@@ -14,8 +14,13 @@ import { getDateTime } from '../../../utils/Format';
 import { PerformanceType } from '../../../model/Performance';
 import { deletePerformance } from '../../../api/fetchAPI';
 import ReviewRegister from '../../../components/modal/review-register/ReviewRegister';
-import { useGetMemberPerformanced } from '../../../api/useFetch';
-import { checkIsReserved } from '../../../utils/Filter';
+import { useGetReservations } from '../../../api/useFetch';
+import {
+  checkIsReserved,
+  filterReservationByPerformanceId,
+} from '../../../utils/Filter';
+import { getButtonText } from '../../../utils/Condition';
+import ReservationTicket from '../../../components/modal/ReservationTicket';
 
 const PerformanceInfo = ({
   setIsEditing,
@@ -24,17 +29,18 @@ const PerformanceInfo = ({
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   performance: PerformanceType;
 }) => {
-  const reservation = useGetMemberPerformanced();
-  const [isTicketModalOpen, setIsTicketModalOpen] = useState(false);
+  const reservations = useGetReservations();
+  const [isTicketModalOpen, setIsReservationModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isReservationTicketOpen, setIsReservationTicketOpen] = useState(false);
   // const performance = useGetPerformance(performanceId);
   const { performanceId } = useParams();
   const [isReserved, setIsReserved] = useState(false);
   useEffect(() => {
-    if (reservation && performanceId) {
-      setIsReserved(checkIsReserved(reservation, +performanceId));
+    if (reservations && performanceId) {
+      setIsReserved(checkIsReserved(reservations, +performanceId));
     }
-  }, [reservation]);
+  }, [reservations]);
   const [isStale, setIsStale] = useState(true);
   // Note: 삭제 기능 비활성화
   const handleClickDelete = () => {
@@ -168,20 +174,16 @@ const PerformanceInfo = ({
                   navigate('/login');
                   return;
                 }
-                if (isStale) {
+                if (isStale && isReserved) {
                   setIsReviewModalOpen(true);
+                } else if (!isStale && !isReserved) {
+                  setIsReservationModalOpen(true);
                 } else {
-                  setIsTicketModalOpen(true);
+                  setIsReservationTicketOpen(true);
                 }
               }}
             >
-              {isStale
-                ? isReserved
-                  ? '후기 작성'
-                  : '공연 종료'
-                : performance.totalSeat
-                ? '예약하기'
-                : '매진'}
+              {getButtonText(isStale, isReserved, performance.totalSeat)}
             </Button>
           </S.BottomStickyContainer>
         )}
@@ -189,8 +191,7 @@ const PerformanceInfo = ({
         <ReservationModal
           performance={performance}
           closeModal={() => {
-            setIsTicketModalOpen(false);
-            setIsTicketModalOpen(false);
+            setIsReservationModalOpen(false);
           }}
         />
       )}
@@ -199,6 +200,18 @@ const PerformanceInfo = ({
           performance={performance}
           closeModal={() => {
             setIsReviewModalOpen(false);
+          }}
+        />
+      )}
+      {isReservationTicketOpen && isReserved && reservations && (
+        <ReservationTicket
+          reservation={performance}
+          {...filterReservationByPerformanceId(
+            reservations,
+            performance.performanceId
+          )}
+          onClick={() => {
+            setIsReservationTicketOpen(false);
           }}
         />
       )}

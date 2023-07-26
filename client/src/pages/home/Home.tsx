@@ -57,7 +57,13 @@ const Home = () => {
         <Styled_Home.Container>
           <CarouselLogic />
           <Styled_Home.MiddlePart>
-            <Input height={30} placeholder="검색..." suffix={true} />
+            <Input
+              height={30}
+              placeholder="준비중인 기능입니다..."
+              suffix={true}
+              disabled
+            />
+            {/* <Input height={30} placeholder="검색..." suffix={true} /> */}
             <Styled_Home.AllBtnsDiv>
               <Link to="/performances" style={{ textDecorationLine: 'none' }}>
                 <MainPageButton

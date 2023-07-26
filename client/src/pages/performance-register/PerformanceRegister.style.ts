@@ -86,6 +86,7 @@ export default {
   PosterDiv: styled.div`
     width: 170px;
     height: 210px;
+    border-radius: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -104,6 +105,7 @@ export default {
   Poster: styled.img`
     width: 170px;
     height: 210px;
+    border-radius: 30px;
     cursor: pointer;
     background-color: transparent;
     object-fit: cover;

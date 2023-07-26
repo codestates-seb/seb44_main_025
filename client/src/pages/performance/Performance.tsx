@@ -14,7 +14,7 @@ export const Performance = () => {
 
   return (
     <>
-      <Header precious={true} />
+      <Header />
       <S.Container>
         <S.Main>
           {data &&
