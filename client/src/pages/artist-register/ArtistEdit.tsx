@@ -60,7 +60,7 @@ export default function Artistedit() {
   useEffect(() => {
     if (artistId && getCookie('userInfo')?.artistId !== +artistId) {
       navigate('/');
-      alert('권한 접근이 없습니다.');
+      alert('접근 권한이 없습니다.');
       return;
     }
   }, []);

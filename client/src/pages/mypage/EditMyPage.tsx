@@ -52,7 +52,7 @@ export default function Editmypage() {
 
   useEffect(() => {
     if (memberId && getCookie('userInfo')?.memberId !== +memberId) {
-      alert('권한 접근이 없습니다.');
+      alert('접근 권한이 없습니다.');
       navigate('/');
       return;
     }

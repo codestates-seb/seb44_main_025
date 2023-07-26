@@ -77,9 +77,11 @@ const ArtistList = () => {
           </S.CategoryContainer>
           <S.ArtistContainer>
             {Array.isArray(data)
-              ? data?.map(artist => (
-                  <ArtistPreview key={artist.artistId} {...artist} />
-                ))
+              ? [...data]
+                  .reverse()
+                  .map(artist => (
+                    <ArtistPreview key={artist.artistId} {...artist} />
+                  ))
               : data?.data?.map(artist => (
                   <ArtistPreview key={artist.artistId} {...artist} />
                 ))}

@@ -4,7 +4,7 @@ import LogoImg from '../.././images/이투플아티스트슬로건.png';
 import Header from '../../components/header/Header';
 import { ButtonPrimary75px, Button } from '../../components/buttons/Buttons';
 import { Input } from '../../components/inputs/Inputs';
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Img from '../../images/기본이미지.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
@@ -34,7 +34,18 @@ export default function Artistregist() {
   const [artistImagesrc, setArtistImagesrc] = useState<string>(Img);
   // const [videofilesrc, setVideofilesrc] = useState<string>(Img);
   // const [videoFile, setVideoFile] = useState<Blob>();
-
+  useEffect(() => {
+    if (!getCookie('userInfo')?.memberId) {
+      navigate('/', { replace: true });
+      alert('접근 권한이 없습니다.');
+      return;
+    }
+    if (getCookie('userInfo')?.artistId) {
+      navigate('/', { replace: true });
+      alert('잘못된 접근입니다.');
+      return;
+    }
+  }, []);
   /** 중복확인버튼 클릭 여부 */
   let [artistNameDupl, setArtistNameDupl] = useState(false);
   /** 중복확인 클릭하지 않고 submit 했을 때

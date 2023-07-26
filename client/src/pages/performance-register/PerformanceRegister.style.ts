@@ -55,7 +55,7 @@ export default {
     margin-top: 20px;
     display: flex;
     min-width: 360px;
-    justify-content: flex-start;
+    justify-content: space-between;
     & > button:not(:first-child) {
       margin-left: 13px;
       ${DeviceQuery.tablet`
@@ -93,11 +93,12 @@ export default {
     background-color: var(--font-mid-color);
     filter: drop-shadow(0 0 3px var(--button-primary-border-color));
     box-shadow: 0 0 3px rgba(255, 255, 255, 0.7);
-    ${FontStyle.heading3};
+    ${FontStyle.smallMedium};
     color: white;
     ${DeviceQuery.tablet`
     width: calc(170px * ${screenScale.tablet});
     height: calc(210px * ${screenScale.tablet});
+    ${FontStyle.heading3};
  `}
   `,
   Poster: styled.img`
