@@ -1,11 +1,12 @@
 import { PerformanceListType, PerformanceType } from '../model/Performance';
-import { ArtistList, Artist, ArtistReview } from '../model/Artist';
+import { ArtistList, Artist } from '../model/Artist';
 import { Member, Review } from '../model/Member';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getCookie, removeCookie, setCookie } from '../utils/Cookie';
 import { useUserInfo } from '../zustand/userInfo.stores';
 import { ReservationType } from '../model/Reservation';
+import { useNavigate } from 'react-router-dom';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
@@ -105,6 +106,7 @@ export const useGetArtists = (
 /** 아티스트 정보를 받아오는 get함수, 아티스트 정보를 받은 후 zustand에 정보를 담아서 상태 관리(수정페이지의 input defaultValue로 넣기 위함) */
 export const useGetArtist = (id: string | number | undefined) => {
   const [data, setData] = useState<Artist>();
+  const navigate = useNavigate();
 
   const getData = async () => {
     await axios
@@ -112,7 +114,11 @@ export const useGetArtist = (id: string | number | undefined) => {
       .then(data => {
         return setData(data.data);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        alert('아티스트 정보를 불러오지 못했습니다.');
+        navigate('/artists', { replace: true });
+      });
   };
   useEffect(() => {
     getData();
