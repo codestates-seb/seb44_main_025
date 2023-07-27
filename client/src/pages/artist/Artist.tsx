@@ -81,12 +81,14 @@ export default function Artistpage() {
             <S.EmptyContainer>
               <S.EmptyWrapper>
                 <S.EmptyTitle>준비중인 공연이 없습니다.</S.EmptyTitle>
-                <ConcertEmptyButton>
-                  <ButtonWithArrowDark
-                    onClick={() => navigate('/performances/register')}
-                    text="공연등록"
-                  ></ButtonWithArrowDark>
-                </ConcertEmptyButton>
+                {artistId === getCookie('userInfo')?.artistId && (
+                  <ConcertEmptyButton>
+                    <ButtonWithArrowDark
+                      onClick={() => navigate('/performances/register')}
+                      text="공연등록"
+                    ></ButtonWithArrowDark>
+                  </ConcertEmptyButton>
+                )}
               </S.EmptyWrapper>
             </S.EmptyContainer>
           )}
@@ -110,12 +112,14 @@ export default function Artistpage() {
               <S.EmptyContainer>
                 <S.EmptyWrapper>
                   <S.EmptyTitle>완료한 공연이 없습니다.</S.EmptyTitle>
-                  <ConcertEmptyButton>
-                    <ButtonWithArrowDark
-                      onClick={() => navigate('/performances/register')}
-                      text="공연등록"
-                    ></ButtonWithArrowDark>
-                  </ConcertEmptyButton>
+                  {artistId === getCookie('userInfo')?.artistId && (
+                    <ConcertEmptyButton>
+                      <ButtonWithArrowDark
+                        onClick={() => navigate('/performances/register')}
+                        text="공연등록"
+                      ></ButtonWithArrowDark>
+                    </ConcertEmptyButton>
+                  )}
                 </S.EmptyWrapper>
               </S.EmptyContainer>
             )}
@@ -135,17 +139,18 @@ export default function Artistpage() {
               <S.EmptyContainer>
                 <S.EmptyWrapper>
                   <S.EmptyTitle>완료한 공연이 없습니다.</S.EmptyTitle>
-                  <ConcertEmptyButton>
-                    <ButtonWithArrowDark
-                      onClick={() => navigate('/performances/register')}
-                      text="공연등록"
-                    ></ButtonWithArrowDark>
-                  </ConcertEmptyButton>
+                  {artistId === getCookie('userInfo')?.artistId && (
+                    <ConcertEmptyButton>
+                      <ButtonWithArrowDark
+                        onClick={() => navigate('/performances/register')}
+                        text="공연등록"
+                      ></ButtonWithArrowDark>
+                    </ConcertEmptyButton>
+                  )}
                 </S.EmptyWrapper>
               </S.EmptyContainer>
             )}
           </S.MyreviewContainer>
-
           <Footer />
         </S.Section>
       </S.Main>
