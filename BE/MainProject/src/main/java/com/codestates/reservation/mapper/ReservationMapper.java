@@ -20,7 +20,8 @@ public class ReservationMapper {
                 reservation.getDate(),
                 reservation.getReservationStatus(),
                 reservation.getSeatValue(),
-                reservation.getPrice());
+                reservation.getPrice(),
+                reservation.getPerformance().getImageUrl());
     }
 
     public Reservation reservationRequestDtoToReservation(ReservationDto.ReservationRequestDto requestDto){
