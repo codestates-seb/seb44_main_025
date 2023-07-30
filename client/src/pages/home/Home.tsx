@@ -8,15 +8,13 @@ import Artistmain from '../../components/artist/ArtistHome';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useHomePage } from '../../zustand/homepage.stores';
-import axios from 'axios';
+import { instance } from '../../api/axios';
 import Navbar from '../../components/nav/Navbar';
 import { getCookie } from '../../utils/Cookie';
 import pianoImage from '../../images/pexels-emre-akyol-16822720.jpg';
 import stageImage from '../../images/pexels-monica-silvestre-713149.jpg';
 import mapImage from '../../images/pexels-nothing-ahead-9494909.jpg';
 import drumImage from '../../images/pexels-ricardo-rojas-3608804.jpg';
-
-const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
 const Home = () => {
   const { setCarouselList, setArtistList } = useHomePage();
@@ -26,9 +24,7 @@ const Home = () => {
   useEffect(() => {
     const getCarouselData = async () => {
       try {
-        const response = await axios.get(
-          `${SERVER_HOST}/performance?page=1&size=5`
-        );
+        const response = await instance.get('/performance?page=1&size=5');
         setCarouselList(response.data.data);
       } catch (error) {
         console.error(error);
@@ -38,7 +34,7 @@ const Home = () => {
     getCarouselData();
     const getArtistsData = async () => {
       try {
-        const response = await axios.get(`${SERVER_HOST}/artist/all`);
+        const response = await instance.get('/artist/all');
         const copy = response.data
           .slice(response.data.length - 4, response.data.length)
           .reverse();

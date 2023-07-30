@@ -9,14 +9,12 @@ import Img from '../../images/기본이미지.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { usePostArtist, usePostArtistImg } from '../../api/fetchAPI';
-import axios from 'axios';
+import { instance } from '../../api/axios';
 import { artistnameRegExp } from '../../utils/RegExp';
 import { getCookie } from '../../utils/Cookie';
 import { FontStyle } from '../../utils/Theme';
 import { H1Title } from '../../theme/common/SlideUp';
 import { categoryObj } from '../../utils/Category';
-
-const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
 interface FormValues {
   artistName: string;
@@ -94,8 +92,8 @@ export default function Artistregist() {
 
   /** 닉네임 중복검사하는 ajax 함수 */
   const useGetDuplicateArtistname = (artistNameData: string | null) => {
-    axios
-      .post(`${SERVER_HOST}/artist/duplicate/artistName`, {
+    instance
+      .post('/artist/duplicate/artistName', {
         artistName: artistNameData,
       })
       // 응답이 갈때

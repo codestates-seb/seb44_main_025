@@ -4,8 +4,8 @@ import { Input } from '../../components/inputs/Inputs';
 import { Styled_Cancel } from './Cancel.styled';
 import { H1Title } from '../../theme/common/SlideUp';
 import { useState } from 'react';
-import axios from 'axios';
-import { removeCookie, getCookie } from '../../utils/Cookie';
+import { authInstance } from '../../api/axios';
+import { removeCookie } from '../../utils/Cookie';
 import { useNavigate } from 'react-router-dom';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
@@ -16,11 +16,10 @@ export default function Cancelpage() {
   const navigate = useNavigate();
 
   const postPassword = () => {
-    axios
+    authInstance
       .delete(`${SERVER_HOST}/member`, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `${getCookie('accessToken')}`,
         },
         data: {
           password: password,
@@ -31,9 +30,9 @@ export default function Cancelpage() {
           alert('[회원탈퇴 성공] 탈퇴 되었습니다');
           navigate('/');
           setIsWrongPassword('light');
-          removeCookie('accessToken');
-          removeCookie('refreshToken');
-          removeCookie('userInfo');
+          removeCookie('accessToken', { path: '/' });
+          removeCookie('refreshToken', { path: '/' });
+          removeCookie('userInfo', { path: '/' });
         }
       })
       .catch(() => {
