@@ -188,7 +188,10 @@ export const useGetMember = () => {
         headers: { Authorization: getCookie('accessToken') },
       })
       .then(data => {
-        setData(data.data), removeCookie('userInfo');
+        authInstance.defaults.headers.common['Authorization'] =
+          getCookie('accessToken');
+        setData(data.data);
+        removeCookie('userInfo');
         setUserInfo({
           memberId: data.data.memberId,
           hasArtist: data.data.hasArtist,
