@@ -1,17 +1,16 @@
-import axios from 'axios';
 import { getCookie } from '../utils/Cookie';
 import { Member } from '../model/Member';
-
-const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
+import { authInstance, instance } from './axios';
 
 // TODO: 임시로 BodyType 사용중인 항목들 타입 정의하기
 interface BodyType {
   [x: string]: any;
 }
 
+// Note: getMember는 다시 접속했을 때에도 요청을 보내야 하므로 쿠키 활용
 export const getMember = async () => {
-  return await axios
-    .get<Member>(`${SERVER_HOST}/member`, {
+  return await instance
+    .get<Member>('/member', {
       headers: {
         Authorization: getCookie('accessToken'),
       },
@@ -23,8 +22,8 @@ export const getMember = async () => {
 // Performance - POST, PATCH, DELETE
 export const postPerformance = async (body: BodyType) => {
   // Promise 상태로 돌려주기
-  return axios
-    .post(`${SERVER_HOST}/performance`, body, {
+  return authInstance
+    .post('/performance', body, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -37,26 +36,19 @@ export const patchPerformance = async (
   performanceId: string | number,
   body: BodyType
 ) => {
-  return await axios
-    .patch(
-      `${SERVER_HOST}/performance/${performanceId}`,
-      JSON.stringify(body),
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: getCookie('accessToken'),
-        },
-      }
-    )
+  return await authInstance
+    .patch(`/performance/${performanceId}`, JSON.stringify(body), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     .then(data => data.data)
     .catch(err => console.error(err));
 };
 
 export const deletePerformance = async (performanceId: string | number) => {
-  return await axios
-    .delete(`${SERVER_HOST}/performance/${performanceId}`, {
-      headers: { Authorization: getCookie('accessToken') },
-    })
+  return await authInstance
+    .delete(`/performance/${performanceId}`)
     .then(response => {
       if (response.status === 204) {
         alert('공연이 삭제되었습니다.');
@@ -73,12 +65,8 @@ export const getReservation = async (
   memberId: string | number,
   reservationId: string | number
 ) => {
-  const data = await axios
-    .get(`${SERVER_HOST}/reservation/${memberId}/${reservationId}`, {
-      headers: {
-        Authorization: getCookie('accessToken'),
-      },
-    })
+  const data = await authInstance
+    .get(`/reservation/${memberId}/${reservationId}`)
     .then(data => data)
     .catch(err => console.error(err));
 
@@ -86,11 +74,10 @@ export const getReservation = async (
 };
 
 export const postReservation = async (body: BodyType) => {
-  return axios
-    .post(`${SERVER_HOST}/reservation`, JSON.stringify(body), {
+  return authInstance
+    .post('/reservation', JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: getCookie('accessToken'),
       },
     })
     .then(data => data)
@@ -98,12 +85,8 @@ export const postReservation = async (body: BodyType) => {
 };
 
 export const deleteReservation = async (reservationId: string | number) => {
-  const data = await axios
-    .delete(`${SERVER_HOST}/reservation/${reservationId}`, {
-      headers: {
-        Authorization: getCookie('accessToken'),
-      },
-    })
+  const data = await authInstance
+    .delete(`/reservation/${reservationId}`)
     .then(data => data)
     .catch(err => console.error(err));
 
@@ -111,11 +94,10 @@ export const deleteReservation = async (reservationId: string | number) => {
 };
 
 export const usePostArtist = async (body: BodyType) => {
-  const data = await axios
-    .post(`${SERVER_HOST}/artist`, JSON.stringify(body), {
+  const data = await authInstance
+    .post('/artist', JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: getCookie('accessToken'),
       },
     })
     .then(data => {
@@ -131,11 +113,10 @@ export const usePatchArtist = async (
   id: string | number | undefined,
   body: BodyType
 ) => {
-  const data = await axios
-    .patch(`${SERVER_HOST}/artist/${id}`, JSON.stringify(body), {
+  const data = await authInstance
+    .patch(`/artist/${id}`, JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: getCookie('accessToken'),
       },
     })
     .then(data => {
@@ -147,11 +128,10 @@ export const usePatchArtist = async (
 };
 
 export const usePostArtistImg = async (body: BodyType) => {
-  const data = await axios
-    .post(`${SERVER_HOST}/image`, body, {
+  const data = await instance
+    .post('/image', body, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: getCookie('accessToken'),
       },
     })
     .then(data => {
@@ -170,11 +150,10 @@ export const postReview = async (
   performanceId: string | number,
   body: BodyType
 ) => {
-  return axios
-    .post(`${SERVER_HOST}/review`, JSON.stringify(body), {
+  return instance
+    .post('/review', JSON.stringify(body), {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: getCookie('accessToken'),
       },
     })
     .then(data => data)
@@ -186,24 +165,20 @@ export const patchReview = async (
   reviewId: string | number,
   body: BodyType
 ) => {
-  return axios
-    .patch(
-      `${SERVER_HOST}/review/${performanceId}/${reviewId}`,
-      JSON.stringify(body),
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: getCookie('accessToken'),
-        },
-      }
-    )
+  return instance
+    .patch(`/review/${performanceId}/${reviewId}`, JSON.stringify(body), {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: getCookie('accessToken'),
+      },
+    })
     .then(data => data)
     .catch(err => console.error(err));
 };
 
 export const deleteReview = async (reviewId: string | number) => {
-  return axios
-    .delete(`${SERVER_HOST}/review/${reviewId}`, {
+  return instance
+    .delete(`/review/${reviewId}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: getCookie('accessToken'),

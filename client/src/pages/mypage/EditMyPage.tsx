@@ -10,11 +10,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { H1Title } from '../../theme/common/SlideUp';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { nicknameRegExp, passwordRegExp } from '../../utils/RegExp';
-import axios from 'axios';
+import { instance, authInstance } from '../../api/axios';
 import { getCookie } from '../../utils/Cookie';
 import { useGetMember } from '../../api/useFetch';
-
-const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
 interface Edit {
   nickname: string;
@@ -61,9 +59,9 @@ export default function Editmypage() {
   /** 회원정보를 서버로 전송하는 ajax 함수 */
   const usePatchMember = (id?: string | number | undefined, data?: any) => {
     delete data.password_confirm;
-    axios
+    authInstance
       .patch(
-        `${SERVER_HOST}/member`,
+        '/member',
         // JSON.stringify(data),
         data,
         {
@@ -105,15 +103,14 @@ export default function Editmypage() {
   /** 닉네임 중복검사하는 ajax 함수 */
   const useGetDuplicateNickname = (nicknameData: string | null): void => {
     if (typeof nicknameData === 'string') {
-      axios
-        .post(`${SERVER_HOST}/member/duplicate/nickname`, {
+      instance
+        .post('/member/duplicate/nickname', {
           nickname: nicknameData,
         })
         .then(response => {
           if (response.status === 200) {
             // 사용 가능한 이메일일 경우
             if (response.data === false) {
-              console.log(response);
               setNicknameDupl(false);
               setClickNicknameDupl(true);
               setSubmitNonClickDupl(true);
