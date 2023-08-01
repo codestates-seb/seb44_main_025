@@ -114,10 +114,10 @@ BE
 회원 및 아티스트<br>보안
 </td>
 <td align="center">
-공연<br>이미지 업로드
+예약 및 후기
 </td>
 <td align="center">
-예약 및 후기
+공연<br>이미지 업로드
 </td>
 </tr>
 </table>
@@ -133,18 +133,26 @@ BE
 |<img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="icon" width="65" height="65" />|<img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" />|<img src="https://techstack-generator.vercel.app/eslint-icon.svg" alt="icon" width="65" height="65" />|<img src="https://techstack-generator.vercel.app/prettier-icon.svg" alt="icon" width="65" height="65" />|
 
 ### Back-End
-|1|2|3|4|
+|MySQL|Java|3|4|
 |------|---|---|---|
-|이미지|이미지|이미지|이미지|
+|<div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="icon" width="65" height="65" /></div>|<div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/java-icon.svg" alt="icon" width="65" height="65" /></div>|이미지|이미지|
+
+<br>
+<img width="800" alt="EZ to Play" src="https://github.com/codestates-seb/seb44_main_025/assets/120698922/28305133-69cd-4973-beb9-cd48b7ccde65">
+
+
 
 <br><hr><br>
 
 ## 문서
 
-사용자 요구사항 정의서
+### 사용자 요구사항 정의서
 
-API 명세서
+### API 명세서
 
-[와이어프레임(Figma)](https://www.figma.com/file/j0gwgMY6Mcqp0QwsvlRRFs/%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84(SEB_MAIN_025)?type=design&node-id=0%3A1&mode=design&t=Y4mO5hCELk5O4KmR-1)
+### [와이어프레임(Figma)](https://www.figma.com/file/j0gwgMY6Mcqp0QwsvlRRFs/%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84(SEB_MAIN_025)?type=design&node-id=0%3A1&mode=design&t=Y4mO5hCELk5O4KmR-1)
+<img width="800" alt="스크린샷 2023-07-26 오후 10 04 04" src="https://github.com/AngryDoggaebi/Space-Shooter-Game/assets/120698922/8a0c967e-02aa-4d80-b7b0-14074f00a8ed">
 
-[ERD](https://dbdiagram.io/d/6423ee0d5758ac5f17250725)
+
+### [ERD](https://dbdiagram.io/d/6423ee0d5758ac5f17250725)
+<img width="800" alt="스크린샷 2023-07-26 오후 10 10 07" src="https://github.com/AngryDoggaebi/Space-Shooter-Game/assets/120698922/9c843083-29f4-4d78-81e5-3893940cea99">
