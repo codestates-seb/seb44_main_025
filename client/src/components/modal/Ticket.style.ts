@@ -32,6 +32,7 @@ export default {
   TicketImg: styled.img`
     width: 300px;
     height: 400px;
+    object-fit: cover;
     ${DeviceQuery.tablet`
       width: calc(300px * ${screenScale.tablet});
       height: calc(400px * ${screenScale.tablet});
