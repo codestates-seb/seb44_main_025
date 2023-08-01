@@ -85,7 +85,7 @@ export const PostcodeMap = ({ defaultAddress, onChangeAddress }) => {
         disabled
         height={30}
         placeholder="주소찾기 버튼을 클릭하세요"
-        value={address}
+        value={address || ''}
         onChange={e => setAddress(e.target.value)}
       />
       <S.MapDiv id="map" ref={divRef} />

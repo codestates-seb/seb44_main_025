@@ -10,10 +10,6 @@ import { ReactComponent as ArrowIcon } from '../../../icons/icon_right.svg';
 
 interface FormValues {
   reviewTitle: string;
-  date: string;
-  price: string;
-  totalSeat: string;
-  artists: string[] | number[];
 }
 
 const ReviewRegister = ({
@@ -46,7 +42,10 @@ const ReviewRegister = ({
     }
   };
   const handleSubmitAll = () => {
-    if (!content) return;
+    if (!content.replace(/<p><br><\/p>/g, '')) {
+      alert('내용을 입력해 주세요.');
+      return;
+    }
     handleSubmit(onSubmit)();
   };
   return (
@@ -61,20 +60,6 @@ const ReviewRegister = ({
             closeModal();
           }}
         />
-        {/* <H1Title.H1>
-          <H1Title.H1span>후기</H1Title.H1span>
-        </H1Title.H1> */}
-        {/* <S.Poster src={performance?.imageUrl} /> 
-        <S.Summary>
-          <p>공연명</p>
-          <p>{performance?.title || '공연 제목'}</p>
-          <p>날짜</p>
-          <p>
-            {performance?.date
-              ? getDateTime(performance.date)
-              : '날짜 불러오기 실패'}
-          </p>
-            </S.Summary> */}
         <S.Heading3>제목</S.Heading3>
         <S.Form onSubmit={handleSubmit(onSubmit)}>
           <Controller
@@ -83,14 +68,19 @@ const ReviewRegister = ({
             defaultValue={defaultTitle}
             rules={{
               required: '반드시 입력해야 합니다',
+              minLength: {
+                value: 5,
+                message: '다섯 글자 이상 입력해 주세요.',
+              },
             }}
-            render={({ field }) => {
+            render={({ field, fieldState: { error } }) => {
               return (
                 <Input
                   height={30}
                   width={285}
                   onChange={field.onChange}
                   value={field.value}
+                  errorMessage={error?.message}
                 />
               );
             }}

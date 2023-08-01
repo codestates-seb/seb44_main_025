@@ -19,13 +19,11 @@ export default function Concertpreview(performance: PerformanceType) {
     >
       <S.ConcertImg src={performance.imageUrl} />
       <S.ConcertDetail>
-        <S.ConcertTitle>{performance.title || '타이틀'}</S.ConcertTitle>
+        <S.ConcertTitle>{performance.title || ''}</S.ConcertTitle>
+        <S.Concertcontent>{artist?.artistName || ''}</S.Concertcontent>
+        <S.Concertcontent>{performance.category || ''}</S.Concertcontent>
         <S.Concertcontent>
-          {artist?.artistName || '탈퇴한 아티스트'}
-        </S.Concertcontent>
-        <S.Concertcontent>{performance.category || '기타'}</S.Concertcontent>
-        <S.Concertcontent>
-          ₩{performance.price.toLocaleString() || '가격'}
+          ₩{performance.price.toLocaleString() || ''}
         </S.Concertcontent>
         <S.Concertcontent>{date.toLocaleDateString()}</S.Concertcontent>
         {/* <S.Concertcontent>{date.toLocaleTimeString()}</S.Concertcontent> */}

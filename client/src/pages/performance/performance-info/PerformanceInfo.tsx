@@ -14,7 +14,10 @@ import { getDateTime } from '../../../utils/Format';
 import { PerformanceType } from '../../../model/Performance';
 import { deletePerformance } from '../../../api/fetchAPI';
 import ReviewRegister from '../../../components/modal/review-register/ReviewRegister';
-import { useGetReservations } from '../../../api/useFetch';
+import {
+  useGetMemberPerformanced,
+  useGetReservations,
+} from '../../../api/useFetch';
 import {
   checkIsReserved,
   filterReservationByPerformanceId,
@@ -30,6 +33,7 @@ const PerformanceInfo = ({
   performance: PerformanceType;
 }) => {
   const reservations = useGetReservations();
+  const pastReservations = useGetMemberPerformanced();
   const [isTicketModalOpen, setIsReservationModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [isReservationTicketOpen, setIsReservationTicketOpen] = useState(false);
@@ -38,7 +42,12 @@ const PerformanceInfo = ({
   const [isReserved, setIsReserved] = useState(false);
   useEffect(() => {
     if (reservations && performanceId) {
-      setIsReserved(checkIsReserved(reservations, +performanceId));
+      setIsReserved(
+        checkIsReserved(
+          isStale ? pastReservations || [] : reservations || [],
+          +performanceId
+        )
+      );
     }
   }, [reservations]);
   const [isStale, setIsStale] = useState(true);
