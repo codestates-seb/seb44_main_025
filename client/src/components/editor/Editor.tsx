@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.bubble.css';
 import { useEditorStore } from './EditorStore';
 import { EditorGlobalStyle, EditorReadonlyGlobalStyle } from './Editor.style';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { usePostArtistImg as postImg } from '../../../api/fetchAPI';
+import { usePostArtistImg as postImg } from '../../api/fetchAPI';
 
 // 이미지 크기 조정 플러그인 관련 import
 // import {Quill} from 'react-quill'

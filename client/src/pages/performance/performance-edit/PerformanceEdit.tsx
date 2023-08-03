@@ -2,10 +2,10 @@ import S from '../../performance-register/PerformanceRegister.style';
 import { Button } from '../../../components/buttons/Buttons';
 // import ArtistContainer from '../../components/artist/artistcontainer';
 import { Input } from '../../../components/inputs/Inputs';
-import { Editor } from '../../../components/inputs/editor/Editor';
+import { Editor } from '../../../components/editor/Editor';
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react';
-import { useEditorStore } from '../../../components/inputs/editor/EditorStore';
+import { useEditorStore } from '../../../components/editor/EditorStore';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import {
   patchPerformance,
