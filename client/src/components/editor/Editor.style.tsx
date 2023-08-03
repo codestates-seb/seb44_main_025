@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-import { DeviceQuery } from '../../../utils/Media';
-import { screenScale } from '../../../utils/MediaSize';
+import { DeviceQuery } from '../../utils/Media';
+import { screenScale } from '../../utils/MediaSize';
 
 // TODO: 두 EditorGlobalStyle 통합하기
 export const EditorGlobalStyle = createGlobalStyle`
