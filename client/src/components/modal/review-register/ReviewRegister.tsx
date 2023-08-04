@@ -1,8 +1,8 @@
 import S from './ReviewRegister.style';
-import { Button } from '../../../components/buttons/Buttons';
-import { Input } from '../../../components/inputs/Inputs';
-import { Editor } from '../../../components/inputs/editor/Editor';
-import { useEditorStore } from '../../../components/inputs/editor/EditorStore';
+import { Button } from '../../buttons/Buttons';
+import { Input } from '../../inputs/Inputs';
+import { Editor } from '../../editor/Editor';
+import { useEditorStore } from '../../editor/EditorStore';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { postReview } from '../../../api/fetchAPI';
 import { PerformanceType } from '../../../model/Performance';

@@ -4,6 +4,7 @@ import ReviewInfo from './review-info/ReviewInfo';
 import ReviewEdit from './review-edit/ReviewEdit';
 import { useState } from 'react';
 
+/** fromMyPage 속성이 true인 경우 수정, 삭제 버튼이 노출됩니다. */
 const ReviewModal = ({
   review,
   closeModal,

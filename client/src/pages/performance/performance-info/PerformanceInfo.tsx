@@ -3,7 +3,7 @@ import { Button } from '../../../components/buttons/Buttons';
 // import ArtistContainer from '../../components/artist/artistcontainer';
 import Review from '../../../components/review-preview/ReviewPreview';
 import { useNavigate, useParams } from 'react-router-dom';
-import { EditorReadOnly } from '../../../components/inputs/editor/Editor';
+import { EditorReadOnly } from '../../../components/editor/Editor';
 import ReservationModal from '../../../components/modal/Reservation';
 import React, { useEffect, useState } from 'react';
 import { categoryObj } from '../../../utils/Category';

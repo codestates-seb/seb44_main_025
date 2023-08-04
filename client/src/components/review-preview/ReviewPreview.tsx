@@ -1,6 +1,5 @@
 import { styled } from 'styled-components';
-import { EditorViewer } from '../inputs/editor/EditorViewer';
-import { useNavigate } from 'react-router-dom';
+import { EditorViewer } from '../editor/EditorViewer';
 import { useState } from 'react';
 import { getDateTime } from '../../utils/Format';
 import { Review } from '../../model/Member';
@@ -9,7 +8,6 @@ import { DeviceQuery } from '../../utils/Media';
 import { screenScale } from '../../utils/MediaSize';
 
 export default function ReviewPreview(props: Review) {
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   return (

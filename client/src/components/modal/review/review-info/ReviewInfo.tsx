@@ -1,5 +1,5 @@
 import S from './ReviewInfo.style';
-import { EditorReadOnly } from '../../../inputs/editor/Editor';
+import { EditorReadOnly } from '../../../editor/Editor';
 import { Review } from '../../../../model/Member';
 import { Button } from '../../../buttons/Buttons';
 import { deleteReview } from '../../../../api/fetchAPI';
