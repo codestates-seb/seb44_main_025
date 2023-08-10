@@ -41,7 +41,7 @@ export const MapDiv = styled.div`
   width: 360px;
   height: 200px;
   z-index: 0;
-  background-color: var(--font-mid-color);
+  background-color: gray;
   filter: drop-shadow(0 0 0px var(--button-primary-border-color));
   color: white;
   ${FontStyle.smallMedium};
