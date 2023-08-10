@@ -171,13 +171,7 @@ export const Map = ({ address }: { address: string }) => {
         <S.Heading3>공연장 위치</S.Heading3>
       </S.TitleButtonFlex>
       <S.Paragraph>{address || '홍대'}</S.Paragraph>
-      {mapRef.current ? (
-        <S.MapDiv id="map" ref={divRef} />
-      ) : (
-        <S.MapDiv id="map" ref={divRef}>
-          {'지도를 불러오지 못하였습니다.'}
-        </S.MapDiv>
-      )}
+      <S.MapDiv id="map" ref={divRef} />
     </S.MapContainer>
   );
 };
