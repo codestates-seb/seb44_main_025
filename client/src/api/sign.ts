@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { SignUp, SignIn } from '../model/Member';
 import { setCookie } from '../utils/Cookie';
+import { authInstance } from './axios';
 
 const SERVER_HOST = process.env.REACT_APP_SERVER_HOST;
 
@@ -36,6 +37,9 @@ export const usePostSignIn = (info: SignIn, postUrl: string) => {
       if (response.status === 200) {
         // token이 필요한 API 요청 시 header Authorization에 token 담아 전송
         axios.defaults.headers.common['authorization'] = `${accessToken}`;
+        authInstance.defaults.headers.common[
+          'Authorization'
+        ] = `${accessToken}`;
 
         // 쿠키 저장
         setCookie(
