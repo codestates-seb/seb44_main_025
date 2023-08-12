@@ -7,13 +7,13 @@
 
 ## 🎵 배포 링크
 
-[EZ to Play](https://ez-to-play.netlify.app/)
+[Ez to Play](https://ez-to-play.netlify.app/)
 
 <br>
 
 ## 🎵 프로젝트 설명
 
-- EZ to Play는 누구나 아티스트가 될 수 있는 공연 예약 플랫폼입니다.
+- Ez to Play는 누구나 아티스트가 될 수 있는 공연 예약 플랫폼입니다.
 
 - 아티스트는 자신의 공연을 등록하여 홍보할 수 있습니다.
 
@@ -194,3 +194,21 @@ BE
 ## 🎵 기술 스택
  
 <img width="800" alt="EZ to Play" src="https://github.com/codestates-seb/seb44_main_025/assets/120698922/28305133-69cd-4973-beb9-cd48b7ccde65">
+
+##  🎵 커밋 컨벤션
+
+키워드 | 용도
+-- | --
+Feat | 새로운 기능 추가, 기존의 기능을 요구 사항에 맞추어 수정
+Fix | 기능에 대한 버그 수정, 오탈자 수정
+Rename | 파일 혹은 폴더명을 수정하거나 경로를 변경하여 옮기는 경우
+Remove | 파일을 삭제하는 작업만 수행하는 경우
+Comment | 필요한 주석 추가 및 변경
+Style | 코드 스타일, 세미콜론 누락, 포맷팅에 대한 수정
+Refactor | 기능의 변화가 아닌 코드 리팩터링 ex) 변수 이름 변경
+Chore | 패키지 매니저 수정, 그 외 기타 수정 ex) .gitignore
+Docs | 문서 관련 작업 ex) API 명세서, Readme.md 등
+lnit | 프로젝트 초기 생성
+Build | 빌드 관련 수정
+Merge | 병합
+Release | 버전 릴리즈
