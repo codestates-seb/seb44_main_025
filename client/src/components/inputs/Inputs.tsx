@@ -2,7 +2,7 @@ import * as S from './Inputs.style';
 import { InputContainerType } from './Inputs.style';
 import { ReactComponent as CloseIcon } from '../../icons/icon_close.svg';
 import { ReactComponent as SearchIcon } from '../../icons/icon_search.svg';
-import React from 'react';
+import React, { useId } from 'react';
 
 type InputType = {
   theme?: 'light' | 'dark' | 'warning' | 'success' | 'primary';
@@ -35,9 +35,10 @@ export const Input: React.FC<InputType> = ({
   onClick,
   ...props
 }) => {
+  const id = useId();
   return (
     <S.Div>
-      {label && <label>{label}</label>}
+      {label && <label htmlFor={id}>{label}</label>}
       <S.InputFlexContainer>
         <S.InputContainer
           theme={theme || 'light'}
@@ -46,6 +47,7 @@ export const Input: React.FC<InputType> = ({
         >
           {prefix && <SearchIcon />}
           <input
+            id={id}
             {...props}
             onChange={e => {
               if (setValue) {
