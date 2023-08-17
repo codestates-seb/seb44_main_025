@@ -15,6 +15,7 @@ import { PerformanceType } from '../../../model/Performance';
 import { deletePerformance } from '../../../api/fetchAPI';
 import ReviewRegister from '../../../components/modal/review-register/ReviewRegister';
 import {
+  useGetArtistReview,
   useGetMemberPerformanced,
   useGetReservations,
 } from '../../../api/useFetch';
@@ -37,9 +38,11 @@ const PerformanceInfo = ({
   const [isTicketModalOpen, setIsReservationModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [isReservationTicketOpen, setIsReservationTicketOpen] = useState(false);
-  // const performance = useGetPerformance(performanceId);
   const { performanceId } = useParams();
   const [isReserved, setIsReserved] = useState(false);
+  const artistReviews = useGetArtistReview(
+    Object.values(performance?.performanceArtist?.performanceArtistList)[0]
+  );
   useEffect(() => {
     if (reservations && performanceId) {
       setIsReserved(
@@ -223,6 +226,20 @@ const PerformanceInfo = ({
             setIsReservationTicketOpen(false);
           }}
         />
+      )}
+      <S.Heading3>아티스트의 공연 후기</S.Heading3>
+      {artistReviews?.length ? (
+        artistReviews.map(artistReview => {
+          return (
+            <S.ReviewDiv key={artistReview.reviewId}>
+              <Review {...artistReview} />
+            </S.ReviewDiv>
+          );
+        })
+      ) : (
+        <S.EmptyWrapper>
+          <S.EmptyTitle>완료한 공연이 없습니다.</S.EmptyTitle>
+        </S.EmptyWrapper>
       )}
     </>
   );
