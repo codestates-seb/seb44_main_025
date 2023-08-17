@@ -8,22 +8,46 @@ import { useGetArtists } from '../../api/useFetch';
 import { getCookie } from '../../utils/Cookie';
 import { categoryObj } from '../../utils/Category';
 import { H1Title } from '../../theme/common/SlideUp';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useIntersectionObserver } from '../../utils/useIntersectionObservser';
+import { throttle } from '../../utils/Throttle';
 
 const ArtistList = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get('category');
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(200);
+  const [size, setSize] = useState(5);
+  const targetRef = useRef<HTMLDivElement>(null);
+  const handleIntersection = () => {
+    setPage(page => page + 1);
+  };
+  const options = {
+    root: null,
+    threshold: 0.5,
+  };
+  const observer = useIntersectionObserver(
+    throttle(handleIntersection, 500),
+    options
+  );
   const handleClickCategory = (id: string) => {
+    setPage(1);
     if (category === id) {
       setSearchParams('');
     } else {
       setSearchParams({ category: id });
     }
   };
-  const data = useGetArtists(category, page, size);
+  const [pageInfo, data] = useGetArtists(category, page, size);
+  // page는 0으로 시작하여 처음에 무조건 1로 증가함 - data 한 번 가져온 후 중단 조건 비교
+  useEffect(() => {
+    if (targetRef.current) {
+      if (page === 1) observer.current.observe(targetRef.current);
+      if (pageInfo === undefined || page >= (pageInfo?.total_pages ?? Infinity))
+        observer.current.unobserve(targetRef.current);
+    }
+  }, [data]);
+
   const isLoggedIn = getCookie('accessToken');
   return (
     <>
@@ -76,16 +100,11 @@ const ArtistList = () => {
             })}
           </S.CategoryContainer>
           <S.ArtistContainer>
-            {Array.isArray(data)
-              ? [...data]
-                  .reverse()
-                  .map(artist => (
-                    <ArtistPreview key={artist.artistId} {...artist} />
-                  ))
-              : data?.data?.map(artist => (
-                  <ArtistPreview key={artist.artistId} {...artist} />
-                ))}
+            {data?.map(artist => (
+              <ArtistPreview key={artist.artistId} {...artist} />
+            ))}
           </S.ArtistContainer>
+          <div ref={targetRef} style={{ height: '5vh' }}></div>
         </S.Main>
       </S.Container>
       <Navbar />
