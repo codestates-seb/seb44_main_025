@@ -2,12 +2,13 @@ import { PerformanceListType, PerformanceType } from '../model/Performance';
 import { ArtistList, Artist } from '../model/Artist';
 import { Member, Review } from '../model/Member';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios, { CancelToken } from 'axios';
 import { getCookie, removeCookie, setCookie } from '../utils/Cookie';
 import { useUserInfo } from '../zustand/userInfo.stores';
 import { ReservationType } from '../model/Reservation';
 import { useNavigate } from 'react-router-dom';
 import { authInstance, instance } from './axios';
+import { PageInfo } from '../model/Common';
 
 export const useGetPerformance = (id: string | number | undefined) => {
   const [data, setData] = useState<PerformanceType>();
@@ -36,13 +37,10 @@ export const useGetPerformances = (
   isStale?: boolean | null,
   page?: number | string | null,
   size?: number | string | null
-) => {
-  const [data, setData] = useState<PerformanceListType>();
-  useEffect(() => {
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
-
-    // TODO: 무한 스크롤 구현 후 size 변경하기
+): [pageInfo: PageInfo | undefined, data: PerformanceType[]] => {
+  const [pageInfo, setPageInfo] = useState<PageInfo>();
+  const [data, setData] = useState<PerformanceType[]>([]);
+  const fetchData = (token: CancelToken) => {
     instance
       .get<PerformanceListType>(
         `/performance${categoryId ? `/category/${categoryId}` : ''}?page=${
@@ -51,13 +49,46 @@ export const useGetPerformances = (
           isStale ? '공연완료' : isStale === false ? '공연진행중' : ''
         }`,
         {
-          cancelToken: source.token,
+          cancelToken: token,
         }
       )
-      .then(res => setData(res.data));
-  }, [categoryId, isStale]);
+      .then(res => {
+        setData(prev => [...prev, ...res.data.data]);
+        setPageInfo(res.data.pageInfo);
+        return true;
+      })
+      .catch(err => {
+        // 토큰에 의하여 요청이 취소된 경우에는 console에 메시지 출력하지 않음
+        if (err.code === 'ERR_CANCELED') return;
+        console.error(err);
+      });
+  };
 
-  return data;
+  // page가 2 이상일 때에만 해당 로직을 통해 data를 갱신합니다.
+  useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    if (+(page ?? 0) > 1) {
+      fetchData(source.token);
+    }
+    return () => {
+      source.cancel('요청 취소');
+    };
+  }, [page]);
+
+  // categoryId, isStale, size가 변경되었을 시, 기존의 data를 초기화하고 새롭게 data를 구성합니다.
+  // 함수를 호출하기 이전에 categoryId, isStale, size 변경 시 동시에 setPage(1)을 호출하여 page가 1이 될 수 있도록 해야 합니다.
+  useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    setData(() => []);
+    fetchData(source.token);
+    return () => {
+      source.cancel('요청 취소');
+    };
+  }, [categoryId, isStale, size]);
+
+  return [pageInfo, data];
 };
 
 export const useGetArtists = (
