@@ -65,7 +65,9 @@ const S = {
    `}
   `,
   ReviewDetail: styled.div`
+    width: 100%;
     margin-left: 25px;
+    margin-right: 25px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

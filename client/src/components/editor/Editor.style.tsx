@@ -29,7 +29,7 @@ export const EditorGlobalStyle = createGlobalStyle`
   .ql-editor {
     min-height: 145px;
     ${DeviceQuery.tablet`
-      min-height: calc(145px * ${screenScale.tablet});
+      min-height: calc(155px * ${screenScale.tablet});
     `}
   }
   iframe {
