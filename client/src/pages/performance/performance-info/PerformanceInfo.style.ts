@@ -144,3 +144,35 @@ export const BottomStickyContainer = styled.div`
       bottom: calc(70px * ${screenScale.tablet});
   `}
 `;
+
+export const EmptyWrapper = styled.div`
+  width: 360px;
+  height: 100px;
+  background-color: var(--font-mid-color);
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 10px;
+  ${DeviceQuery.tablet`
+      width: calc(360px * ${screenScale.tablet});
+      height: calc(100px * ${screenScale.tablet});
+      margin-bottom: calc(10px * ${screenScale.tablet});
+   `}
+`;
+export const EmptyTitle = styled.p`
+  ${FontStyle.smallRegular};
+  color: var(--font-highlight-color);
+  padding: 0px 15px 10px 15px;
+  ${DeviceQuery.tablet`
+      padding: calc(0px * ${screenScale.tablet}) calc(15px * ${screenScale.tablet}) calc(10px * ${screenScale.tablet}) calc(15px * ${screenScale.tablet});
+   `}
+`;
+
+// margin 되돌리기 용도
+export const ReviewDiv = styled.div`
+  margin-left: -15px;
+  ${DeviceQuery.tablet`
+    margin-left: calc(-15px * ${screenScale.tablet});
+  `}
+`;
