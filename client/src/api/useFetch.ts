@@ -95,36 +95,74 @@ export const useGetArtists = (
   categoryId?: string | number | null,
   page?: number | string | null,
   size?: number | string | null
-) => {
-  const [data, setData] = useState<ArtistList>();
+): [pageInfo: PageInfo | undefined, data: Artist[]] => {
+  const [pageInfo, setPageInfo] = useState<PageInfo>();
+  const [data, setData] = useState<Artist[]>([]);
 
-  useEffect(() => {
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
-
+  // category를 포함한 요청, 포함하지 않은 요청 API 요청 엔드포인트 및 응답 자체가 다르므로 분리
+  // category를 포함하지 않은 요청
+  const fetchDataWithoutCategory = (token: CancelToken) => {
     instance
-      .get<ArtistList>(
-        categoryId
-          ? `/artist?page=${page || 1}&size=${
-              size || 10
-            }&category=${categoryId}`
-          : '/artist/all',
-        {
-          cancelToken: source.token,
-        }
-      )
-      .then(data => setData(data.data))
+      .get<Artist[]>('/artist/all', {
+        cancelToken: token,
+      })
+      .then(res => {
+        setData(res.data.reverse());
+      })
       .catch(err => {
         if (err.code === 'ERR_CANCELED') return;
         console.log(err);
       });
+  };
 
+  // category를 포함한 요청
+  const fetchDataWithCategory = (token: CancelToken) => {
+    instance
+      .get<ArtistList>(
+        `/artist?page=${page || 1}&size=${size || 10}&category=${categoryId}`,
+        {
+          cancelToken: token,
+        }
+      )
+      .then(res => {
+        setPageInfo(res.data.pageInfo);
+        setData(prev => [...prev, ...res.data.data]);
+      })
+      .catch(err => {
+        if (err.code === 'ERR_CANCELED') return;
+        console.log(err);
+      });
+  };
+
+  // page 변경 시 실행되는 effect
+  useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    if (+(page ?? 0) > 1) {
+      fetchDataWithCategory(source.token);
+    }
     return () => {
       source.cancel('요청 취소');
     };
-  }, [categoryId, page, size]);
+  }, [page]);
 
-  return data;
+  // category, size 변경 시 실행되는 effect
+  useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    if (categoryId === null) {
+      fetchDataWithoutCategory(source.token);
+      setPageInfo(undefined);
+    } else {
+      setData(() => []);
+      fetchDataWithCategory(source.token);
+    }
+    return () => {
+      source.cancel('요청 취소');
+    };
+  }, [categoryId, size]);
+
+  return [pageInfo, data];
 };
 
 /** 아티스트 정보를 받아오는 get함수, 아티스트 정보를 받은 후 zustand에 정보를 담아서 상태 관리(수정페이지의 input defaultValue로 넣기 위함) */
