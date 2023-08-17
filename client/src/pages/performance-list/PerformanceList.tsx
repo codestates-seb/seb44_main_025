@@ -1,7 +1,7 @@
 import { S } from './PerformanceList.style';
 import { ReactComponent as MapIcon } from '../../icons/icon_map_search.svg';
 import { Button } from '../../components/buttons/Buttons';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ConcertPreview from '../../components/concert-preview/ConcertPreview';
 import Header from '../../components/header/Header';
 import { useGetPerformances } from '../../api/useFetch';
@@ -14,18 +14,16 @@ import { H1Title } from '../../theme/common/SlideUp';
 const PerformanceList = () => {
   const targetRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const category = searchParams.get('category');
+  const [category, setCategory] = useState<number | null>(null);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(200);
   const [isStale, setIsStale] = useState<boolean | null>(null);
   const handleClickCategory = (id: string) => {
-    if (category === id) {
-      setSearchParams('');
+    setPage(1);
+    if (category === +id) {
+      setCategory(null);
     } else {
-      setSearchParams({
-        category: id,
-      });
+      setCategory(+id);
     }
   };
   const data = useGetPerformances(category, isStale, page, size);
