@@ -10,13 +10,30 @@ import Navbar from '../../components/nav/Navbar';
 import { useState, useRef, useEffect } from 'react';
 import { getCookie } from '../../utils/Cookie';
 import { H1Title } from '../../theme/common/SlideUp';
+import { useIntersectionObserver } from '../../utils/useIntersectionObservser';
+import { throttle } from '../../utils/Throttle';
 
 const PerformanceList = () => {
-  const targetRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const [category, setCategory] = useState<number | null>(null);
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(200);
+  const [size, setSize] = useState(5);
+  const targetRef = useRef<HTMLDivElement>(null);
+
+  // Note: InterSectionObserver 콜백 함수
+  const handleIntersection = () => {
+    setPage(page => page + 1);
+  };
+  // InterSectionObserver options
+  const options = {
+    root: null,
+    threshold: 0,
+  };
+  // IntersectionObserver 반환하는 Hook
+  const observer = useIntersectionObserver(
+    throttle(handleIntersection, 500),
+    options
+  );
   const [isStale, setIsStale] = useState<boolean | null>(null);
   const handleClickCategory = (id: string) => {
     setPage(1);
@@ -26,24 +43,16 @@ const PerformanceList = () => {
       setCategory(+id);
     }
   };
-  const data = useGetPerformances(category, isStale, page, size);
+  const [pageInfo, data] = useGetPerformances(category, isStale, page, size);
+  useEffect(() => {
+    if (targetRef.current) {
+      if (page === 1) observer.current.observe(targetRef.current);
+      if (page >= (pageInfo?.total_pages ?? Infinity))
+        observer.current.unobserve(targetRef.current);
+    }
+  }, [data]);
+
   const isLoggedIn = getCookie('accessToken');
-  // useEffect(() => {
-  //   let observer: IntersectionObserver;
-  //   observer = new IntersectionObserver(
-  //     () => {
-  //       setPage(
-  //         Math.min(
-  //           page + 1,
-  //           data?.pageInfo.total_pages || Number.MAX_SAFE_INTEGER
-  //         )
-  //       );
-  //     },
-  //     { threshold: 0.1 }
-  //   );
-  //   observer.observe(targetRef.current as Element);
-  //   return () => observer && observer.disconnect();
-  // }, []);
   return (
     <>
       <Header />
@@ -65,6 +74,7 @@ const PerformanceList = () => {
               <S.Heading3
                 onClick={() => {
                   setIsStale(null);
+                  setPage(1);
                 }}
               >
                 전체
@@ -73,6 +83,7 @@ const PerformanceList = () => {
               <S.Heading3
                 onClick={() => {
                   setIsStale(false);
+                  setPage(1);
                 }}
               >
                 진행중공연
@@ -81,6 +92,7 @@ const PerformanceList = () => {
               <S.Heading3
                 onClick={() => {
                   setIsStale(true);
+                  setPage(1);
                 }}
               >
                 지난공연
@@ -130,14 +142,14 @@ const PerformanceList = () => {
             })}
           </S.CategoryContainer>
           <S.PerformanceContainer>
-            {data?.data?.map(performance => (
+            {data?.map(performance => (
               <ConcertPreview
                 key={performance.performanceId}
                 {...performance}
               />
             ))}
           </S.PerformanceContainer>
-          <div ref={targetRef} />
+          <div ref={targetRef} style={{ height: '5vh' }}></div>
         </S.Main>
       </S.Container>
       <Navbar />
