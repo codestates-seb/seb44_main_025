@@ -51,6 +51,9 @@ export default {
     }
     & .quill {
       max-width: 285px;
+      ${DeviceQuery.tablet`
+        max-width: calc(285px * ${screenScale.tablet});
+    `};
       & * {
         color: white;
       }
