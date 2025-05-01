@@ -127,11 +127,10 @@ BE
 <img width="3680" alt="EZtoPlay_Userflow" src="https://github.com/codestates-seb/seb44_main_025/assets/83588163/daead9c0-cbc4-4405-b45a-095c743fa963">
 
 ### [와이어프레임(Figma)](https://www.figma.com/file/j0gwgMY6Mcqp0QwsvlRRFs/%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84(SEB_MAIN_025)?type=design&node-id=0%3A1&mode=design&t=Y4mO5hCELk5O4KmR-1)
-<img width="800" alt="스크린샷 2023-07-26 오후 10 04 04" src="https://github.com/AngryDoggaebi/Space-Shooter-Game/assets/120698922/8a0c967e-02aa-4d80-b7b0-14074f00a8ed">
-
+<img width="800" alt="EztoPlay_Wireframe" src="https://github.com/user-attachments/assets/80218c7f-3369-4c82-b85d-fbce10609534">
 
 ### [ERD](https://dbdiagram.io/d/6423ee0d5758ac5f17250725)
-<img width="800" alt="스크린샷 2023-07-26 오후 10 10 07" src="https://github.com/AngryDoggaebi/Space-Shooter-Game/assets/120698922/9c843083-29f4-4d78-81e5-3893940cea99">
+<img width="800" alt="EztoPlay_ERD" src="https://github.com/user-attachments/assets/20460482-f2ef-48e0-af1a-8a689cb0de17">
 
 <br>
 
